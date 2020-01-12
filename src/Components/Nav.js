@@ -1,11 +1,13 @@
 import React from "react";
-import Home from "../App";
+// import Home from "../App";
 import SignIn from "./NavComponent/Sign_in";
 import SignUp from "./NavComponent/Sign_up";
+import MainPage from './NavComponent/MainPage'
+
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-const Nav = props => {
+export default function Nav(props){
   return (
     <Router>
       <div>
@@ -18,7 +20,7 @@ const Nav = props => {
 
             <ul class='nav navbar-nav pull-xs-right'>
               <li class='nav-item'>
-                <Link class='nav-link active' to='/'>
+                <Link class='nav-link active' to='/home'>
                   Home
                 </Link>
               </li>
@@ -36,13 +38,11 @@ const Nav = props => {
           </div>
         </nav>
         <Switch>
-          <Route path='/sign_in'><SignIn/></Route>
-          <Route path='/sign_up'><SignUp/></Route>
-          @@@@@@@@@@@@@@@现在卡住了。。。。。。。。。。。
+          <Route exact path='/home'><MainPage/></Route>
+          <Route exact path='/sign_in'><SignIn/></Route>
+          <Route exact path='/sign_up'><SignUp/></Route>
         </Switch>
       </div>
     </Router>
   );
-};
-
-export default Nav;
+}
