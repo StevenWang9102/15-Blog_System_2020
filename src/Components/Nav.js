@@ -5,7 +5,7 @@ import SignUp from "./NavComponent/Sign_up";
 import MainPage from './NavComponent/MainPage'
 
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
 export default function Nav(props){
   return (
@@ -38,6 +38,7 @@ export default function Nav(props){
           </div>
         </nav>
         <Switch>
+          <Route exact path='/'><Redirect to="/home"/></Route>
           <Route exact path='/home'><MainPage/></Route>
           <Route exact path='/sign_in'><SignIn/></Route>
           <Route exact path='/sign_up'><SignUp/></Route>
