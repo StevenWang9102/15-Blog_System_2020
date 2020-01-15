@@ -1,4 +1,3 @@
-
 export const INITIALDATA_LOADED = Symbol('INITIALDATA_LOADED');
 export const ARTICLE_DATA_LOADED = Symbol('ARTICLE_DATA_LOADED')
 

@@ -24,3 +24,9 @@
 .home-page .container{
   text-align: left;
 }
+
+.article-meta .author-image
+{
+  height: 30px;
+  width: 30px;
+}

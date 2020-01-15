@@ -1,12 +1,7 @@
 import React from "react";
 
-
 const SignUp = props => {
-  return (
-    <div>
-      注册页面
-    </div>
-  );
+  return <div>on SignUp Page Now</div>;
 };
 
 export default SignUp;

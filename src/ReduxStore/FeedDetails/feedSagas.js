@@ -8,9 +8,7 @@ export const feedSaga = function*() {
 
 const loadInitialData = function*() {
   const initData = yield call(fetchData);
-  console.log(initData)
   yield put(articleDataLoaded(initData.data["articles"]));
-  // 分发给actions
 };
 
 const fetchData = () => {
