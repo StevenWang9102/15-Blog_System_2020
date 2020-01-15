@@ -12,7 +12,7 @@ const ArticlePreview = props => {
             <div class='feed-toggle'>
               <ul class='nav nav-pills outline-active'>
                 <li class='nav-item'>
-                  <a class='nav-link active' href=''>
+                  <a class='nav-link active' href='#top'>
                     Global Feed
                   </a>
                 </li>
@@ -21,7 +21,7 @@ const ArticlePreview = props => {
 
             {props.articleLibrary &&
               props.articleLibrary.map((article, index) => {
-                console.log(article);
+                // console.log(article);
                 return (
                   <div class='article-preview' key={index}>
                     <div class='article-meta'>
@@ -29,7 +29,7 @@ const ArticlePreview = props => {
                         <img src={article.author.image} alt='author' />
                       </a>
                       <div class='info'>
-                        <a href='' class='author'>
+                        <a href='#top' class='author'>
                           {article.author.username}
                         </a>
                         <span class='date'>{article.updatedAt}</span>
@@ -38,7 +38,7 @@ const ArticlePreview = props => {
                         <i class='ion-heart'></i> {article.favoritesCount}
                       </button>
                     </div>
-                    <a href='' class='preview-link'>
+                    <a href='#top' class='preview-link'>
                       <h1>{article.title}</h1>
                       <p>{article.description}</p>
                       <span>Read more...</span>

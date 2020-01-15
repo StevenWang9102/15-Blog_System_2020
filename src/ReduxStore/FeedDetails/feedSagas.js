@@ -8,23 +8,24 @@ export const feedSaga = function*() {
 
 const loadInitialData = function*() {
   const initData = yield call(fetchData);
+  console.log(initData)
   yield put(articleDataLoaded(initData.data["articles"]));
   // 分发给actions
 };
 
 const fetchData = () => {
-  // return axios.get("https://conduit.productionready.io/api/articles?limit=10&offset=0");
-  // // 要替换axios@@@@@@
-  const Http = new XMLHttpRequest();
-  const URL =
-    "https://conduit.productionready.io/api/articles?limit=10&offset=0";
-
-  Http.open("GET", URL);
-  Http.send();
-  Http.onreadystatechange = function() {
-    if (this.readyState === 4 && this.status === 200) {
-      console.log(typeof(this.responseText));@@@@类型转换一次
-      return this.responseText;
-    }
-  };
+    return axios.get("https://conduit.productionready.io/api/articles?limit=10&offset=0");
+    // 要替换axios@@@@@@
+    //   const Http = new XMLHttpRequest();
+    //   const URL =
+    //     "https://conduit.productionready.io/api/articles?limit=10&offset=0";
+    //   Http.open("GET", URL);
+    //   Http.send();
+    
+    //   Http.onreadystatechange = function() {
+    //     if (this.readyState === 4 && this.status === 200) {
+    //     //   console.log(JSON.parse(this.responseText));
+    //       return JSON.parse(this.responseText);
+    //     }
+    //   };
 };
