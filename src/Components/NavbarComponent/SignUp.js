@@ -1,5 +1,4 @@
 import React from "react";
-// import { BrowserRouter as Router, Swithch, Route } from 'react-router-dom'
 
 
 const SignUp = props => {

@@ -3,9 +3,8 @@ import React from "react";
 
 const PopularTages = props => {
   return (
-    <div>
-      <div class='container page'>
-          <div class='row'>
+      // <div class='container page'>
+      //     <div class='row'>
               
             <div class='col-md-3'>
               <div class='sidebar'>
@@ -39,9 +38,8 @@ const PopularTages = props => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-    </div>
+        //   </div>
+        // </div>
   );
 };
 

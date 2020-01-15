@@ -1,28 +1,25 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import './App.css';
-import Nav from './Components/Nav.js'
+import Navbar from './Components/NavbarComponent/Navbar'
 import { loadInitialData } from "./ReduxStore/FeedDetails/feedActions";
 
-
-// import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-
-const App = (props) => {
+const InternalApp = (props) => {
   useEffect(() => {
     props.loadInitialData();
   }, [props]);
 
   return (
       <div className="App">
-        <Nav/>
+        <Navbar/>
         {/* <MainPage/> */}
       </div>
   );
 }
 
-const mapStateToProps = ({ saveBookStore, usersBooksChanged, setStudentName }) => {
-  return { saveBookStore, usersBooksChanged, setStudentName };
-}; //@@@@@@@@@@@@@此处不对劲
+const mapStateToProps = (state) => {
+  return {...state};
+}; 
 
 const mapDismatchToProps = dispatch => {
   return {
@@ -32,4 +29,4 @@ const mapDismatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDismatchToProps)(App);
+export const App = connect(mapStateToProps, mapDismatchToProps)(InternalApp);

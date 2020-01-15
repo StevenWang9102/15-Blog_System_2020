@@ -16,6 +16,7 @@ const loadInitialData = function*() {
 const fetchData = () => {
     return axios.get("https://conduit.productionready.io/api/articles?limit=10&offset=0");
     // 要替换axios@@@@@@
+    
     //   const Http = new XMLHttpRequest();
     //   const URL =
     //     "https://conduit.productionready.io/api/articles?limit=10&offset=0";

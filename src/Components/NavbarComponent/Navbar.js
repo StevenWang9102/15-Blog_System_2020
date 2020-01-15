@@ -1,20 +1,19 @@
 import React from "react";
-// import Home from "../App";
-import SignIn from "./NavComponent/Sign_in";
-import SignUp from "./NavComponent/Sign_up";
-import MainPage from './NavComponent/MainPage'
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
+import {MainPage} from '../MainPageComponent/MainPage'
 
 
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
-export default function Nav(props){
+function Navbar(props){
   return (
     <Router>
       <div>
         <nav class='navbar navbar-light'>
           <div class='container'>
 
-            <a class='navbar-brand' href='index.html'>
+            <a class='navbar-brand' href='/home'>
               conduit
             </a>
 
@@ -47,3 +46,5 @@ export default function Nav(props){
     </Router>
   );
 }
+
+export default Navbar
