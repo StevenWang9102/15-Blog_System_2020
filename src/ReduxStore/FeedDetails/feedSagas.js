@@ -8,12 +8,12 @@ export const feedSaga = function*() {
 
 const loadInitialData = function*() {
   const initData = yield call(fetchData);
-  // console.log(initData.data["articles"])
+  console.log(initData.data["articles"])
   yield put(articleDataLoaded(initData.data["articles"]));
 };
 
 const fetchData = () => {
-    return axios.get("https://conduit.productionready.io/api/articles?limit=50&offset=120");
+    return axios.get("https://conduit.productionready.io/api/articles?limit=200&offset=110");
     // 要替换axios@@@@@@
     
     //   const Http = new XMLHttpRequest();

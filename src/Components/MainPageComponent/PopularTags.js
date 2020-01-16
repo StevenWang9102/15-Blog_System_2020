@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
 const InternalPopularTages = props => {
+  const [popularTags, setPopularTags] = useState(["第一名", "第二名"]);
   const tempTagList = [];
-  let popularTags = [];
 
   const reducer = (allElements, element) => {
     if (element in allElements) allElements[element]++;
@@ -11,29 +11,42 @@ const InternalPopularTages = props => {
     return allElements;
   };
 
+  console.log(props.articleLibrary);
+  
   return (
     <div class='col-md-3'>
       <div class='sidebar'>
         <p>Popular Tags</p>
 
         <div class='tag-list'>
-          {props.articleLibrary &&
-            props.articleLibrary.forEach(article => {
-              if (article.tagList.length !== 0) {
-                article.tagList.forEach(item => {
-                  tempTagList.push(item);
-                });
-              }
+          {
+          popularTags.map((popular)=>{
+
+              //数据变换
+              props.articleLibrary && props.articleLibrary.forEach(article => {
+                  console.log(article.tagList)
+                  if (article.tagList.length !== 0) 
+                    article.tagList.forEach(item => {
+                      tempTagList.push(item);
+                      console.log(tempTagList)
+                    });  
+                })
+              
+
+              // 数据统计，显示前五
               const myObject = tempTagList.reduce(reducer, {});
-              popularTags = Object.keys(myObject).slice(0, 4);
-              console.log(popularTags);
-            })}
-          <a href='#top' class='tag-pill tag-default'>
-            programming
-          </a>
-          <a href='#top' class='tag-pill tag-default'>
-            programming
-          </a>
+              console.log(Object.keys(myObject).slice(0, 3));
+              
+              //循环渲染
+              Object.keys(myObject).slice(0, 3).map((p)=>{ 
+                return(
+                  <a href='#top' class='tag-pill tag-default'>
+                    {p}
+                  </a>
+                )
+              })
+          })}
+
         </div>
       </div>
     </div>
