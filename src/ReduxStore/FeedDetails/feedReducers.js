@@ -7,7 +7,7 @@ const initialState = {
 export const feedReducer = (state = initialState, action) => {
   switch (action.type) {
     case ARTICLE_DATA_LOADED:
-      return { ...state, articleLibrary: action.articleData };
+      return { ...state, articleLibrary: action.articleInitData };
     default:
       return state;
   }

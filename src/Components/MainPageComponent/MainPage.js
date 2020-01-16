@@ -1,6 +1,6 @@
 import React from "react";
 import {ArticlePreview} from "./ArticlePreview";
-import PopularTages from "./PopularTags";
+import {PopularTages} from "./PopularTags";
 import Banner from "./Banner";
 
 const MainPage = props => {

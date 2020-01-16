@@ -8,7 +8,7 @@ import { loadInitialData } from "./ReduxStore/FeedDetails/feedActions";
 const InternalApp = props => {
   useEffect(() => {
     props.loadInitialData();
-  }, [props]);
+  }, []);
 
   return (
     <div className='App'>

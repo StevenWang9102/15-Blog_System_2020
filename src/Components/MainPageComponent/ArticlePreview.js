@@ -2,7 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
 
+
 const InternalArticlePreview = props => {
+
   return (
     <div class='col-md-9 col-sm-12'>
       <div class='feed-toggle'>

@@ -1,35 +1,38 @@
 import React from "react";
+import { connect } from "react-redux";
 
-const PopularTages = props => {
+const InternalPopularTages = props => {
+  const tempTagList = [];
+  let popularTags = [];
+
+  const reducer = (allElements, element) => {
+    if (element in allElements) allElements[element]++;
+    else allElements[element] = 1;
+    return allElements;
+  };
+
   return (
     <div class='col-md-3'>
       <div class='sidebar'>
         <p>Popular Tags</p>
 
         <div class='tag-list'>
+          {props.articleLibrary &&
+            props.articleLibrary.forEach(article => {
+              if (article.tagList.length !== 0) {
+                article.tagList.forEach(item => {
+                  tempTagList.push(item);
+                });
+              }
+              const myObject = tempTagList.reduce(reducer, {});
+              popularTags = Object.keys(myObject).slice(0, 4);
+              console.log(popularTags);
+            })}
           <a href='#top' class='tag-pill tag-default'>
             programming
           </a>
           <a href='#top' class='tag-pill tag-default'>
-            javascript
-          </a>
-          <a href='#top' class='tag-pill tag-default'>
-            emberjs
-          </a>
-          <a href='#top' class='tag-pill tag-default'>
-            angularjs
-          </a>
-          <a href='#top' class='tag-pill tag-default'>
-            react
-          </a>
-          <a href='#top' class='tag-pill tag-default'>
-            mean
-          </a>
-          <a href='#top' class='tag-pill tag-default'>
-            node
-          </a>
-          <a href='#top' class='tag-pill tag-default'>
-            rails
+            programming
           </a>
         </div>
       </div>
@@ -37,4 +40,15 @@ const PopularTages = props => {
   );
 };
 
-export default PopularTages;
+const mapStateToProps = state => {
+  return { ...state };
+};
+
+const mapDismatchToProps = dispatch => {
+  return {};
+};
+
+export const PopularTages = connect(
+  mapStateToProps,
+  mapDismatchToProps
+)(InternalPopularTages);
