@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 
 const InternalPopularTages = props => {
-  const [popularTags, setPopularTags] = useState(["第一名", "第二名"]);
   const tempTagList = [];
 
   const reducer = (allElements, element) => {
@@ -11,42 +10,36 @@ const InternalPopularTages = props => {
     return allElements;
   };
 
-  console.log(props.articleLibrary);
-  
+  const PopularTagesCounter = () => {
+    // 数据输入进来
+    if(props.articleLibrary){
+      props.articleLibrary.forEach(article => {
+        console.log(article.tagList);
+        if (article.tagList.length !== 0)
+          article.tagList.forEach(item => {
+            tempTagList.push(item);
+          });
+      });
+    }
+       
+    // 数据统计，显示前五
+    const myObject = tempTagList.reduce(reducer, {});
+    return Object.keys(myObject).slice(0, 5);
+  };
+
   return (
     <div class='col-md-3'>
       <div class='sidebar'>
         <p>Popular Tags</p>
 
         <div class='tag-list'>
-          {
-          popularTags.map((popular)=>{
-
-              //数据变换
-              props.articleLibrary && props.articleLibrary.forEach(article => {
-                  console.log(article.tagList)
-                  if (article.tagList.length !== 0) 
-                    article.tagList.forEach(item => {
-                      tempTagList.push(item);
-                      console.log(tempTagList)
-                    });  
-                })
-              
-
-              // 数据统计，显示前五
-              const myObject = tempTagList.reduce(reducer, {});
-              console.log(Object.keys(myObject).slice(0, 3));
-              
-              //循环渲染
-              Object.keys(myObject).slice(0, 3).map((p)=>{ 
-                return(
-                  <a href='#top' class='tag-pill tag-default'>
-                    {p}
-                  </a>
-                )
-              })
+          {PopularTagesCounter().map(tag => {
+            return (
+              <a href='#top' class='tag-pill tag-default'>
+                {tag}
+              </a>
+            );
           })}
-
         </div>
       </div>
     </div>

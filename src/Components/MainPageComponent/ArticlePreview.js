@@ -1,51 +1,69 @@
 import React from "react";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
-
+import ArticleDetails from "./ArticleDetails";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  // Redirect
+} from "react-router-dom";
 
 const InternalArticlePreview = props => {
-
   return (
-    <div class='col-md-9 col-sm-12'>
-      <div class='feed-toggle'>
-        <ul class='nav nav-pills outline-active'>
-          <li class='nav-item'>
-            <a class='nav-link active' href='#top'>
-              Global Feed
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      {props.articleLibrary &&
-        props.articleLibrary.map((article, index) => {
-          return (
-            <div class='article-preview' key={index}>
-              <div class='article-meta'>
-                <a href='profile.html'>
-                  <img class='author-image' src={article.author.image} alt='' />
-                </a>
-                <div class='info'>
-                  <a href='#top' class='author'>
-                    {article.author.username}
-                  </a>
-                  <span class='date'>
-                    {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
-                  </span>
-                </div>
-                <button class='btn btn-outline-primary btn-sm pull-xs-right'>
-                  <i class='ion-heart'></i> {article.favoritesCount}
-                </button>
-              </div>
-              <a href='#top' class='preview-link'>
-                <h1>{article.title}</h1>
-                <p>{article.description}</p>
-                <span>Read more...</span>
+    <Router>
+      <div class='col-md-9 col-sm-12'>
+        <div class='feed-toggle'>
+          <ul class='nav nav-pills outline-active'>
+            <li class='nav-item'>
+              <a class='nav-link active' href='#top'>
+                Global Feed
               </a>
-            </div>
-          );
-        })}
-    </div>
+            </li>
+          </ul>
+        </div>
+
+        {props.articleLibrary &&
+          props.articleLibrary.map((article, index) => {
+            return (
+              <div class='article-preview' key={index}>
+                <div class='article-meta'>
+                  <a href='profile.html'>
+                    <img
+                      class='author-image'
+                      src={article.author.image}
+                      alt=''
+                    />
+                  </a>
+                  <div class='info'>
+                    <a href='#top' class='author'>
+                      {article.author.username}
+                    </a>
+                    <span class='date'>
+                      {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
+                    </span>
+                  </div>
+                  <button class='btn btn-outline-primary btn-sm pull-xs-right'>
+                    <i class='ion-heart'></i> {article.favoritesCount}
+                  </button>
+                </div>
+                <Link
+                  class='nav-link preview-link article-detail' to='/article-detail'>
+                  <h1>{article.title}</h1>
+                  <p>{article.description}</p>
+                  <span>Read more...</span>
+                </Link>
+              </div>
+            );
+          })}
+      </div>
+      <Switch>
+          <Route exact path='/article-detail'>
+            <ArticleDetails/>
+          </Route>
+      </Switch>
+    </Router>
   );
 };
 

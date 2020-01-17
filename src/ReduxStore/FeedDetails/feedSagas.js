@@ -13,7 +13,7 @@ const loadInitialData = function*() {
 };
 
 const fetchData = () => {
-    return axios.get("https://conduit.productionready.io/api/articles?limit=200&offset=110");
+    return axios.get("https://conduit.productionready.io/api/articles?limit=50&offset=10");
     // 要替换axios@@@@@@
     
     //   const Http = new XMLHttpRequest();

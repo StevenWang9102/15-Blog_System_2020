@@ -8,6 +8,7 @@ import { loadInitialData } from "./ReduxStore/FeedDetails/feedActions";
 const InternalApp = props => {
   useEffect(() => {
     props.loadInitialData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
