@@ -1,23 +1,16 @@
-import React from "react";
-import { connect } from "react-redux";
-import dateFormat from "dateformat";
-import ArticleDetails from "./ArticleDetails";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  // Redirect
-} from "react-router-dom";
+import React from 'react';
+import { connect } from 'react-redux';
+import dateFormat from 'dateformat';
+import { Link } from 'react-router-dom';
 
 const InternalArticlePreview = props => {
   return (
-    <Router>
-      <div class='col-md-9 col-sm-12'>
-        <div class='feed-toggle'>
-          <ul class='nav nav-pills outline-active'>
-            <li class='nav-item'>
-              <a class='nav-link active' href='#top'>
+
+      <div className="col-md-9 col-sm-12">
+        <div className="feed-toggle">
+          <ul className="nav nav-pills outline-active">
+            <li className="nav-item">
+              <a className="nav-link active" href="#top">
                 Global Feed
               </a>
             </li>
@@ -27,29 +20,29 @@ const InternalArticlePreview = props => {
         {props.articleLibrary &&
           props.articleLibrary.map((article, index) => {
             return (
-              <div class='article-preview' key={index}>
-                <div class='article-meta'>
-                  <a href='profile.html'>
+              <div className="article-preview" key={index}>
+                <div className="article-meta">
+                  <a href="profile.html">
                     <img
-                      class='author-image'
+                      className="author-image"
                       src={article.author.image}
-                      alt=''
+                      alt=""
                     />
                   </a>
-                  <div class='info'>
-                    <a href='#top' class='author'>
+                  <div className="info">
+                    <a href="#top" className="author">
                       {article.author.username}
                     </a>
-                    <span class='date'>
+                    <span className="date">
                       {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
                     </span>
                   </div>
-                  <button class='btn btn-outline-primary btn-sm pull-xs-right'>
-                    <i class='ion-heart'></i> {article.favoritesCount}
+                  <button className="btn btn-outline-primary btn-sm pull-xs-right">
+                    <i className="ion-heart"></i> {article.favoritesCount}
                   </button>
                 </div>
                 <Link
-                  class='nav-link preview-link article-detail' to='/article-detail'>
+                  className="nav-link preview-link article-detail" to="/article-detail">
                   <h1>{article.title}</h1>
                   <p>{article.description}</p>
                   <span>Read more...</span>
@@ -58,12 +51,8 @@ const InternalArticlePreview = props => {
             );
           })}
       </div>
-      <Switch>
-          <Route exact path='/article-detail'>
-            <ArticleDetails/>
-          </Route>
-      </Switch>
-    </Router>
+          
+
   );
 };
 

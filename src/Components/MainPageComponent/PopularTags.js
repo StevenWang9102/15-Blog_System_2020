@@ -1,5 +1,5 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 
 const InternalPopularTages = props => {
   const tempTagList = [];
@@ -28,14 +28,14 @@ const InternalPopularTages = props => {
   };
 
   return (
-    <div class='col-md-3'>
-      <div class='sidebar'>
+    <div className="col-md-3">
+      <div className="sidebar">
         <p>Popular Tags</p>
 
-        <div class='tag-list'>
+        <div className="tag-list">
           {PopularTagesCounter().map(tag => {
             return (
-              <a href='#top' class='tag-pill tag-default'>
+              <a href="#top" className="tag-pill tag-default">
                 {tag}
               </a>
             );

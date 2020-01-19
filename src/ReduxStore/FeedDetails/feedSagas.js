@@ -1,6 +1,6 @@
-import { takeLatest, put, call } from "redux-saga/effects";
-import { INITIALDATA_LOADED, articleDataLoaded } from "./feedActions";
-import axios from "axios";
+import { takeLatest, put, call } from 'redux-saga/effects';
+import { INITIALDATA_LOADED, articleDataLoaded } from './feedActions';
+import axios from 'axios';
 
 export const feedSaga = function*() {
   yield takeLatest(INITIALDATA_LOADED, loadInitialData);
