@@ -33,9 +33,9 @@ const InternalPopularTages = props => {
         <p>Popular Tags</p>
 
         <div className="tag-list">
-          {PopularTagesCounter().map(tag => {
+          {PopularTagesCounter().map((tag, index) => {
             return (
-              <a href="#top" className="tag-pill tag-default">
+              <a href="#top" className="tag-pill tag-default" key={index}>
                 {tag}
               </a>
             );
