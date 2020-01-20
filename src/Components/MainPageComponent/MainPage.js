@@ -1,14 +1,14 @@
-import React from 'react';
-import {ArticlePreview} from './ArticlePreview';
-import {PopularTages} from './PopularTags';
-import Banner from './Banner';
+import React from "react";
+import {ArticlePreview} from "./ArticlePreview";
+import PopularTages from "./PopularTags";
+import Banner from "./Banner";
 
 const MainPage = props => {
   return (
-    <div className="home-page">
+    <div class="home-page">
       <Banner />
-      <div className="container page">
-        <div className="row">
+      <div class='container page'>
+        <div class='row'>
           <ArticlePreview />
           <PopularTages />
         </div>
