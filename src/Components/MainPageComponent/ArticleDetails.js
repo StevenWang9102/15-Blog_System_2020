@@ -1,9 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 
 const InternalArticleDetails = props => {
-  console.log(props.currentArticleTitle);
-  console.log(props.articleLibrary);
 
   return (
     <div className='article-page'>
@@ -12,14 +10,14 @@ const InternalArticleDetails = props => {
 
 {/* 标题部分 */}
           {props.articleLibrary &&
-            props.articleLibrary.map(article => {
+            props.articleLibrary.map((article, index) => {
               if (article.title === props.currentArticleTitle) {
                 return (
-                  <div>
+                  <div key={index}>
                     <h1>{article.title}</h1>
                     <div className='article-meta'>
                       <a href='#top'>
-                        <img src={article.author.imge} alt='author' />
+                        <img className="author-image" src={article.author.imge} alt='au' />
                       </a>
                       <div className='info'>
                         <a href='#top' className='author'>
@@ -38,15 +36,13 @@ const InternalArticleDetails = props => {
 {/* 内容部分 */}
       <div className='container page'>
         <div className='row article-content'>
-          <div className='col-md-12'>
-            <p>
+          <div className='col-md-12 article-detail'>
               {props.articleLibrary &&
-                props.articleLibrary.map(article => {
+                props.articleLibrary.map((article, index) => {
                   if (article.title === props.currentArticleTitle) {
-                    return <p> {article.body} </p>;
-                  }
+                    return <div key={index}> {article.body} </div>;
+                  } else return <div> </div>
                 })}
-            </p>
           </div>
         </div>
         <hr/>

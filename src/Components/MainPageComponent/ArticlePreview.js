@@ -47,15 +47,14 @@ const InternalArticlePreview = props => {
                 className='nav-link preview-link article-detail'
                 to='/article-detail'>
                 <h1
-                  onClick={()=> {
-                    props.onArticleClick(article.title);
-                  }}
-                >
+                  onClick={() => {
+                    props.onArticleClick(article.title, article.slug);                    
+                  }}>
                   {article.title}
                 </h1>
+                <p>{article.description}</p>
+                <span>Read more...</span>
               </Link>
-              <p>{article.description}</p>
-              <span>Read more...</span>
             </div>
           );
         })}
@@ -69,7 +68,7 @@ const mapStateToProps = state => {
 
 const mapDismatchToProps = dispatch => {
   return {
-    onArticleClick: title => dispatch(articleTitleClicked(title))
+    onArticleClick: (title, slug) => dispatch(articleTitleClicked(title, slug))
   };
 };
 

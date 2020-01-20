@@ -16,7 +16,7 @@ export const tagsDataLoaded = (tagsData) =>{
     return { type: TAGS_DATA_LOADED, tagsData};
 }
 
-export const articleTitleClicked = (title) => {
-    return { type: ARTICLE_TITLE_CLICKED, title };
+export const articleTitleClicked = (title, slug) => {
+    return { type: ARTICLE_TITLE_CLICKED, title, slug };
 }
 

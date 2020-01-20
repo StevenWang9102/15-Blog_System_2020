@@ -21,6 +21,10 @@
   color: #09d3ac;
 }
 
+body{
+  font-family: source sans pro, sans-serif;
+}
+
 .home-page .container{
   text-align: left;
 }
@@ -34,4 +38,20 @@
 .article-detail
 {
   width: 100%;
+  text-align: left;
+}
+
+.banner
+{
+  text-align: left;
+}
+
+.article-meta .author-image
+{
+  height: 30px;
+  width: 30px;
+}
+
+p{
+  text-align: left;
 }

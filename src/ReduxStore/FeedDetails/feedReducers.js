@@ -13,7 +13,7 @@ export const feedReducer = (state = initialState, action) => {
       return { ...state, popularTags: action.tagsData };
 
     case ARTICLE_TITLE_CLICKED:
-      return { ...state, currentArticleTitle: action.title };
+      return { ...state, currentArticleTitle: action.title, currentArticleSlug: action.slug };
     
       default:
       return state;
