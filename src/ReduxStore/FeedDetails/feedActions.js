@@ -5,7 +5,7 @@ export const loadInitialData = () => {
     return { type: INITIALDATA_LOADED };
 };
 
-export const articleDataLoaded = (articleInitData) =>{
-    return { type: ARTICLE_DATA_LOADED, articleInitData};
+export const articleDataLoaded = (articleData) =>{
+    return { type: ARTICLE_DATA_LOADED, articleData};
 }
 
