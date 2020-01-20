@@ -4,8 +4,9 @@ import dateFormat from 'dateformat';
 import { Link } from 'react-router-dom';
 
 const InternalArticlePreview = props => {
+  console.log(props.articleLibrary);
+  
   return (
-
       <div className="col-md-9 col-sm-12">
         <div className="feed-toggle">
           <ul className="nav nav-pills outline-active">
