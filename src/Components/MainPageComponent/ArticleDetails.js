@@ -1,7 +1,9 @@
 import React from 'react';
 
 export const ArticleDetails = props => {
-    
+  
+  console.log(props.currentArticleTitle);
+  
   return (
     <div className="article-page">
       <div className="banner">

@@ -1,6 +1,7 @@
 export const INITIALDATA_LOADED = Symbol('INITIALDATA_LOADED');
 export const ARTICLE_DATA_LOADED = Symbol('ARTICLE_DATA_LOADED')
 export const TAGS_DATA_LOADED = Symbol('TAGS_DATA_LOADED')
+export const ARTICLE_TITLE_CLICKED = Symbol('ARTICLE_TITLE_CLICKED')
 
 
 export const loadInitialData = () => {
@@ -13,5 +14,10 @@ export const articleDataLoaded = (articleData) =>{
 
 export const tagsDataLoaded = (tagsData) =>{
     return { type: TAGS_DATA_LOADED, tagsData};
+}
+
+//
+export const articleTitleClicked = (title) => {
+    return { type: ARTICLE_TITLE_CLICKED, title };
 }
 
