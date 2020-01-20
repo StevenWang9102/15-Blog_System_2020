@@ -1,8 +1,7 @@
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
 
 const InternalfetchInitCommentData = (props) => {
-    console.log(props.currentArticleSlug);
     
     return fetch (`https://conduit.productionready.io/api/articles/:slug?=${props.currentArticleSlug}/comments`)
       .then(response => {

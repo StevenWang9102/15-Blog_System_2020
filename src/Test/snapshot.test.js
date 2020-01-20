@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { MainPage } from '../Components/MainPageComponent/MainPage'
 
-it('renders main page correctly', () => {
+it("renders main page correctly", () => {
   const tree = renderer
     .create(<MainPage/>)
     .toJSON();
