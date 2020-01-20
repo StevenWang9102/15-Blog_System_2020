@@ -1,9 +1,9 @@
 import React from 'react';
 import {ArticlePreview} from './ArticlePreview';
 import {PopularTages} from './PopularTags';
-import Banner from './Banner';
+import {Banner} from './Banner';
 
-const MainPage = props => {
+export const MainPage = props => {
   return (
     <div className="home-page">
       <Banner />
@@ -17,4 +17,3 @@ const MainPage = props => {
   );
 };
 
-export default MainPage;

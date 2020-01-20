@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ArticleDetails = props => {
+export const ArticleDetails = props => {
     
   return (
     <div className="article-page">
@@ -9,11 +9,11 @@ const ArticleDetails = props => {
           <h1>How to build webapps that scale</h1>
 
           <div className="article-meta">
-            <a href="">
+            <a href="#top">
               <img src="http://i.imgur.com/Qr71crq.jpg" alt="author"/>
             </a>
             <div className="info">
-              <a href="" className="author">
+              <a href="#top" className="author">
                 name: Eric Simons
               </a>
               <span className="date">January 20th</span>
@@ -61,7 +61,7 @@ const ArticleDetails = props => {
                 </p>
               </div>
               <div className="card-footer">
-                <a href="" className="comment-author">
+                <a href="#top" className="comment-author">
                   <img
                     src="http://i.imgur.com/Qr71crq.jpg"
                     className="comment-author-img"
@@ -70,7 +70,7 @@ const ArticleDetails = props => {
                   />
                 </a>
                 &nbsp;
-                <a href="" className="comment-author">
+                <a href="#top" className="comment-author">
                   Jacob Schmidt
                 </a>
                 <span className="date-posted">Dec 29th</span>
@@ -87,4 +87,3 @@ const ArticleDetails = props => {
   );
 };
 
-export default ArticleDetails;

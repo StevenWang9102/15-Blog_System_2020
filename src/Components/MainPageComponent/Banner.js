@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Banner = props => {
+export const Banner = props => {
   return (
     <div className="home-page">
       <div className="banner">
@@ -12,5 +12,3 @@ const Banner = props => {
     </div>
   );
 };
-
-export default Banner;

@@ -1,8 +1,8 @@
 import React from 'react';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
-import MainPage from '../MainPageComponent/MainPage';
-import ArticleDetails from '../MainPageComponent/ArticleDetails';
+import {SignIn} from './SignIn';
+import {SignUp} from './SignUp';
+import {MainPage} from '../MainPageComponent/MainPage';
+import {ArticleDetails} from '../MainPageComponent/ArticleDetails';
 
 import {
   BrowserRouter as Router,
@@ -12,7 +12,7 @@ import {
   Redirect
 } from 'react-router-dom';
 
-function Navbar(props) {
+export const Navbar = (props) => {
   return (
     <Router>
       <div>
@@ -61,5 +61,3 @@ function Navbar(props) {
     </Router>
   );
 }
-
-export default Navbar;
