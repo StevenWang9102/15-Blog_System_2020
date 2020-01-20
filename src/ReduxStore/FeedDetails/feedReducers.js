@@ -1,4 +1,4 @@
-import { ARTICLE_DATA_LOADED } from "./feedActions";
+import { ARTICLE_DATA_LOADED } from './feedActions';
 
 const initialState = {
   // Blank for now
