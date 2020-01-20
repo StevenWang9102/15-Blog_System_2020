@@ -44,18 +44,18 @@ const InternalArticlePreview = props => {
                 </button>
               </div>
               <Link
-                value = {article.title}
-                onClick={event => {
-                  props.onArticleClick(article.title);
-                  console.log(event.target.value);
-                }}
-                // 传递文章的title给store
                 className='nav-link preview-link article-detail'
                 to='/article-detail'>
-                <h1>{article.title}</h1>
-                <p>{article.description}</p>
-                <span>Read more...</span>
+                <h1
+                  onClick={()=> {
+                    props.onArticleClick(article.title);
+                  }}
+                >
+                  {article.title}
+                </h1>
               </Link>
+              <p>{article.description}</p>
+              <span>Read more...</span>
             </div>
           );
         })}

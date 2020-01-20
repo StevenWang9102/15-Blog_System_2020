@@ -12,6 +12,11 @@ const loadInitialData = function*() {
 
   const initTagData = yield call(fetchInitTagesData);
   yield put(tagsDataLoaded(initTagData.data["tags"]));    
+
+  const initCommentData = yield call(fetchInitCommentData);
+  console.log(initCommentData);
+  
+  yield put(tagsDataLoaded(initTagData.data["tags"]));
 };
 
 const fetchInitArticleData = () => {
@@ -28,4 +33,8 @@ const fetchInitArticleData = () => {
 
 const fetchInitTagesData = () => {
   return axios.get("https://conduit.productionready.io/api/tags");
+};
+
+const fetchInitCommentData = () => {
+  return axios.get("https://conduit.productionready.io/api/articles/:slug/comments");
 };

@@ -1,10 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const InternalPopularTages = props => {
-  
-  console.log(props.popularTags);
-  
+const InternalPopularTages = props => {  
   return (
     <div className="col-md-3">
       <div className="sidebar">

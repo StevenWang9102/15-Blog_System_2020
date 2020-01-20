@@ -1,84 +1,99 @@
-import React from 'react';
+import React from "react";
+import { connect } from "react-redux";
 
-export const ArticleDetails = props => {
-  
+const InternalArticleDetails = props => {
   console.log(props.currentArticleTitle);
-  
-  return (
-    <div className="article-page">
-      <div className="banner">
-        <div className="container">
-          <h1>How to build webapps that scale</h1>
+  console.log(props.articleLibrary);
 
-          <div className="article-meta">
-            <a href="#top">
-              <img src="http://i.imgur.com/Qr71crq.jpg" alt="author"/>
-            </a>
-            <div className="info">
-              <a href="#top" className="author">
-                name: Eric Simons
-              </a>
-              <span className="date">January 20th</span>
-            </div>
-          </div>
+  return (
+    <div className='article-page'>
+      <div className='banner'>
+        <div className='container'>
+
+{/* 标题部分 */}
+          {props.articleLibrary &&
+            props.articleLibrary.map(article => {
+              if (article.title === props.currentArticleTitle) {
+                return (
+                  <div>
+                    <h1>{article.title}</h1>
+                    <div className='article-meta'>
+                      <a href='#top'>
+                        <img src={article.author.imge} alt='author' />
+                      </a>
+                      <div className='info'>
+                        <a href='#top' className='author'>
+                          {article.author.username}
+                        </a>
+                        <span className='date'>{article.author.updatedAt}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              } else return <div> </div>;
+            })}
         </div>
       </div>
 
-      <div className="container page">
-        <div className="row article-content">
-          <div className="col-md-12">
+{/* 内容部分 */}
+      <div className='container page'>
+        <div className='row article-content'>
+          <div className='col-md-12'>
             <p>
-              Web development technologies have evolved at an incredible clip
-              over the past few years.
+              {props.articleLibrary &&
+                props.articleLibrary.map(article => {
+                  if (article.title === props.currentArticleTitle) {
+                    return <p> {article.body} </p>;
+                  }
+                })}
             </p>
           </div>
         </div>
         <hr/>
 
-        <div className="row">
-          <div className="col-xs-12 col-md-8 offset-md-2">
-            <form className="card comment-form">
-              <div className="card-block">
+{/* 评论部分 */}
+        <div className='row'>
+          <div className='col-xs-12 col-md-8 offset-md-2'>
+            <form className='card comment-form'>
+              <div className='card-block'>
                 <textarea
-                  className="form-control"
-                  placeholder="Write a comment..."
-                  rows="3"></textarea>
+                  className='form-control'
+                  placeholder='Write a comment...'
+                  rows='3'></textarea>
               </div>
-              <div className="card-footer">
+              <div className='card-footer'>
                 <img
-                  src="http://i.imgur.com/Qr71crq.jpg"
-                  className="comment-author-img"
-                  alt="author"
+                  src='http://i.imgur.com/Qr71crq.jpg'
+                  className='comment-author-img'
+                  alt='author'
                 />
-                <button className="btn btn-sm btn-primary">Post Comment</button>
+                <button className='btn btn-sm btn-primary'>Post Comment</button>
               </div>
             </form>
 
-
-            <div className="card">
-              <div className="card-block">
-                <p className="card-text">
+            <div className='card'>
+              <div className='card-block'>
+                <p className='card-text'>
                   With supporting text below as a natural lead-in to additional
                   content.
                 </p>
               </div>
-              <div className="card-footer">
-                <a href="#top" className="comment-author">
+              <div className='card-footer'>
+                <a href='#top' className='comment-author'>
                   <img
-                    src="http://i.imgur.com/Qr71crq.jpg"
-                    className="comment-author-img"
-                                      alt="author"
-
+                    src='http://i.imgur.com/Qr71crq.jpg'
+                    className='comment-author-img'
+                    alt='author'
                   />
                 </a>
                 &nbsp;
-                <a href="#top" className="comment-author">
+                <a href='#top' className='comment-author'>
                   Jacob Schmidt
                 </a>
-                <span className="date-posted">Dec 29th</span>
-                <span className="mod-options">
-                  <i className="ion-edit"></i>
-                  <i className="ion-trash-a"></i>
+                <span className='date-posted'>Dec 29th</span>
+                <span className='mod-options'>
+                  <i className='ion-edit'></i>
+                  <i className='ion-trash-a'></i>
                 </span>
               </div>
             </div>
@@ -89,3 +104,15 @@ export const ArticleDetails = props => {
   );
 };
 
+const mapStateToProps = state => {
+  return { ...state };
+};
+
+const mapDismatchToProps = dispatch => {
+  return {};
+};
+
+export const ArticleDetails = connect(
+  mapStateToProps,
+  mapDismatchToProps
+)(InternalArticleDetails);
