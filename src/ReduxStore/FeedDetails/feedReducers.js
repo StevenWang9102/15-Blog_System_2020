@@ -7,6 +7,7 @@ import {
 
 const initialState = {
   // Blank for now
+  currentComments:{}
 };
 
 export const feedReducer = (state = initialState, action) => {
