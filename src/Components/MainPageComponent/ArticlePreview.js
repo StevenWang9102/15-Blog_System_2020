@@ -44,7 +44,8 @@ const InternalArticlePreview = props => {
               </div>
               <Link
                 className="nav-link preview-link article-detail"
-                to="/article-detail">
+                to= { "/article-detail/" + article.slug}
+              >
                 <h1
                   onClick={() => {
                     props.onArticleClick(article.title, article.slug);                    

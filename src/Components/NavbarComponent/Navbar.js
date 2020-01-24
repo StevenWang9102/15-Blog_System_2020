@@ -53,7 +53,7 @@ export const Navbar = (props) => {
           <Route exact path="/sign_up">
             <SignUp />
           </Route>
-          <Route exact path="/article-detail">
+          <Route path="/article-detail/:slug">
             <ArticleDetails/>
           </Route>
         </Switch>
