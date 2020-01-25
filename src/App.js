@@ -1,35 +1,32 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import {Navbar} from './Components/NavbarComponent/Navbar';
 import './App.css';
-import Nav from './Components/Nav.js'
-import { loadInitialData } from "./ReduxStore/FeedDetails/feedActions";
+import { loadInitialData } from './ReduxStore/FeedDetails/feedActions';
 
-
-// import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-
-const App = (props) => {
+const InternalApp = props => {
   useEffect(() => {
     props.loadInitialData();
-  }, [props]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-      <div className="App">
-        <Nav/>
-        {/* <MainPage/> */}
-      </div>
+    <div className="App">
+      <Navbar />
+    </div>
   );
-}
+};
 
-const mapStateToProps = ({ saveBookStore, usersBooksChanged, setStudentName }) => {
-  return { saveBookStore, usersBooksChanged, setStudentName };
-}; //@@@@@@@@@@@@@此处不对劲
+const mapStateToProps = state => {
+  return { ...state };
+};
 
 const mapDismatchToProps = dispatch => {
   return {
     loadInitialData: () => {
       dispatch(loadInitialData());
-    },
+    }
   };
 };
 
-export default connect(mapStateToProps, mapDismatchToProps)(App);
+export const App = connect(mapStateToProps, mapDismatchToProps)(InternalApp);
