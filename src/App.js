@@ -21,7 +21,7 @@ const mapStateToProps = state => {
   return { ...state };
 };
 
-const mapDismatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     loadInitialData: () => {
       dispatch(loadInitialData());
@@ -29,4 +29,4 @@ const mapDismatchToProps = dispatch => {
   };
 };
 
-export const App = connect(mapStateToProps, mapDismatchToProps)(InternalApp);
+export const App = connect(mapStateToProps, mapDispatchToProps)(InternalApp);

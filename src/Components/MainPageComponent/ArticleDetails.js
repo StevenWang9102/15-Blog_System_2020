@@ -73,7 +73,7 @@ const mapStateToProps = ({currentArticleDetails }) => {
   return {currentArticleDetails };
 };
 
-const mapDismatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     loadInitArticleDetail: slug => dispatch(loadInitArticleDetail(slug))
   };
@@ -81,5 +81,5 @@ const mapDismatchToProps = dispatch => {
 
 export const ArticleDetails = connect(
   mapStateToProps,
-  mapDismatchToProps
+  mapDispatchToProps
 )(InternalArticleDetails);

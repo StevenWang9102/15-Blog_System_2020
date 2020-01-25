@@ -4,7 +4,9 @@ import {PopularTages} from './PopularTags';
 import {Banner} from './Banner';
 
 export const MainPage = props => {
-  return (
+
+
+return (
     <div className="home-page">
       <Banner />
       <div className="container page">

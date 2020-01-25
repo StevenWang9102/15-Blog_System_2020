@@ -2,8 +2,10 @@ import {
   ARTICLE_DATA_LOADED,
   TAGS_DATA_LOADED,
   ARTICLE_TITLE_CLICKED,
+  POPULAR_TAG_DISPLAYED,
   ARTICLE_COMMENTS_LOADED,
-  ARTICLE_CONTENT_LOADED
+  ARTICLE_CONTENT_LOADED,
+  TAG_RELATED_ARTICLE_LOADED
 } from "./feedActions";
 
 const initialState = {
@@ -34,6 +36,12 @@ export const feedReducer = (state = initialState, action) => {
 
     case ARTICLE_COMMENTS_LOADED:
       return { ...state, currentComments: action.initCommentData };
+
+    case TAG_RELATED_ARTICLE_LOADED:
+      return { ...state, tagRelatedArticles: action.tagRelatedArticle, isDisplay: action.isDisplay };
+
+    case POPULAR_TAG_DISPLAYED:
+      return { ...state, isDisplay: action.tagName };
 
     default:
       return state;

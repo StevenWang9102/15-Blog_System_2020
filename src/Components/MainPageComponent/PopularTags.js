@@ -1,21 +1,38 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { popularTagClicked, popularTagIsDiplayed } from '../../ReduxStore/FeedDetails/feedActions';
 
-const InternalPopularTages = props => {  
+
+const InternalPopularTages = props => {
+  // 在这个页面
+  // 加入点击事件
+  // 点击后触发请求
+  //
+
   return (
-    <div className="col-md-3">
-      <div className="sidebar">
+    <div className='col-md-3'>
+      <div className='sidebar'>
         <p>Popular Tags</p>
 
-        <div className="tag-list">
-          {props.popularTags && props.popularTags.map((tag, index) => {
-            return (
-              <a href="#top" className="tag-pill tag-default" key={index}>
-                {tag}
-              </a>
-            );
-          })}
+        <div className='tag-list'>
+          {props.popularTags &&
+            props.popularTags.map((tagName, index) => {
+              return (
+                <a 
+                  href='#top' 
+                  className='tag-pill tag-default' 
+                  key={index}
+                  value = {tagName}
+                  onClick = {()=> {
+                    props.onPopularTagClicked(tagName)
+                    props.onPopularTagIsDiplayed(tagName)
+                  }}
+                  >
+                  {tagName}
+                </a>
+              );
+            })}
         </div>
       </div>
     </div>
@@ -23,13 +40,19 @@ const InternalPopularTages = props => {
 };
 
 InternalPopularTages.propTypes = {
-  popularTags: PropTypes.array.isRequired,
-
+  popularTags: PropTypes.array.isRequired
 };
 
-const mapStateToProps = ({popularTags}) => {
-  return {popularTags};
+const mapStateToProps = ({ popularTags }) => {
+  return { popularTags };
 };
 
-export const PopularTages = connect(
-  mapStateToProps)(InternalPopularTages);
+const mapDispatchToProps = dispatch => {
+  return {
+    onPopularTagClicked: (tagName) => dispatch(popularTagClicked(tagName)),
+    onPopularTagIsDiplayed: (tagName) => dispatch(popularTagIsDiplayed(tagName))
+
+  };
+};
+
+export const PopularTages = connect(mapStateToProps, mapDispatchToProps)(InternalPopularTages);
