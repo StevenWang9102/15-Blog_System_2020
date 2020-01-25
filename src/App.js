@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import "./App.css";
-import Navbar from "./Components/NavbarComponent/Navbar";
-
-import { loadInitialData } from "./ReduxStore/FeedDetails/feedActions";
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import {Navbar} from './Components/NavbarComponent/Navbar';
+import './App.css';
+import { loadInitialData } from './ReduxStore/FeedDetails/feedActions';
 
 const InternalApp = props => {
   useEffect(() => {
     props.loadInitialData();
-  }, [props]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <div className='App'>
+    <div className="App">
       <Navbar />
     </div>
   );
