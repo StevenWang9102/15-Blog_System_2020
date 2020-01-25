@@ -2,12 +2,18 @@ import {
   ARTICLE_DATA_LOADED,
   TAGS_DATA_LOADED,
   ARTICLE_TITLE_CLICKED,
-  ARTICLE_COMMENTS_LOADED
+  ARTICLE_COMMENTS_LOADED,
+  ARTICLE_CONTENT_LOADED
 } from "./feedActions";
 
 const initialState = {
   // Blank for now
-  currentComments:{}
+  currentComments:{},
+  currentArticleDetails:{},
+  articleLibrary:[],
+  popularTags: [],
+  currentArticleTitle: "",
+  currentArticleSlug: ""
 };
 
 export const feedReducer = (state = initialState, action) => {
@@ -24,7 +30,9 @@ export const feedReducer = (state = initialState, action) => {
         currentArticleTitle: action.title,
         currentArticleSlug: action.slug
       };
-    //
+    case ARTICLE_CONTENT_LOADED:
+      return { ...state, currentArticleDetails: action.initArticleData };
+
     case ARTICLE_COMMENTS_LOADED:
       return { ...state, currentComments: action.initCommentData };
 

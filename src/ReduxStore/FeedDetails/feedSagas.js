@@ -3,6 +3,7 @@ import {
   INITIALDATA_LOADED,
   INIT_ARTICLE_COMMENT_GET,
   articleDataLoaded,
+  articleContentLoaded,
   articleCommentsLoaded,
   tagsDataLoaded
 } from "./feedActions";
@@ -10,59 +11,34 @@ import {
 export const feedSaga = function*() {
   yield takeLatest(INITIALDATA_LOADED, function*() {
     // load all articles
-    const initArticData = yield call(fetchInitArticleData);
+    const initArticData = yield call(
+      fetchInitialData,
+      "/articles?limit=50&offset=10"
+    );
+
     yield put(articleDataLoaded(initArticData["articles"]));
     // load popular tages
-    const initTagData = yield call(fetchInitTagesData);
+    const initTagData = yield call(fetchInitialData, "/tags");
     yield put(tagsDataLoaded(initTagData["tags"]));
   });
-  yield takeLatest(INIT_ARTICLE_COMMENT_GET, function*(slug) {    
-    const initCommentData = yield call(fetchInitCommentData, slug.slug);
-    console.log(initCommentData);
+  yield takeLatest(INIT_ARTICLE_COMMENT_GET, function*(slug) {
+    // 文章请求
+    const initArticleData = yield call(fetchInitialData, `/articles/${slug.slug}`);
+    yield put(articleContentLoaded(initArticleData.article));
+    
+    // 评论请求
+    const initCommentData = yield call(fetchInitialData, `/articles/${slug.slug}/comments`);
     yield put(articleCommentsLoaded(initCommentData));
-    // 这句啥意思
   });
 };
 
-const fetchInitCommentData = slug => {  
-  return fetch(
-    `https://conduit.productionready.io/api/articles/${slug}/comments`
-  )
+const fetchInitialData = url => {
+  return fetch("https://conduit.productionready.io/api" + url)
     .then(response => {
       if (response.ok) {
         return response.json();
       } else {
-        console.error("get article comments failed");
+        console.error("--- get data failed ---");
       }
     })
-};
-
-const fetchInitArticleData = () => {
-  return fetch(
-    "https://conduit.productionready.io/api/articles?limit=50&offset=10"
-  )
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("get data failed");
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    });
-};
-
-const fetchInitTagesData = () => {
-  return fetch("https://conduit.productionready.io/api/tags")
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("get popular tags failed");
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    });
 };

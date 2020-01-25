@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import dateFormat from 'dateformat';
 import { Link } from 'react-router-dom';
@@ -18,8 +19,7 @@ const InternalArticlePreview = props => {
         </ul>
       </div>
 
-      {props.articleLibrary &&
-        props.articleLibrary.map((article, index) => {
+      {props.articleLibrary.map((article, index) => {
           return (
             <div className="article-preview" key={index}>
               <div className="article-meta">
@@ -62,8 +62,13 @@ const InternalArticlePreview = props => {
   );
 };
 
-const mapStateToProps = state => {
-  return { ...state };
+InternalArticlePreview.propTypes = {
+  articleLibrary: PropTypes.array.isRequired,
+  onArticleClick: PropTypes.func
+};
+
+const mapStateToProps = ({articleLibrary, onArticleClick}) => {
+  return {articleLibrary, onArticleClick};
 };
 
 const mapDismatchToProps = dispatch => {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 const InternalPopularTages = props => {  
@@ -21,15 +22,14 @@ const InternalPopularTages = props => {
   );
 };
 
-const mapStateToProps = state => {
-  return { ...state };
+InternalPopularTages.propTypes = {
+  popularTags: PropTypes.array.isRequired,
+
 };
 
-const mapDismatchToProps = dispatch => {
-  return {};
+const mapStateToProps = ({popularTags}) => {
+  return {popularTags};
 };
 
 export const PopularTages = connect(
-  mapStateToProps,
-  mapDismatchToProps
-)(InternalPopularTages);
+  mapStateToProps)(InternalPopularTages);
