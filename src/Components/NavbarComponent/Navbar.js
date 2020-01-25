@@ -1,8 +1,8 @@
-import React from 'react';
-import {SignIn} from './SignIn';
-import {SignUp} from './SignUp';
-import {MainPage} from '../MainPageComponent/MainPage';
-import {ArticleDetails} from '../MainPageComponent/ArticleDetails';
+import React from "react";
+import {SignIn} from "./SignIn";
+import {SignUp} from "./SignUp";
+import {MainPage} from "../MainPageComponent/MainPage";
+import {ArticleDetails} from "../MainPageComponent/ArticleDetails";
 
 import {
   BrowserRouter as Router,
@@ -10,7 +10,7 @@ import {
   Route,
   Link,
   Redirect
-} from 'react-router-dom';
+} from "react-router-dom";
 
 export const Navbar = (props) => {
   return (

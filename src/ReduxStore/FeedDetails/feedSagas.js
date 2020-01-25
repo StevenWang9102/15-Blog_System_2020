@@ -2,7 +2,6 @@ import { takeLatest, put, call } from "redux-saga/effects";
 import {
   INITIALDATA_LOADED,
   INIT_ARTICLE_COMMENT_GET,
-  ARTICLE_TITLE_CLICKED,
   POPULAR_TAG_CLICKED,
   articleDataLoaded,
   articleContentLoaded,
@@ -41,7 +40,6 @@ export const feedSaga = function*() {
 
   // 热门标签
   yield takeLatest(POPULAR_TAG_CLICKED, function*(tagName) {
-    console.log(tagName.tagName);
     const isDisplay = true
     const tagRelatedData = yield call(
       fetchInitialData,

@@ -6,17 +6,15 @@ import { Link } from "react-router-dom";
 import { articleTitleClicked } from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalArticlePreview = props => {
-  console.log(props.isDisplay);
-
   // 给一个标志: 只要props.tagRelatedArticles 不为空
   // if 点击popular tags
   // else 普通的
   return (
-    <div className='col-md-9 col-sm-12'>
-      <div className='feed-toggle display-inline'>
-        <ul className='nav nav-pills outline-active'>
-          <li className='nav-item'>
-            <a className='nav-link active' href='#top'>
+    <div className="col-md-9 col-sm-12">
+      <div className="feed-toggle display-inline">
+        <ul className="nav nav-pills outline-active">
+          <li className="nav-item">
+            <a className="nav-link active" href="#top">
               Global Feed
             </a>
           </li>
@@ -24,11 +22,11 @@ const InternalArticlePreview = props => {
       </div>
       
       {props.tagRelatedArticles && (
-        <div className='feed-toggle display-inline'>
-          <ul className='nav nav-pills outline-active'>
-            <li className='nav-item'>
-              <a className='nav-link active' href='#top'>
-                # 
+        <div className="feed-toggle display-inline">
+          <ul className="nav nav-pills outline-active">
+            <li className="nav-item">
+              <a className="nav-link active" href="#top">
+                # test
               </a>
             </li>
           </ul>
@@ -37,30 +35,30 @@ const InternalArticlePreview = props => {
 
       {props.articleLibrary.map((article, index) => {
         return (
-          <div className='article-preview' key={index}>
-            <div className='article-meta'>
-              <a href='profile.html'>
+          <div className="article-preview" key={index}>
+            <div className="article-meta">
+              <a href="profile.html">
                 <img
-                  className='author-image'
+                  className="author-image"
                   src={article.author.image}
-                  alt=''
+                  alt=""
                 />
               </a>
-              <div className='info'>
-                <a href='#top' className='author'>
+              <div className="info">
+                <a href="#top" className="author">
                   {article.author.username}
                 </a>
-                <span className='date'>
+                <span className="date">
                   {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
                 </span>
               </div>
-              <button className='btn btn-outline-primary btn-sm pull-xs-right'>
-                <i className='ion-heart'></i> {article.favoritesCount}
+              <button className="btn btn-outline-primary btn-sm pull-xs-right">
+                <i className="ion-heart"></i> {article.favoritesCount}
               </button>
             </div>
 
             <Link
-              className='nav-link preview-link article-detail'
+              className="nav-link preview-link article-detail"
               to={"/article-detail/" + article.slug}>
               <h1
                 onClick={() => {

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import {Navbar} from './Components/NavbarComponent/Navbar';
-import './App.css';
-import { loadInitialData } from './ReduxStore/FeedDetails/feedActions';
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import {Navbar} from "./Components/NavbarComponent/Navbar";
+import "./App.css";
+import { loadInitialData } from "./ReduxStore/FeedDetails/feedActions";
 
 const InternalApp = props => {
   useEffect(() => {

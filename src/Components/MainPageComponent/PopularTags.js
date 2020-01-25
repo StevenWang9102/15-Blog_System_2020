@@ -1,27 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { popularTagClicked, popularTagIsDiplayed } from '../../ReduxStore/FeedDetails/feedActions';
+import { popularTagClicked, popularTagIsDiplayed } from "../../ReduxStore/FeedDetails/feedActions";
 
 
 const InternalPopularTages = props => {
-  // 在这个页面
-  // 加入点击事件
-  // 点击后触发请求
-  //
-
   return (
-    <div className='col-md-3'>
-      <div className='sidebar'>
+    <div className="col-md-3">
+      <div className="sidebar">
         <p>Popular Tags</p>
 
-        <div className='tag-list'>
+        <div className="tag-list">
           {props.popularTags &&
             props.popularTags.map((tagName, index) => {
               return (
                 <a 
-                  href='#top' 
-                  className='tag-pill tag-default' 
+                  href="#top" 
+                  className="tag-pill tag-default" 
                   key={index}
                   value = {tagName}
                   onClick = {()=> {
