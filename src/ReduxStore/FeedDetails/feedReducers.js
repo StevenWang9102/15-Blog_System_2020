@@ -7,7 +7,6 @@ import {
 } from "./feedActions";
 
 const initialState = {
-  // Blank for now
   currentComments:{},
   currentArticleDetails:{},
   articleLibrary:[],

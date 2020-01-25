@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import dateFormat from "dateformat";
 import { loadInitArticleDetail } from "../../ReduxStore/FeedDetails/feedActions";
 import { useParams } from "react-router-dom";
+import {ArticleComments} from "./ArticleComments"
 
 const InternalArticleDetails = props => {
   const { slug } = useParams();
@@ -57,49 +58,19 @@ const InternalArticleDetails = props => {
         </div>
         <hr />
 
-        {/* 文章对应的评论部分 */}
-        <div className='row'>
-          <div className='col-xs-12 col-md-8 offset-md-2'>
-            <div className='card'>
-              <div className='card-block'>
-                <p className='card-text'>
-                  {props.currentComments.comments &&
-                    props.currentComments.comments.body}
-                </p>
-              </div>
+        <ArticleComments/>
 
-              {props.currentArticleDetails.author && (
-                <div className='card-footer'>
-                  <a href='#top' className='comment-author'>
-                    <img
-                      src={props.currentArticleDetails.author.image}
-                      className='comment-author-img'
-                      alt="au"
-                    />
-                  </a>
-                  <a href='#top' className='comment-author'>
-                    {props.currentArticleDetails.author.username}
-                  </a>
-                  <span className='date-posted'>
-                  {dateFormat(props.currentArticleDetails.updatedAt, "ddd mmm dd yyyy")}
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
 };
 
 InternalArticleDetails.propTypes = {
-  currentComments: PropTypes.object.isRequired,
   currentArticleDetails: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({currentArticleDetails,currentComments }) => {
-  return {currentArticleDetails,currentComments};
+const mapStateToProps = ({currentArticleDetails }) => {
+  return {currentArticleDetails };
 };
 
 const mapDismatchToProps = dispatch => {
