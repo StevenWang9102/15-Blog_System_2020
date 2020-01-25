@@ -1,40 +1,35 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const PopularTages = props => {
+const InternalPopularTages = props => {  
   return (
-    <div class='col-md-3'>
-      <div class='sidebar'>
+    <div className="col-md-3">
+      <div className="sidebar">
         <p>Popular Tags</p>
 
-        <div class='tag-list'>
-          <a href='#top' class='tag-pill tag-default'>
-            programming
-          </a>
-          <a href='#top' class='tag-pill tag-default'>
-            javascript
-          </a>
-          <a href='#top' class='tag-pill tag-default'>
-            emberjs
-          </a>
-          <a href='#top' class='tag-pill tag-default'>
-            angularjs
-          </a>
-          <a href='#top' class='tag-pill tag-default'>
-            react
-          </a>
-          <a href='#top' class='tag-pill tag-default'>
-            mean
-          </a>
-          <a href='#top' class='tag-pill tag-default'>
-            node
-          </a>
-          <a href='#top' class='tag-pill tag-default'>
-            rails
-          </a>
+        <div className="tag-list">
+          {props.popularTags && props.popularTags.map((tag, index) => {
+            return (
+              <a href="#top" className="tag-pill tag-default" key={index}>
+                {tag}
+              </a>
+            );
+          })}
         </div>
       </div>
     </div>
   );
 };
 
-export default PopularTages;
+InternalPopularTages.propTypes = {
+  popularTags: PropTypes.array.isRequired,
+
+};
+
+const mapStateToProps = ({popularTags}) => {
+  return {popularTags};
+};
+
+export const PopularTages = connect(
+  mapStateToProps)(InternalPopularTages);
