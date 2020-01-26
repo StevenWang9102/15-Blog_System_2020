@@ -1,13 +1,11 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
 import { Link } from "react-router-dom";
-import { articleTitleClicked } from "../../ReduxStore/FeedDetails/feedActions";
+import { articleTitleClicked, globeFeedClicked} from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalArticlePreview = props => {
-  const [tagRelatedArticles, setTagRelatedArticles] = useState(props.tagRelatedArticles)
-  const [currentTagName, setCurrentTagName] = useState(props.tagRelatedArticles)
 
   console.log(props.tagRelatedArticles);
   console.log(props.currentTagName);
@@ -16,24 +14,24 @@ const InternalArticlePreview = props => {
     <div className='col-md-9 col-sm-12'>
       <div className='feed-toggle'>
         <ul className='nav nav-pills outline-active '>
-          <li
-            className='nav-item'
-            // 点击之后，props.currentTagName 设置为 空对象
-            onClick ={()=>{}}
-          >
-            <a className='nav-link active display-inline' href='#top'>
+          <li className='nav-item'>
+            <a
+              className='nav-link active display-inline'
+              href='#top'
+              // 点击之后，props.currentTagName 设置为 空对象
+              onClick={() => { props.onGlobeFeedClicked()}}>
               Global Feed
             </a>
-            {currentTagName && (
+            {props.currentTagName && (
               <a className='nav-link active display-inline' href='#top'>
-                # {currentTagName}
+                # {props.currentTagName}
               </a>
             )}
           </li>
         </ul>
       </div>
 
-      {(tagRelatedArticles || props.articleLibrary).map((article, index) => {
+      {(props.tagRelatedArticles || props.articleLibrary).map((article, index) => {
         return (
           <div className='article-preview' key={index}>
             <div className='article-meta'>
@@ -41,7 +39,7 @@ const InternalArticlePreview = props => {
                 <img
                   className='author-image'
                   src={article.author.image}
-                  alt=''
+                  alt='au'
                 />
               </a>
               <div className='info'>
@@ -99,7 +97,8 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    onArticleClick: (title, slug) => dispatch(articleTitleClicked(title, slug))
+    onArticleClick: (title, slug) => dispatch(articleTitleClicked(title, slug)),
+    onGlobeFeedClicked: ()=> dispatch(globeFeedClicked())
   };
 };
 

@@ -6,7 +6,8 @@ import {
   ARTICLE_COMMENTS_LOADED,
   ARTICLE_CONTENT_LOADED,
   TAG_RELATED_ARTICLE_LOADED,
-  RELATED_TAG_LOADED
+  RELATED_TAG_LOADED,
+  GLOBLE_FEED_CLICKED
 } from "./feedActions";
 
 const initialState = {
@@ -46,7 +47,9 @@ export const feedReducer = (state = initialState, action) => {
 
     case RELATED_TAG_LOADED:
       return { ...state, currentTagName: action.tagName };
-
+    // GLOBLE_FEED_CLICKED
+    case GLOBLE_FEED_CLICKED:
+      return { ...state, currentTagName: "", tagRelatedArticles: []};
     default:
       return state;
   }

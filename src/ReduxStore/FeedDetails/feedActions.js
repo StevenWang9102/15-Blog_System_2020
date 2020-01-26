@@ -9,7 +9,8 @@ export const POPULAR_TAG_CLICKED = Symbol("POPULAR_TAG_CLICKED")
 export const POPULAR_TAG_DISPLAYED = Symbol("POPULAR_TAG_DISPLAYED")
 export const TAG_RELATED_ARTICLE_LOADED = Symbol("TAG_RELATED_ARTICLE_LOADED")
 export const RELATED_TAG_LOADED = Symbol("RELATED_TAG_LOADED")
-
+export const GLOBLE_FEED_CLICKED = Symbol("GLOBLE_FEED_CLICKED")
+// GLOBLE_FEED_CLICKED
 // RELATED_TAG_LOADED
 
 export const loadInitialData = () => {
@@ -51,6 +52,10 @@ export const popularTagIsDiplayed = (tagName) => {
 
 export const tagRelatedArticleLoaded = (tagRelatedArticles) => {
     return { type: TAG_RELATED_ARTICLE_LOADED, tagRelatedArticles };
+}
+
+export const globeFeedClicked = () => {
+    return { type: GLOBLE_FEED_CLICKED };
 }
 
 // relatedTagLoaded
