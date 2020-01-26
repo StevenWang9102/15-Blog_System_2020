@@ -21,7 +21,6 @@ const InternalPopularTages = props => {
                   value = {tagName}
                   onClick = {()=> {
                     props.onPopularTagClicked(tagName)
-                    props.onPopularTagIsDiplayed(tagName)
                   }}
                   >
                   {tagName}
@@ -45,7 +44,6 @@ const mapStateToProps = ({ popularTags }) => {
 const mapDispatchToProps = dispatch => {
   return {
     onPopularTagClicked: (tagName) => dispatch(popularTagClicked(tagName)),
-    // onPopularTagIsDiplayed: (tagName) => dispatch(popularTagIsDiplayed(tagName))
   };
 };
 

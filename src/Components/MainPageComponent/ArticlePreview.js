@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { articleTitleClicked } from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalArticlePreview = props => {
+  const [tagRelatedArticles, setTagRelatedArticles] = useState(props.tagRelatedArticles)
+  const [currentTagName, setCurrentTagName] = useState(props.tagRelatedArticles)
 
   console.log(props.tagRelatedArticles);
   console.log(props.currentTagName);
@@ -17,21 +19,21 @@ const InternalArticlePreview = props => {
           <li
             className='nav-item'
             // 点击之后，props.currentTagName 设置为 空对象
-            // onClick =
+            onClick ={()=>{}}
           >
             <a className='nav-link active display-inline' href='#top'>
               Global Feed
             </a>
-            {props.currentTagName && (
+            {currentTagName && (
               <a className='nav-link active display-inline' href='#top'>
-                # {props.currentTagName}
+                # {currentTagName}
               </a>
             )}
           </li>
         </ul>
       </div>
 
-      {(props.tagRelatedArticles || props.articleLibrary).map((article, index) => {
+      {(tagRelatedArticles || props.articleLibrary).map((article, index) => {
         return (
           <div className='article-preview' key={index}>
             <div className='article-meta'>
