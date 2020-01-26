@@ -7,6 +7,7 @@ import {
   articleContentLoaded,
   articleCommentsLoaded,
   tagRelatedArticleLoaded,
+  relatedTagLoaded,
   tagsDataLoaded
 } from "./feedActions";
 
@@ -24,28 +25,32 @@ export const feedSaga = function*() {
   });
 
   // 文章评论
-  yield takeLatest(INIT_ARTICLE_COMMENT_GET, function*(slug) {
+  yield takeLatest(INIT_ARTICLE_COMMENT_GET, function*(action) {
     const initArticleData = yield call(
       fetchInitialData,
-      `/articles/${slug.slug}`
+      `/articles/${action.slug}`
     );
     yield put(articleContentLoaded(initArticleData.article));
 
     const initCommentData = yield call(
       fetchInitialData,
-      `/articles/${slug.slug}/comments`
+      `/articles/${action.slug}/comments`
     );
     yield put(articleCommentsLoaded(initCommentData));
   });
 
-  // 热门标签
-  yield takeLatest(POPULAR_TAG_CLICKED, function*(tagName) {
-    const isDisplay = true
+  // 热门标签：要文章，要标签名称
+  yield takeLatest(POPULAR_TAG_CLICKED, function*(action) {
+    // const isDisplay = true
     const tagRelatedData = yield call(
       fetchInitialData,
-      `/articles?tag=${tagName.tagName}&limit=10&offset=0`
+      `/articles?tag=${action.tagName}&limit=10&offset=0`
     );
-    yield put(tagRelatedArticleLoaded(tagRelatedData.articles, isDisplay));
+    console.log(tagRelatedData.articles);
+    
+    yield put(tagRelatedArticleLoaded(tagRelatedData.articles));
+    yield put(relatedTagLoaded(action.tagName));
+
   });
 };
 

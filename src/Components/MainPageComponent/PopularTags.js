@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { popularTagClicked, popularTagIsDiplayed } from "../../ReduxStore/FeedDetails/feedActions";
+import { popularTagClicked } from "../../ReduxStore/FeedDetails/feedActions";
 
 
 const InternalPopularTages = props => {
@@ -45,8 +45,7 @@ const mapStateToProps = ({ popularTags }) => {
 const mapDispatchToProps = dispatch => {
   return {
     onPopularTagClicked: (tagName) => dispatch(popularTagClicked(tagName)),
-    onPopularTagIsDiplayed: (tagName) => dispatch(popularTagIsDiplayed(tagName))
-
+    // onPopularTagIsDiplayed: (tagName) => dispatch(popularTagIsDiplayed(tagName))
   };
 };
 

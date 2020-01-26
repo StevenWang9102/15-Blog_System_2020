@@ -58,6 +58,6 @@ p{
 
 .display-inline
 {
-  display: inline-block;
+  display: inline-block !important;
   margin-right: 15px;
 }

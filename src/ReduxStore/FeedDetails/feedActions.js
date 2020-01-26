@@ -8,7 +8,9 @@ export const ARTICLE_CONTENT_LOADED = Symbol("ARTICLE_CONTENT_LOADED")
 export const POPULAR_TAG_CLICKED = Symbol("POPULAR_TAG_CLICKED")
 export const POPULAR_TAG_DISPLAYED = Symbol("POPULAR_TAG_DISPLAYED")
 export const TAG_RELATED_ARTICLE_LOADED = Symbol("TAG_RELATED_ARTICLE_LOADED")
+export const RELATED_TAG_LOADED = Symbol("RELATED_TAG_LOADED")
 
+// RELATED_TAG_LOADED
 
 export const loadInitialData = () => {
     return { type: INITIALDATA_LOADED };
@@ -47,6 +49,11 @@ export const popularTagIsDiplayed = (tagName) => {
     return { type: POPULAR_TAG_DISPLAYED, tagName }; 
 }
 
-export const tagRelatedArticleLoaded = (tagRelatedArticle) => {
-    return { type: TAG_RELATED_ARTICLE_LOADED, tagRelatedArticle };
+export const tagRelatedArticleLoaded = (tagRelatedArticles) => {
+    return { type: TAG_RELATED_ARTICLE_LOADED, tagRelatedArticles };
+}
+
+// relatedTagLoaded
+export const relatedTagLoaded = (tagName) => {
+    return { type: RELATED_TAG_LOADED, tagName };
 }
