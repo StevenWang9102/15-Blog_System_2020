@@ -3,6 +3,8 @@ import {SignIn} from "./SignIn";
 import {SignUp} from "./SignUp";
 import {MainPage} from "../MainPageComponent/MainPage";
 import {ArticleDetails} from "../MainPageComponent/ArticleDetails";
+import { UserProfile } from "../UserComponent/UserProfile"
+
 
 import {
   BrowserRouter as Router,
@@ -40,6 +42,7 @@ export const Navbar = (props) => {
             </ul>
           </div>
         </nav>
+
         <Switch>
           <Route exact path="/">
             <Redirect to="/home" />
@@ -56,7 +59,11 @@ export const Navbar = (props) => {
           <Route path="/article-detail/:slug">
             <ArticleDetails/>
           </Route>
+          <Route exact path="/user-profile">
+            <UserProfile />
+          </Route>
         </Switch>
+
       </div>
     </Router>
   );
