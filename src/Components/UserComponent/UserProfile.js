@@ -6,13 +6,6 @@ import { loadUserProfileDetail } from "../../ReduxStore/FeedDetails/feedActions"
 
 const InternalUserProfile = props => {
   const { userName } = useParams();
-  console.log(userName);
-  console.log(props.currentUsersArticles);
-
-  // 请求1：https://conduit.productionready.io/api/user
-  // 请求2：https://conduit.productionready.io/api/profiles/anotherBloke
-
-  // 请求3：https://conduit.productionready.io/api/articles?author=anotherBloke&limit=5&offset=0
 
   useEffect(() => {
     props.loadUserProfileDetail(userName);
@@ -21,6 +14,7 @@ const InternalUserProfile = props => {
 
   return (
     <div class='profile-page'>
+      
       {/* 用户信息 */}
       <div class='user-info'>
         <div class='container'>
@@ -60,14 +54,18 @@ const InternalUserProfile = props => {
                   </a>
                 </li>
                 <li class='nav-item'>
-                  <a class='nav-link' href=''>
+                  <a class='nav-link' href='#top'
+
+                  // 开始作业@@@@@@@@@@@@@@@@@@
+                    onClick={()=>{props.onFavoritedArticleClicked()}}
+                  >
                     Favorited Articles
                   </a>
                 </li>
               </ul>
             </div>
 
-            {/* 一篇文章,此处需要循环map */}
+            {/* 一篇文章 */}
             {props.currentUsersArticles.map((article,index) => {
               return (
                 <div class='article-preview' key={index}>
