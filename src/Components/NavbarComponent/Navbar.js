@@ -4,7 +4,7 @@ import {SignUp} from "./SignUp";
 import {MainPage} from "../MainPageComponent/MainPage";
 import {ArticleDetails} from "../MainPageComponent/ArticleDetails";
 import { UserProfile } from "../UserComponent/UserProfile"
-
+import { connect } from "react-redux";
 
 import {
   BrowserRouter as Router,
@@ -14,7 +14,7 @@ import {
   Redirect
 } from "react-router-dom";
 
-export const Navbar = (props) => {
+export const InternalNavbar = (props) => {
   return (
     <Router>
       <div>
@@ -56,10 +56,10 @@ export const Navbar = (props) => {
           <Route exact path="/sign_up">
             <SignUp />
           </Route>
-          <Route path="/article-detail/:slug">
+          <Route path="/article-detail/:article_slug">
             <ArticleDetails/>
           </Route>
-          <Route exact path="/user-profile">
+          <Route path='/user-profile/:userName'>
             <UserProfile />
           </Route>
         </Switch>
@@ -68,3 +68,10 @@ export const Navbar = (props) => {
     </Router>
   );
 }
+
+const mapStateToProps = ({ currentArticleDetails }) => {
+  return { currentArticleDetails };
+};
+
+export const Navbar = connect(
+  mapStateToProps)(InternalNavbar);

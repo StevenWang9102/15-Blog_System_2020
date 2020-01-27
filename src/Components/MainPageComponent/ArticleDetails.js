@@ -1,14 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import dateFormat from "dateformat";
 import { loadInitArticleDetail } from "../../ReduxStore/FeedDetails/feedActions";
 import { useParams } from "react-router-dom";
@@ -16,12 +9,11 @@ import { ArticleComments } from "./ArticleComments";
 
 const InternalArticleDetails = props => {
 
-  console.log(props.currentArticleDetails);
-  
-  const { slug } = useParams();
+  // console.log(props.currentArticleDetails.author.username);
+  const { article_slug } = useParams();
 
   useEffect(() => {
-    props.loadInitArticleDetail(slug);
+    props.loadInitArticleDetail(article_slug);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -37,7 +29,9 @@ const InternalArticleDetails = props => {
               <div className='article-meta'>
 
                 {/* 在这里工作 */}
-                <Link to='/user-profile'>
+                {/* to={"/article-detail/" + article.slug}> */}
+
+                <Link to= {'/user-profile/' + props.currentArticleDetails.author.username}>
                   <a href='#top'>
                     <img
                       className='author-image'
@@ -45,17 +39,18 @@ const InternalArticleDetails = props => {
                       alt='au'
                     />
                   </a>
-                  <a href='#top' className='author'>
-                    {props.currentArticleDetails.author.username}
-                  </a>
+                  <div className='info'>
+                    <a href='#top' className='author'>
+                      {props.currentArticleDetails.author.username}
+                    </a>
+                    <span className='date'>
+                      {dateFormat(
+                        props.currentArticleDetails.author.updatedAt,
+                        "ddd mmm dd yyyy"
+                      )}
+                    </span>
+                  </div>
                 </Link>
-
-                <span className='date'>
-                  {dateFormat(
-                    props.currentArticleDetails.author.updatedAt,
-                    "ddd mmm dd yyyy"
-                  )}
-                </span>
               </div>
             </div>
           )}
@@ -87,7 +82,7 @@ const mapStateToProps = ({ currentArticleDetails }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadInitArticleDetail: slug => dispatch(loadInitArticleDetail(slug))
+    loadInitArticleDetail: article_slug => dispatch(loadInitArticleDetail(article_slug))
   };
 };
 
