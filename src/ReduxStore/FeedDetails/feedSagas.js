@@ -8,7 +8,10 @@ import {
   articleCommentsLoaded,
   tagRelatedArticleLoaded,
   relatedTagLoaded,
-  tagsDataLoaded
+  USERS_NAME_LOADED,
+  userProfileDataLoaded,
+  tagsDataLoaded,
+  userRelatedArticlesLoaded
 } from "./feedActions";
 
 export const feedSaga = function*() {
@@ -41,17 +44,31 @@ export const feedSaga = function*() {
 
   // 热门标签：要文章，要标签名称
   yield takeLatest(POPULAR_TAG_CLICKED, function*(action) {
-    // const isDisplay = true
     const tagRelatedData = yield call(
       fetchInitialData,
       `/articles?tag=${action.tagName}&limit=10&offset=0`
     );
-    console.log(tagRelatedData.articles);
-    
     yield put(tagRelatedArticleLoaded(tagRelatedData.articles));
     yield put(relatedTagLoaded(action.tagName));
-
   });
+
+  // 用户页面
+  yield takeLatest(USERS_NAME_LOADED, function*(action) {
+    const userProfileData = yield call(
+      fetchInitialData,
+      `/profiles/${action.userName}`
+    );
+      // 请求3：https://conduit.productionready.io/api/articles?author=anotherBloke&limit=5&offset=0
+    const userRelatedArticles = yield call(
+      fetchInitialData,
+      `/articles?author=${action.userName}&limit=5&offset=0`
+    );
+    console.log(userRelatedArticles.articles);
+    
+    yield put(userProfileDataLoaded(userProfileData));
+    yield put(userRelatedArticlesLoaded(userRelatedArticles.articles));
+  });
+
 };
 
 const fetchInitialData = url => {
@@ -59,7 +76,7 @@ const fetchInitialData = url => {
     response => {
       if (response.ok) {
         return response.json();
-      } else console.error("--- get data failed ---");
+      } else console.error(" -- Your Error: get data failed -- ");
     }
   );
 };

@@ -61,3 +61,8 @@ p{
   display: inline-block !important;
   margin-right: 15px;
 }
+
+.article-preview
+{
+  text-align: left;
+}

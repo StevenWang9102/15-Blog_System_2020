@@ -22,14 +22,11 @@ const InternalArticleDetails = props => {
       <div className='banner'>
         <div className='container'>
           {/* 文章标题部分 */}
-          {props.currentArticleDetails.author && (
+          {props.currentArticleDetails && (
             <div>
               <h1>{props.currentArticleDetails.title}</h1>
 
               <div className='article-meta'>
-
-                {/* 在这里工作 */}
-                {/* to={"/article-detail/" + article.slug}> */}
 
                 <Link to= {'/user-profile/' + props.currentArticleDetails.author.username}>
                   <a href='#top'>
@@ -41,7 +38,7 @@ const InternalArticleDetails = props => {
                   </a>
                   <div className='info'>
                     <a href='#top' className='author'>
-                      {props.currentArticleDetails.author.username}
+                      {props.currentArticleDetails && props.currentArticleDetails.author.username}
                     </a>
                     <span className='date'>
                       {dateFormat(

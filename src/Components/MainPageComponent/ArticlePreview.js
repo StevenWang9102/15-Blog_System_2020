@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
@@ -9,18 +9,20 @@ import {
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalArticlePreview = props => {
-  console.log(props.tagRelatedArticles);
+  console.log(props.currentArticleDetails);
   console.log(props.currentTagName);
 
   return (
     <div className='col-md-9 col-sm-12'>
+
+      {/* 小导航 */}
       <div className='feed-toggle'>
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
             <a
               className='nav-link active display-inline'
               href='#top'
-              // 点击之后，props.currentTagName 设置为 空对象
+
               onClick={() => {
                 props.onGlobeFeedClicked();
               }}>
@@ -35,13 +37,16 @@ const InternalArticlePreview = props => {
         </ul>
       </div>
 
+
+      {/* 文章 */}
       {(props.tagRelatedArticles || props.articleLibrary).map(
         (article, index) => {
           return (
             <div className='article-preview' key={index}>
+              
               <div className='article-meta'>
-                {/* 在这里工作 */}
-                <Link to='/user-profile'>
+
+                <Link to= {'/user-profile/' + article.author.username}>
                   <a href='profile.html'>
                     <img
                       className='author-image'
@@ -95,6 +100,7 @@ const mapStateToProps = ({
   onArticleClick,
   tagRelatedArticles,
   currentTagName,
+  currentArticleDetails,
   isDisplay
 }) => {
   return {
@@ -102,6 +108,7 @@ const mapStateToProps = ({
     onArticleClick,
     tagRelatedArticles,
     currentTagName,
+    currentArticleDetails,
     isDisplay
   };
 };

@@ -10,7 +10,10 @@ export const POPULAR_TAG_DISPLAYED = Symbol("POPULAR_TAG_DISPLAYED")
 export const TAG_RELATED_ARTICLE_LOADED = Symbol("TAG_RELATED_ARTICLE_LOADED")
 export const RELATED_TAG_LOADED = Symbol("RELATED_TAG_LOADED")
 export const GLOBLE_FEED_CLICKED = Symbol("GLOBLE_FEED_CLICKED")
-
+export const USERS_NAME_LOADED = Symbol("GLOBLE_FEED_CLICKED")
+// USERS_RELATED_ARTICLES_LOADED
+export const USERS_PROFILE_LOADED = Symbol("USERS_PROFILE_LOADED")
+export const USERS_RELATED_ARTICLES_LOADED = Symbol("USERS_PROFILE_LOADED")
 
 export const loadInitialData = () => {
     return { type: INITIALDATA_LOADED };
@@ -59,4 +62,18 @@ export const globeFeedClicked = () => {
 
 export const relatedTagLoaded = (tagName) => {
     return { type: RELATED_TAG_LOADED, tagName };
+}
+
+// loadUserProfileDetail
+export const loadUserProfileDetail = (userName) => {
+    return { type: USERS_NAME_LOADED, userName };
+}
+// userProfileDataLoaded
+export const userProfileDataLoaded = (userProfileData) => {
+    return { type: USERS_PROFILE_LOADED, userProfileData };
+}
+
+// userRelatedArticlesLoaded
+export const userRelatedArticlesLoaded = (userRelatedArticles) => {
+    return { type: USERS_RELATED_ARTICLES_LOADED, userRelatedArticles };
 }

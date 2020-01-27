@@ -1,44 +1,47 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
+import dateFormat from "dateformat";
+import { loadUserProfileDetail } from "../../ReduxStore/FeedDetails/feedActions";
 
-export const UserProfile = props => {
+const InternalUserProfile = props => {
   const { userName } = useParams();
   console.log(userName);
+  console.log(props.currentUsersArticles);
 
+  // 请求1：https://conduit.productionready.io/api/user
+  // 请求2：https://conduit.productionready.io/api/profiles/anotherBloke
 
-  
-  // useparm可以取到用户姓名
-  // 请求了2次
-
-
+  // 请求3：https://conduit.productionready.io/api/articles?author=anotherBloke&limit=5&offset=0
 
   useEffect(() => {
     props.loadUserProfileDetail(userName);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   return (
     <div class='profile-page'>
-
       {/* 用户信息 */}
       <div class='user-info'>
         <div class='container'>
           <div class='row'>
             <div class='col-xs-12 col-md-10 offset-md-1'>
               <img
-                src='http://i.imgur.com/Qr71crq.jpg'
+                src={
+                  props.currentProfileData.profile &&
+                  props.currentProfileData.profile.image
+                }
                 class='user-img'
                 alt='au'
               />
-                <h4>{userName}</h4>
+              <h4>{userName}</h4>
               <p>
-                Cofounder @GoThinkster, lived in Aol's HQ for a few months,
-                kinda looks like Peeta from the Hunger Games
+                {props.currentProfileData.profile &&
+                  props.currentProfileData.profile.bio}
               </p>
               <button class='btn btn-sm btn-outline-secondary action-btn'>
                 <i class='ion-plus-round'></i>
-                &nbsp; Follow Eric Simons
+                &nbsp; + Follow {userName}
               </button>
             </div>
           </div>
@@ -65,30 +68,57 @@ export const UserProfile = props => {
             </div>
 
             {/* 一篇文章,此处需要循环map */}
-            <div class='article-preview'>
-              <div class='article-meta'>
-                <a href=''>
-                  <img src='http://i.imgur.com/Qr71crq.jpg' alt='au' />
-                </a>
-                <div class='info'>
-                  <a href='' class='author'>
-                    Eric Simons
+            {props.currentUsersArticles.map((article,index) => {
+              return (
+                <div class='article-preview' key={index}>
+                  <div class='article-meta'>
+                    <a href=''>
+                      <img src={article.author.image}
+                      alt='au' />
+                    </a>
+                    <div class='info'>
+                      <a href='' class='author'>
+                        {article.author.username}
+                      </a>
+                      <span class='date'> {dateFormat(
+                        article.updatedAt,
+                        "ddd mmm dd yyyy"
+                      )}</span>
+                    </div>
+                    <button class='btn btn-outline-primary btn-sm pull-xs-right'>
+                      <i class='ion-heart'></i> {article.favoritesCount}
+                    </button>
+                  </div>
+                  <a href='#top' class='preview-link'>
+                    <h1>{article.title}</h1>
+                    <p>{article.description}</p>
+                    <span>Read more...</span>
                   </a>
-                  <span class='date'>January 20th</span>
                 </div>
-                <button class='btn btn-outline-primary btn-sm pull-xs-right'>
-                  <i class='ion-heart'></i> 29
-                </button>
-              </div>
-              <a href='' class='preview-link'>
-                <h1>How to build webapps that scale</h1>
-                <p>This is the description for the post.</p>
-                <span>Read more...</span>
-              </a>
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>
     </div>
   );
 };
+
+const mapStateToProps = ({
+  currentArticleDetails,
+  currentProfileData,
+  currentUsersArticles
+}) => {
+  return { currentArticleDetails, currentProfileData, currentUsersArticles };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    loadUserProfileDetail: userName => dispatch(loadUserProfileDetail(userName))
+  };
+};
+
+export const UserProfile = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(InternalUserProfile);
