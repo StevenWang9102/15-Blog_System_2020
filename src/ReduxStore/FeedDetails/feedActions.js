@@ -14,6 +14,11 @@ export const USERS_NAME_LOADED = Symbol("GLOBLE_FEED_CLICKED")
 // USERS_RELATED_ARTICLES_LOADED
 export const USERS_PROFILE_LOADED = Symbol("USERS_PROFILE_LOADED")
 export const USERS_RELATED_ARTICLES_LOADED = Symbol("USERS_PROFILE_LOADED")
+// FAVERATED_ARITICLE_CLICKED
+export const FAVERATED_ARITICLE_CLICKED = Symbol("FAVERATED_ARITICLE_CLICKED")
+// FAVERATED_ARITICLE_LOADED
+export const FAVERATED_ARITICLE_LOADED = Symbol("FAVERATED_ARITICLE_LOADED")
+
 
 export const loadInitialData = () => {
     return { type: INITIALDATA_LOADED };
@@ -76,4 +81,13 @@ export const userProfileDataLoaded = (userProfileData) => {
 // userRelatedArticlesLoaded
 export const userRelatedArticlesLoaded = (userRelatedArticles) => {
     return { type: USERS_RELATED_ARTICLES_LOADED, userRelatedArticles };
+}
+
+//favoritedArticleClicked
+export const favoritedArticleClicked = (userName) => {
+    return { type: FAVERATED_ARITICLE_CLICKED, userName };
+}
+// favoritedArticleLoaded
+export const favoritedArticleLoaded = (favoritedArticles) => {
+    return { type: FAVERATED_ARITICLE_LOADED, favoritedArticles };
 }

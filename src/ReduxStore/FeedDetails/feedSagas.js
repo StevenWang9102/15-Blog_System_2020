@@ -11,7 +11,9 @@ import {
   USERS_NAME_LOADED,
   userProfileDataLoaded,
   tagsDataLoaded,
-  userRelatedArticlesLoaded
+  userRelatedArticlesLoaded,
+  FAVERATED_ARITICLE_CLICKED,
+  favoritedArticleLoaded
 } from "./feedActions";
 
 export const feedSaga = function*() {
@@ -52,7 +54,7 @@ export const feedSaga = function*() {
     yield put(relatedTagLoaded(action.tagName));
   });
 
-  // 用户页面
+  // User Profile
   yield takeLatest(USERS_NAME_LOADED, function*(action) {
     const userProfileData = yield call(
       fetchInitialData,
@@ -68,6 +70,19 @@ export const feedSaga = function*() {
     yield put(userProfileDataLoaded(userProfileData));
     yield put(userRelatedArticlesLoaded(userRelatedArticles.articles));
   });
+
+  // Favarited Articles
+  yield takeLatest(FAVERATED_ARITICLE_CLICKED, function*(action) {
+
+    const favoritedArticlesData = yield call(
+      fetchInitialData,
+      `/articles?favorited=${action.userName}&limit=5&offset=0`
+    );    
+    console.log(favoritedArticlesData);
+    
+    yield put(favoritedArticleLoaded(favoritedArticlesData.article));
+  });
+
 
 };
 

@@ -22,7 +22,7 @@ const InternalArticleDetails = props => {
       <div className='banner'>
         <div className='container'>
           {/* 文章标题部分 */}
-          {props.currentArticleDetails && (
+          {props.currentArticleDetails.author && (
             <div>
               <h1>{props.currentArticleDetails.title}</h1>
 

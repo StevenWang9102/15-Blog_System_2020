@@ -47,18 +47,14 @@ const InternalArticlePreview = props => {
               <div className='article-meta'>
 
                 <Link to= {'/user-profile/' + article.author.username}>
-                  <a href='profile.html'>
                     <img
                       className='author-image'
                       src={article.author.image}
                       alt='au'
                     />
-                  </a>
 
-                  <div className='info'>
-                    <a href='#top' className='author'>
+                  <div className='info author'>
                       {article.author.username}
-                    </a>
                     <span className='date'>
                       {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
                     </span>
