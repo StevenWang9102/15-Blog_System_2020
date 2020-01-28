@@ -1,6 +1,6 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import { ArticlePreview } from './ArticlePreview'
+import React from "react";
+import renderer from "react-test-renderer";
+import { ArticlePreview } from "./ArticlePreview"
 
 it("renders correctly", () => {
   const tree = renderer
