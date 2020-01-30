@@ -65,7 +65,6 @@ export const feedSaga = function*() {
       fetchInitialData,
       `/articles?author=${action.userName}&limit=5&offset=0`
     );
-    console.log(userRelatedArticles.articles);
     
     yield put(userProfileDataLoaded(userProfileData));
     yield put(userRelatedArticlesLoaded(userRelatedArticles.articles));
@@ -78,7 +77,6 @@ export const feedSaga = function*() {
       fetchInitialData,
       `/articles?favorited=${action.userName}&limit=5&offset=0`
     );    
-    console.log(favoritedArticlesData);
     
     yield put(favoritedArticleLoaded(favoritedArticlesData.article));
   });

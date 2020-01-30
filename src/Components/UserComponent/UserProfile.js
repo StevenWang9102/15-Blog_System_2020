@@ -13,8 +13,6 @@ const InternalUserProfile = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
-  console.log(props.favoritedArticles);
   
   return (
     <div className='profile-page'>
