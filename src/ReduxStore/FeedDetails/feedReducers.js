@@ -2,7 +2,6 @@ import {
   ARTICLE_DATA_LOADED,
   TAGS_DATA_LOADED,
   ARTICLE_TITLE_CLICKED,
-  POPULAR_TAG_DISPLAYED,
   ARTICLE_COMMENTS_LOADED,
   ARTICLE_CONTENT_LOADED,
   TAG_RELATED_ARTICLE_LOADED,
@@ -47,9 +46,6 @@ export const feedReducer = (state = initialState, action) => {
 
     case TAG_RELATED_ARTICLE_LOADED:
       return { ...state, tagRelatedArticles: action.tagRelatedArticles };
-
-    case POPULAR_TAG_DISPLAYED:
-      return { ...state, isDisplay: action.tagName };
 
     case RELATED_TAG_LOADED:
       return { ...state, currentTagName: action.tagName };

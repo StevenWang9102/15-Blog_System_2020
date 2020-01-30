@@ -9,7 +9,6 @@ import { ArticleComments } from "./ArticleComments";
 
 const InternalArticleDetails = props => {
 
-  // console.log(props.currentArticleDetails.author.username);
   const { article_slug } = useParams();
 
   useEffect(() => {

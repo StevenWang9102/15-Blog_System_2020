@@ -58,10 +58,8 @@ const InternalUserProfile = props => {
 
                 <li className='nav-item'>
                   <a className='nav-link' href='#top'
-                  // 请求1： https://conduit.productionready.io/api/profiles/Akshay5695zzz
-                  // 请求1： https://conduit.productionready.io/api/articles?favorited=Akshay5695zzz&limit=5&offset=0
+                  
                     onClick={(userName)=>{props.onFavoritedArticleClicked(userName)}}
-                    // 拿到之后，重新渲染页面？
                   >
                     Favorited Articles
                   </a>

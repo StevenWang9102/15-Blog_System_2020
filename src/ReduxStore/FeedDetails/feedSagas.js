@@ -17,7 +17,6 @@ import {
 } from "./feedActions";
 
 export const feedSaga = function*() {
-  
   // 初始数据
   yield takeLatest(INITIALDATA_LOADED, function*() {
     const initArticData = yield call(
@@ -60,28 +59,26 @@ export const feedSaga = function*() {
       fetchInitialData,
       `/profiles/${action.userName}`
     );
-      // 请求3：https://conduit.productionready.io/api/articles?author=anotherBloke&limit=5&offset=0
     const userRelatedArticles = yield call(
       fetchInitialData,
       `/articles?author=${action.userName}&limit=5&offset=0`
     );
-    
+
     yield put(userProfileDataLoaded(userProfileData));
     yield put(userRelatedArticlesLoaded(userRelatedArticles.articles));
   });
 
   // Favarited Articles
+  // 请求1： https://conduit.productionready.io/api/profiles/Akshay5695zzz
+  // 请求2： https://conduit.productionready.io/api/articles?favorited=Akshay5695zzz&limit=5&offset=0
   yield takeLatest(FAVERATED_ARITICLE_CLICKED, function*(action) {
-
     const favoritedArticlesData = yield call(
       fetchInitialData,
       `/articles?favorited=${action.userName}&limit=5&offset=0`
-    );    
-    
+    );
+
     yield put(favoritedArticleLoaded(favoritedArticlesData.article));
   });
-
-
 };
 
 const fetchInitialData = url => {

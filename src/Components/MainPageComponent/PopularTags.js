@@ -34,7 +34,8 @@ const InternalPopularTages = props => {
 };
 
 InternalPopularTages.propTypes = {
-  popularTags: PropTypes.array.isRequired
+  popularTags: PropTypes.array.isRequired,
+  onPopularTagClicked: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ popularTags }) => {

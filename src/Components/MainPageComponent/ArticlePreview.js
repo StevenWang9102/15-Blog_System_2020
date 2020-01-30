@@ -9,8 +9,6 @@ import {
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalArticlePreview = props => {
-  console.log(props.currentArticleDetails);
-  console.log(props.currentTagName);
 
   return (
     <div className='col-md-9 col-sm-12'>
@@ -87,6 +85,8 @@ const InternalArticlePreview = props => {
 };
 
 InternalArticlePreview.propTypes = {
+  currentTagName: PropTypes.string,
+  tagRelatedArticles: PropTypes.array,
   articleLibrary: PropTypes.array.isRequired,
   onArticleClick: PropTypes.func
 };
@@ -96,16 +96,12 @@ const mapStateToProps = ({
   onArticleClick,
   tagRelatedArticles,
   currentTagName,
-  currentArticleDetails,
-  isDisplay
 }) => {
   return {
     articleLibrary,
     onArticleClick,
     tagRelatedArticles,
     currentTagName,
-    currentArticleDetails,
-    isDisplay
   };
 };
 
