@@ -9,18 +9,19 @@ import {
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalArticlePreview = props => {
-
+  
   return (
     <div className='col-md-9 col-sm-12'>
 
-      {/* 小导航 */}
+      {/* Navigation */}
       <div className='feed-toggle'>
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
             <a
               className='nav-link active display-inline'
               href='#top'
-
+      
+              // 这里
               onClick={() => {
                 props.onGlobeFeedClicked();
               }}>
@@ -36,7 +37,7 @@ const InternalArticlePreview = props => {
       </div>
 
 
-      {/* 文章 */}
+      {/* Article */}
       {(props.tagRelatedArticles || props.articleLibrary).map(
         (article, index) => {
           return (

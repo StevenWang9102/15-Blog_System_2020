@@ -6,18 +6,21 @@ import dateFormat from "dateformat";
 import { loadUserProfileDetail, favoritedArticleClicked } from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalUserProfile = props => {
-  const { userName } = useParams();
 
+
+  const { userName } = useParams();
   useEffect(() => {
     props.loadUserProfileDetail(userName);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   
+  console.log(props.favoritedArticles);
+  
   return (
     <div className='profile-page'>
       
-      {/* 用户信息 */}
+      {/* User Information */}
       <div className='user-info'>
         <div className='container'>
           <div className='row'>
@@ -47,7 +50,8 @@ const InternalUserProfile = props => {
       <div className='container'>
         <div className='row'>
           <div className='col-xs-12 col-md-10 offset-md-1'>
-            {/* 副导航 */}
+
+            {/* Navigation */}
             <div className='articles-toggle'>
               <ul className='nav nav-pills outline-active'>
                 <li className='nav-item'>
@@ -57,8 +61,7 @@ const InternalUserProfile = props => {
                 </li>
 
                 <li className='nav-item'>
-                  <a className='nav-link' href='#top'
-                  
+                  <a className='nav-link'
                     onClick={(userName)=>{props.onFavoritedArticleClicked(userName)}}
                   >
                     Favorited Articles
@@ -70,7 +73,8 @@ const InternalUserProfile = props => {
             </div>
 
             {/* 一篇文章 */}
-            {props.currentUsersArticles.map((article,index) => {
+            
+            { (props.favoritedArticles || props.currentUsersArticles).map((article,index) => {
               return (
                 <div className='article-preview' key={index}>
                   <div className='article-meta'>

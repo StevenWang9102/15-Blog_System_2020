@@ -17,7 +17,7 @@ import {
 } from "./feedActions";
 
 export const feedSaga = function*() {
-  // 初始数据
+  // Globe feeds
   yield takeLatest(INITIALDATA_LOADED, function*() {
     const initArticData = yield call(
       fetchInitialData,
@@ -76,8 +76,9 @@ export const feedSaga = function*() {
       fetchInitialData,
       `/articles?favorited=${action.userName}&limit=5&offset=0`
     );
-
-    yield put(favoritedArticleLoaded(favoritedArticlesData.article));
+    console.log(favoritedArticlesData);
+  
+    yield put(favoritedArticleLoaded(favoritedArticlesData.articles));
   });
 };
 

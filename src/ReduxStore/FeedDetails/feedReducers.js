@@ -21,11 +21,15 @@ const initialState = {
   currentArticleSlug: "",
   currentProfileData: {},
   currentUsersArticles: [],
-  favoritedArticles:[]
+  favoritedArticles: null,
+  //
+  tagRelatedArticles: null,
+  currentTagName:""
 };
 
 export const feedReducer = (state = initialState, action) => {
   switch (action.type) {
+
     case ARTICLE_DATA_LOADED:
       return { ...state, articleLibrary: action.articleData };
 
@@ -38,6 +42,7 @@ export const feedReducer = (state = initialState, action) => {
         currentArticleTitle: action.title,
         currentArticleSlug: action.slug
       };
+
     case ARTICLE_CONTENT_LOADED:
       return { ...state, currentArticleDetails: action.initArticleData };
 
@@ -51,7 +56,7 @@ export const feedReducer = (state = initialState, action) => {
       return { ...state, currentTagName: action.tagName };
 
     case GLOBLE_FEED_CLICKED:
-      return { ...state, currentTagName: "", tagRelatedArticles: [] };
+      return { ...state, currentTagName: "", tagRelatedArticles: null };
 
     case USERS_PROFILE_LOADED:
       return { ...state, currentProfileData: action.userProfileData };
@@ -61,6 +66,7 @@ export const feedReducer = (state = initialState, action) => {
       
     case FAVERATED_ARITICLE_LOADED:
       return { ...state, favoritedArticles: action.favoritedArticles };
+
     default:
       return state;
   }
