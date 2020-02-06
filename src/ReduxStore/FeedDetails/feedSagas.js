@@ -14,9 +14,9 @@ import {
   userRelatedArticlesLoaded,
   FAVERATED_ARITICLE_CLICKED,
   favoritedArticleLoaded,
-  SIGN_IN_BUTTON_CLICKED
+  SIGN_IN_BUTTON_CLICKED,
+  userTokedLoaded
 } from "./feedActions";
-
 
 export const feedSaga = function*() {
   // Globe feeds
@@ -30,7 +30,7 @@ export const feedSaga = function*() {
     yield put(tagsDataLoaded(initTagData["tags"]));
   });
 
-  // 文章评论
+  // Article Comments
   yield takeLatest(INIT_ARTICLE_COMMENT_GET, function*(action) {
     const initArticleData = yield call(
       fetchInitialData,
@@ -45,7 +45,7 @@ export const feedSaga = function*() {
     yield put(articleCommentsLoaded(initCommentData));
   });
 
-  // 热门标签：要文章，要标签名称
+  // Popular tags
   yield takeLatest(POPULAR_TAG_CLICKED, function*(action) {
     const tagRelatedData = yield call(
       fetchInitialData,
@@ -80,14 +80,26 @@ export const feedSaga = function*() {
     yield put(favoritedArticleLoaded(favoritedArticlesData.articles));
   });
 
-  // SignIn Function。。。。。。。。。。。。。。
+  // SignIn Function
   yield takeLatest(SIGN_IN_BUTTON_CLICKED, function*(action) {
-    const favoritedArticlesData = yield call(
+    console.log(action);
+
+    const userData = {}
+    userData.email = action.email;
+    userData.password = action.password;
+    
+    const userPostData = yield call(
       postInitialData,
-      `/articles?favorited=${action.userName}&limit=5&offset=0`
+      userData
     );
-    console.log(favoritedArticlesData);
-    yield put(favoritedArticleLoaded(favoritedArticlesData.articles));
+    yield put(userTokedLoaded(userPostData));
+    // 拿到密钥之后，解锁一些功能
+    // 重新进行get文章 https://conduit.productionready.io/api/articles/feed?limit=10&offset=0
+    // 现在是重新get // 等于是加载密钥作者的文章
+    // 之前get文章："https://conduit.productionready.io/api/articles?limit=50&offset=10
+    // 重新get标签 https://conduit.productionready.io/api/tags
+    // 等于是加载密钥作者的热门文章
+
   });
 };
 
@@ -101,12 +113,22 @@ const fetchInitialData = url => {
   );
 };
 
-const postInitialData = url => {
-  return fetch("https://conduit.productionready.io/api/users/login" + url).then(
-    response => {
-      if (response.ok) {
-        return response.json();
-      } else console.error(" -- Your Error: post data failed -- ");
-    }
-  );
+const postInitialData = userData => {
+  const data = { user: userData };
+  fetch("https://conduit.productionready.io/api/users/login", {
+    method: "POST", 
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .then(response => {
+      console.log("Success:", response);
+      return response.user.token
+      // 理解为密钥
+    })
+    .catch(error => {
+      console.error("Error: post data failed:", error);
+    });
 };

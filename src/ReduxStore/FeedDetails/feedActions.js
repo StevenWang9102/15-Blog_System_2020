@@ -98,3 +98,8 @@ export const favoritedArticleLoaded = (favoritedArticles) => {
 export const signInClicked = (email, password) => {
     return { type: SIGN_IN_BUTTON_CLICKED, email: email, password: password };
 }
+
+// userTokedLoaded
+export const userTokedLoaded = (token) => {
+    return { type: SIGN_IN_BUTTON_CLICKED, token: token };
+}
