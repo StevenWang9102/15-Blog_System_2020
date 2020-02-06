@@ -13,8 +13,10 @@ import {
   tagsDataLoaded,
   userRelatedArticlesLoaded,
   FAVERATED_ARITICLE_CLICKED,
-  favoritedArticleLoaded
+  favoritedArticleLoaded,
+  SIGN_IN_BUTTON_CLICKED
 } from "./feedActions";
+
 
 export const feedSaga = function*() {
   // Globe feeds
@@ -69,15 +71,22 @@ export const feedSaga = function*() {
   });
 
   // Favarited Articles
-  // 请求1： https://conduit.productionready.io/api/profiles/Akshay5695zzz
-  // 请求2： https://conduit.productionready.io/api/articles?favorited=Akshay5695zzz&limit=5&offset=0
   yield takeLatest(FAVERATED_ARITICLE_CLICKED, function*(action) {
     const favoritedArticlesData = yield call(
       fetchInitialData,
       `/articles?favorited=${action.userName}&limit=5&offset=0`
     );
     console.log(favoritedArticlesData);
-  
+    yield put(favoritedArticleLoaded(favoritedArticlesData.articles));
+  });
+
+  // SignIn Function。。。。。。。。。。。。。。
+  yield takeLatest(SIGN_IN_BUTTON_CLICKED, function*(action) {
+    const favoritedArticlesData = yield call(
+      postInitialData,
+      `/articles?favorited=${action.userName}&limit=5&offset=0`
+    );
+    console.log(favoritedArticlesData);
     yield put(favoritedArticleLoaded(favoritedArticlesData.articles));
   });
 };
@@ -88,6 +97,16 @@ const fetchInitialData = url => {
       if (response.ok) {
         return response.json();
       } else console.error(" -- Your Error: get data failed -- ");
+    }
+  );
+};
+
+const postInitialData = url => {
+  return fetch("https://conduit.productionready.io/api/users/login" + url).then(
+    response => {
+      if (response.ok) {
+        return response.json();
+      } else console.error(" -- Your Error: post data failed -- ");
     }
   );
 };

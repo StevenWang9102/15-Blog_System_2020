@@ -61,7 +61,7 @@ const InternalUserProfile = props => {
                 </li>
 
                 <li className='nav-item'>
-                  <a className='nav-link'
+                  <a className='nav-link' href='#top'
                     onClick={(userName)=>{props.onFavoritedArticleClicked(userName)}}
                   >
                     Favorited Articles

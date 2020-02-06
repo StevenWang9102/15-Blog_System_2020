@@ -18,6 +18,8 @@ export const USERS_RELATED_ARTICLES_LOADED = Symbol("USERS_PROFILE_LOADED")
 export const FAVERATED_ARITICLE_CLICKED = Symbol("FAVERATED_ARITICLE_CLICKED")
 // FAVERATED_ARITICLE_LOADED
 export const FAVERATED_ARITICLE_LOADED = Symbol("FAVERATED_ARITICLE_LOADED")
+// SIGN_IN_BUTTON_CLICKED
+export const SIGN_IN_BUTTON_CLICKED = Symbol("SIGN_IN_BUTTON_CLICKED")
 
 
 export const loadInitialData = () => {
@@ -90,4 +92,9 @@ export const favoritedArticleClicked = (userName) => {
 // favoritedArticleLoaded
 export const favoritedArticleLoaded = (favoritedArticles) => {
     return { type: FAVERATED_ARITICLE_LOADED, favoritedArticles };
+}
+
+// signInClick
+export const signInClicked = (email, password) => {
+    return { type: SIGN_IN_BUTTON_CLICKED, email: email, password: password };
 }
