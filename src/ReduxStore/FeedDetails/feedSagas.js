@@ -82,8 +82,6 @@ export const feedSaga = function*() {
 
   // SignIn Function
   yield takeLatest(SIGN_IN_BUTTON_CLICKED, function*(action) {
-    console.log(action);
-
     const userData = {}
     userData.email = action.email;
     userData.password = action.password;
@@ -92,14 +90,17 @@ export const feedSaga = function*() {
       postInitialData,
       userData
     );
-    yield put(userTokedLoaded(userPostData));
-    // 拿到密钥之后，解锁一些功能
+    console.log(userPostData.user.token);
+
+    yield put(userTokedLoaded(userPostData.user.token));
+    
+    // 拿到密钥之后，解锁一些功能:
+    // 在哪个页面：导航、副导航
     // 重新进行get文章 https://conduit.productionready.io/api/articles/feed?limit=10&offset=0
     // 现在是重新get // 等于是加载密钥作者的文章
     // 之前get文章："https://conduit.productionready.io/api/articles?limit=50&offset=10
     // 重新get标签 https://conduit.productionready.io/api/tags
     // 等于是加载密钥作者的热门文章
-
   });
 };
 
@@ -115,20 +116,16 @@ const fetchInitialData = url => {
 
 const postInitialData = userData => {
   const data = { user: userData };
-  fetch("https://conduit.productionready.io/api/users/login", {
+  
+  return fetch("https://conduit.productionready.io/api/users/login", {
     method: "POST", 
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(data)
-  })
-    .then(response => response.json())
+  }).then(response => response.json())
     .then(response => {
       console.log("Success:", response);
-      return response.user.token
-      // 理解为密钥
+      return response
     })
-    .catch(error => {
-      console.error("Error: post data failed:", error);
-    });
 };

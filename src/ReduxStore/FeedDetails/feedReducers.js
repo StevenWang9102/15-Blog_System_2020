@@ -9,7 +9,8 @@ import {
   USERS_PROFILE_LOADED,
   GLOBLE_FEED_CLICKED,
   USERS_RELATED_ARTICLES_LOADED,
-  FAVERATED_ARITICLE_LOADED
+  FAVERATED_ARITICLE_LOADED,
+  USER_TOKEN_LOADED,
 } from "./feedActions";
 
 const initialState = {
@@ -24,7 +25,8 @@ const initialState = {
   favoritedArticles: null,
   //
   tagRelatedArticles: null,
-  currentTagName:""
+  currentTagName:"",
+  userToken: null
 };
 
 export const feedReducer = (state = initialState, action) => {
@@ -66,6 +68,10 @@ export const feedReducer = (state = initialState, action) => {
       
     case FAVERATED_ARITICLE_LOADED:
       return { ...state, favoritedArticles: action.favoritedArticles };
+
+    // SIGN_IN_BUTTON_CLICKED
+    case USER_TOKEN_LOADED:
+      return { ...state, userToken: action.userToken };
 
     default:
       return state;

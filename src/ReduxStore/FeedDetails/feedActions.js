@@ -20,6 +20,8 @@ export const FAVERATED_ARITICLE_CLICKED = Symbol("FAVERATED_ARITICLE_CLICKED")
 export const FAVERATED_ARITICLE_LOADED = Symbol("FAVERATED_ARITICLE_LOADED")
 // SIGN_IN_BUTTON_CLICKED
 export const SIGN_IN_BUTTON_CLICKED = Symbol("SIGN_IN_BUTTON_CLICKED")
+// USER_TOKEN_LOADED
+export const USER_TOKEN_LOADED = Symbol("USER_TOKEN_LOADED")
 
 
 export const loadInitialData = () => {
@@ -101,5 +103,5 @@ export const signInClicked = (email, password) => {
 
 // userTokedLoaded
 export const userTokedLoaded = (token) => {
-    return { type: SIGN_IN_BUTTON_CLICKED, token: token };
+    return { type: USER_TOKEN_LOADED, userToken: token };
 }

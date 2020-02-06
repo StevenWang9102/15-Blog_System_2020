@@ -38,10 +38,7 @@ const InternalSignIn = props => {
                   const email = document.querySelector("input[type='text']").value;
                   const password = document.querySelector("input[type='password']").value;
                   props.onSignInClicked(email, password)
-                
                 }}
-                // Post 出来目前的用户和密码，给到服务器端
-                // 读取上面input的数值
               >
                 Sign in
               </button>
