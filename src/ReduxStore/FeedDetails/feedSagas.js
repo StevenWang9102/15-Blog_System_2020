@@ -18,11 +18,11 @@ import {
   userTokedLoaded,
   YOURE_ARTICLES_NEEDED
 } from "./feedActions";
-import {userToken} from "../selector"
+import { userToken } from "../selector"
 
-export const feedSaga = function*() {
+export const feedSaga = function* () {
   // Globe feeds
-  yield takeLatest(INITIALDATA_LOADED, function*() {
+  yield takeLatest(INITIALDATA_LOADED, function* () {
     const initArticData = yield call(
       fetchInitialData,
       "/articles?limit=50&offset=10"
@@ -33,7 +33,7 @@ export const feedSaga = function*() {
   });
 
   // Article Comments
-  yield takeLatest(INIT_ARTICLE_COMMENT_GET, function*(action) {
+  yield takeLatest(INIT_ARTICLE_COMMENT_GET, function* (action) {
     const initArticleData = yield call(
       fetchInitialData,
       `/articles/${action.slug}`
@@ -48,7 +48,7 @@ export const feedSaga = function*() {
   });
 
   // Popular tags
-  yield takeLatest(POPULAR_TAG_CLICKED, function*(action) {
+  yield takeLatest(POPULAR_TAG_CLICKED, function* (action) {
     const tagRelatedData = yield call(
       fetchInitialData,
       `/articles?tag=${action.tagName}&limit=10&offset=0`
@@ -58,7 +58,8 @@ export const feedSaga = function*() {
   });
 
   // User Profile
-  yield takeLatest(USERS_NAME_LOADED, function*(action) {
+  yield takeLatest(USERS_NAME_LOADED, function* (action) {
+    // use saga's all effect (https://redux-saga.js.org/docs/api/#alleffects---parallel-effects)
     const userProfileData = yield call(
       fetchInitialData,
       `/profiles/${action.userName}`
@@ -73,7 +74,7 @@ export const feedSaga = function*() {
   });
 
   // Favarited Articles
-  yield takeLatest(FAVERATED_ARITICLE_CLICKED, function*(action) {
+  yield takeLatest(FAVERATED_ARITICLE_CLICKED, function* (action) {
     const favoritedArticlesData = yield call(
       fetchInitialData,
       `/articles?favorited=${action.userName}&limit=5&offset=0`
@@ -82,20 +83,22 @@ export const feedSaga = function*() {
   });
 
   // SignIn Function
-  yield takeLatest(SIGN_IN_BUTTON_CLICKED, function*(action) {
+  yield takeLatest(SIGN_IN_BUTTON_CLICKED, function* (action) {
     const userData = {}
     userData.email = action.email;
     userData.password = action.password;
-    
+
     const userPostData = yield call(
       postInitialData,
       userData
     );
-    yield put(userTokedLoaded(userPostData.user.token));
+    // keep the whole user object on store, not only the token
+    yield put(userTokedLoaded(userPostData.user));
+    // window.location = '/home';
   });
 
   // Your Articles Needed
-  yield takeLatest(YOURE_ARTICLES_NEEDED, function*(action) {
+  yield takeLatest(YOURE_ARTICLES_NEEDED, function* (action) {
     // const token = yield select(userToken)
     // const yourArticleData = yield call(
     //   fetchYourArticles,
@@ -133,11 +136,12 @@ const fetchInitialData = url => {
   );
 };
 
+// this function name can be more self-explaining
 const postInitialData = userData => {
 
   const data = { user: userData };
   return fetch("https://conduit.productionready.io/api/users/login", {
-    method: "POST", 
+    method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
@@ -146,5 +150,5 @@ const postInitialData = userData => {
     .then(response => {
       console.log("-- Post User Information Success::", response);
       return response
-    })
+    }) // here we should use catch to handle the login failures.
 };

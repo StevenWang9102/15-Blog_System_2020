@@ -8,16 +8,20 @@ import { loadUserProfileDetail, favoritedArticleClicked } from "../../ReduxStore
 const InternalUserProfile = props => {
 
 
-  const { userName } = useParams();
+  // const { userName } = useParams();
+  const userName = props.user ? props.user.username : null;
   useEffect(() => {
-    props.loadUserProfileDetail(userName);
+    // you can get user name from the props, if you kept the whole user object in store after login 
+    if (userName) {
+      props.loadUserProfileDetail(userName);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-    
+
   return (
     <div className='profile-page'>
-      
+
       {/* User Information */}
       <div className='user-info'>
         <div className='container'>
@@ -60,7 +64,7 @@ const InternalUserProfile = props => {
 
                 <li className='nav-item'>
                   <a className='nav-link' href='#top'
-                    onClick={(userName)=>{props.onFavoritedArticleClicked(userName)}}
+                    onClick={(userName) => { props.onFavoritedArticleClicked(userName) }}
                   >
                     Favorited Articles
                   </a>
@@ -71,13 +75,13 @@ const InternalUserProfile = props => {
             </div>
 
             {/* One Article */}
-            { (props.favoritedArticles || props.currentUsersArticles).map((article,index) => {
+            {(props.favoritedArticles || props.currentUsersArticles).map((article, index) => {
               return (
                 <div className='article-preview' key={index}>
                   <div className='article-meta'>
                     <a href='#top'>
                       <img src={article.author.image}
-                      alt='au' />
+                        alt='au' />
                     </a>
                     <div className='info'>
                       <a href='#top' className='author'>
@@ -118,9 +122,10 @@ const mapStateToProps = ({
   currentProfileData,
   currentUsersArticles,
   onFavoritedArticleClicked,
-  favoritedArticles
+  favoritedArticles,
+  userToken
 }) => {
-  return { currentProfileData, currentUsersArticles, onFavoritedArticleClicked, favoritedArticles };
+  return { currentProfileData, currentUsersArticles, onFavoritedArticleClicked, favoritedArticles, user: userToken };
 };
 
 const mapDispatchToProps = dispatch => {

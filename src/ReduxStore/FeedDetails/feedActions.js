@@ -23,24 +23,24 @@ export const loadInitialData = () => {
     return { type: INITIALDATA_LOADED };
 };
 
-export const loadInitArticleDetail = (slug) =>{
+export const loadInitArticleDetail = (slug) => {
     return { type: INIT_ARTICLE_COMMENT_GET, slug };
 }
 
-export const articleDataLoaded = (articleData) =>{
-    return { type: ARTICLE_DATA_LOADED, articleData};
+export const articleDataLoaded = (articleData) => {
+    return { type: ARTICLE_DATA_LOADED, articleData };
 }
 
 export const articleContentLoaded = (initArticleData) => {
-    return { type: ARTICLE_CONTENT_LOADED, initArticleData};
+    return { type: ARTICLE_CONTENT_LOADED, initArticleData };
 }
 
-export const tagsDataLoaded = (tagsData) =>{
-    return { type: TAGS_DATA_LOADED, tagsData};
+export const tagsDataLoaded = (tagsData) => {
+    return { type: TAGS_DATA_LOADED, tagsData };
 }
 
-export const articleCommentsLoaded = (initCommentData) =>{
-    return { type: ARTICLE_COMMENTS_LOADED, initCommentData};
+export const articleCommentsLoaded = (initCommentData) => {
+    return { type: ARTICLE_COMMENTS_LOADED, initCommentData };
 }
 
 export const articleTitleClicked = (title, slug) => {
@@ -48,11 +48,11 @@ export const articleTitleClicked = (title, slug) => {
 }
 
 export const popularTagClicked = (tagName) => {
-    return { type: POPULAR_TAG_CLICKED, tagName }; 
+    return { type: POPULAR_TAG_CLICKED, tagName };
 }
 
 export const popularTagIsDiplayed = (tagName) => {
-    return { type: POPULAR_TAG_DISPLAYED, tagName }; 
+    return { type: POPULAR_TAG_DISPLAYED, tagName };
 }
 
 export const tagRelatedArticleLoaded = (tagRelatedArticles) => {
@@ -87,10 +87,12 @@ export const favoritedArticleLoaded = (favoritedArticles) => {
     return { type: FAVERATED_ARITICLE_LOADED, favoritedArticles };
 }
 
+// use a more meaningful naming, eg login or authentication
 export const signInClicked = (email, password) => {
     return { type: SIGN_IN_BUTTON_CLICKED, email: email, password: password };
 }
 
+// typo here, userTokenLoaded
 export const userTokedLoaded = (token) => {
     return { type: USER_TOKEN_LOADED, userToken: token };
 }

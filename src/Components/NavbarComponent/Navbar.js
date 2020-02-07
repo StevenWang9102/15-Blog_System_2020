@@ -5,6 +5,7 @@ import { MainPage } from "../MainPageComponent/MainPage";
 import { NewPost } from "./NewPost";
 import { Setting } from "./Setting";
 import { connect } from "react-redux";
+import { UserProfile } from '../UserComponent/UserProfile';
 import PropTypes from "prop-types";
 
 
@@ -23,9 +24,9 @@ export const InternalNavbar = props => {
       <div>
         <nav className='navbar navbar-light'>
           <div className='container'>
-            
+
             <Link className='navbar-brand' to='/home'>
-            conduit
+              conduit
             </Link>
 
             <ul className='nav navbar-nav pull-xs-right'>
@@ -51,30 +52,30 @@ export const InternalNavbar = props => {
 
                   <li className='nav-item'>
                     <Link className='nav-link' to='/user_profile'>
-                      Logged User
+                      {props.userToken.username}
                     </Link>
                   </li>
 
                 </div>
               ) : (
-                <div>
-                  <li className='nav-item'>
-                    <Link className='nav-link active' to='/home'>
-                      Home
+                  <div>
+                    <li className='nav-item'>
+                      <Link className='nav-link active' to='/home'>
+                        Home
                     </Link>
-                  </li>
-                  <li className='nav-item'>
-                    <Link className='nav-link' to='/sign_in'>
-                      Sign in
+                    </li>
+                    <li className='nav-item'>
+                      <Link className='nav-link' to='/sign_in'>
+                        Sign in
                     </Link>
-                  </li>
-                  <li className='nav-item'>
-                    <Link className='nav-link' to='/sign_up'>
-                      Sign up
+                    </li>
+                    <li className='nav-item'>
+                      <Link className='nav-link' to='/sign_up'>
+                        Sign up
                     </Link>
-                  </li>
-                </div>
-              )}
+                    </li>
+                  </div>
+                )}
             </ul>
           </div>
         </nav>
@@ -100,6 +101,9 @@ export const InternalNavbar = props => {
           <Route exact path='/setting'>
             <Setting />
           </Route>
+          <Route exact path='/user_profile'>
+            <UserProfile />
+          </Route>
         </Switch>
       </div>
     </Router>
@@ -107,7 +111,7 @@ export const InternalNavbar = props => {
 };
 
 InternalNavbar.propTypes = {
-  userToken: PropTypes.string,
+  userToken: PropTypes.object,
 };
 
 const mapStateToProps = ({ userToken }) => {

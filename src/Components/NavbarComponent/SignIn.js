@@ -41,12 +41,12 @@ const InternalSignIn = props => {
                     "input[type='password']"
                   ).value;
                   props.onSignInClicked(email, password);
-                }}>
-                <Link
+                }}>Sign in
+                {/* <Link
                   className='nav-link preview-link article-detail'
                   to='/home'>
                   Sign in{" "}
-                </Link>
+                </Link> */}
               </button>
             </form>
           </div>
