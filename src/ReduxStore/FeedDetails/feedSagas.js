@@ -1,4 +1,4 @@
-import { takeLatest, put, call } from "redux-saga/effects";
+import { takeLatest, put, call, select } from "redux-saga/effects";
 import {
   INITIALDATA_LOADED,
   INIT_ARTICLE_COMMENT_GET,
@@ -15,8 +15,10 @@ import {
   FAVERATED_ARITICLE_CLICKED,
   favoritedArticleLoaded,
   SIGN_IN_BUTTON_CLICKED,
-  userTokedLoaded
+  userTokedLoaded,
+  YOURE_ARTICLES_NEEDED
 } from "./feedActions";
+import {userToken} from "../selector"
 
 export const feedSaga = function*() {
   // Globe feeds
@@ -102,21 +104,52 @@ export const feedSaga = function*() {
     // 重新get标签 https://conduit.productionready.io/api/tags
     // 等于是加载密钥作者的热门文章
   });
+
+  // Your Articles Needed
+  yield takeLatest(YOURE_ARTICLES_NEEDED, function*(action) {
+    const token = yield select(userToken)
+    
+    // const yourArticleData = yield call(
+    //   fetchYourArticles,
+    //   token
+    // );
+  
+    // console.log(yourArticleData);
+    // yield put(userTokedLoaded(userPostData.user.token));
+  });
 };
+
+// Progress Now //////////////////////////////////////////////
+// Progress Now //////////////////////////////////////////////
+
+
+// const fetchYourArticles = token => {
+//   return fetch("https://conduit.productionready.io/api/articles/feed?limit=10&offset=0", {
+//     method: "GET", 
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     Authorization: `Token ${token}`
+//   }).then(response => response.json())
+//     .then(response => {
+//       console.log(" -- get Your Article Success:", response);
+//       return response
+//     })
+// };
 
 const fetchInitialData = url => {
   return fetch("https://conduit.productionready.io/api" + url).then(
     response => {
       if (response.ok) {
         return response.json();
-      } else console.error(" -- Your Error: get data failed -- ");
+      } else console.error(" -- Error: get data failed -- ");
     }
   );
 };
 
 const postInitialData = userData => {
+
   const data = { user: userData };
-  
   return fetch("https://conduit.productionready.io/api/users/login", {
     method: "POST", 
     headers: {
@@ -125,7 +158,7 @@ const postInitialData = userData => {
     body: JSON.stringify(data)
   }).then(response => response.json())
     .then(response => {
-      console.log("Success:", response);
+      console.log("-- Post User Information Success::", response);
       return response
     })
 };

@@ -2,8 +2,8 @@ import React from "react";
 import { SignIn } from "./SignIn";
 import { SignUp } from "./SignUp";
 import { MainPage } from "../MainPageComponent/MainPage";
-import { ArticleDetails } from "../MainPageComponent/ArticleDetails";
-import { UserProfile } from "../UserComponent/UserProfile";
+import { NewPost } from "./NewPost";
+import { Setting } from "./Setting";
 import { connect } from "react-redux";
 
 import {
@@ -15,7 +15,6 @@ import {
 } from "react-router-dom";
 
 export const InternalNavbar = props => {
-  console.log(props.userToken);
 
   return (
     <Router>
@@ -26,15 +25,33 @@ export const InternalNavbar = props => {
               conduit
             </a>
             <ul className='nav navbar-nav pull-xs-right'>
-              <li className='nav-item'>
-                <Link className='nav-link active' to='/home'>
-                  Home
-                </Link>
-              </li>
               {props.userToken ? (
-                "存在用户"
+                <div>
+                  <li className='nav-item'>
+                    <Link className='nav-link active' to='/home'>
+                      Home
+                    </Link>
+                  </li>
+
+                  <li className='nav-item'>
+                    <Link className='nav-link' to='/new_post'>
+                      New Post
+                    </Link>
+                  </li>
+
+                  <li className='nav-item'>
+                    <Link className='nav-link' to='/setting'>
+                      Setting
+                    </Link>
+                  </li>
+                </div>
               ) : (
                 <div>
+                  <li className='nav-item'>
+                    <Link className='nav-link active' to='/home'>
+                      Home
+                    </Link>
+                  </li>
                   <li className='nav-item'>
                     <Link className='nav-link' to='/sign_in'>
                       Sign in
@@ -58,17 +75,20 @@ export const InternalNavbar = props => {
           <Route exact path='/home'>
             <MainPage />
           </Route>
+
           <Route exact path='/sign_in'>
             <SignIn />
           </Route>
           <Route exact path='/sign_up'>
             <SignUp />
           </Route>
-          <Route path='/article-detail/:article_slug'>
-            <ArticleDetails />
+
+          {/* New */}
+          <Route path='/new_post'>
+            <NewPost />
           </Route>
-          <Route path='/user-profile/:userName'>
-            <UserProfile />
+          <Route path='/setting'>
+            <Setting />
           </Route>
         </Switch>
       </div>
