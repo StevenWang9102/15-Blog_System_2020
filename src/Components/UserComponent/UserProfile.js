@@ -14,9 +14,7 @@ const InternalUserProfile = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  
-  console.log(props.favoritedArticles);
-  
+    
   return (
     <div className='profile-page'>
       
@@ -72,8 +70,7 @@ const InternalUserProfile = props => {
               </ul>
             </div>
 
-            {/* 一篇文章 */}
-            
+            {/* One Article */}
             { (props.favoritedArticles || props.currentUsersArticles).map((article,index) => {
               return (
                 <div className='article-preview' key={index}>

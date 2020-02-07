@@ -20,7 +20,8 @@ const InternalArticleDetails = props => {
     <div className='article-page'>
       <div className='banner'>
         <div className='container'>
-          {/* 文章标题部分 */}
+
+          {/* Article Title */}
           {props.currentArticleDetails.author && (
             <div>
               <h1>{props.currentArticleDetails.title}</h1>
@@ -53,15 +54,14 @@ const InternalArticleDetails = props => {
         </div>
       </div>
 
-      {/* 文章内容部分 */}
+      {/* Article Details */}
       <div className='container page'>
         <div className='row article-content'>
           <div className='col-md-12 article-detail'>
             {props.currentArticleDetails.body}
           </div>
         </div>
-        <hr />
-
+        <hr/>
         <ArticleComments />
       </div>
     </div>

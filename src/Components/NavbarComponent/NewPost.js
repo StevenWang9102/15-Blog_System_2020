@@ -50,8 +50,9 @@ const InternalNewPost = props => {
   );
 };
 
-const mapStateToProps = state => {
-  return { ...state };
+
+const mapStateToProps = () => {
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {

@@ -78,7 +78,6 @@ export const feedSaga = function*() {
       fetchInitialData,
       `/articles?favorited=${action.userName}&limit=5&offset=0`
     );
-    console.log(favoritedArticlesData);
     yield put(favoritedArticleLoaded(favoritedArticlesData.articles));
   });
 
@@ -92,29 +91,16 @@ export const feedSaga = function*() {
       postInitialData,
       userData
     );
-    console.log(userPostData.user.token);
-
     yield put(userTokedLoaded(userPostData.user.token));
-    
-    // 拿到密钥之后，解锁一些功能:
-    // 在哪个页面：导航、副导航
-    // 重新进行get文章 https://conduit.productionready.io/api/articles/feed?limit=10&offset=0
-    // 现在是重新get // 等于是加载密钥作者的文章
-    // 之前get文章："https://conduit.productionready.io/api/articles?limit=50&offset=10
-    // 重新get标签 https://conduit.productionready.io/api/tags
-    // 等于是加载密钥作者的热门文章
   });
 
   // Your Articles Needed
   yield takeLatest(YOURE_ARTICLES_NEEDED, function*(action) {
-    const token = yield select(userToken)
-    
+    // const token = yield select(userToken)
     // const yourArticleData = yield call(
     //   fetchYourArticles,
     //   token
     // );
-  
-    // console.log(yourArticleData);
     // yield put(userTokedLoaded(userPostData.user.token));
   });
 };
@@ -129,7 +115,7 @@ export const feedSaga = function*() {
 //     headers: {
 //       "Content-Type": "application/json"
 //     },
-//     Authorization: `Token ${token}`
+//     Authorization: `Bearer ${token}`
 //   }).then(response => response.json())
 //     .then(response => {
 //       console.log(" -- get Your Article Success:", response);

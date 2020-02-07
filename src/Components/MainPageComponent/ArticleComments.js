@@ -43,11 +43,11 @@ const InternalArticleComments = props => {
 };
 
 InternalArticleComments.propTypes = {
-  currentComments: PropTypes.object.isRequired
+  currentComments: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({ currentArticleDetails, currentComments }) => {
-  return { currentArticleDetails, currentComments };
+const mapStateToProps = ({ currentComments }) => {
+  return { currentComments };
 };
 
 export const ArticleComments = connect(mapStateToProps)(
