@@ -56,9 +56,9 @@ const InternalSignIn = props => {
   );
 };
 
-// const mapStateToProps = state => {
-//   return { ...state };
-// }; //去掉会报错。。。
+const mapStateToProps = state => {
+  return { ...state };
+}; //去掉会报错。。。
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -68,6 +68,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export const SignIn = connect(
-  // mapStateToProps,
+  mapStateToProps,
   mapDispatchToProps
 )(InternalSignIn);
