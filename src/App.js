@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import {Navbar} from "./Components/NavbarComponent/Navbar";
+import { Navbar } from "./Components/NavbarComponent/Navbar";
 import "./App.css";
 import { loadInitialData } from "./ReduxStore/FeedDetails/feedActions";
 

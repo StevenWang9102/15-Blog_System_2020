@@ -2,11 +2,15 @@ import {
   ARTICLE_DATA_LOADED,
   TAGS_DATA_LOADED,
   ARTICLE_TITLE_CLICKED,
-  POPULAR_TAG_DISPLAYED,
   ARTICLE_COMMENTS_LOADED,
   ARTICLE_CONTENT_LOADED,
   TAG_RELATED_ARTICLE_LOADED,
-  RELATED_TAG_LOADED
+  RELATED_TAG_LOADED,
+  USERS_PROFILE_LOADED,
+  GLOBLE_FEED_CLICKED,
+  USERS_RELATED_ARTICLES_LOADED,
+  FAVERATED_ARITICLE_LOADED,
+  USER_TOKEN_LOADED,
 } from "./feedActions";
 
 const initialState = {
@@ -15,11 +19,19 @@ const initialState = {
   articleLibrary: [],
   popularTags: [],
   currentArticleTitle: "",
-  currentArticleSlug: ""
+  currentArticleSlug: "",
+  currentProfileData: {},
+  currentUsersArticles: [],
+  favoritedArticles: null,
+  //
+  tagRelatedArticles: null,
+  currentTagName:"",
+  userToken: null
 };
 
 export const feedReducer = (state = initialState, action) => {
   switch (action.type) {
+
     case ARTICLE_DATA_LOADED:
       return { ...state, articleLibrary: action.articleData };
 
@@ -32,6 +44,7 @@ export const feedReducer = (state = initialState, action) => {
         currentArticleTitle: action.title,
         currentArticleSlug: action.slug
       };
+
     case ARTICLE_CONTENT_LOADED:
       return { ...state, currentArticleDetails: action.initArticleData };
 
@@ -41,11 +54,24 @@ export const feedReducer = (state = initialState, action) => {
     case TAG_RELATED_ARTICLE_LOADED:
       return { ...state, tagRelatedArticles: action.tagRelatedArticles };
 
-    case POPULAR_TAG_DISPLAYED:
-      return { ...state, isDisplay: action.tagName };
-
     case RELATED_TAG_LOADED:
       return { ...state, currentTagName: action.tagName };
+
+    case GLOBLE_FEED_CLICKED:
+      return { ...state, currentTagName: "", tagRelatedArticles: null };
+
+    case USERS_PROFILE_LOADED:
+      return { ...state, currentProfileData: action.userProfileData };
+
+    case USERS_RELATED_ARTICLES_LOADED:
+      return { ...state, currentUsersArticles: action.userRelatedArticles };
+      
+    case FAVERATED_ARITICLE_LOADED:
+      return { ...state, favoritedArticles: action.favoritedArticles };
+
+    // SIGN_IN_BUTTON_CLICKED
+    case USER_TOKEN_LOADED:
+      return { ...state, userToken: action.userToken };
 
     default:
       return state;

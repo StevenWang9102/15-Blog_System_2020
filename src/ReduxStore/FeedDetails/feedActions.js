@@ -9,8 +9,15 @@ export const POPULAR_TAG_CLICKED = Symbol("POPULAR_TAG_CLICKED")
 export const POPULAR_TAG_DISPLAYED = Symbol("POPULAR_TAG_DISPLAYED")
 export const TAG_RELATED_ARTICLE_LOADED = Symbol("TAG_RELATED_ARTICLE_LOADED")
 export const RELATED_TAG_LOADED = Symbol("RELATED_TAG_LOADED")
-
-// RELATED_TAG_LOADED
+export const GLOBLE_FEED_CLICKED = Symbol("GLOBLE_FEED_CLICKED")
+export const USERS_NAME_LOADED = Symbol("GLOBLE_FEED_CLICKED")
+export const USERS_PROFILE_LOADED = Symbol("USERS_PROFILE_LOADED")
+export const USERS_RELATED_ARTICLES_LOADED = Symbol("USERS_PROFILE_LOADED")
+export const FAVERATED_ARITICLE_CLICKED = Symbol("FAVERATED_ARITICLE_CLICKED")
+export const FAVERATED_ARITICLE_LOADED = Symbol("FAVERATED_ARITICLE_LOADED")
+export const SIGN_IN_BUTTON_CLICKED = Symbol("SIGN_IN_BUTTON_CLICKED")
+export const USER_TOKEN_LOADED = Symbol("USER_TOKEN_LOADED")
+export const YOURE_ARTICLES_NEEDED = Symbol("YOURE_ARTICLES_NEEDED")
 
 export const loadInitialData = () => {
     return { type: INITIALDATA_LOADED };
@@ -24,7 +31,6 @@ export const articleDataLoaded = (articleData) =>{
     return { type: ARTICLE_DATA_LOADED, articleData};
 }
 
-// 这个是特定文章的返回值
 export const articleContentLoaded = (initArticleData) => {
     return { type: ARTICLE_CONTENT_LOADED, initArticleData};
 }
@@ -53,7 +59,43 @@ export const tagRelatedArticleLoaded = (tagRelatedArticles) => {
     return { type: TAG_RELATED_ARTICLE_LOADED, tagRelatedArticles };
 }
 
-// relatedTagLoaded
+export const globeFeedClicked = () => {
+    return { type: GLOBLE_FEED_CLICKED };
+}
+
 export const relatedTagLoaded = (tagName) => {
     return { type: RELATED_TAG_LOADED, tagName };
+}
+
+export const loadUserProfileDetail = (userName) => {
+    return { type: USERS_NAME_LOADED, userName };
+}
+
+export const userProfileDataLoaded = (userProfileData) => {
+    return { type: USERS_PROFILE_LOADED, userProfileData };
+}
+
+export const userRelatedArticlesLoaded = (userRelatedArticles) => {
+    return { type: USERS_RELATED_ARTICLES_LOADED, userRelatedArticles };
+}
+
+export const favoritedArticleClicked = (userName) => {
+    return { type: FAVERATED_ARITICLE_CLICKED, userName };
+}
+
+export const favoritedArticleLoaded = (favoritedArticles) => {
+    return { type: FAVERATED_ARITICLE_LOADED, favoritedArticles };
+}
+
+export const signInClicked = (email, password) => {
+    return { type: SIGN_IN_BUTTON_CLICKED, email: email, password: password };
+}
+
+export const userTokedLoaded = (token) => {
+    return { type: USER_TOKEN_LOADED, userToken: token };
+}
+
+// loadYourArticles
+export const loadYourArticles = (token) => {
+    return { type: YOURE_ARTICLES_NEEDED, token: token };
 }
