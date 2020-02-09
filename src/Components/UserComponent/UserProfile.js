@@ -9,6 +9,7 @@ const InternalUserProfile = props => {
 
 
   const { userName } = useParams();
+  
   useEffect(() => {
     props.loadUserProfileDetail(userName);
     // eslint-disable-next-line react-hooks/exhaustive-deps
