@@ -9,20 +9,15 @@ const InternalUserProfile = props => {
 
 
   const { userName } = useParams();
-<<<<<<< Updated upstream
   
-=======
-
->>>>>>> Stashed changes
   useEffect(() => {
     props.loadUserProfileDetail(userName);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  }, []);    
     
   return (
     <div className='profile-page'>
-      测试文字
+      
       {/* User Information */}
       <div className='user-info'>
         <div className='container'>

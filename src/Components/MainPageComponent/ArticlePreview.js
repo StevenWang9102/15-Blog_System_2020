@@ -24,7 +24,7 @@ const InternalArticlePreview = props => {
           <li className='nav-item'>
 
             {/* Your Feeds */}
-            {props.userToken && (
+            {sessionStorage.getItem('Token') && (
                 <a
                   className='nav-link active display-inline'
                   href='#top'
@@ -63,15 +63,12 @@ const InternalArticlePreview = props => {
               <div className='article-meta'>
                 
                 {/* 
-
-                链接到用户页面
-                访问用户页面
-                用户页面开始请求
-              
-                
-                
+                  链接到用户页面
+                  访问用户页面
+                  用户页面开始请求
                 */}
-                <Link to={"/user-profile/" + article.author.username}>
+
+                <Link to={"/user_profile/" + article.author.username}>
                   <img
                     className='author-image'
                     src={article.author.image}

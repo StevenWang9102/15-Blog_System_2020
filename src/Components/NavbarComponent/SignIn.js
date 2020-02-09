@@ -4,6 +4,9 @@ import { signInClicked } from "../../ReduxStore/FeedDetails/feedActions";
 import { Link } from "react-router-dom";
 
 const InternalSignIn = props => {
+
+  console.log(sessionStorage.getItem('email'));
+
   return (
     <div className='auth-page'>
       <div className='container page'>
@@ -20,6 +23,7 @@ const InternalSignIn = props => {
                   id='username'
                   className='form-control form-control-lg'
                   type='text'
+                  value={sessionStorage.getItem('email')}
                   placeholder='Email'></input>
               </fieldset>
 
@@ -33,6 +37,8 @@ const InternalSignIn = props => {
 
               <button
                 className='btn btn-lg btn-primary pull-xs-right'
+                
+                // 此处要更新
                 onClick={event => {
                   event.preventDefault();
                   const email = document.querySelector("input[type='text']")
@@ -41,11 +47,25 @@ const InternalSignIn = props => {
                     "input[type='password']"
                   ).value;
                   props.onSignInClicked(email, password);
+
+                  // tag Session Storage
+                  // const user = { 'email': email, 'password': password }
+                  sessionStorage.setItem('email', email)
+                  sessionStorage.setItem('Token', props.userToken)
+
+                  // 储存在本地
+                  // 是用户登录状态 - 始终保持登录
+                  // 那么哪些东西需要保存呢，答案如下
+                  // 第一， props.userToken
+                  // 第二， props.userToken
+                  // props.userToken在哪里拿到的？
+                  
+
                 }}>
                 <Link
                   className='nav-link preview-link article-detail'
                   to='/home'>
-                  Sign in{" "}
+                  Sign in
                 </Link>
               </button>
             </form>
@@ -58,7 +78,7 @@ const InternalSignIn = props => {
 
 const mapStateToProps = state => {
   return { ...state };
-}; //去掉会报错。。。
+}; 
 
 const mapDispatchToProps = dispatch => {
   return {

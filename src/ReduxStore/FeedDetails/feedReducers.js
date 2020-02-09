@@ -11,6 +11,7 @@ import {
   USERS_RELATED_ARTICLES_LOADED,
   FAVERATED_ARITICLE_LOADED,
   USER_TOKEN_LOADED,
+  SIGN_IN_BUTTON_CLICKED,
 } from "./feedActions";
 
 const initialState = {
@@ -22,7 +23,7 @@ const initialState = {
   currentArticleSlug: "",
   currentProfileData: {},
   currentUsersArticles: [],
-  favoritedArticles: null,
+  favoritedArticles: [],
   tagRelatedArticles: null,
   currentTagName:"",
   userToken: null

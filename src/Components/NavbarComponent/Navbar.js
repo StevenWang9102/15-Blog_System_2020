@@ -6,6 +6,7 @@ import { NewPost } from "./NewPost";
 import { Setting } from "./Setting";
 import { connect } from "react-redux";
 import { UserProfile } from "../UserComponent/UserProfile"
+import { ArticleDetails } from "../MainPageComponent/ArticleDetails"
 import PropTypes from "prop-types";
 
 
@@ -30,7 +31,7 @@ export const InternalNavbar = props => {
             </Link>
 
             <ul className='nav navbar-nav pull-xs-right'>
-              {props.userToken ? (
+              {sessionStorage.getItem('Token') ? (
                 <div>
                   <li className='nav-item'>
                     <Link className='nav-link active' to='/home'>
@@ -95,10 +96,24 @@ export const InternalNavbar = props => {
             <SignUp />
           </Route>
 
-          {/* 缺链接到用户页面的语法 */}
-          <Route exact path='/user_profile'>
+         
+
+          {/* 
+            缺链接到用户页面的语法
+            解析出来用户名
+           */}
+
+          <Route path='/user_profile/:userName'>
             <UserProfile />
           </Route>
+          <Route path="/article-detail/:article_slug">
+            <ArticleDetails/>
+          </Route>
+
+
+
+
+
 
           <Route exact path='/new_post'>
             <NewPost />
@@ -106,6 +121,9 @@ export const InternalNavbar = props => {
           <Route exact path='/setting'>
             <Setting />
           </Route>
+
+          
+          
         </Switch>
       </div>
     </Router>
