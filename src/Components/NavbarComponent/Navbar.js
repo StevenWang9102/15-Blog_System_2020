@@ -5,6 +5,7 @@ import { MainPage } from "../MainPageComponent/MainPage";
 import { NewPost } from "./NewPost";
 import { Setting } from "./Setting";
 import { connect } from "react-redux";
+import { UserProfile } from "../UserComponent/UserProfile"
 import PropTypes from "prop-types";
 
 
@@ -92,6 +93,11 @@ export const InternalNavbar = props => {
           </Route>
           <Route exact path='/sign_up'>
             <SignUp />
+          </Route>
+
+          {/* 缺链接到用户页面的语法 */}
+          <Route exact path='/user_profile'>
+            <UserProfile />
           </Route>
 
           <Route exact path='/new_post'>

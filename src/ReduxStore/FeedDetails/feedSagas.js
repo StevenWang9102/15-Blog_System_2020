@@ -59,14 +59,24 @@ export const feedSaga = function*() {
 
   // User Profile
   yield takeLatest(USERS_NAME_LOADED, function*(action) {
-    const userProfileData = yield call(
-      fetchInitialData,
-      `/profiles/${action.userName}`
-    );
-    const userRelatedArticles = yield call(
-      fetchInitialData,
-      `/articles?author=${action.userName}&limit=5&offset=0`
-    );
+    // const userProfileData = yield call(
+    //   fetchInitialData,
+    //   `/profiles/${action.userName}`
+    // );
+    // const userRelatedArticles = yield call(
+    //   fetchInitialData,
+    //   `/articles?author=${action.userName}&limit=5&offset=0`
+    // );
+    // 升级改造
+    // 同时进行Fetch动作，同时返回
+    // 测试工作不：点击用户，显示用户信息
+    // 现在不显示用户信息，
+    // 数据进来没
+
+    const [userProfileData, userRelatedArticles] = yield [
+      call(fetchInitialData, `/profiles/${action.userName}`),
+      call(fetchInitialData, `/articles?author=${action.userName}&limit=5&offset=0`)
+    ]
 
     yield put(userProfileDataLoaded(userProfileData));
     yield put(userRelatedArticlesLoaded(userRelatedArticles.articles));

@@ -62,6 +62,15 @@ const InternalArticlePreview = props => {
             <div className='article-preview' key={index}>
               <div className='article-meta'>
                 
+                {/* 
+
+                链接到用户页面
+                访问用户页面
+                用户页面开始请求
+              
+                
+                
+                */}
                 <Link to={"/user-profile/" + article.author.username}>
                   <img
                     className='author-image'

@@ -9,6 +9,8 @@ import { ArticleComments } from "./ArticleComments";
 
 const InternalArticleDetails = props => {
 
+  console.log(props.currentProfileData);
+  
   const { article_slug } = useParams();
 
   useEffect(() => {
@@ -72,8 +74,8 @@ InternalArticleDetails.propTypes = {
   currentArticleDetails: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ currentArticleDetails }) => {
-  return { currentArticleDetails };
+const mapStateToProps = ({ currentArticleDetails,currentProfileData }) => {
+  return { currentArticleDetails,currentProfileData };
 };
 
 const mapDispatchToProps = dispatch => {
