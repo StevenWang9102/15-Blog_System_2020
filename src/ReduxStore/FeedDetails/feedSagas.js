@@ -17,7 +17,7 @@ import {
   SIGN_IN_BUTTON_CLICKED,
   userTokedLoaded,
   // userTokenNameLoaded,
-  YOURE_ARTICLES_NEEDED
+  YOURE_FEED_CLICKED
 } from "./feedActions";
 
 export const feedSaga = function*() {
@@ -86,43 +86,61 @@ export const feedSaga = function*() {
     userData.email = action.email;
     userData.password = action.password;
     const userPostData = yield call(postInitialData, userData);
-    // yield put(userTokedLoaded(userPostData.user.token));
+     
+    // tag Session Storage
+    sessionStorage.setItem('Token', userPostData.user.token)
+    sessionStorage.setItem('TokenUserName', userPostData.user.username)    
+    
     yield put(userTokedLoaded(userPostData));
+    // yield put(userTokedLoaded(userPostData.user.token));
   });
 
-  // Your Articles Needed
-  // Your Articles Needed
-  // Your Articles Needed
+  // Your Articles Clicked /////////////////////////////////////
+  // Progress Now //////////////////////////////////////////////
+  // Progress Now //////////////////////////////////////////////
 
-  yield takeLatest(YOURE_ARTICLES_NEEDED, function*(action) {
+  yield takeLatest(YOURE_FEED_CLICKED, function*(action) {
     const state = yield select();
-    const token = JSON.stringify(state.userToken)
+    const token = sessionStorage.getItem('Token')
     console.log(token);
-    // 成功拿到密钥
-    // 现在报错
-    
+    //现在拿不到密钥。。 
+       
     const yourArticleData = yield call(fetchYourArticles, token);
     console.log(yourArticleData);
     // yield put(userTokedLoaded(userPostData.user.token));
   }); 
 };
 
-// Progress Now //////////////////////////////////////////////
-const fetchYourArticles = token => {
-  let url = "https://conduit.productionready.io/api/articles/feed?limit=10&offset=0";
-  let header = new Headers()
-  header.append("Authorization", `Bearer ${token}`)
-  let request = new Request(url,{
-    method: "GET",
-    mode: "cors",
-    headers: header
-  })
 
-  return fetch(request).then(response => response.json())
+const fetchYourArticles = token => {
+  return fetch("https://conduit.productionready.io/api/articles/feed?limit=10&offset=0", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    // body: JSON.stringify(data)
+  })
+    .then(response => response.json())
     .then(response => {
-      console.log(" -- get Your Article Success:", response);
-      return response
-    })
+      // console.log("-- Post User Information Success::", response);
+      return response;
+    });
+  // let url = "https://conduit.productionready.io/api/articles/feed?limit=10&offset=0";
+  // let header = new Headers()
+  // header.append("Authorization", `Bearer ${token}`)
+  // let req = new Request(url,{
+  //   method: "GET",
+  //   mode: "cors",
+  //   headers: header
+  // })
+
+  // return fetch(req)
+  //   // .then(response => response.json())
+  //   .then(response => {
+  //     console.log(" -- get Your Article Success:", response);
+  //     return response
+  //   })
 };
 
 const fetchInitialData = url => {
@@ -146,7 +164,7 @@ const postInitialData = userData => {
   })
     .then(response => response.json())
     .then(response => {
-      console.log("-- Post User Information Success::", response);
+      // console.log("-- Post User Information Success::", response);
       return response;
     });
 };

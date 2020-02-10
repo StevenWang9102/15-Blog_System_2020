@@ -10,16 +10,16 @@ export const POPULAR_TAG_DISPLAYED = Symbol("POPULAR_TAG_DISPLAYED")
 export const TAG_RELATED_ARTICLE_LOADED = Symbol("TAG_RELATED_ARTICLE_LOADED")
 export const RELATED_TAG_LOADED = Symbol("RELATED_TAG_LOADED")
 export const GLOBLE_FEED_CLICKED = Symbol("GLOBLE_FEED_CLICKED")
-export const USERS_NAME_LOADED = Symbol("GLOBLE_FEED_CLICKED")
+export const USERS_NAME_LOADED = Symbol("USERS_NAME_LOADED")
 export const USERS_PROFILE_LOADED = Symbol("USERS_PROFILE_LOADED")
-export const USERS_RELATED_ARTICLES_LOADED = Symbol("USERS_PROFILE_LOADED")
+export const USERS_RELATED_ARTICLES_LOADED = Symbol("USERS_RELATED_ARTICLES_LOADED")
 export const FAVERATED_ARITICLE_CLICKED = Symbol("FAVERATED_ARITICLE_CLICKED")
 export const FAVERATED_ARITICLE_LOADED = Symbol("FAVERATED_ARITICLE_LOADED")
 export const SIGN_IN_BUTTON_CLICKED = Symbol("SIGN_IN_BUTTON_CLICKED")
 export const USER_TOKEN_LOADED = Symbol("USER_TOKEN_LOADED")
-export const YOURE_ARTICLES_NEEDED = Symbol("YOURE_ARTICLES_NEEDED")
-// USER_TOKEN_NAME_LOADED
-export const USER_TOKEN_NAME_LOADED = Symbol("YOURE_ARTICLES_NEEDED")
+export const USER_TOKEN_NAME_LOADED = Symbol("USER_TOKEN_NAME_LOADED")
+// YOURE_FEED_CLICKED
+export const YOURE_FEED_CLICKED = Symbol("YOURE_FEED_CLICKED")
 
 
 export const loadInitialData = () => {
@@ -104,5 +104,5 @@ export const userTokedLoaded = (payload) => {
 // }
 
 export const loadYourArticles = (token) => {
-    return { type: YOURE_ARTICLES_NEEDED, token: token };
+    return { type: YOURE_FEED_CLICKED, token: token };
 }

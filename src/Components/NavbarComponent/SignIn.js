@@ -43,17 +43,6 @@ const InternalSignIn = props => {
                 onClick={event => {
                   event.preventDefault();
                   props.onSignInClicked(email, password);
-
-                  // tag Session Storage
-                  // const user = { 'email': email, 'password': password
-                  console.log(props.userToken);
-                  
-                  // sessionStorage.setItem('Token', JSON.stringify(props.userToken))
-                  // sessionStorage.setItem('TokenName', props.userTokenName)
-                  sessionStorage.setItem('Token', '测试')
-
-                  console.log(sessionStorage.getItem('Token'));
-                  
                 }}>
                 <Link
                   className='nav-link preview-link article-detail'

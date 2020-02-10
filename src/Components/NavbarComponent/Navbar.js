@@ -57,10 +57,7 @@ export const InternalNavbar = props => {
                   {/* Logged User */}
                   <li className='nav-item'>
                     <Link className='nav-link' to='/user_profile'>
-                        {sessionStorage.getItem('TokenName')|| '用户不存在' 
-                        // 点击sign in之后，存在了本地
-                        // 现在去调动就可以了
-                        } 
+                        {sessionStorage.getItem('TokenUserName') || '未登录'} 
                     </Link>
                   </li>
 
