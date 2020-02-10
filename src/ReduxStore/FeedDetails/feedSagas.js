@@ -16,7 +16,7 @@ import {
   favoritedArticleLoaded,
   SIGN_IN_BUTTON_CLICKED,
   userTokedLoaded,
-  userTokenNameLoaded,
+  // userTokenNameLoaded,
   YOURE_ARTICLES_NEEDED
 } from "./feedActions";
 
@@ -96,9 +96,10 @@ export const feedSaga = function*() {
 
   yield takeLatest(YOURE_ARTICLES_NEEDED, function*(action) {
     const state = yield select();
-    const token = state.userToken
+    const token = JSON.stringify(state.userToken)
     console.log(token);
     // 成功拿到密钥
+    // 现在报错
     
     const yourArticleData = yield call(fetchYourArticles, token);
     console.log(yourArticleData);
@@ -108,13 +109,16 @@ export const feedSaga = function*() {
 
 // Progress Now //////////////////////////////////////////////
 const fetchYourArticles = token => {
-  return fetch("https://conduit.productionready.io/api/articles/feed?limit=10&offset=0", {
+  let url = "https://conduit.productionready.io/api/articles/feed?limit=10&offset=0";
+  let header = new Headers()
+  header.append("Authorization", `Bearer ${token}`)
+  let request = new Request(url,{
     method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    Authorization: `Bearer ${token}`
-  }).then(response => response.json())
+    mode: "cors",
+    headers: header
+  })
+
+  return fetch(request).then(response => response.json())
     .then(response => {
       console.log(" -- get Your Article Success:", response);
       return response

@@ -21,7 +21,7 @@ import {
 export const InternalNavbar = props => {
 
   // const userName = props.userTokenName || null;
-  console.log(props.userTokenName);
+  console.log(sessionStorage.getItem('TokenName'));
   
   return (
     <Router>
@@ -53,10 +53,14 @@ export const InternalNavbar = props => {
                       Setting
                     </Link>
                   </li>
-{/* 这里 */}
+
+                  {/* Logged User */}
                   <li className='nav-item'>
                     <Link className='nav-link' to='/user_profile'>
-                        {props.userTokenName || null } 
+                        {sessionStorage.getItem('TokenName')|| '用户不存在' 
+                        // 点击sign in之后，存在了本地
+                        // 现在去调动就可以了
+                        } 
                     </Link>
                   </li>
 

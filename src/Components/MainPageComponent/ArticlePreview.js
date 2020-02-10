@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
+// import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
@@ -11,10 +12,11 @@ import {
 
 const InternalArticlePreview = props => {
 
-  useEffect(() => {
-    props.onYourArticleNeeded(props.userToken);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // 暂时关闭
+  // useEffect(() => {
+  //   props.onYourArticleNeeded(props.userToken);
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <div className='col-md-9 col-sm-12'>
@@ -29,7 +31,7 @@ const InternalArticlePreview = props => {
                 <a
                   className='nav-link active display-inline'
                   onClick={() => {
-                    props.onYourFeedClicked();
+                    props.onYourFeedClicked(props.userToken);
                   }}>
                   Your Feed
                 </a>
@@ -136,8 +138,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onArticleClick: (title, slug) => dispatch(articleTitleClicked(title, slug)),
     onGlobeFeedClicked: () => dispatch(globeFeedClicked()),
-    onYourArticleNeeded: () => dispatch(loadYourArticles()),
-    onYourFeedClicked: () => dispatch(loadYourArticles()),
+    // onYourArticleNeeded: () => dispatch(loadYourArticles()),
+    onYourFeedClicked: (token) => dispatch(loadYourArticles(token)),
   };
 };
 
