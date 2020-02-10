@@ -20,8 +20,6 @@ const InternalUserProfile = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 获取点击的名字，点击不是作者，给404
-
   return (
     <div>
       <div className='profile-page'>
@@ -91,7 +89,6 @@ const InternalUserProfile = props => {
                             {article.author.username}
                           </a>
                           <span className='date'>
-                            {" "}
                             {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
                           </span>
                         </div>

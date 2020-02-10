@@ -10,9 +10,16 @@ import {
   loadYourArticles
 } from "../../ReduxStore/FeedDetails/feedActions";
 
+
+import {
+  NavLink
+} from "react-router-dom";
+
 const InternalArticlePreview = props => {
 
-  // 暂时关闭
+  console.log(props.yourArticles);
+  
+  // CLOSED TEMPORARY
   // useEffect(() => {
   //   props.onYourArticleNeeded(props.userToken);
   // // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -26,10 +33,9 @@ const InternalArticlePreview = props => {
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
 
-            {/* Your Feeds */}
             {sessionStorage.getItem('Token') && (
                 <a
-                  className='nav-link active display-inline'
+                  className='nav-link display-inline'  //active 
                   onClick={() => {
                     props.onYourFeedClicked(props.userToken);
                   }}>
@@ -37,25 +43,25 @@ const InternalArticlePreview = props => {
                 </a>
             )}
             
-            {/* Globel Feeds */}
             <a
-              className='nav-link active display-inline'
-              href='#top'
+              className='nav-link display-inline'
               onClick={() => {
                 props.onGlobeFeedClicked();
               }}>
               Global Feed
             </a>
 
-            {/* Tag Feeds */}
             {props.currentTagName && (
-              <a className='nav-link active display-inline' href='#top'>
+              <NavLink exact={true} className='nav-link display-inline' activeClassName='active' to='/popular_tags'>
                 # {props.currentTagName}
-              </a>
+              </NavLink>
             )}
           </li>
         </ul>
       </div>
+
+
+{/*   Confusing.... props.yourArticles */}
 
       {/* --------------------- Article --------------------- */}
       {(props.tagRelatedArticles || props.articleLibrary).map(
@@ -63,13 +69,7 @@ const InternalArticlePreview = props => {
           return (
             <div className='article-preview' key={index}>
               <div className='article-meta'>
-                
-                {/* 
-                  链接到用户页面
-                  访问用户页面
-                  用户页面开始请求
-                */}
-
+            
                 <Link to={"/user_profile/" + article.author.username}>
                   <img
                     className='author-image'
@@ -123,14 +123,16 @@ const mapStateToProps = ({
   onArticleClick,
   tagRelatedArticles,
   currentTagName,
-  userToken
+  userToken,
+  yourArticles
 }) => {
   return {
     articleLibrary,
     onArticleClick,
     tagRelatedArticles,
     currentTagName,
-    userToken
+    userToken,
+    yourArticles
   };
 };
 

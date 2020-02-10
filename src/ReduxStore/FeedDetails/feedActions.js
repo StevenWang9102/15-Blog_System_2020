@@ -20,6 +20,8 @@ export const USER_TOKEN_LOADED = Symbol("USER_TOKEN_LOADED")
 export const USER_TOKEN_NAME_LOADED = Symbol("USER_TOKEN_NAME_LOADED")
 // YOURE_FEED_CLICKED
 export const YOURE_FEED_CLICKED = Symbol("YOURE_FEED_CLICKED")
+// YOURE_FEED_LOADED
+export const YOURE_FEED_LOADED = Symbol("YOURE_FEED_LOADED")
 
 
 export const loadInitialData = () => {
@@ -105,4 +107,9 @@ export const userTokedLoaded = (payload) => {
 
 export const loadYourArticles = (token) => {
     return { type: YOURE_FEED_CLICKED, token: token };
+}
+
+// yourFeedsLoaded
+export const yourFeedsLoaded = (articles) => {
+    return { type: YOURE_FEED_LOADED, articles: articles };
 }
