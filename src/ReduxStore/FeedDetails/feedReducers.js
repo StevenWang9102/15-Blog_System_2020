@@ -12,6 +12,7 @@ import {
   FAVERATED_ARITICLE_LOADED,
   USER_TOKEN_LOADED,
   SIGN_IN_BUTTON_CLICKED,
+  USER_TOKEN_NAME_LOADED,
 } from "./feedActions";
 
 const initialState = {
@@ -70,8 +71,14 @@ export const feedReducer = (state = initialState, action) => {
       return { ...state, favoritedArticles: action.favoritedArticles };
 
     case USER_TOKEN_LOADED:
-      return { ...state, userToken: action.userToken };
+      return { ...state, userToken: action.userToken, userTokenName: action.userTokenName  };
 
+    // USER_TOKEN_NAME_LOADED
+    // case USER_TOKEN_NAME_LOADED:
+    //   return { ...state, userTokenName: action.userTokenName };
+
+    // 测试 
+  
     default:
       return state;
   }

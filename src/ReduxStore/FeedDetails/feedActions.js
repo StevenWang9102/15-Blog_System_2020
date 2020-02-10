@@ -18,6 +18,9 @@ export const FAVERATED_ARITICLE_LOADED = Symbol("FAVERATED_ARITICLE_LOADED")
 export const SIGN_IN_BUTTON_CLICKED = Symbol("SIGN_IN_BUTTON_CLICKED")
 export const USER_TOKEN_LOADED = Symbol("USER_TOKEN_LOADED")
 export const YOURE_ARTICLES_NEEDED = Symbol("YOURE_ARTICLES_NEEDED")
+// USER_TOKEN_NAME_LOADED
+export const USER_TOKEN_NAME_LOADED = Symbol("YOURE_ARTICLES_NEEDED")
+
 
 export const loadInitialData = () => {
     return { type: INITIALDATA_LOADED };
@@ -92,11 +95,14 @@ export const signInClicked = (email, password) => {
     
 }
 
-export const userTokedLoaded = (token) => {
-    return { type: USER_TOKEN_LOADED, userToken: token };
+export const userTokedLoaded = (payload) => {
+    return { type: USER_TOKEN_LOADED, userToken: payload.user.token, userTokenName: payload.user.username };
 }
+// userTokenNameLoaded
+// export const userTokenNameLoaded = (payload) => {
+//     return { type: USER_TOKEN_NAME_LOADED,  };
+// }
 
-// loadYourArticles
 export const loadYourArticles = (token) => {
     return { type: YOURE_ARTICLES_NEEDED, token: token };
 }

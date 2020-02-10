@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { signInClicked } from "../../ReduxStore/FeedDetails/feedActions";
 import { Link } from "react-router-dom";
 
 const InternalSignIn = props => {
 
-  console.log(sessionStorage.getItem('email'));
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  // console.log(sessionStorage.getItem('email'));
+  console.log(email);
+  console.log(password);
 
   return (
     <div className='auth-page'>
@@ -23,7 +28,8 @@ const InternalSignIn = props => {
                   id='username'
                   className='form-control form-control-lg'
                   type='text'
-                  value={sessionStorage.getItem('email')}
+                  onChange={(event) => setEmail(event.target.value)}  
+                  // value={JSON.parse(sessionStorage.getItem('USER')) && JSON.parse(sessionStorage.getItem('USER')).email}
                   placeholder='Email'></input>
               </fieldset>
 
@@ -32,6 +38,8 @@ const InternalSignIn = props => {
                   id='password'
                   className='form-control form-control-lg'
                   type='password'
+                  onChange={(event) => setPassword(event.target.value)}  
+                  // value={JSON.parse(sessionStorage.getItem('USER')) && JSON.parse(sessionStorage.getItem('USER')).email}
                   placeholder='Password'></input>
               </fieldset>
 
@@ -41,25 +49,28 @@ const InternalSignIn = props => {
                 // 此处要更新
                 onClick={event => {
                   event.preventDefault();
-                  const email = document.querySelector("input[type='text']")
-                    .value;
-                  const password = document.querySelector(
-                    "input[type='password']"
-                  ).value;
+                  // const email = document.querySelector("input[type='text']")
+                  //   .value;
+                  // const password = document.querySelector(
+                  //   "input[type='password']"
+                  // ).value;
                   props.onSignInClicked(email, password);
 
                   // tag Session Storage
                   // const user = { 'email': email, 'password': password }
-                  sessionStorage.setItem('email', email)
+                  // sessionStorage.setItem('USER', JSON.stringify(user))
+
                   sessionStorage.setItem('Token', props.userToken)
 
-                  // 储存在本地
                   // 是用户登录状态 - 始终保持登录
                   // 那么哪些东西需要保存呢，答案如下
-                  // 第一， props.userToken
-                  // 第二， props.userToken
+                    // 第一， props.userToken
+                    // 第二， props.userToken
                   // props.userToken在哪里拿到的？
-                  
+
+
+                  // 用户名，密码也要保存
+                  // 现在页面好像表现的异常
 
                 }}>
                 <Link

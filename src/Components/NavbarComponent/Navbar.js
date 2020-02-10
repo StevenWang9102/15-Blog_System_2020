@@ -20,6 +20,9 @@ import {
 
 export const InternalNavbar = props => {
 
+  // const userName = props.userTokenName || null;
+  console.log(props.userTokenName);
+  
   return (
     <Router>
       <div>
@@ -31,6 +34,8 @@ export const InternalNavbar = props => {
             </Link>
 
             <ul className='nav navbar-nav pull-xs-right'>
+              {/* {props.userToken ? ( */}
+
               {sessionStorage.getItem('Token') ? (
                 <div>
                   <li className='nav-item'>
@@ -53,7 +58,7 @@ export const InternalNavbar = props => {
 
                   <li className='nav-item'>
                     <Link className='nav-link' to='/user_profile'>
-                      Logged User
+                        {props.userTokenName || null } 
                     </Link>
                   </li>
 
@@ -134,8 +139,8 @@ InternalNavbar.propTypes = {
   userToken: PropTypes.string,
 };
 
-const mapStateToProps = ({ userToken }) => {
-  return { userToken };
+const mapStateToProps = ({ userToken, userTokenName }) => {
+  return { userToken, userTokenName };
 };
 
 export const Navbar = connect(mapStateToProps)(InternalNavbar);
