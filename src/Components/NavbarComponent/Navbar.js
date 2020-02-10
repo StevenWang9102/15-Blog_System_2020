@@ -34,8 +34,6 @@ export const InternalNavbar = props => {
             </Link>
 
             <ul className='nav navbar-nav pull-xs-right'>
-              {/* {props.userToken ? ( */}
-
               {sessionStorage.getItem('Token') ? (
                 <div>
                   <li className='nav-item'>
@@ -55,7 +53,7 @@ export const InternalNavbar = props => {
                       Setting
                     </Link>
                   </li>
-
+{/* 这里 */}
                   <li className='nav-item'>
                     <Link className='nav-link' to='/user_profile'>
                         {props.userTokenName || null } 
@@ -101,24 +99,12 @@ export const InternalNavbar = props => {
             <SignUp />
           </Route>
 
-         
-
-          {/* 
-            缺链接到用户页面的语法
-            解析出来用户名
-           */}
-
-          <Route path='/user_profile/:userName'>
+          <Route path='/user_profile'>
             <UserProfile />
           </Route>
           <Route path="/article-detail/:article_slug">
             <ArticleDetails/>
           </Route>
-
-
-
-
-
 
           <Route exact path='/new_post'>
             <NewPost />

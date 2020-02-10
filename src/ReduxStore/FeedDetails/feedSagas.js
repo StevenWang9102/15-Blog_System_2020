@@ -61,8 +61,11 @@ export const feedSaga = function*() {
   yield takeLatest(USERS_NAME_LOADED, function*(action) {
     const [userProfileData, userRelatedArticles] = yield [
       call(fetchInitialData, `/profiles/${action.userName}`),
-      call(fetchInitialData, `/articles?author=${action.userName}&limit=5&offset=0`)
-    ]
+      call(
+        fetchInitialData,
+        `/articles?author=${action.userName}&limit=5&offset=0`
+      )
+    ];
 
     yield put(userProfileDataLoaded(userProfileData));
     yield put(userRelatedArticlesLoaded(userRelatedArticles.articles));
@@ -79,53 +82,44 @@ export const feedSaga = function*() {
 
   // SignIn Function
   yield takeLatest(SIGN_IN_BUTTON_CLICKED, function*(action) {
-    const userData = {}
+    const userData = {};
     userData.email = action.email;
     userData.password = action.password;
-    
-    const userPostData = yield call(
-      postInitialData,
-      userData
-    );
-
-    console.log(userPostData);
-    
-
-
+    const userPostData = yield call(postInitialData, userData);
     // yield put(userTokedLoaded(userPostData.user.token));
     yield put(userTokedLoaded(userPostData));
-    // yield put(userTokenNameLoaded(userPostData));
-
   });
 
   // Your Articles Needed
+  // Your Articles Needed
+  // Your Articles Needed
+
   yield takeLatest(YOURE_ARTICLES_NEEDED, function*(action) {
-    // const token = yield select(userToken)
-    // const yourArticleData = yield call(
-    //   fetchYourArticles,
-    //   token
-    // );
+    const state = yield select();
+    const token = state.userToken
+    console.log(token);
+    // 成功拿到密钥
+    
+    const yourArticleData = yield call(fetchYourArticles, token);
+    console.log(yourArticleData);
     // yield put(userTokedLoaded(userPostData.user.token));
-  });
+  }); 
 };
 
 // Progress Now //////////////////////////////////////////////
-// Progress Now //////////////////////////////////////////////
-
-
-// const fetchYourArticles = token => {
-//   return fetch("https://conduit.productionready.io/api/articles/feed?limit=10&offset=0", {
-//     method: "GET", 
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     Authorization: `Bearer ${token}`
-//   }).then(response => response.json())
-//     .then(response => {
-//       console.log(" -- get Your Article Success:", response);
-//       return response
-//     })
-// };
+const fetchYourArticles = token => {
+  return fetch("https://conduit.productionready.io/api/articles/feed?limit=10&offset=0", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    Authorization: `Bearer ${token}`
+  }).then(response => response.json())
+    .then(response => {
+      console.log(" -- get Your Article Success:", response);
+      return response
+    })
+};
 
 const fetchInitialData = url => {
   return fetch("https://conduit.productionready.io/api" + url).then(
@@ -138,17 +132,17 @@ const fetchInitialData = url => {
 };
 
 const postInitialData = userData => {
-
   const data = { user: userData };
   return fetch("https://conduit.productionready.io/api/users/login", {
-    method: "POST", 
+    method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(data)
-  }).then(response => response.json())
+  })
+    .then(response => response.json())
     .then(response => {
       console.log("-- Post User Information Success::", response);
-      return response
-    })
+      return response;
+    });
 };

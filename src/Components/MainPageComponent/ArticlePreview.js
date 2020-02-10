@@ -13,7 +13,8 @@ const InternalArticlePreview = props => {
 
   useEffect(() => {
     props.onYourArticleNeeded(props.userToken);
-  }, [props, props.userToken]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className='col-md-9 col-sm-12'>
@@ -27,9 +28,8 @@ const InternalArticlePreview = props => {
             {sessionStorage.getItem('Token') && (
                 <a
                   className='nav-link active display-inline'
-                  href='#top'
                   onClick={() => {
-                    props.onGlobeFeedClicked();
+                    props.onYourFeedClicked();
                   }}>
                   Your Feed
                 </a>
@@ -136,7 +136,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onArticleClick: (title, slug) => dispatch(articleTitleClicked(title, slug)),
     onGlobeFeedClicked: () => dispatch(globeFeedClicked()),
-    onYourArticleNeeded: () => dispatch(loadYourArticles())
+    onYourArticleNeeded: () => dispatch(loadYourArticles()),
+    onYourFeedClicked: () => dispatch(loadYourArticles()),
   };
 };
 

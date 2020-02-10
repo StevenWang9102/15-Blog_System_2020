@@ -9,7 +9,6 @@ import {
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalUserProfile = props => {
-  // const { userName } = useParams();
   // 这个UserName不需要从URL获取，应该是从内存访问的
 
   const userName = props.userTokenName || null;
