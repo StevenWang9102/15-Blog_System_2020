@@ -5,10 +5,9 @@ import { MainPage } from "../MainPageComponent/MainPage";
 import { NewPost } from "./NewPost";
 import { Setting } from "./Setting";
 import { connect } from "react-redux";
-import { UserProfile } from "../UserComponent/UserProfile"
-import { ArticleDetails } from "../MainPageComponent/ArticleDetails"
+import { UserProfile } from "../UserComponent/UserProfile";
+import { ArticleDetails } from "../MainPageComponent/ArticleDetails";
 import PropTypes from "prop-types";
-
 
 import {
   BrowserRouter as Router,
@@ -19,22 +18,17 @@ import {
 } from "react-router-dom";
 
 export const InternalNavbar = props => {
-
-  // const userName = props.userTokenName || null;
-  console.log(sessionStorage.getItem('TokenName'));
-  
   return (
     <Router>
       <div>
         <nav className='navbar navbar-light'>
           <div className='container'>
-            
             <Link className='navbar-brand' to='/home'>
-            conduit
+              conduit
             </Link>
 
             <ul className='nav navbar-nav pull-xs-right'>
-              {sessionStorage.getItem('Token') ? (
+              {sessionStorage.getItem("Token") ? (
                 <div>
                   <li className='nav-item'>
                     <Link className='nav-link active' to='/home'>
@@ -44,12 +38,14 @@ export const InternalNavbar = props => {
 
                   <li className='nav-item'>
                     <Link className='nav-link' to='/new_post'>
+                      <img src='./icon/008-edit.png' alt='post' />
                       New Post
                     </Link>
                   </li>
 
                   <li className='nav-item'>
                     <Link className='nav-link' to='/setting'>
+                      <img src='./icon/004-settings.png' alt='setting' />
                       Setting
                     </Link>
                   </li>
@@ -57,10 +53,9 @@ export const InternalNavbar = props => {
                   {/* Logged User */}
                   <li className='nav-item'>
                     <Link className='nav-link' to='/user_profile'>
-                        {sessionStorage.getItem('TokenUserName') || '未登录'} 
+                      {sessionStorage.getItem("TokenUserName") || "未登录"}
                     </Link>
                   </li>
-
                 </div>
               ) : (
                 <div>
@@ -103,8 +98,8 @@ export const InternalNavbar = props => {
           <Route path='/user_profile'>
             <UserProfile />
           </Route>
-          <Route path="/article-detail/:article_slug">
-            <ArticleDetails/>
+          <Route path='/article-detail/:article_slug'>
+            <ArticleDetails />
           </Route>
 
           <Route exact path='/new_post'>
@@ -113,9 +108,6 @@ export const InternalNavbar = props => {
           <Route exact path='/setting'>
             <Setting />
           </Route>
-
-          
-          
         </Switch>
       </div>
     </Router>
@@ -123,7 +115,7 @@ export const InternalNavbar = props => {
 };
 
 InternalNavbar.propTypes = {
-  userToken: PropTypes.string,
+  userToken: PropTypes.string
 };
 
 const mapStateToProps = ({ userToken, userTokenName }) => {

@@ -22,6 +22,8 @@ export const USER_TOKEN_NAME_LOADED = Symbol("USER_TOKEN_NAME_LOADED")
 export const YOURE_FEED_CLICKED = Symbol("YOURE_FEED_CLICKED")
 // YOURE_FEED_LOADED
 export const YOURE_FEED_LOADED = Symbol("YOURE_FEED_LOADED")
+// FAVORITED_BUTTON_CLICKED
+export const FAVORITED_BUTTON_CLICKED = Symbol("FAVORITED_BUTTON_CLICKED")
 
 
 export const loadInitialData = () => {
@@ -112,4 +114,9 @@ export const loadYourArticles = (token) => {
 // yourFeedsLoaded
 export const yourFeedsLoaded = (articles) => {
     return { type: YOURE_FEED_LOADED, articles: articles };
+}
+
+// favoritedButtonClicked
+export const favoritedButtonClicked = (token, slug) => {
+    return { type: FAVORITED_BUTTON_CLICKED, token: token, slug: slug};
 }

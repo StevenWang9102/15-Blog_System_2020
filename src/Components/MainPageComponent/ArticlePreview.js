@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 import {
   articleTitleClicked,
   globeFeedClicked,
-  loadYourArticles
+  loadYourArticles,
+  favoritedButtonClicked
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 
@@ -66,6 +67,8 @@ const InternalArticlePreview = props => {
       {/* --------------------- Article --------------------- */}
       {(props.tagRelatedArticles || props.articleLibrary).map(
         (article, index) => {
+          // console.log(article);
+          
           return (
             <div className='article-preview' key={index}>
               <div className='article-meta'>
@@ -85,8 +88,17 @@ const InternalArticlePreview = props => {
                   </div>
                 </Link>
 
-                <button className='btn btn-outline-primary btn-sm pull-xs-right'>
-                  <i className='ion-heart'></i> {article.favoritesCount}
+                <button 
+                  className='btn btn-outline-primary btn-sm pull-xs-right'
+                  // 只能在存在登录状态才能传递这个函数，否则无意义
+                  onClick={()=>{
+                    const token = sessionStorage.getItem("Token")
+                    console.log(token);
+                    if(token) props.onFavoritedButtonClicked(token, article.slug)
+                  }}
+                >
+                  <img src='./icon/002-heart-2.png' alt='love'/> 
+                  {article.favoritesCount}
                 </button>
               </div>
 
@@ -140,8 +152,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onArticleClick: (title, slug) => dispatch(articleTitleClicked(title, slug)),
     onGlobeFeedClicked: () => dispatch(globeFeedClicked()),
-    // onYourArticleNeeded: () => dispatch(loadYourArticles()),
     onYourFeedClicked: (token) => dispatch(loadYourArticles(token)),
+    onFavoritedButtonClicked: (token, slug) => dispatch(favoritedButtonClicked(token, slug)),
   };
 };
 

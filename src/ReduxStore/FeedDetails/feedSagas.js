@@ -17,7 +17,8 @@ import {
   SIGN_IN_BUTTON_CLICKED,
   userTokedLoaded,
   YOURE_FEED_CLICKED,
-  yourFeedsLoaded
+  yourFeedsLoaded,
+  FAVORITED_BUTTON_CLICKED,
 } from "./feedActions";
 
 export const feedSaga = function*() {
@@ -86,7 +87,7 @@ export const feedSaga = function*() {
     const userData = {};
     userData.email = action.email;
     userData.password = action.password;
-    const userPostData = yield call(postInitialData, userData);
+    const userPostData = yield call(postDataToServer1, userData);
 
     // tag Session Storage
     sessionStorage.setItem("Token", userPostData.user.token);
@@ -98,12 +99,60 @@ export const feedSaga = function*() {
   // YOURE_FEED_CLICKED
   yield takeLatest(YOURE_FEED_CLICKED, function*(action) {
     const token = sessionStorage.getItem("Token");
-    const yourArticleData = yield call(fetchYourFeedsArticles, token);
+    const yourArticleData = yield call(getDataFromServerWithToken, token);
     yield put(yourFeedsLoaded(yourArticleData.articles));
+  });
+
+  // FAVORITED_BUTTON_CLICKED
+  yield takeLatest(FAVORITED_BUTTON_CLICKED, function*(action) {
+    const slug = action.slug
+    const token = action.token
+    console.log(token);
+    
+    // // https://conduit.productionready.io/api/articles/teste-28wve1/favorite
+    // 参数是什么？是点击了哪个文章含slug
+    const yourFavoritedData = yield call(postDataToServer2, token, slug);
+    
+    console.log(yourFavoritedData.article.favoritesCount);
+    // 同时带两个参数
+    // yield put(yourFavoritedCountLoaded(yourFavoritedData.articles));
   });
 };
 
-const fetchYourFeedsArticles = token => {
+const postDataToServer2 = (token, slug) => {
+  return fetch(`https://conduit.productionready.io/api/articles/${slug}/favorite`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`
+    },
+    // body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .then(response => {
+      console.log("-- Post Your Favorited Article Success —-", response);
+      return response;
+    });
+};
+
+const postDataToServer1 = userData => {
+  const data = { user: userData };
+  return fetch("https://conduit.productionready.io/api/users/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .then(response => {
+      console.log("-- Post User Information Success —-", response);
+      return response;
+    });
+};
+
+
+const getDataFromServerWithToken = token => {
   return fetch(
     "https://conduit.productionready.io/api/articles/feed?limit=10&offset=0",
     {
@@ -133,18 +182,3 @@ const fetchInitialData = url => {
   );
 };
 
-const postInitialData = userData => {
-  const data = { user: userData };
-  return fetch("https://conduit.productionready.io/api/users/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  })
-    .then(response => response.json())
-    .then(response => {
-      console.log("-- Post User Information Success —-", response);
-      return response;
-    });
-};

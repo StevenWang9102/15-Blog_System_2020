@@ -66,3 +66,16 @@ p{
 {
   text-align: left;
 }
+
+.article-meta button img{
+  width: 13px;
+  height: 13px;
+  margin-right: 5px;
+}
+
+.nav-item .nav-link img
+{
+  width: 13px;
+  height: 13px;
+  margin-right: 5px;
+}
