@@ -22,6 +22,7 @@ const InternalArticlePreview = props => {
       <div className='feed-toggle'>
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
+
             {/* Your Feeds */}
             {props.userToken && (
                 <a
@@ -60,6 +61,7 @@ const InternalArticlePreview = props => {
           return (
             <div className='article-preview' key={index}>
               <div className='article-meta'>
+                
                 <Link to={"/user-profile/" + article.author.username}>
                   <img
                     className='author-image'
@@ -104,7 +106,8 @@ InternalArticlePreview.propTypes = {
   currentTagName: PropTypes.string,
   tagRelatedArticles: PropTypes.array,
   articleLibrary: PropTypes.array.isRequired,
-  onArticleClick: PropTypes.func
+  onArticleClick: PropTypes.func,
+  userToken: PropTypes.string,
 };
 
 const mapStateToProps = ({
@@ -128,7 +131,6 @@ const mapDispatchToProps = dispatch => {
     onArticleClick: (title, slug) => dispatch(articleTitleClicked(title, slug)),
     onGlobeFeedClicked: () => dispatch(globeFeedClicked()),
     onYourArticleNeeded: () => dispatch(loadYourArticles())
-
   };
 };
 

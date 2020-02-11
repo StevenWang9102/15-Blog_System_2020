@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { signInClicked } from "../../ReduxStore/FeedDetails/feedActions"
+import { signInClicked } from "../../ReduxStore/FeedDetails/feedActions";
+import { Link } from "react-router-dom";
 
 const InternalSignIn = props => {
-
   return (
     <div className='auth-page'>
       <div className='container page'>
@@ -13,9 +13,8 @@ const InternalSignIn = props => {
             <p className='text-xs-center'>
               <a href='#top'> Need an account? </a>
             </p>
-            
-            <form>
 
+            <form>
               <fieldset className='form-group'>
                 <input
                   id='username'
@@ -32,15 +31,22 @@ const InternalSignIn = props => {
                   placeholder='Password'></input>
               </fieldset>
 
-              <button className='btn btn-lg btn-primary pull-xs-right'
-                onClick={(event)=>{
+              <button
+                className='btn btn-lg btn-primary pull-xs-right'
+                onClick={event => {
                   event.preventDefault();
-                  const email = document.querySelector("input[type='text']").value;
-                  const password = document.querySelector("input[type='password']").value;
-                  props.onSignInClicked(email, password)
-                }}
-              >
-                Sign in
+                  const email = document.querySelector("input[type='text']")
+                    .value;
+                  const password = document.querySelector(
+                    "input[type='password']"
+                  ).value;
+                  props.onSignInClicked(email, password);
+                }}>
+                <Link
+                  className='nav-link preview-link article-detail'
+                  to='/home'>
+                  Sign in{" "}
+                </Link>
               </button>
             </form>
           </div>
@@ -50,18 +56,18 @@ const InternalSignIn = props => {
   );
 };
 
-
-const mapStateToProps = (state) => {
-  return {...state }
-}
-//去掉报错。。。
+const mapStateToProps = state => {
+  return { ...state };
+}; //去掉会报错。。。
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSignInClicked: (email, password) => dispatch(signInClicked(email, password))
+    onSignInClicked: (email, password) =>
+      dispatch(signInClicked(email, password))
   };
 };
 
 export const SignIn = connect(
-  mapStateToProps, mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(InternalSignIn);

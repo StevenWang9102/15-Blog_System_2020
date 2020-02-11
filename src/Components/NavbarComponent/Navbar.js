@@ -5,6 +5,8 @@ import { MainPage } from "../MainPageComponent/MainPage";
 import { NewPost } from "./NewPost";
 import { Setting } from "./Setting";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
 
 import {
   BrowserRouter as Router,
@@ -21,9 +23,11 @@ export const InternalNavbar = props => {
       <div>
         <nav className='navbar navbar-light'>
           <div className='container'>
-            <a className='navbar-brand' href='/home'>
-              conduit
-            </a>
+            
+            <Link className='navbar-brand' to='/home'>
+            conduit
+            </Link>
+
             <ul className='nav navbar-nav pull-xs-right'>
               {props.userToken ? (
                 <div>
@@ -44,6 +48,13 @@ export const InternalNavbar = props => {
                       Setting
                     </Link>
                   </li>
+
+                  <li className='nav-item'>
+                    <Link className='nav-link' to='/user_profile'>
+                      Logged User
+                    </Link>
+                  </li>
+
                 </div>
               ) : (
                 <div>
@@ -83,11 +94,10 @@ export const InternalNavbar = props => {
             <SignUp />
           </Route>
 
-          {/* New */}
-          <Route path='/new_post'>
+          <Route exact path='/new_post'>
             <NewPost />
           </Route>
-          <Route path='/setting'>
+          <Route exact path='/setting'>
             <Setting />
           </Route>
         </Switch>
@@ -96,8 +106,12 @@ export const InternalNavbar = props => {
   );
 };
 
-const mapStateToProps = ({ currentArticleDetails, userToken }) => {
-  return { currentArticleDetails, userToken };
+InternalNavbar.propTypes = {
+  userToken: PropTypes.string,
+};
+
+const mapStateToProps = ({ userToken }) => {
+  return { userToken };
 };
 
 export const Navbar = connect(mapStateToProps)(InternalNavbar);

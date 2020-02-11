@@ -5,7 +5,6 @@ import {Banner} from "./Banner";
 
 export const MainPage = props => {
 
-
 return (
     <div className="home-page">
       <Banner />

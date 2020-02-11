@@ -23,7 +23,6 @@ const initialState = {
   currentProfileData: {},
   currentUsersArticles: [],
   favoritedArticles: null,
-  //
   tagRelatedArticles: null,
   currentTagName:"",
   userToken: null
@@ -69,7 +68,6 @@ export const feedReducer = (state = initialState, action) => {
     case FAVERATED_ARITICLE_LOADED:
       return { ...state, favoritedArticles: action.favoritedArticles };
 
-    // SIGN_IN_BUTTON_CLICKED
     case USER_TOKEN_LOADED:
       return { ...state, userToken: action.userToken };
 
