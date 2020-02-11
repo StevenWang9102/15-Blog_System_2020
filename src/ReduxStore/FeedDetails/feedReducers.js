@@ -12,8 +12,8 @@ import {
   FAVERATED_ARITICLE_LOADED,
   USER_TOKEN_LOADED,
   YOURE_FEED_LOADED,
-  // SIGN_IN_BUTTON_CLICKED,
-  // USER_TOKEN_NAME_LOADED,
+  SMALL_NAV_CLICKED,
+  YOUR_FEED_NAV_CLICKED,
 } from "./feedActions";
 
 const initialState = {
@@ -29,7 +29,10 @@ const initialState = {
   tagRelatedArticles: null,
   currentTagName:"",
   userToken: null,
-  yourArticles:[]
+  userTokenName: null,
+  yourArticles:[],
+  smallNavStatus: 'active',
+  selfStatus: 'null'
 };
 
 export const feedReducer = (state = initialState, action) => {
@@ -75,15 +78,15 @@ export const feedReducer = (state = initialState, action) => {
     case USER_TOKEN_LOADED:
       return { ...state, userToken: action.userToken, userTokenName: action.userTokenName };
 
-    // USER_TOKEN_NAME_LOADED
-    // case USER_TOKEN_NAME_LOADED:
-    //   return { ...state, userTokenName: action.userTokenName };
-    // 测试 
-
-    //YOURE_FEED_LOADED
     case YOURE_FEED_LOADED:
       return { ...state, yourArticles: action.articles };
-  
+    
+    case SMALL_NAV_CLICKED:
+      return { ...state, smallNavStatus: action.status };
+
+    case YOUR_FEED_NAV_CLICKED:
+      return { ...state, selfStatus: action.selfStatus, tagRelatedArticles: null };
+
     default:
       return state;
   }

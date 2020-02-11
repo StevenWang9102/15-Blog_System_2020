@@ -50,7 +50,7 @@ export const InternalNavbar = props => {
                     </Link>
                   </li>
 
-                  {/* Logged User */}
+                  {/* --------------- Logged User ---------- */}
                   <li className='nav-item'>
                     <Link className='nav-link' to='/user_profile'>
                       {sessionStorage.getItem("TokenUserName") || "未登录"}

@@ -23,7 +23,7 @@ import {
 
 export const feedSaga = function*() {
 
-  // GLOBAL FEEDS
+  // GLOBAL_FEEDS_LOADED
   yield takeLatest(INITIALDATA_LOADED, function*() {
     const initArticData = yield call(
       fetchInitialData,
@@ -34,7 +34,7 @@ export const feedSaga = function*() {
     yield put(tagsDataLoaded(initTagData["tags"]));
   });
 
-  // ARTICLE_COMMENT
+  // ARTICLE_COMMENT_LOADED
   yield takeLatest(INIT_ARTICLE_COMMENT_GET, function*(action) {
     const initArticleData = yield call(
       fetchInitialData,
@@ -68,7 +68,6 @@ export const feedSaga = function*() {
         `/articles?author=${action.userName}&limit=5&offset=0`
       )
     ];
-
     yield put(userProfileDataLoaded(userProfileData));
     yield put(userRelatedArticlesLoaded(userRelatedArticles.articles));
   });
@@ -87,7 +86,7 @@ export const feedSaga = function*() {
     const userData = {};
     userData.email = action.email;
     userData.password = action.password;
-    const userPostData = yield call(postDataToServer1, userData);
+    const userPostData = yield call(postDataToServer, userData);
 
     // tag Session Storage
     sessionStorage.setItem("Token", userPostData.user.token);
@@ -107,26 +106,21 @@ export const feedSaga = function*() {
   yield takeLatest(FAVORITED_BUTTON_CLICKED, function*(action) {
     const slug = action.slug
     const token = action.token
-    console.log(token);
-    
-    // // https://conduit.productionready.io/api/articles/teste-28wve1/favorite
-    // 参数是什么？是点击了哪个文章含slug
-    const yourFavoritedData = yield call(postDataToServer2, token, slug);
-    
-    console.log(yourFavoritedData.article.favoritesCount);
-    // 同时带两个参数
-    // yield put(yourFavoritedCountLoaded(yourFavoritedData.articles));
+    const yourFavoritedData = yield call(postDataToServerWithToken, token, slug);
+    // Confusing...How to change favorited article
+    // Confusing...How to change favorited article
+    // Confusing...How to change favorited article
+    // Confusing...How to change favorited article
   });
 };
 
-const postDataToServer2 = (token, slug) => {
+const postDataToServerWithToken = (token, slug) => {
   return fetch(`https://conduit.productionready.io/api/articles/${slug}/favorite`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Token ${token}`
     },
-    // body: JSON.stringify(data)
   })
     .then(response => response.json())
     .then(response => {
@@ -135,7 +129,7 @@ const postDataToServer2 = (token, slug) => {
     });
 };
 
-const postDataToServer1 = userData => {
+const postDataToServer = userData => {
   const data = { user: userData };
   return fetch("https://conduit.productionready.io/api/users/login", {
     method: "POST",

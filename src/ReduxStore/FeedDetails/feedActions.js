@@ -18,13 +18,11 @@ export const FAVERATED_ARITICLE_LOADED = Symbol("FAVERATED_ARITICLE_LOADED")
 export const SIGN_IN_BUTTON_CLICKED = Symbol("SIGN_IN_BUTTON_CLICKED")
 export const USER_TOKEN_LOADED = Symbol("USER_TOKEN_LOADED")
 export const USER_TOKEN_NAME_LOADED = Symbol("USER_TOKEN_NAME_LOADED")
-// YOURE_FEED_CLICKED
 export const YOURE_FEED_CLICKED = Symbol("YOURE_FEED_CLICKED")
-// YOURE_FEED_LOADED
 export const YOURE_FEED_LOADED = Symbol("YOURE_FEED_LOADED")
-// FAVORITED_BUTTON_CLICKED
 export const FAVORITED_BUTTON_CLICKED = Symbol("FAVORITED_BUTTON_CLICKED")
-
+export const SMALL_NAV_CLICKED = Symbol("SMALL_NAV_CLICKED")
+export const YOUR_FEED_NAV_CLICKED = Symbol("YOUR_FEED_NAV_CLICKED")
 
 export const loadInitialData = () => {
     return { type: INITIALDATA_LOADED };
@@ -96,27 +94,28 @@ export const favoritedArticleLoaded = (favoritedArticles) => {
 
 export const signInClicked = (email, password) => {
     return { type: SIGN_IN_BUTTON_CLICKED, email: email, password: password };
-    
 }
 
 export const userTokedLoaded = (payload) => {
     return { type: USER_TOKEN_LOADED, userToken: payload.user.token, userTokenName: payload.user.username };
 }
-// userTokenNameLoaded
-// export const userTokenNameLoaded = (payload) => {
-//     return { type: USER_TOKEN_NAME_LOADED,  };
-// }
 
 export const loadYourArticles = (token) => {
     return { type: YOURE_FEED_CLICKED, token: token };
 }
 
-// yourFeedsLoaded
 export const yourFeedsLoaded = (articles) => {
     return { type: YOURE_FEED_LOADED, articles: articles };
 }
 
-// favoritedButtonClicked
 export const favoritedButtonClicked = (token, slug) => {
     return { type: FAVORITED_BUTTON_CLICKED, token: token, slug: slug};
+}
+
+export const smallNavClicked = (status) => {
+    return { type: SMALL_NAV_CLICKED, status:status };
+}
+
+export const yourFeedNavClicked = (self) => {
+    return { type: YOUR_FEED_NAV_CLICKED, selfStatus: self };
 }

@@ -8,8 +8,6 @@ import { useParams } from "react-router-dom";
 import { ArticleComments } from "./ArticleComments";
 
 const InternalArticleDetails = props => {
-
-  console.log(props.currentProfileData);
   
   const { article_slug } = useParams();
 
@@ -23,7 +21,7 @@ const InternalArticleDetails = props => {
       <div className='banner'>
         <div className='container'>
 
-          {/* Article Title */}
+          {/* ---------------- Article Title  ---------------- */}
           {props.currentArticleDetails.author && (
             <div>
               <h1>{props.currentArticleDetails.title}</h1>
@@ -56,7 +54,7 @@ const InternalArticleDetails = props => {
         </div>
       </div>
 
-      {/* Article Details */}
+      {/* ---------------- Article Details ----------------  */}
       <div className='container page'>
         <div className='row article-content'>
           <div className='col-md-12 article-detail'>

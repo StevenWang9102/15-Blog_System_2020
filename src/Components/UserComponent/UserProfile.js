@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-// import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
 import {
@@ -9,9 +8,9 @@ import {
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalUserProfile = props => {
+  
   // 这个UserName不需要从URL获取，应该是从内存访问的
-
-  const userName = props.userTokenName || null;
+  const userName = sessionStorage.getItem("TokenUserName") || null;
 
   useEffect(() => {
     if (userName) {
@@ -21,9 +20,10 @@ const InternalUserProfile = props => {
   }, []);
 
   return (
-    <div>
+    <div> 
       <div className='profile-page'>
-        {/* User Information */}
+
+        {/* ---------------- User Information ---------------- */}
         <div className='user-info'>
           <div className='container'>
             <div className='row'>
@@ -53,7 +53,8 @@ const InternalUserProfile = props => {
         <div className='container'>
           <div className='row'>
             <div className='col-xs-12 col-md-10 offset-md-1'>
-              {/* Navigation */}
+
+              {/* ---------------- Navigation ---------------- */}
               <div className='articles-toggle'>
                 <ul className='nav nav-pills outline-active'>
                   <li className='nav-item'>
@@ -75,7 +76,7 @@ const InternalUserProfile = props => {
                 </ul>
               </div>
 
-              {/* One Article */}
+              {/* ---------------- One Article ----------------  */}
               {(props.favoritedArticles || props.currentUsersArticles).map(
                 (article, index) => {
                   return (
