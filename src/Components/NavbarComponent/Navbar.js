@@ -23,6 +23,7 @@ export const InternalNavbar = props => {
       <div>
         <nav className='navbar navbar-light'>
           <div className='container'>
+            {/* --------------- ROUTER LINK --------------- */}
             <Link className='navbar-brand' to='/home'>
               conduit
             </Link>
@@ -50,10 +51,10 @@ export const InternalNavbar = props => {
                     </Link>
                   </li>
 
-                  {/* --------------- Logged User ---------- */}
+                  {/* Logged User */}
                   <li className='nav-item'>
                     <Link className='nav-link' to='/user_profile'>
-                      {sessionStorage.getItem("TokenUserName") || "未登录"}
+                      {sessionStorage.getItem("TokenUserName")}
                     </Link>
                   </li>
                 </div>
@@ -80,35 +81,20 @@ export const InternalNavbar = props => {
           </div>
         </nav>
 
+        {/* --------------- ROUTER SWITCH --------------- */}
         <Switch>
           <Route exact path='/'>
             <Redirect to='/home' />
           </Route>
-          <Route exact path='/home'>
-            <MainPage />
-          </Route>
-
-          <Route exact path='/sign_in'>
-            <SignIn />
-          </Route>
-          <Route exact path='/sign_up'>
-            <SignUp />
-          </Route>
-
-          <Route path='/user_profile'>
-            <UserProfile />
-          </Route>
-          <Route path='/article-detail/:article_slug'>
-            <ArticleDetails />
-          </Route>
-
-          <Route exact path='/new_post'>
-            <NewPost />
-          </Route>
-          <Route exact path='/setting'>
-            <Setting />
-          </Route>
+          <Route exact path='/home' component={MainPage} />
+          <Route exact path='/sign_in' component={SignIn} />
+          <Route exact path='/sign_up'component={SignUp} />
+          <Route path='/user_profile' component={UserProfile} />
+          <Route path='/article-detail/:article_slug' component={ArticleDetails} />
+          <Route exact path='/new_post' component={NewPost} />
+          <Route exact path='/setting' component={Setting} />
         </Switch>
+
       </div>
     </Router>
   );

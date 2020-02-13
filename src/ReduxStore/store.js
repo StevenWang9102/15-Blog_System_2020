@@ -6,12 +6,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 const sagaMiddleware = createSagaMiddleware();
 
-// export const store = createStore(
-//   feedReducer,
-//   applyMiddleware(sagaMiddleware),
-//   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-// );
-
 export const store = createStore(feedReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
 
 sagaMiddleware.run(feedSaga);
