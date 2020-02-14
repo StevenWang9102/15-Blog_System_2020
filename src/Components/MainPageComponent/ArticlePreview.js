@@ -17,7 +17,7 @@ import { NavLink } from "react-router-dom";
 const InternalArticlePreview = props => {
   
   useEffect(() => {
-    if (props.userToken) props.onYourArticleNeeded(props.userToken);
+    if (props.userInfo.token) props.onYourArticleNeeded(props.userInfo.token);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -34,7 +34,7 @@ const InternalArticlePreview = props => {
             {sessionStorage.getItem("Token") && (
               <NavLink
               onClick={() => {
-                props.onYourFeedClicked(props.userToken);
+                props.onYourFeedClicked(props.userInfo.token);
                 props.onSmallNavClicked('null')
                 props.onYourFeedNavClicked('active')
               }}
@@ -135,7 +135,7 @@ InternalArticlePreview.propTypes = {
   tagRelatedArticles: PropTypes.array,
   articleLibrary: PropTypes.array.isRequired,
   onArticleClick: PropTypes.func,
-  userToken: PropTypes.string
+  userInfo: PropTypes.object
 };
 
 const mapStateToProps = ({
@@ -143,7 +143,7 @@ const mapStateToProps = ({
   onArticleClick,
   tagRelatedArticles,
   currentTagName,
-  userToken,
+  userInfo,
   yourArticles,
   smallNavStatus,
   selfStatus
@@ -153,7 +153,7 @@ const mapStateToProps = ({
     onArticleClick,
     tagRelatedArticles,
     currentTagName,
-    userToken,
+    userInfo,
     yourArticles,
     smallNavStatus,
     selfStatus

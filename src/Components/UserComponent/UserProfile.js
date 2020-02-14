@@ -119,7 +119,7 @@ InternalUserProfile.propTypes = {
   currentUsersArticles: PropTypes.array.isRequired,
   loadUserProfileDetail: PropTypes.func.isRequired,
   favoritedArticles: PropTypes.array,
-  userTokenName: PropTypes.array
+  userInfo: PropTypes.object
 };
 
 const mapStateToProps = ({
@@ -127,13 +127,13 @@ const mapStateToProps = ({
   currentUsersArticles,
   onFavoritedArticleClicked,
   favoritedArticles,
-  userTokenName
+  userInfo
 }) => {
   return {
     currentProfileData,
     currentUsersArticles,
     onFavoritedArticleClicked,
-    userTokenName,
+    userInfo,
     favoritedArticles
   };
 };

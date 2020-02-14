@@ -28,8 +28,7 @@ const initialState = {
   favoritedArticles: [],
   tagRelatedArticles: null,
   currentTagName:"",
-  userToken: null,
-  userTokenName: null,
+  userInfo: null, // 暂定是null
   yourArticles:[],
   smallNavStatus: 'active',
   selfStatus: 'null'
@@ -76,7 +75,7 @@ export const feedReducer = (state = initialState, action) => {
       return { ...state, favoritedArticles: action.favoritedArticles };
 
     case USER_TOKEN_LOADED:
-      return { ...state, userToken: action.userToken, userTokenName: action.userTokenName };
+      return { ...state, userInfo: action.userInfo };
 
     case YOURE_FEED_LOADED:
       return { ...state, yourArticles: action.articles };

@@ -1,4 +1,5 @@
 import { takeLatest, put, call } from "redux-saga/effects";
+import { getUser, setUser } from '../../Components/UserComponent/AuthToken'
 import {
   INITIALDATA_LOADED,
   INIT_ARTICLE_COMMENT_GET,

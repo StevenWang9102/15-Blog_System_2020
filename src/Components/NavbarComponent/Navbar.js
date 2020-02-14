@@ -101,11 +101,11 @@ export const InternalNavbar = props => {
 };
 
 InternalNavbar.propTypes = {
-  userToken: PropTypes.string
+  userInfo: PropTypes.object
 };
 
-const mapStateToProps = ({ userToken, userTokenName }) => {
-  return { userToken, userTokenName };
+const mapStateToProps = ({ userInfo }) => {
+  return { userInfo };
 };
 
 export const Navbar = connect(mapStateToProps)(InternalNavbar);

@@ -97,7 +97,9 @@ export const signInClicked = (email, password) => {
 }
 
 export const userTokedLoaded = (payload) => {
-    return { type: USER_TOKEN_LOADED, userToken: payload.user.token, userTokenName: payload.user.username };
+    // return { type: USER_TOKEN_LOADED, userToken: payload.user.token, userTokenName: payload.user.username };
+    return { type: USER_TOKEN_LOADED, userInfo: payload.user };
+
 }
 
 export const loadYourArticles = (token) => {
