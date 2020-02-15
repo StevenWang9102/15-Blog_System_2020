@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { signInClicked } from "../../ReduxStore/FeedDetails/feedActions";
-import { MainPage } from "../MainPageComponent/MainPage";
 import {
-  BrowserRouter as Router,
   Route,
   Link,
   Redirect,
@@ -11,7 +9,6 @@ import {
 const InternalSignIn = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // let history = useHistory();
 
   return (
     <Route>
@@ -55,6 +52,7 @@ const InternalSignIn = props => {
                       Sign in
                     </button>
                   </Link>
+                  {/* @@@@ 不理解为什么可以重新跳转了。。。。。。。。 */}
                 </form>
               </div>
             </div>
