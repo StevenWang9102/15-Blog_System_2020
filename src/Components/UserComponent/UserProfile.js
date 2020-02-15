@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
+
 import dateFormat from "dateformat";
 import {
   loadUserProfileDetail,
@@ -10,7 +12,7 @@ import {
 const InternalUserProfile = props => {
   
   // 这个UserName不需要从URL获取，应该是从内存访问的
-  const userName = sessionStorage.getItem("TokenUserName") || null;
+  const userName = getUserInformation.username || null;
 
   useEffect(() => {
     if (userName) {

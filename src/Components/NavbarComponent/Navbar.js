@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { UserProfile } from "../UserComponent/UserProfile";
 import { ArticleDetails } from "../MainPageComponent/ArticleDetails";
 import PropTypes from "prop-types";
-
+import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas"
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,7 +17,11 @@ import {
   Redirect
 } from "react-router-dom";
 
+
 export const InternalNavbar = props => {
+
+  console.log(getUserInformation());
+  
   return (
     <Router>
       <div>
@@ -26,10 +30,11 @@ export const InternalNavbar = props => {
             {/* --------------- ROUTER LINK --------------- */}
             <Link className='navbar-brand' to='/home'>
               conduit
-            </Link>
+            </Link> 
 
             <ul className='nav navbar-nav pull-xs-right'>
-              {sessionStorage.getItem("Token") ? (
+              {getUserInformation() && getUserInformation().token  ? (
+                // && 好像不好吧。。。
                 <div>
                   <li className='nav-item'>
                     <Link className='nav-link active' to='/home'>
@@ -51,10 +56,10 @@ export const InternalNavbar = props => {
                     </Link>
                   </li>
 
-                  {/* Logged User */}
+                  {/* ---- Logged User ---- */}
                   <li className='nav-item'>
                     <Link className='nav-link' to='/user_profile'>
-                      {sessionStorage.getItem("TokenUserName")}
+                      {getUserInformation().username}
                     </Link>
                   </li>
                 </div>

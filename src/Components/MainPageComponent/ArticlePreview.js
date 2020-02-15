@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
 import { Link } from "react-router-dom";
+import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
+
 import {
   articleTitleClicked,
   globeFeedClicked,
@@ -17,11 +19,11 @@ import { NavLink } from "react-router-dom";
 const InternalArticlePreview = props => {
   
   useEffect(() => {
-    if (props.userInfo.token) props.onYourArticleNeeded(props.userInfo.token);
+    props.userInfo && props.userInfo.token && props.onYourArticleNeeded(props.userInfo.token);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  
+
   return (
     <div className='col-md-9 col-sm-12'>
 
@@ -30,8 +32,8 @@ const InternalArticlePreview = props => {
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
 
-            {/* ----------- Your Feed --------- */}
-            {sessionStorage.getItem("Token") && (
+            {/* ----- Your Feed ----- */}            
+            { getUserInformation() && getUserInformation().token && (
               <NavLink
               onClick={() => {
                 props.onYourFeedClicked(props.userInfo.token);
@@ -46,7 +48,7 @@ const InternalArticlePreview = props => {
               </NavLink>
             )}
 
-            {/* ----------- Global Feed --------- */}
+            {/* ----- Global Feed ----- */}
             <NavLink
               onClick={() => {
                 props.onGlobeFeedClicked();
@@ -101,7 +103,7 @@ const InternalArticlePreview = props => {
                 <button
                   className='btn btn-outline-primary btn-sm pull-xs-right'
                   onClick={() => {
-                    const token = sessionStorage.getItem("Token");
+                    const token = getUserInformation.token ;
                     if (token)
                       props.onFavoritedButtonClicked(token, article.slug);
                   }}>

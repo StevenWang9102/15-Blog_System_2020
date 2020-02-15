@@ -1,4 +1,4 @@
-import { takeLatest, put, call } from "redux-saga/effects";
+import { takeLatest, put, call, select } from "redux-saga/effects";
 import { getUser, setUser } from '../../Components/UserComponent/AuthToken'
 import {
   INITIALDATA_LOADED,
@@ -22,10 +22,21 @@ import {
   FAVORITED_BUTTON_CLICKED,
 } from "./feedActions";
 
+export const getUserInformation = function(state){
+  console.log(state);
+  
+  // const reduxStoredUserInfo = yield select(state => state.userInfo);
+  // if(reduxStoredUserInfo) return reduxStoredUserInfo
+  // else 
+  // put到redux store...
+  return getUser() 
+}
+
 export const feedSaga = function*() {
 
   // GLOBAL_FEEDS_LOADED
   yield takeLatest(INITIALDATA_LOADED, function*() {
+    // const token = yield select(state => state.userInfo)
     const initArticData = yield call(
       fetchInitialData,
       "/articles?limit=50&offset=10"
@@ -87,18 +98,20 @@ export const feedSaga = function*() {
     const userData = {};
     userData.email = action.email;
     userData.password = action.password;
-    const userPostData = yield call(postDataToServer, userData);
+    const userPostedData = yield call(postDataToServer, userData);
+    
 
     // tag Session Storage
-    sessionStorage.setItem("Token", userPostData.user.token);
-    sessionStorage.setItem("TokenUserName", userPostData.user.username);
+    setUser(userPostedData.user) // 去sessionStorage
+    // sessionStorage.setItem("Token", userPostedData.user.token);
+    // sessionStorage.setItem("TokenUserName", userPostedData.user.username);
 
-    yield put(userTokedLoaded(userPostData));
+    yield put(userTokedLoaded(userPostedData));
   });
 
   // YOURE_FEED_CLICKED
   yield takeLatest(YOURE_FEED_CLICKED, function*(action) {
-    const token = sessionStorage.getItem("Token");
+    const token = getUserInformation.token;
     const yourArticleData = yield call(getDataFromServerWithToken, token);
     yield put(yourFeedsLoaded(yourArticleData.articles));
   });
@@ -138,12 +151,15 @@ const postDataToServer = userData => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(data)
-  })
-    .then(response => response.json())
-    .then(response => {
-      console.log("-- Post User Information Success —-", response);
-      return response;
-    });
+  }).then(response => {
+    if (response.ok) {
+      return response.json()
+      .then(response => {
+        console.log("-- Post Information Success -- :", response);
+        return response;
+      });
+    } else console.error(" -- Error: Post data failed -- ");
+  });
 };
 
 

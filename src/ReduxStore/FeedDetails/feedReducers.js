@@ -28,7 +28,7 @@ const initialState = {
   favoritedArticles: [],
   tagRelatedArticles: null,
   currentTagName:"",
-  userInfo: null, // 暂定是null
+  userInfo: {}, // 暂定是null
   yourArticles:[],
   smallNavStatus: 'active',
   selfStatus: 'null'
