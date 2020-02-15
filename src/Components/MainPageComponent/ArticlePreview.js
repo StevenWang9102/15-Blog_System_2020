@@ -11,6 +11,7 @@ import {
   globeFeedClicked,
   loadYourArticles,
   favoritedButtonClicked,
+  setNavStatus,
   smallNavClicked,
   yourFeedNavClicked,
 } from "../../ReduxStore/FeedDetails/feedActions";
@@ -37,11 +38,11 @@ const InternalArticlePreview = props => {
               <NavLink
               onClick={() => {
                 props.onYourFeedClicked(props.userInfo.token);
-                props.onSmallNavClicked('null')
-                props.onYourFeedNavClicked('active')
+                props.setNavStatus('active', 'null', 'null');
+                // props.currentTagName = null
               }}
               className='nav-link display-inline'
-              activeClassName = {props.selfStatus}
+              activeClassName = {props.status1}
               to='/home#your_feed'
               >
               Your Feed
@@ -51,12 +52,11 @@ const InternalArticlePreview = props => {
             {/* ----- Global Feed ----- */}
             <NavLink
               onClick={() => {
-                props.onGlobeFeedClicked();
-                props.onSmallNavClicked('active')
-                props.onYourFeedNavClicked('null')
+                props.onGlobeFeedClicked('null', 'active', 'null');
+                props.setNavStatus('null', 'active', 'null')
               }}
               className='nav-link display-inline'
-              activeClassName = {props.smallNavStatus}
+              activeClassName = {props.status2}
               to='/home#global_feed'
               >
               Global Feed
@@ -66,7 +66,7 @@ const InternalArticlePreview = props => {
             {props.currentTagName && (
               <NavLink
                 className='nav-link display-inline'
-                activeClassName='active'
+                activeClassName= 'active'
                 to='/home#popular_tags'
                 >
                 # {props.currentTagName}
@@ -148,7 +148,10 @@ const mapStateToProps = ({
   userInfo,
   yourArticles,
   smallNavStatus,
-  selfStatus
+  selfStatus,
+  status3,
+  status2,
+  status1
 }) => {
   return {
     articleLibrary,
@@ -158,19 +161,23 @@ const mapStateToProps = ({
     userInfo,
     yourArticles,
     smallNavStatus,
-    selfStatus
+    selfStatus,
+    status3,
+    status2,
+    status1
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onArticleClick: (title, slug) => dispatch(articleTitleClicked(title, slug)),
+
     onGlobeFeedClicked: () => dispatch(globeFeedClicked()),
-    onYourFeedClicked: token => dispatch(loadYourArticles(token)),
+    setNavStatus:(status1, status2, status3) => dispatch(setNavStatus(status1, status2, status3)),
+    onYourFeedClicked: (token) => dispatch(loadYourArticles(token)),
+    
     onYourArticleNeeded: token => dispatch(loadYourArticles(token)),
     onFavoritedButtonClicked: (token, slug) => dispatch(favoritedButtonClicked(token, slug)),
-    onSmallNavClicked: (status) => dispatch(smallNavClicked(status)),
-    onYourFeedNavClicked: (self) => dispatch(yourFeedNavClicked(self)),
   };
 };
 

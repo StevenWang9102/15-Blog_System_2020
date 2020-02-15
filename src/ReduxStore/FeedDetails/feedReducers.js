@@ -14,6 +14,8 @@ import {
   YOURE_FEED_LOADED,
   SMALL_NAV_CLICKED,
   YOUR_FEED_NAV_CLICKED,
+  SMALL_NAV_SET_CLICKED,
+  YOURE_FEED_CLICKED
 } from "./feedActions";
 
 const initialState = {
@@ -31,7 +33,10 @@ const initialState = {
   userInfo: {}, // 暂定是null
   yourArticles:[],
   smallNavStatus: 'active',
-  selfStatus: 'null'
+  selfStatus: 'null',
+  status1: 'null',
+  status2: 'active',
+  status3: 'active',
 };
 
 export const feedReducer = (state = initialState, action) => {
@@ -56,12 +61,18 @@ export const feedReducer = (state = initialState, action) => {
     case ARTICLE_COMMENTS_LOADED:
       return { ...state, currentComments: action.initCommentData };
 
+
+
     case TAG_RELATED_ARTICLE_LOADED:
       return { ...state, tagRelatedArticles: action.tagRelatedArticles };
 
     case RELATED_TAG_LOADED:
       return { ...state, currentTagName: action.tagName };
 
+      // YOURE_FEED_CLICKED
+    case YOURE_FEED_CLICKED:
+        return { ...state, currentTagName: null };
+  
     case GLOBLE_FEED_CLICKED:
       return { ...state, currentTagName: "", tagRelatedArticles: null };
 
@@ -86,6 +97,10 @@ export const feedReducer = (state = initialState, action) => {
     case YOUR_FEED_NAV_CLICKED:
       return { ...state, selfStatus: action.selfStatus, tagRelatedArticles: null };
 
+      // SMALL_NAV_SET_CLICKED
+    case SMALL_NAV_SET_CLICKED:
+      return { ...state, status1:action.status1, status2:action.status2, status3:action.status3 };
+  
     default:
       return state;
   }

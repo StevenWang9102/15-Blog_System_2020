@@ -23,6 +23,8 @@ export const YOURE_FEED_LOADED = Symbol("YOURE_FEED_LOADED")
 export const FAVORITED_BUTTON_CLICKED = Symbol("FAVORITED_BUTTON_CLICKED")
 export const SMALL_NAV_CLICKED = Symbol("SMALL_NAV_CLICKED")
 export const YOUR_FEED_NAV_CLICKED = Symbol("YOUR_FEED_NAV_CLICKED")
+// SMALL_NAV_SET_CLICKED
+export const SMALL_NAV_SET_CLICKED = Symbol("SMALL_NAV_SET_CLICKED")
 
 export const loadInitialData = () => {
     return { type: INITIALDATA_LOADED };
@@ -97,18 +99,18 @@ export const signInClicked = (email, password) => {
 }
 
 export const userTokedLoaded = (payload) => {
-    // return { type: USER_TOKEN_LOADED, userToken: payload.user.token, userTokenName: payload.user.username };
     return { type: USER_TOKEN_LOADED, userInfo: payload.user };
 
 }
 
-export const loadYourArticles = (token) => {
-    return { type: YOURE_FEED_CLICKED, token: token };
+export const loadYourArticles = (token, clear ) => {
+    return { type: YOURE_FEED_CLICKED, token: token, clear: clear };
 }
 
 export const yourFeedsLoaded = (articles) => {
     return { type: YOURE_FEED_LOADED, articles: articles };
 }
+
 
 export const favoritedButtonClicked = (token, slug) => {
     return { type: FAVORITED_BUTTON_CLICKED, token: token, slug: slug};
@@ -120,4 +122,9 @@ export const smallNavClicked = (status) => {
 
 export const yourFeedNavClicked = (self) => {
     return { type: YOUR_FEED_NAV_CLICKED, selfStatus: self };
+}
+// setNavStatus
+
+export const setNavStatus = (status1, status2, status3) => {
+    return { type: SMALL_NAV_SET_CLICKED, status1: status1, status2: status2, status3: status3 };
 }
