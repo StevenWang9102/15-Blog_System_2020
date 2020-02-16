@@ -131,12 +131,11 @@ export const feedSaga = function*() {
   });
 
   // FAVORITED_BUTTON_CLICKED
-  yield takeLatest(FAVORITED_BUTTON_CLICKED, function*(action) {
+  yield takeLatest(FAVORITED_BUTTON_CLICKED, function*(action) {    
     const slug = action.slug;
     const token = action.token;
     const url = `/articles/${slug}/favorite`;
-    // const yourFavoritedData =
-    yield call(postDataToServerAll, token, url);
+    const yourFavoritedData = yield call(postDataToServerAll, token, url);
   });
 
   // POST_COMMENTS_CLICKED
@@ -151,6 +150,8 @@ export const feedSaga = function*() {
 
   // POST_ARTICLE_CLICKED
   yield takeLatest(POST_ARTICLE_CLICKED, function*(action) {
+    console.log('进来了吗');
+    
     const token = getUserInformation().token;
     const url = "/articles";
     const postData = {};

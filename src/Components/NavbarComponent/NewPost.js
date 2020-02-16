@@ -70,7 +70,6 @@ useEffect(() => {
                     onClick={()=> {
                       props.onPostArticleClicked(title, description, content, tags, props.currentSlug );
                     }}>
-                      >
                     Publish Article
                   </button>
                 

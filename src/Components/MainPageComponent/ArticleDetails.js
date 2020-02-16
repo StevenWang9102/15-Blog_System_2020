@@ -23,12 +23,13 @@ const InternalArticleDetails = props => {
     <div className='article-page'>
       <div className='banner'>
         <div className='container'>
+
           {/* ---------------- Article Title  ---------------- */}
           {props.currentArticleDetails.author && (
             <div>
               <h1>{props.currentArticleDetails.title}</h1>
 
-              <div className='article-meta'>
+              <div className='article-meta article-source'>
                 <Link
                   to={
                     "/user-profile/" +
@@ -111,7 +112,6 @@ const InternalArticleDetails = props => {
       {/* ---------------- Comments ----------------  */}
       {getUserInformation() && <ArticleComments />}
     </div>
-    // </Router>
   );
 };
 
