@@ -1,4 +1,4 @@
-import { takeLatest, put, call, select } from "redux-saga/effects";
+import { takeLatest, put, call, select, all} from "redux-saga/effects";
 import { getUser, setUser } from '../../Components/UserComponent/AuthToken'
 import {
   INITIALDATA_LOADED,
@@ -78,14 +78,23 @@ export const feedSaga = function*() {
   });
 
   // USER PROFILE LOADED
+    // USER PROFILE LOADED
+      // USER PROFILE LOADED
+        // USER PROFILE LOADED
+          // USER PROFILE LOADED
+            // USER PROFILE LOADED
+              // USER PROFILE LOADED
+
   yield takeLatest(USERS_NAME_LOADED, function*(action) {
-    const [userProfileData, userRelatedArticles] = yield [
+
+    const [userProfileData, userRelatedArticles] = yield all ([
       call(fetchInitialData, `/profiles/${action.userName}`),
-      call(
-        fetchInitialData,
-        `/articles?author=${action.userName}&limit=5&offset=0`
-      )
-    ];
+      call( fetchInitialData, `/articles?author=${action.userName}&limit=5&offset=0`)
+    ])
+    
+    console.log(userProfileData);
+    console.log(userRelatedArticles.articles);
+    
     yield put(userProfileDataLoaded(userProfileData));
     yield put(userRelatedArticlesLoaded(userRelatedArticles.articles));
   });
@@ -100,12 +109,19 @@ export const feedSaga = function*() {
   });
 
   // SIGN_IN_BUTTON_CLICKED
+
   yield takeLatest(SIGN_IN_BUTTON_CLICKED, function*(action) {
     const userData = {};
+    const url = '/users/login';
+
     userData.email = action.email;
     userData.password = action.password;
-    const userPostedData = yield call(postDataToServer, userData);
+    
+    const postData = { user: userData };
+    const userPostedData = yield call(postDataToServerAll, null , url, postData );
 
+    console.log(userPostedData);
+    
     // tag Session Storage
     setUser(userPostedData.user) 
     yield put(userTokedLoaded(userPostedData));
@@ -121,11 +137,11 @@ export const feedSaga = function*() {
     yield put(yourFeedsLoaded(yourArticleData.articles));
   });
 
-  // FAVORITED_BUTTON_CLICKED ///////////////////////
+  // FAVORITED_BUTTON_CLICKED 
   yield takeLatest(FAVORITED_BUTTON_CLICKED, function*(action) {
     const slug = action.slug
     const token = action.token
-    const url = `/${slug}/favorite`
+    const url = `/articles/${slug}/favorite`
     const yourFavoritedData = yield call(postDataToServerAll, token, url);
     console.log(yourFavoritedData);
     
@@ -137,7 +153,7 @@ export const feedSaga = function*() {
   // POST_COMMENTS_CLICKED
   yield takeLatest(POST_COMMENTS_CLICKED, function*(action) {
     const token = getUserInformation().token;
-    const url = `/${action.slug}/comments`
+    const url = `/articles/${action.slug}/comments`
     const postData={}
     postData.comment = {body:`${action.myComment}`}
     const yourPostData = yield call(postDataToServerAll, token, url, postData);
@@ -145,14 +161,10 @@ export const feedSaga = function*() {
   });
 
   // POST_ARTICLE_CLICKED
-    // POST_ARTICLE_CLICKED
-
-      // POST_ARTICLE_CLICKED
-
   yield takeLatest(POST_ARTICLE_CLICKED, function*(action) {
-    console.log(action);
+
     const token = getUserInformation().token;
-    const url = '' ;
+    const url = '/articles' ;
     const postData = {}
 
     postData.article = {
@@ -164,17 +176,22 @@ export const feedSaga = function*() {
 
     const postArticleData = yield call(postDataToServerAll, token, url, postData );
     console.log(postArticleData);
-    
   });
 };
 
 const postDataToServerAll = (token, url, postData) => {
+  // 
+  let authorization = `Authorization: Token ${token}`
+  if( token === null ) authorization = ''
+  
+  console.log(authorization);
+  
   return fetch(
-    `https://conduit.productionready.io/api/articles${url}`, {
+    `https://conduit.productionready.io/api${url}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Token ${token}`
+      authorization
     },
     body: JSON.stringify(postData)
   })
@@ -182,34 +199,17 @@ const postDataToServerAll = (token, url, postData) => {
       if (response.ok) {
         return response.json()
         .then(response => {
-          if(url.indexOf('favorite')>=0) console.log(" -- Post Your Favorite Article Success -- ", response);
-          if(url.indexOf('comments')>=0) console.log(" -- Post Your Comments Success --  ", response);
-          // if(url.indexOf('comments')) console.log(" -- Post Your Comments Success —- ", response);          
+          // if(url.indexOf('favorite')>=0) console.log(" -- Post Your Favorite Article Success -- ", response);
+          // else if(url.indexOf('comments')>=0) console.log(" -- Post Your Comments Success --  ", response);
+          // else if(url.indexOf('articles')>=0 && url.indexOf('comments')===-1 ) console.log(" -- Post Your Comments Success --  ", response);
+          // else if(token === null ) console.log(" -- SIGN IN SUCCESS —- ", response);          
+          console.log(" -- SUCCESS —- ", response);
           return response;
         });
       } else console.error(" -- Error: Post data failed -- ");
     });
 };
 
-
-const postDataToServer = userData => {
-  const data = { user: userData };
-  return fetch("https://conduit.productionready.io/api/users/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  }).then(response => {
-    if (response.ok) {
-      return response.json()
-      .then(response => {
-        console.log("-- Post Information Success -- :", response);
-        return response;
-      });
-    } else console.error(" -- Error: Post data failed -- ");
-  });
-};
 
 
 const getDataFromServerWithToken = token => {
@@ -236,6 +236,7 @@ const fetchInitialData = url => {
   return fetch("https://conduit.productionready.io/api" + url).then(
     response => {
       if (response.ok) {
+        console.log(' -- Get Data Success -- ')
         return response.json();
       } else console.error(" -- Error: get data failed -- ");
     }

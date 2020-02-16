@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
+  // BrowserRouter as Router,
+  // Switch,
+  // Route,
   Link,
-  Redirect
+  // Redirect
 } from "react-router-dom";
 import dateFormat from "dateformat";
 import {
@@ -16,13 +16,16 @@ import {
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalUserProfile = props => {
+
   // 这个UserName不需要从URL获取，应该是从内存访问的
   const userName = getUserInformation().username || null;
+  console.log(userName);
+  
 
   useEffect(() => {
-    if (userName) {
+    // if (userName) {
       props.loadUserProfileDetail(userName);
-    }
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -86,6 +89,14 @@ const InternalUserProfile = props => {
                 </div>
 
                 {/* ---------------- One Article ----------------  */}
+                {/* 
+                    
+                    资源加载了吗
+                    谁加载的
+                    失效了吗
+
+                */}
+
                 {(props.favoritedArticles || props.currentUsersArticles).map(
                   (article, index) => {
                     return (
@@ -103,7 +114,7 @@ const InternalUserProfile = props => {
                             </span>
                           </div>
                           <button className='btn btn-outline-primary btn-sm pull-xs-right'>
-                            <i className='ion-heart'></i>{" "}
+                            <i className='ion-heart'></i>
                             {article.favoritesCount}
                           </button>
                         </div>
