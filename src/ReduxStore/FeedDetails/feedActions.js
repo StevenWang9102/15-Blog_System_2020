@@ -10,17 +10,32 @@ export const POPULAR_TAG_DISPLAYED = Symbol("POPULAR_TAG_DISPLAYED")
 export const TAG_RELATED_ARTICLE_LOADED = Symbol("TAG_RELATED_ARTICLE_LOADED")
 export const RELATED_TAG_LOADED = Symbol("RELATED_TAG_LOADED")
 export const GLOBLE_FEED_CLICKED = Symbol("GLOBLE_FEED_CLICKED")
-export const USERS_NAME_LOADED = Symbol("GLOBLE_FEED_CLICKED")
+export const USERS_NAME_LOADED = Symbol("USERS_NAME_LOADED")
 export const USERS_PROFILE_LOADED = Symbol("USERS_PROFILE_LOADED")
-export const USERS_RELATED_ARTICLES_LOADED = Symbol("USERS_PROFILE_LOADED")
+export const USERS_RELATED_ARTICLES_LOADED = Symbol("USERS_RELATED_ARTICLES_LOADED")
 export const FAVERATED_ARITICLE_CLICKED = Symbol("FAVERATED_ARITICLE_CLICKED")
 export const FAVERATED_ARITICLE_LOADED = Symbol("FAVERATED_ARITICLE_LOADED")
 export const SIGN_IN_BUTTON_CLICKED = Symbol("SIGN_IN_BUTTON_CLICKED")
 export const USER_TOKEN_LOADED = Symbol("USER_TOKEN_LOADED")
-export const YOURE_ARTICLES_NEEDED = Symbol("YOURE_ARTICLES_NEEDED")
+export const USER_TOKEN_NAME_LOADED = Symbol("USER_TOKEN_NAME_LOADED")
+export const YOURE_FEED_CLICKED = Symbol("YOURE_FEED_CLICKED")
+export const YOURE_FEED_LOADED = Symbol("YOURE_FEED_LOADED")
+export const FAVORITED_BUTTON_CLICKED = Symbol("FAVORITED_BUTTON_CLICKED")
+export const SMALL_NAV_CLICKED = Symbol("SMALL_NAV_CLICKED")
+export const YOUR_FEED_NAV_CLICKED = Symbol("YOUR_FEED_NAV_CLICKED")
+// SMALL_NAV_SET_CLICKED
+export const SMALL_NAV_SET_CLICKED = Symbol("SMALL_NAV_SET_CLICKED")
+// GLOBAL_DATA_LOADED
+export const GLOBAL_DATA_LOADED = Symbol("GLOBAL_DATA_LOADED")
+
+
 
 export const loadInitialData = () => {
     return { type: INITIALDATA_LOADED };
+};
+// globalDataLoaded
+export const globalDataLoaded = (payload) => {
+    return { type: GLOBAL_DATA_LOADED, payload  };
 };
 
 export const loadInitArticleDetail = (slug) =>{
@@ -91,11 +106,33 @@ export const signInClicked = (email, password) => {
     return { type: SIGN_IN_BUTTON_CLICKED, email: email, password: password };
 }
 
-export const userTokedLoaded = (token) => {
-    return { type: USER_TOKEN_LOADED, userToken: token };
+export const userTokedLoaded = (payload) => {
+    return { type: USER_TOKEN_LOADED, userInfo: payload.user };
+
 }
 
-// loadYourArticles
-export const loadYourArticles = (token) => {
-    return { type: YOURE_ARTICLES_NEEDED, token: token };
+export const loadYourArticles = (token ) => {
+    return { type: YOURE_FEED_CLICKED, token: token };
+}
+
+export const yourFeedsLoaded = (articles) => {
+    return { type: YOURE_FEED_LOADED, articles: articles };
+}
+
+
+export const favoritedButtonClicked = (token, slug) => {
+    return { type: FAVORITED_BUTTON_CLICKED, token: token, slug: slug};
+}
+
+export const smallNavClicked = (status) => {
+    return { type: SMALL_NAV_CLICKED, status:status };
+}
+
+export const yourFeedNavClicked = (self) => {
+    return { type: YOUR_FEED_NAV_CLICKED, selfStatus: self };
+}
+// setNavStatus
+
+export const setNavStatus = (status1, status2, status3) => {
+    return { type: SMALL_NAV_SET_CLICKED, status1: status1, status2: status2, status3: status3 };
 }

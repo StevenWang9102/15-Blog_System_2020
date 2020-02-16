@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { popularTagClicked } from "../../ReduxStore/FeedDetails/feedActions";
+import { popularTagClicked,  setNavStatus } from "../../ReduxStore/FeedDetails/feedActions";
+import { NavLink } from "react-router-dom";
 
 
 const InternalPopularTages = props => {
@@ -14,17 +15,20 @@ const InternalPopularTages = props => {
           {props.popularTags &&
             props.popularTags.map((tagName, index) => {
               return (
-                <a 
-                  href="#top" 
-                  className="tag-pill tag-default" 
-                  key={index}
-                  value = {tagName}
-                  onClick = {()=> {
-                    props.onPopularTagClicked(tagName)
-                  }}
-                  >
-                  {tagName}
-                </a>
+              <NavLink
+                className="tag-pill tag-default" 
+                key={index}
+                value = {tagName}
+                onClick = {()=> {
+                  console.log('点击popular tags');
+                  const tag = tagName
+                  props.onPopularTagClicked(tag)
+                  props.setNavStatus('null', 'null', 'active')
+                }}
+                to='/home#popular_tags'
+                >
+                {tagName}
+              </NavLink>
               );
             })}
         </div>
@@ -45,6 +49,7 @@ const mapStateToProps = ({ popularTags }) => {
 const mapDispatchToProps = dispatch => {
   return {
     onPopularTagClicked: (tagName) => dispatch(popularTagClicked(tagName)),
+    setNavStatus: (status1, status2, status3) => dispatch(setNavStatus(status1, status2, status3)),
   };
 };
 

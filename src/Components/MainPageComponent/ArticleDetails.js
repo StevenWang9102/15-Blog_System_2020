@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import { ArticleComments } from "./ArticleComments";
 
 const InternalArticleDetails = props => {
-
+  
   const { article_slug } = useParams();
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const InternalArticleDetails = props => {
       <div className='banner'>
         <div className='container'>
 
-          {/* Article Title */}
+          {/* ---------------- Article Title  ---------------- */}
           {props.currentArticleDetails.author && (
             <div>
               <h1>{props.currentArticleDetails.title}</h1>
@@ -54,7 +54,7 @@ const InternalArticleDetails = props => {
         </div>
       </div>
 
-      {/* Article Details */}
+      {/* ---------------- Article Details ----------------  */}
       <div className='container page'>
         <div className='row article-content'>
           <div className='col-md-12 article-detail'>
@@ -72,8 +72,8 @@ InternalArticleDetails.propTypes = {
   currentArticleDetails: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ currentArticleDetails }) => {
-  return { currentArticleDetails };
+const mapStateToProps = ({ currentArticleDetails,currentProfileData }) => {
+  return { currentArticleDetails,currentProfileData };
 };
 
 const mapDispatchToProps = dispatch => {
