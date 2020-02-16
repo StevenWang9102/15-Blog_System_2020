@@ -20,6 +20,8 @@ import {
   YOURE_FEED_CLICKED,
   yourFeedsLoaded,
   FAVORITED_BUTTON_CLICKED,
+  setNavStatus,
+  globalDataLoaded,
 } from "./feedActions";
 
 export const getUserInformation = function(state){
@@ -41,7 +43,12 @@ export const feedSaga = function*() {
       fetchInitialData,
       "/articles?limit=50&offset=10"
     );
+    console.log(initArticData);
+    //
     yield put(articleDataLoaded(initArticData["articles"]));
+    yield put(globalDataLoaded(initArticData["articles"]));
+
+
     const initTagData = yield call(fetchInitialData, "/tags");
     yield put(tagsDataLoaded(initTagData["tags"]));
   });
@@ -99,20 +106,20 @@ export const feedSaga = function*() {
     userData.email = action.email;
     userData.password = action.password;
     const userPostedData = yield call(postDataToServer, userData);
-    
+
 
     // tag Session Storage
-    setUser(userPostedData.user) // 去sessionStorage
-    // sessionStorage.setItem("Token", userPostedData.user.token);
-    // sessionStorage.setItem("TokenUserName", userPostedData.user.username);
-
+    setUser(userPostedData.user) 
     yield put(userTokedLoaded(userPostedData));
+    yield put(setNavStatus('active', 'null', 'null'));
   });
 
   // YOURE_FEED_CLICKED
   yield takeLatest(YOURE_FEED_CLICKED, function*(action) {
-    const token = getUserInformation.token;
+    const token = getUserInformation().token;
     const yourArticleData = yield call(getDataFromServerWithToken, token);
+    console.log(yourArticleData);
+    
     yield put(yourFeedsLoaded(yourArticleData.articles));
   });
 

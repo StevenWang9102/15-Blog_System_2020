@@ -20,7 +20,9 @@ const InternalPopularTages = props => {
                 key={index}
                 value = {tagName}
                 onClick = {()=> {
-                  props.onPopularTagClicked(tagName)
+                  console.log('点击popular tags');
+                  const tag = tagName
+                  props.onPopularTagClicked(tag)
                   props.setNavStatus('null', 'null', 'active')
                 }}
                 to='/home#popular_tags'

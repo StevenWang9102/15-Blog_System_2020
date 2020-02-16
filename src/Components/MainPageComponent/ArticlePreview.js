@@ -8,57 +8,58 @@ import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
 
 import {
   articleTitleClicked,
-  globeFeedClicked,
+  loadInitialData,
   loadYourArticles,
   favoritedButtonClicked,
-  setNavStatus,
-  smallNavClicked,
-  yourFeedNavClicked,
+  setNavStatus
 } from "../../ReduxStore/FeedDetails/feedActions";
 import { NavLink } from "react-router-dom";
 
 const InternalArticlePreview = props => {
-  
   useEffect(() => {
-    props.userInfo && props.userInfo.token && props.onYourArticleNeeded(props.userInfo.token);
+    props.userInfo &&
+      props.userInfo.token &&
+      props.onYourArticleNeeded(props.userInfo.token);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(props.currentTagName);
+  console.log(props.yourArticles);
+  // !props.tagRelatedArticles
+  // console.log();
+
+  console.log(props.tagRelatedArticles);
+  console.log(props.globalFeeds);
 
   return (
     <div className='col-md-9 col-sm-12'>
-
       {/* --------------------- Navigation --------------------- */}
       <div className='feed-toggle'>
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
-
-            {/* ----- Your Feed ----- */}            
-            { getUserInformation() && getUserInformation().token && (
+            {/* ----- Your Feed ----- */}
+            {getUserInformation() && getUserInformation().token && (
               <NavLink
-              onClick={() => {
-                props.onYourFeedClicked(props.userInfo.token);
-                props.setNavStatus('active', 'null', 'null');
-                // props.currentTagName = null
-              }}
-              className='nav-link display-inline'
-              activeClassName = {props.status1}
-              to='/home#your_feed'
-              >
-              Your Feed
+                onClick={() => {
+                  props.onYourFeedClicked(props.userInfo.token);
+                  props.setNavStatus("active", "null", "null");
+                }}
+                className='nav-link display-inline'
+                activeClassName={props.status1}
+                to='/home#your_feed'>
+                Your Feed
               </NavLink>
             )}
 
             {/* ----- Global Feed ----- */}
             <NavLink
               onClick={() => {
-                props.onGlobeFeedClicked('null', 'active', 'null');
-                props.setNavStatus('null', 'active', 'null')
+                props.onGlobeFeedClicked();
+                props.setNavStatus("null", "active", "null");
               }}
               className='nav-link display-inline'
-              activeClassName = {props.status2}
-              to='/home#global_feed'
-              >
+              activeClassName={props.status2}
+              to='/home#global_feed'>
               Global Feed
             </NavLink>
 
@@ -66,68 +67,78 @@ const InternalArticlePreview = props => {
             {props.currentTagName && (
               <NavLink
                 className='nav-link display-inline'
-                activeClassName= 'active'
-                to='/home#popular_tags'
-                >
+                activeClassName='active'
+                to='/home#popular_tags'>
                 # {props.currentTagName}
               </NavLink>
             )}
           </li>
         </ul>
       </div>
-
-      {/*   Confusing.... how to add props.yourArticles bellow */}
-      {/*   Confusing.... how to add props.yourArticles bellow */}
-
       {/* --------------------- Article --------------------- */}
-      {(props.tagRelatedArticles || props.articleLibrary).map(
-        (article, index) => {
-          return (
-            <div className='article-preview' key={index}>
-              <div className='article-meta'>
-                <Link to={"/user_profile/" + article.author.username}>
-                  <img
-                    className='author-image'
-                    src={article.author.image}
-                    alt='au'
-                  />
 
-                  <div className='info author'>
-                    {article.author.username}
-                    <span className='date'>
-                      {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
-                    </span>
-                  </div>
+      {( getUserInformation() && props.yourArticles === null && !props.globalFeeds )
+        ? (
+            <div className='article-preview'>No articles are here... yet.</div>
+          )
+        : (getUserInformation()
+            ? props.tagRelatedArticles ||
+              (props.yourArticles !== [] && props.yourArticles) ||
+              props.globalFeeds
+            : props.tagRelatedArticles || props.globalFeeds
+          ).map((article, index) => {
+
+            console.log('？');
+            
+            return (
+              <div className='article-preview' key={index}>
+                <div className='article-meta'>
+                  <Link to={"/user_profile/" + article.author.username}>
+                    <img
+                      className='author-image'
+                      src={article.author.image}
+                      alt='au'
+                    />
+
+                    <div className='info author'>
+                      {article.author.username}
+                      <span className='date'>
+                        {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
+                      </span>
+                    </div>
+                  </Link>
+
+                  <button
+                    className='btn btn-outline-primary btn-sm pull-xs-right'
+                    onClick={() => {
+                      const token = getUserInformation.token;
+                      if (token)
+                        props.onFavoritedButtonClicked(token, article.slug);
+                    }}>
+                    <img src='./icon/002-heart-2.png' alt='love' />
+                    {article.favoritesCount}
+                  </button>
+                </div>
+
+                <Link
+                  className='nav-link preview-link article-detail'
+                  to={"/article-detail/" + article.slug}>
+                  <h1
+                    onClick={() => {
+                      props.onArticleClick(article.title, article.slug);
+                    }}>
+                    {article.title}
+                  </h1>
+                  <p>{article.description}</p>
+                  <span>Read more...</span>
                 </Link>
-
-                <button
-                  className='btn btn-outline-primary btn-sm pull-xs-right'
-                  onClick={() => {
-                    const token = getUserInformation.token ;
-                    if (token)
-                      props.onFavoritedButtonClicked(token, article.slug);
-                  }}>
-                  <img src='./icon/002-heart-2.png' alt='love' />
-                  {article.favoritesCount}
-                </button>
               </div>
-
-              <Link
-                className='nav-link preview-link article-detail'
-                to={"/article-detail/" + article.slug}>
-                <h1
-                  onClick={() => {
-                    props.onArticleClick(article.title, article.slug);
-                  }}>
-                  {article.title}
-                </h1>
-                <p>{article.description}</p>
-                <span>Read more...</span>
-              </Link>
-            </div>
-          );
-        }
-      )}
+            );
+          })}
+      {/* // 现在的问题是登录之后， // 全局Feeds怎么不出来啊？？ //
+      数据props.articleLibrary已经进入component // 为什么不渲染？ //
+      还是刷新之后才渲染？？？？？？？？？？？？？？？？？ //
+      需要重新赋值，因为开始就是这个数据 */}
     </div>
   );
 };
@@ -151,7 +162,8 @@ const mapStateToProps = ({
   selfStatus,
   status3,
   status2,
-  status1
+  status1,
+  globalFeeds
 }) => {
   return {
     articleLibrary,
@@ -164,20 +176,22 @@ const mapStateToProps = ({
     selfStatus,
     status3,
     status2,
-    status1
+    status1,
+    globalFeeds
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onArticleClick: (title, slug) => dispatch(articleTitleClicked(title, slug)),
+    onGlobeFeedClicked: () => dispatch(loadInitialData()),
+    setNavStatus: (status1, status2, status3) =>
+      dispatch(setNavStatus(status1, status2, status3)),
+    onYourFeedClicked: token => dispatch(loadYourArticles(token)),
 
-    onGlobeFeedClicked: () => dispatch(globeFeedClicked()),
-    setNavStatus:(status1, status2, status3) => dispatch(setNavStatus(status1, status2, status3)),
-    onYourFeedClicked: (token) => dispatch(loadYourArticles(token)),
-    
     onYourArticleNeeded: token => dispatch(loadYourArticles(token)),
-    onFavoritedButtonClicked: (token, slug) => dispatch(favoritedButtonClicked(token, slug)),
+    onFavoritedButtonClicked: (token, slug) =>
+      dispatch(favoritedButtonClicked(token, slug))
   };
 };
 

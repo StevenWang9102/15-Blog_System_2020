@@ -25,9 +25,17 @@ export const SMALL_NAV_CLICKED = Symbol("SMALL_NAV_CLICKED")
 export const YOUR_FEED_NAV_CLICKED = Symbol("YOUR_FEED_NAV_CLICKED")
 // SMALL_NAV_SET_CLICKED
 export const SMALL_NAV_SET_CLICKED = Symbol("SMALL_NAV_SET_CLICKED")
+// GLOBAL_DATA_LOADED
+export const GLOBAL_DATA_LOADED = Symbol("GLOBAL_DATA_LOADED")
+
+
 
 export const loadInitialData = () => {
     return { type: INITIALDATA_LOADED };
+};
+// globalDataLoaded
+export const globalDataLoaded = (payload) => {
+    return { type: GLOBAL_DATA_LOADED, payload  };
 };
 
 export const loadInitArticleDetail = (slug) =>{
@@ -103,8 +111,8 @@ export const userTokedLoaded = (payload) => {
 
 }
 
-export const loadYourArticles = (token, clear ) => {
-    return { type: YOURE_FEED_CLICKED, token: token, clear: clear };
+export const loadYourArticles = (token ) => {
+    return { type: YOURE_FEED_CLICKED, token: token };
 }
 
 export const yourFeedsLoaded = (articles) => {
