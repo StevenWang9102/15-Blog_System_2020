@@ -2,7 +2,7 @@ export const INITIALDATA_LOADED = Symbol("INITIALDATA_LOADED");
 export const ARTICLE_DATA_LOADED = Symbol("ARTICLE_DATA_LOADED")
 export const TAGS_DATA_LOADED = Symbol("TAGS_DATA_LOADED")
 export const ARTICLE_TITLE_CLICKED = Symbol("ARTICLE_TITLE_CLICKED")
-export const INIT_ARTICLE_COMMENT_GET = Symbol("INIT_ARTICLE_COMMENT_GET")
+export const INIT_ARTICLE_DETAILS_GET = Symbol("INIT_ARTICLE_DETAILS_GET")
 export const ARTICLE_COMMENTS_LOADED = Symbol("ARTICLE_COMMENTS_LOADED")
 export const ARTICLE_CONTENT_LOADED = Symbol("ARTICLE_CONTENT_LOADED")
 export const POPULAR_TAG_CLICKED = Symbol("POPULAR_TAG_CLICKED")
@@ -39,7 +39,7 @@ export const globalDataLoaded = (payload) => {
 };
 
 export const loadInitArticleDetail = (slug) =>{
-    return { type: INIT_ARTICLE_COMMENT_GET, slug };
+    return { type: INIT_ARTICLE_DETAILS_GET, slug };
 }
 
 export const articleDataLoaded = (articleData) =>{

@@ -3,7 +3,7 @@ import {
   TAGS_DATA_LOADED,
   ARTICLE_TITLE_CLICKED,
   ARTICLE_COMMENTS_LOADED,
-  INIT_ARTICLE_COMMENT_GET,
+  INIT_ARTICLE_DETAILS_GET,
   ARTICLE_CONTENT_LOADED,
   TAG_RELATED_ARTICLE_LOADED,
   RELATED_TAG_LOADED,
@@ -30,7 +30,7 @@ const initialState = {
   currentArticleSlug: "",
   currentProfileData: {},
   currentUsersArticles: [],
-  favoritedArticles: [],
+  favoritedArticles: null,
   tagRelatedArticles: null,
   currentTagName: "",
   userInfo: {}, // 暂定是null
@@ -113,8 +113,8 @@ export const feedReducer = (state = initialState, action) => {
         status2: action.status2,
         status3: action.status3
       };
-      // INIT_ARTICLE_COMMENT_GET
-      case INIT_ARTICLE_COMMENT_GET:
+      // INIT_ARTICLE_DETAILS_GET
+      case INIT_ARTICLE_DETAILS_GET:
         return { ...state, currentSlug: action.slug };
     
         default:

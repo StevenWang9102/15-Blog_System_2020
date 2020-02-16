@@ -20,7 +20,6 @@ const InternalArticleDetails = props => {
   let history = useHistory();
 
   console.log(article_slug);
-  
 
   useEffect(() => {
     props.loadInitArticleDetail(article_slug);
@@ -28,7 +27,7 @@ const InternalArticleDetails = props => {
   }, []);
 
   return (
-    <Router>
+    // <Router>
       <div className='article-page'>
         <div className='banner'>
           <div className='container'>
@@ -43,16 +42,14 @@ const InternalArticleDetails = props => {
                       "/user-profile/" +
                       props.currentArticleDetails.author.username
                     }>
-                      <img
-                        className='author-image'
-                        src={props.currentArticleDetails.author.image}
-                        alt='au'
-                      />
+                    <img
+                      className='author-image'
+                      src={props.currentArticleDetails.author.image}
+                      alt='au'
+                    />
                     <div className='info author'>
-                      {/* <a href='#top' className='author'> */}
-                        {props.currentArticleDetails &&
-                          props.currentArticleDetails.author.username}
-                      {/* </a> */}
+                      {props.currentArticleDetails &&
+                        props.currentArticleDetails.author.username}
                       <span className='date'>
                         {dateFormat(
                           props.currentArticleDetails.author.updatedAt,
@@ -61,6 +58,36 @@ const InternalArticleDetails = props => {
                       </span>
                     </div>
                   </Link>
+                </div>
+
+                {/* 新增按钮 */}
+                {/* 前面加入权限 */}
+                {/* 前面加入权限 */}
+                {/* 前面加入权限 */}
+
+                <div className = "edit-button">
+                  <Link to = {`/new_post/${article_slug}`}>
+                  <button
+                    className='btn btn-sm btn-info'
+                    onClick={event => {
+                      // 发送目前slug
+                      
+                      // 发送一个请求：https://conduit.productionready.io/api/articles/111-yq91b
+                      // 同时页面跳转: 应该是New Post，但是有数据读进来
+                      // 只需要重新Post这些数据就可以覆盖
+                      // props.onDeleteArticleClicked()
+                    }}>
+                    Edit Article
+                  </button>
+                  </Link>
+
+                  <button
+                    className='btn btn-sm btn-warning'
+                    onClick={event => {
+                      // props.onPostCommentsClicked(props.currentSlug, myComment)
+                    }}>
+                    Delete Article
+                  </button>
                 </div>
               </div>
             )}
@@ -95,12 +122,9 @@ const InternalArticleDetails = props => {
         )}
 
         {/* ---------------- Comments ----------------  */}
-        { getUserInformation() && <ArticleComments />}
-
-
-
+        {getUserInformation() && <ArticleComments />}
       </div>
-    </Router>
+    // </Router>
   );
 };
 

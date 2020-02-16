@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { useState } from "react";
+
 import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
 import {
   // BrowserRouter as Router,
   // Switch,
   // Route,
-  Link,
+  Link
   // Redirect
 } from "react-router-dom";
 import dateFormat from "dateformat";
@@ -16,122 +18,128 @@ import {
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalUserProfile = props => {
-
   // 这个UserName不需要从URL获取，应该是从内存访问的
   const userName = getUserInformation().username || null;
   console.log(userName);
-  
+  console.log(props.currentUsersArticles);
+
+  console.log(props.favoritedArticles);
 
   useEffect(() => {
-    // if (userName) {
+    if (userName) {
       props.loadUserProfileDetail(userName);
-    // }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-      <div>
-        <div className='profile-page'>
-          {/* ---------------- User Information ---------------- */}
-          <div className='user-info'>
-            <div className='container'>
-              <div className='row'>
-                <div className='col-xs-12 col-md-10 offset-md-1'>
-                  <img
-                    src={
-                      props.currentProfileData.profile &&
-                      props.currentProfileData.profile.image
-                    }
-                    className='user-img'
-                    alt='au'
-                  />
-                  <h4>{userName}</h4>
-                  <p>
-                    {props.currentProfileData.profile &&
-                      props.currentProfileData.profile.bio}
-                  </p>
-                  <button className='btn btn-sm btn-outline-secondary action-btn'>
-                    <i className='ion-plus-round'></i>
-                    {/* Woring  */}
-                    <Link className='nav-link' to='/setting'>
-                      <img src='./icon/004-settings.png' alt='setting' />
-                      Edit Profile Setting
-                    </Link>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
+    <div>
+      <div className='profile-page'>
+        {/* ---------------- User Information ---------------- */}
+        <div className='user-info'>
           <div className='container'>
             <div className='row'>
               <div className='col-xs-12 col-md-10 offset-md-1'>
-                {/* ---------------- Navigation ---------------- */}
-                <div className='articles-toggle'>
-                  <ul className='nav nav-pills outline-active'>
-                    <li className='nav-item'>
-                      <a className='nav-link active' href='#top'>
-                        My Articles
-                      </a>
-                    </li>
-
-                    <li className='nav-item'>
-                      <a
-                        className='nav-link'
-                        href='#top'
-                        onClick={userName => {
-                          props.onFavoritedArticleClicked(userName);
-                        }}>
-                        Favorited Articles
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-
-                {/* ---------------- One Article ----------------  */}
-                {/* 
-                    
-                    资源加载了吗
-                    谁加载的
-                    失效了吗
-
-                */}
-
-                {(props.favoritedArticles || props.currentUsersArticles).map(
-                  (article, index) => {
-                    return (
-                      <div className='article-preview' key={index}>
-                        <div className='article-meta'>
-                          <a href='#top'>
-                            <img src={article.author.image} alt='au' />
-                          </a>
-                          <div className='info'>
-                            <a href='#top' className='author'>
-                              {article.author.username}
-                            </a>
-                            <span className='date'>
-                              {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
-                            </span>
-                          </div>
-                          <button className='btn btn-outline-primary btn-sm pull-xs-right'>
-                            <i className='ion-heart'></i>
-                            {article.favoritesCount}
-                          </button>
-                        </div>
-                        <a href='#top' className='preview-link'>
-                          <h1>{article.title}</h1>
-                          <p>{article.description}</p>
-                          <span>Read more...</span>
-                        </a>
-                      </div>
-                    );
+                <img
+                  src={
+                    props.currentProfileData.profile &&
+                    props.currentProfileData.profile.image
                   }
-                )}
+                  className='user-img'
+                  alt='au'
+                />
+                <h4>{userName}</h4>
+                <p>
+                  {props.currentProfileData.profile &&
+                    props.currentProfileData.profile.bio}
+                </p>
+                <button className='btn btn-sm btn-outline-secondary action-btn'>
+                  <i className='ion-plus-round'></i>
+                  {/* Woring  */}
+                  <Link className='nav-link' to='/setting'>
+                    <img src='./icon/004-settings.png' alt='setting' />
+                    Edit Profile Setting
+                  </Link>
+                </button>
               </div>
             </div>
           </div>
         </div>
+
+        <div className='container'>
+          <div className='row'>
+            <div className='col-xs-12 col-md-10 offset-md-1'>
+              {/* ---------------- Navigation ---------------- */}
+              <div className='articles-toggle'>
+                <ul className='nav nav-pills outline-active'>
+                  <li className='nav-item'>
+                    <Link
+                      to='/user_profile/my_articles'
+                      className='nav-link active'
+                      onClick={() => {
+                        props.loadUserProfileDetail(userName);
+                      }}>
+                      My Articles
+                    </Link>
+                  </li>
+
+                  <li className='nav-item'>
+                    <Link
+                      to='/user_profile/favorited_articles'
+                      className='nav-link'
+                      onClick={userName => {
+                        props.onFavoritedArticleClicked(userName);
+                      }}>
+                      Favorited Articles
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              {/* ---------------- One Article ----------------  */}
+
+              {(props.favoritedArticles || props.currentUsersArticles).map(
+                (article, index) => {
+                  return (
+                    <div className='article-preview' key={index}>
+                      <div className='article-meta'>
+                        <Link to={"/user_profile/" + article.author.username}>
+                          <img src={article.author.image} alt='au' />
+                        </Link>
+
+                        <div className='info'>
+                          <Link
+                            to={"/user_profile/" + article.author.username}
+                            className='author'>
+                            {article.author.username}
+                          </Link>
+                          <span className='date'>
+                            {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
+                          </span>
+                        </div>
+                        <button className='btn btn-outline-primary btn-sm pull-xs-right'>
+                          <i className='ion-heart'></i>
+                          {article.favoritesCount}
+                        </button>
+                      </div>
+
+                      {/* Working */}
+                      <Link
+                        to={"/article-detail/" + article.slug}
+                        className='preview-link'>
+                        <h1>{article.title}</h1>
+                        <p>{article.description}</p>
+                        <span>Read more...</span>
+                      </Link>
+                    </div>
+                  );
+                }
+              )}
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
   );
 };
 

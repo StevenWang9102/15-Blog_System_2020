@@ -95,3 +95,14 @@ p{
 .logout-button{
   float: left;
 }
+
+.edit-button{
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.article-meta
+{
+  display: inline-block;
+
+}

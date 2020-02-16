@@ -2,7 +2,7 @@ import { takeLatest, put, call, select, all} from "redux-saga/effects";
 import { getUser, setUser } from '../../Components/UserComponent/AuthToken'
 import {
   INITIALDATA_LOADED,
-  INIT_ARTICLE_COMMENT_GET,
+  INIT_ARTICLE_DETAILS_GET,
   POPULAR_TAG_CLICKED,
   articleDataLoaded,
   articleContentLoaded,
@@ -43,7 +43,7 @@ export const feedSaga = function*() {
       fetchInitialData,
       "/articles?limit=50&offset=10"
     );
-    //
+    
     yield put(articleDataLoaded(initArticData["articles"]));
     yield put(globalDataLoaded(initArticData["articles"]));
 
@@ -52,8 +52,19 @@ export const feedSaga = function*() {
     yield put(tagsDataLoaded(initTagData["tags"]));
   });
 
+  // ARTICLE_COMMENT_LOADED 这里面获取失败
   // ARTICLE_COMMENT_LOADED
-  yield takeLatest(INIT_ARTICLE_COMMENT_GET, function*(action) {
+  // ARTICLE_COMMENT_LOADED
+  // ARTICLE_COMMENT_LOADED
+  // ARTICLE_COMMENT_LOADED
+  // ARTICLE_COMMENT_LOADED
+
+  // 这篇文章 404报错， 
+  // 携带token，是谁
+  // 是get方法，
+  // 哪片文章。。。。。。。。。。。。。。。。。。。。。。。。。。。
+
+  yield takeLatest(INIT_ARTICLE_DETAILS_GET, function*(action) {
     const initArticleData = yield call(
       fetchInitialData,
       `/articles/${action.slug}`
@@ -78,13 +89,6 @@ export const feedSaga = function*() {
   });
 
   // USER PROFILE LOADED
-    // USER PROFILE LOADED
-      // USER PROFILE LOADED
-        // USER PROFILE LOADED
-          // USER PROFILE LOADED
-            // USER PROFILE LOADED
-              // USER PROFILE LOADED
-
   yield takeLatest(USERS_NAME_LOADED, function*(action) {
 
     const [userProfileData, userRelatedArticles] = yield all ([
@@ -105,11 +109,12 @@ export const feedSaga = function*() {
       fetchInitialData,
       `/articles?favorited=${action.userName}&limit=5&offset=0`
     );
+    console.log(favoritedArticlesData);
+    
     yield put(favoritedArticleLoaded(favoritedArticlesData.articles));
   });
 
   // SIGN_IN_BUTTON_CLICKED
-
   yield takeLatest(SIGN_IN_BUTTON_CLICKED, function*(action) {
     const userData = {};
     const url = '/users/login';

@@ -1,12 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { onPostArticleClicked } from "../../ReduxStore/FeedDetails/feedActions";
+import { onPostArticleClicked, loadInitArticleDetail } from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalNewPost = props => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState("");
+
+// 每次进入这个界面，都去看看这篇文章有没有值
+// 从哪里拿到这篇文章的slug， 应该是内存
+
+useEffect(() => {
+  props.loadInitArticleDetail(props.currentSlug);
+  // 发送请求这篇文章的内容
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
+
+console.log(props.currentSlug);
+console.log(props.currentArticleDetails);
 
 
   return (
@@ -75,14 +88,15 @@ const InternalNewPost = props => {
 };
 
 
-const mapStateToProps = ({ currentSlug }) => {
-  return { currentSlug };
+const mapStateToProps = ({ currentSlug, currentArticleDetails }) => {
+  return { currentSlug, currentArticleDetails };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onPostArticleClicked: (title, description, content, tags, slug) =>
-      dispatch(onPostArticleClicked(title, description, content, tags, slug))
+      dispatch(onPostArticleClicked(title, description, content, tags, slug)),
+    loadInitArticleDetail: (slug) => dispatch(loadInitArticleDetail(slug)),
   };
 };
 export const NewPost = connect(

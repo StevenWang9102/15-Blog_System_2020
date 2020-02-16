@@ -104,7 +104,7 @@ export const InternalNavbar = props => {
 
           <Route path='/user_profile' component={UserProfile} />
           <Route path='/article-detail/:article_slug' component={ArticleDetails} />
-          <Route exact path='/new_post' component={NewPost} />
+          <Route path='/new_post' component={NewPost} />
           <Route exact path='/setting' component={Setting} />
         </Switch>
 
