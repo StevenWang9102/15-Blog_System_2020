@@ -85,7 +85,13 @@ p{
   width: 70% !important;
   text-align:left !important;
   margin-left: 10% !important;
+}
 
-  /* margin-right: 100 auto !important; */
+.hr-setting{
 
+  margin-top: 80px !important;
+}
+
+.logout-button{
+  float: left;
 }
