@@ -1,26 +1,13 @@
 import React from "react";
 import { useState } from "react";
-
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
-import { useParams } from "react-router-dom";
-
-
-// onPostCommentsClicked
 import { onPostCommentsClicked } from "../../ReduxStore/FeedDetails/feedActions";
 
 
 const InternalArticleComments = props => {
-  // Slug应该从URL上面拿到，这样刷新才能好使
-  // 这个articlue_slug 在上一个detail
-  // detail 页面有没有传递到 redux store??
-  // 有的，重新取出来了
-  
-  // const { article_slug } = useParams();
-  const [myComment, setMyComment] = useState("");
-
-  console.log(props.currentSlug);
+   const [myComment, setMyComment] = useState("");
   
   return (
     <div className='commonts-container'>
@@ -46,9 +33,6 @@ const InternalArticleComments = props => {
                 className='btn btn-sm btn-primary'
                 onClick={(event)=>
                   {
-                    event.preventDefault();
-                    console.log(myComment);
-                    
                     props.onPostCommentsClicked(props.currentSlug, myComment)
                   }
                 }

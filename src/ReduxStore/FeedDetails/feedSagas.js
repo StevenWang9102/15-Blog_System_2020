@@ -13,6 +13,7 @@ import {
   userProfileDataLoaded,
   tagsDataLoaded,
   userRelatedArticlesLoaded,
+  POST_ARTICLE_CLICKED,
   FAVERATED_ARITICLE_CLICKED,
   favoritedArticleLoaded,
   SIGN_IN_BUTTON_CLICKED,
@@ -25,9 +26,7 @@ import {
   POST_COMMENTS_CLICKED,
 } from "./feedActions";
 
-export const getUserInformation = function(state){
-  console.log(state);
-  
+export const getUserInformation = function(state){  
   // const reduxStoredUserInfo = yield select(state => state.userInfo);
   // if(reduxStoredUserInfo) return reduxStoredUserInfo
   // else 
@@ -122,78 +121,76 @@ export const feedSaga = function*() {
     yield put(yourFeedsLoaded(yourArticleData.articles));
   });
 
-  // FAVORITED_BUTTON_CLICKED
+  // FAVORITED_BUTTON_CLICKED ///////////////////////
   yield takeLatest(FAVORITED_BUTTON_CLICKED, function*(action) {
     const slug = action.slug
     const token = action.token
-    const yourFavoritedData = yield call(postDataToServerWithToken, token, slug);
-    // Confusing...How to change favorited article
-    // Confusing...How to change favorited article
+    const url = `/${slug}/favorite`
+    const yourFavoritedData = yield call(postDataToServerAll, token, url);
+    console.log(yourFavoritedData);
+    
+    // 此处喜欢要加一
+    // 此处喜欢要加一
+    // 此处喜欢要加一
   });
 
   // POST_COMMENTS_CLICKED
-  // POST_COMMENTS_CLICKED
-  // POST_COMMENTS_CLICKED
-  // POST_COMMENTS_CLICKED
-  // POST_COMMENTS_CLICKED
-  // POST_COMMENTS_CLICKED
-
   yield takeLatest(POST_COMMENTS_CLICKED, function*(action) {
     const token = getUserInformation().token;
-    console.log(token);
-    
-    const slug = action.slug;
-    console.log(slug);
-    
-    const myComment = action.myComment
-    console.log(typeof(myComment));
-
+    const url = `/${action.slug}/comments`
     const postData={}
-    postData.comment = {body:`${myComment}`}
-    console.log(postData);
-    
-    
-    // 报错400.。。。。。。。。。。。
-    // 还需要内容。。。data
-    // 好像是data格式不对
-
-    const yourPostData = yield call(postDataToServerWithToken2, token, slug, postData);
+    postData.comment = {body:`${action.myComment}`}
+    const yourPostData = yield call(postDataToServerAll, token, url, postData);
     console.log(yourPostData);    
-    // yield put(yourFeedsLoaded(yourArticleData.articles));
+  });
+
+  // POST_ARTICLE_CLICKED
+    // POST_ARTICLE_CLICKED
+
+      // POST_ARTICLE_CLICKED
+
+  yield takeLatest(POST_ARTICLE_CLICKED, function*(action) {
+    console.log(action);
+    const token = getUserInformation().token;
+    const url = '' ;
+    const postData = {}
+
+    postData.article = {
+      title:`${action.title}`, 
+      description:`${action.description}`,
+      body:`${action.content}`,
+      tagList:`${action.tags}`,
+    }
+
+    const postArticleData = yield call(postDataToServerAll, token, url, postData );
+    console.log(postArticleData);
+    
   });
 };
 
-const postDataToServerWithToken2 = (token, slug, postData) => {
-  return fetch(`https://conduit.productionready.io/api/articles/${slug}/comments`, {
+const postDataToServerAll = (token, url, postData) => {
+  return fetch(
+    `https://conduit.productionready.io/api/articles${url}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Token ${token}`
     },
     body: JSON.stringify(postData)
-
   })
-    .then(response => response.json())
     .then(response => {
-      console.log("-- Post Your Favorited Article Success —-", response);
-      return response;
+      if (response.ok) {
+        return response.json()
+        .then(response => {
+          if(url.indexOf('favorite')>=0) console.log(" -- Post Your Favorite Article Success -- ", response);
+          if(url.indexOf('comments')>=0) console.log(" -- Post Your Comments Success --  ", response);
+          // if(url.indexOf('comments')) console.log(" -- Post Your Comments Success —- ", response);          
+          return response;
+        });
+      } else console.error(" -- Error: Post data failed -- ");
     });
 };
 
-const postDataToServerWithToken = (token, slug) => {
-  return fetch(`https://conduit.productionready.io/api/articles/${slug}/favorite`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Token ${token}`
-    },
-  })
-    .then(response => response.json())
-    .then(response => {
-      console.log("-- Post Your Favorited Article Success —-", response);
-      return response;
-    });
-};
 
 const postDataToServer = userData => {
   const data = { user: userData };

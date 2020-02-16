@@ -111,7 +111,7 @@ const InternalArticlePreview = props => {
                   <button
                     className='btn btn-outline-primary btn-sm pull-xs-right'
                     onClick={() => {
-                      const token = getUserInformation.token;
+                      const token = getUserInformation().token;
                       if (token)
                         props.onFavoritedButtonClicked(token, article.slug);
                     }}>

@@ -23,12 +23,11 @@ export const YOURE_FEED_LOADED = Symbol("YOURE_FEED_LOADED")
 export const FAVORITED_BUTTON_CLICKED = Symbol("FAVORITED_BUTTON_CLICKED")
 export const SMALL_NAV_CLICKED = Symbol("SMALL_NAV_CLICKED")
 export const YOUR_FEED_NAV_CLICKED = Symbol("YOUR_FEED_NAV_CLICKED")
-// SMALL_NAV_SET_CLICKED
 export const SMALL_NAV_SET_CLICKED = Symbol("SMALL_NAV_SET_CLICKED")
-// GLOBAL_DATA_LOADED
 export const GLOBAL_DATA_LOADED = Symbol("GLOBAL_DATA_LOADED")
-// POST_COMMENTS_CLICKED
 export const POST_COMMENTS_CLICKED = Symbol("POST_COMMENTS_CLICKED")
+// POST_ARTICLE_CLICKED
+export const POST_ARTICLE_CLICKED = Symbol("POST_ARTICLE_CLICKED")
 
 
 export const loadInitialData = () => {
@@ -141,4 +140,9 @@ export const setNavStatus = (status1, status2, status3) => {
 // onPostCommentsClicked
 export const onPostCommentsClicked = (slug, myComment) => {
     return { type: POST_COMMENTS_CLICKED, slug: slug, myComment: myComment };
+}
+// onPostArticleClicked
+
+export const onPostArticleClicked = (title, description, content, tags, slug ) => {
+    return { type: POST_ARTICLE_CLICKED, title:title, description:description, content:content, tags:tags, slug:slug };
 }
