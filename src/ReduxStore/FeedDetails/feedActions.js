@@ -27,7 +27,8 @@ export const YOUR_FEED_NAV_CLICKED = Symbol("YOUR_FEED_NAV_CLICKED")
 export const SMALL_NAV_SET_CLICKED = Symbol("SMALL_NAV_SET_CLICKED")
 // GLOBAL_DATA_LOADED
 export const GLOBAL_DATA_LOADED = Symbol("GLOBAL_DATA_LOADED")
-
+// POST_COMMENTS_CLICKED
+export const POST_COMMENTS_CLICKED = Symbol("POST_COMMENTS_CLICKED")
 
 
 export const loadInitialData = () => {
@@ -135,4 +136,9 @@ export const yourFeedNavClicked = (self) => {
 
 export const setNavStatus = (status1, status2, status3) => {
     return { type: SMALL_NAV_SET_CLICKED, status1: status1, status2: status2, status3: status3 };
+}
+
+// onPostCommentsClicked
+export const onPostCommentsClicked = (slug, myComment) => {
+    return { type: POST_COMMENTS_CLICKED, slug: slug, myComment: myComment };
 }

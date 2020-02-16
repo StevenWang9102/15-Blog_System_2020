@@ -3,6 +3,7 @@ import {
   TAGS_DATA_LOADED,
   ARTICLE_TITLE_CLICKED,
   ARTICLE_COMMENTS_LOADED,
+  INIT_ARTICLE_COMMENT_GET,
   ARTICLE_CONTENT_LOADED,
   TAG_RELATED_ARTICLE_LOADED,
   RELATED_TAG_LOADED,
@@ -112,8 +113,11 @@ export const feedReducer = (state = initialState, action) => {
         status2: action.status2,
         status3: action.status3
       };
-
-    default:
+      // INIT_ARTICLE_COMMENT_GET
+      case INIT_ARTICLE_COMMENT_GET:
+        return { ...state, currentSlug: action.slug };
+    
+        default:
       return state;
   }
 };

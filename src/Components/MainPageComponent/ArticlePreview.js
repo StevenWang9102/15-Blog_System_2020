@@ -88,7 +88,7 @@ const InternalArticlePreview = props => {
             : props.tagRelatedArticles || props.globalFeeds
           ).map((article, index) => {
 
-            console.log('？');
+          
             
             return (
               <div className='article-preview' key={index}>
