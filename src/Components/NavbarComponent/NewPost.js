@@ -8,19 +8,15 @@ const InternalNewPost = props => {
   const [content, setContent] = useState("");
   const [tags, setTags] = useState("");
 
-// 每次进入这个界面，都去看看这篇文章有没有值
 // 从哪里拿到这篇文章的slug， 应该是内存
+// 每次进入这个界面，都去看看这篇文章有没有值
+// 目前请求失败@@@@@@@
 
 useEffect(() => {
   props.loadInitArticleDetail(props.currentSlug);
   // 发送请求这篇文章的内容
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
 }, []);
-
-console.log(props.currentSlug);
-console.log(props.currentArticleDetails);
-
 
   return (
     <div className='auth-page'>
@@ -30,6 +26,7 @@ console.log(props.currentArticleDetails);
             <div class='col-md-10 offset-md-1 col-xs-12'>
               <form>
                 <fieldset>
+                  
                   {/* ---- Title ---- */}
                   <fieldset class='form-group'>
                     <input

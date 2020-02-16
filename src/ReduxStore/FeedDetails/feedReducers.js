@@ -24,7 +24,7 @@ const initialState = {
   currentComments: {},
   currentArticleDetails: {},
   articleLibrary: [],
-  globalFeeds:[],
+  globalFeeds: [],
   popularTags: [],
   currentArticleTitle: "",
   currentArticleSlug: "",
@@ -33,7 +33,7 @@ const initialState = {
   favoritedArticles: null,
   tagRelatedArticles: null,
   currentTagName: "",
-  userInfo: {}, // 暂定是null
+  userInfo: {},
   yourArticles: null,
   smallNavStatus: "active",
   selfStatus: "null",
@@ -69,14 +69,12 @@ export const feedReducer = (state = initialState, action) => {
     case RELATED_TAG_LOADED:
       return { ...state, currentTagName: action.tagName };
 
-    // YOURE_FEED_CLICKED
     case YOURE_FEED_CLICKED:
       return { ...state, currentTagName: null, tagRelatedArticles: null };
 
     case INITIALDATA_LOADED:
       return { ...state, currentTagName: "", tagRelatedArticles: null };
 
-    // GLOBAL_DATA_LOADED
     case GLOBAL_DATA_LOADED:
       return { ...state, globalFeeds: action.payload };
 
@@ -105,7 +103,6 @@ export const feedReducer = (state = initialState, action) => {
         tagRelatedArticles: null
       };
 
-    // SMALL_NAV_SET_CLICKED
     case SMALL_NAV_SET_CLICKED:
       return {
         ...state,
@@ -113,11 +110,10 @@ export const feedReducer = (state = initialState, action) => {
         status2: action.status2,
         status3: action.status3
       };
-      // INIT_ARTICLE_DETAILS_GET
-      case INIT_ARTICLE_DETAILS_GET:
-        return { ...state, currentSlug: action.slug };
-    
-        default:
+    case INIT_ARTICLE_DETAILS_GET:
+      return { ...state, currentSlug: action.slug };
+
+    default:
       return state;
   }
 };

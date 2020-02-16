@@ -20,8 +20,6 @@ import {
 
 
 export const InternalNavbar = props => {
-
-  
   return (
     <Router>
       <div>

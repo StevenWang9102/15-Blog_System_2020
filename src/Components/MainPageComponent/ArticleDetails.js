@@ -8,18 +8,11 @@ import { useParams } from "react-router-dom";
 import { ArticleComments } from "./ArticleComments";
 import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
 
-import {
-  BrowserRouter as Router,
-  Link,
-  Route,
-  Redirect
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const InternalArticleDetails = props => {
   const { article_slug } = useParams();
   let history = useHistory();
-
-  console.log(article_slug);
 
   useEffect(() => {
     props.loadInitArticleDetail(article_slug);
@@ -27,58 +20,52 @@ const InternalArticleDetails = props => {
   }, []);
 
   return (
-    // <Router>
-      <div className='article-page'>
-        <div className='banner'>
-          <div className='container'>
-            {/* ---------------- Article Title  ---------------- */}
-            {props.currentArticleDetails.author && (
-              <div>
-                <h1>{props.currentArticleDetails.title}</h1>
+    <div className='article-page'>
+      <div className='banner'>
+        <div className='container'>
+          {/* ---------------- Article Title  ---------------- */}
+          {props.currentArticleDetails.author && (
+            <div>
+              <h1>{props.currentArticleDetails.title}</h1>
 
-                <div className='article-meta'>
-                  <Link
-                    to={
-                      "/user-profile/" +
-                      props.currentArticleDetails.author.username
-                    }>
-                    <img
-                      className='author-image'
-                      src={props.currentArticleDetails.author.image}
-                      alt='au'
-                    />
-                    <div className='info author'>
-                      {props.currentArticleDetails &&
-                        props.currentArticleDetails.author.username}
-                      <span className='date'>
-                        {dateFormat(
-                          props.currentArticleDetails.author.updatedAt,
-                          "ddd mmm dd yyyy"
-                        )}
-                      </span>
-                    </div>
-                  </Link>
-                </div>
+              <div className='article-meta'>
+                <Link
+                  to={
+                    "/user-profile/" +
+                    props.currentArticleDetails.author.username
+                  }>
+                  <img
+                    className='author-image'
+                    src={props.currentArticleDetails.author.image}
+                    alt='au'
+                  />
+                  <div className='info author'>
+                    {props.currentArticleDetails &&
+                      props.currentArticleDetails.author.username}
+                    <span className='date'>
+                      {dateFormat(
+                        props.currentArticleDetails.author.updatedAt,
+                        "ddd mmm dd yyyy"
+                      )}
+                    </span>
+                  </div>
+                </Link>
+              </div>
 
-                {/* 新增按钮 */}
-                {/* 前面加入权限 */}
-                {/* 前面加入权限 */}
-                {/* 前面加入权限 */}
-
-                <div className = "edit-button">
-                  <Link to = {`/new_post/${article_slug}`}>
-                  <button
-                    className='btn btn-sm btn-info'
-                    onClick={event => {
-                      // 发送目前slug
-                      
-                      // 发送一个请求：https://conduit.productionready.io/api/articles/111-yq91b
-                      // 同时页面跳转: 应该是New Post，但是有数据读进来
-                      // 只需要重新Post这些数据就可以覆盖
-                      // props.onDeleteArticleClicked()
-                    }}>
-                    Edit Article
-                  </button>
+              {/* ---------------- Edit and Delete Button ----------------  */}
+              {getUserInformation() && (
+                <div className='edit-button'>
+                  <Link to={`/new_post/${article_slug}`}>
+                    <button
+                      className='btn btn-sm btn-info'
+                      onClick={event => {
+                        // 发送目前slug
+                        // 发送一个请求：https://conduit.productionready.io/api/articles/111-yq91b
+                        // 同时页面跳转: 应该是New Post，但是有数据读进来
+                        // 只需要重新Post这些数据就可以覆盖
+                      }}>
+                      Edit Article
+                    </button>
                   </Link>
 
                   <button
@@ -89,41 +76,41 @@ const InternalArticleDetails = props => {
                     Delete Article
                   </button>
                 </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* ---------------- Article Details ----------------  */}
-        <div className='container page'>
-          <div className='row article-content'>
-            <div className='col-md-12 article-detail'>
-              {props.currentArticleDetails.body}
+              )}
             </div>
-          </div>
-          <hr />
+          )}
         </div>
-
-        {/* ---------------- Sign in options  ----------------  */}
-
-        {!getUserInformation() && (
-          <div className='container page'>
-            <div className='row'>
-              <div className='col-md-12'>
-                <Link to='sign_in' onClick={() => history.push("sign_in")}>
-                  Sign in
-                </Link>
-                or
-                <Link to='sign_up'> sign up </Link>
-                to add comments on this article.
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ---------------- Comments ----------------  */}
-        {getUserInformation() && <ArticleComments />}
       </div>
+
+      {/* ---------------- Article Details ----------------  */}
+      <div className='container page'>
+        <div className='row article-content'>
+          <div className='col-md-12 article-detail'>
+            {props.currentArticleDetails.body}
+          </div>
+        </div>
+        <hr />
+      </div>
+
+      {/* ---------------- Sign in options  ----------------  */}
+      {!getUserInformation() && (
+        <div className='container page'>
+          <div className='row'>
+            <div className='col-md-12'>
+              <Link to='sign_in' onClick={() => history.push("sign_in")}>
+                Sign in
+              </Link>
+              or
+              <Link to='sign_up'> sign up </Link>
+              to add comments on this article.
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ---------------- Comments ----------------  */}
+      {getUserInformation() && <ArticleComments />}
+    </div>
     // </Router>
   );
 };

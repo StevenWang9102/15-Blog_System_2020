@@ -1,16 +1,9 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { useState } from "react";
 
 import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
-import {
-  // BrowserRouter as Router,
-  // Switch,
-  // Route,
-  Link
-  // Redirect
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 import dateFormat from "dateformat";
 import {
   loadUserProfileDetail,
@@ -18,23 +11,18 @@ import {
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalUserProfile = props => {
-  // 这个UserName不需要从URL获取，应该是从内存访问的
-  const userName = getUserInformation().username || null;
-  console.log(userName);
-  console.log(props.currentUsersArticles);
 
-  console.log(props.favoritedArticles);
+  const userName = getUserInformation().username || null;
 
   useEffect(() => {
-    if (userName) {
-      props.loadUserProfileDetail(userName);
-    }
+      userName && props.loadUserProfileDetail(userName);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div>
       <div className='profile-page'>
+
         {/* ---------------- User Information ---------------- */}
         <div className='user-info'>
           <div className='container'>
@@ -55,7 +43,6 @@ const InternalUserProfile = props => {
                 </p>
                 <button className='btn btn-sm btn-outline-secondary action-btn'>
                   <i className='ion-plus-round'></i>
-                  {/* Woring  */}
                   <Link className='nav-link' to='/setting'>
                     <img src='./icon/004-settings.png' alt='setting' />
                     Edit Profile Setting
@@ -69,6 +56,7 @@ const InternalUserProfile = props => {
         <div className='container'>
           <div className='row'>
             <div className='col-xs-12 col-md-10 offset-md-1'>
+
               {/* ---------------- Navigation ---------------- */}
               <div className='articles-toggle'>
                 <ul className='nav nav-pills outline-active'>
@@ -97,7 +85,6 @@ const InternalUserProfile = props => {
               </div>
 
               {/* ---------------- One Article ----------------  */}
-
               {(props.favoritedArticles || props.currentUsersArticles).map(
                 (article, index) => {
                   return (
@@ -123,7 +110,6 @@ const InternalUserProfile = props => {
                         </button>
                       </div>
 
-                      {/* Working */}
                       <Link
                         to={"/article-detail/" + article.slug}
                         className='preview-link'>
