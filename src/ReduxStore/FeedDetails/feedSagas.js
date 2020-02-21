@@ -129,7 +129,7 @@ export const feedSaga = function*() {
 
   // USER_PROFILE_LOADED
   yield takeLatest(USERS_NAME_LOADED, function*(action) {
-    yield saveUserInfoToStore()
+    // yield saveUserInfoToStore()
     const [userProfileData, userRelatedArticles] = yield all([
       call(fetchInitialData, `/profiles/${action.userName}`, "Load User Profile"),
       call(
@@ -190,7 +190,7 @@ export const feedSaga = function*() {
   yield takeLatest(POST_ARTICLE_CLICKED, function*(action) {
     
     const token = getUserInformation().token;
-    const url = "/articles";
+    const url = `/articles/${action.slug}`;
     const postData = {};
     const message = "Post an Article"
 
@@ -201,13 +201,9 @@ export const feedSaga = function*() {
       tagList: `${action.tags}`
     };
 
-    const yourArticle = yield call(postDataToServerAll, token, url, postData, message, "POST");    
-    // 重新发布一次post 文章
-    // 重新发布一次post 文章
+    const yourArticle = yield call(postDataToServerAll, token, url, postData, message, "PUT");    
     // 重新发布一次post 文章
     console.log(yourArticle);
-    // 获取数据成功
-    // 新的slug给到redirect
     yield put(articleContentLoaded(yourArticle.article));
     yield put(articleCommentsLoaded(yourArticle));
     yield put(articleReloaded(true))

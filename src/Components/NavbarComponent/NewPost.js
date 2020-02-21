@@ -27,9 +27,7 @@ const InternalNewPost = props => {
 
   // 发送请求这篇文章的内容
   console.log(props.newSlug);
-
-  //
-
+  
   useEffect(() => {
     props.loadInitArticleDetail(slug);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -100,7 +98,7 @@ const InternalNewPost = props => {
                               description,
                               content,
                               tags,
-                              props.currentSlug
+                              props.currentSlug,
                             );
                           }}>
                           Publish Article

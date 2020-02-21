@@ -1,25 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import dateFormat from "dateformat";
 import {
   loadUserProfileDetail,
-  favoritedArticleClicked
+  favoritedArticleClicked,
+  setProfileNavStatus
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalUserProfile = props => {
 
-  const userName = getUserInformation().username || null;
+  const userName = getUserInformation().username;
+  // const [navStatus, setNavStatus] = useState(["active", "null"])
 
   useEffect(() => {
     userName && props.loadUserProfileDetail(userName);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(props.currentUsersArticles);
   
+  console.log(props.myNav);
+
+
   return (
     <div>
       <div className='profile-page'>
@@ -62,30 +65,38 @@ const InternalUserProfile = props => {
               <div className='articles-toggle'>
                 <ul className='nav nav-pills outline-active'>
                   <li className='nav-item'>
-                    <Link
+                    <NavLink
                       to='/user_profile/my_articles'
-                      className='nav-link active'
+                      className='nav-link'
+                      activeClassName={props.myNav}
                       onClick={() => {
+                        props.setProfileNavStatus("active", "null")
                         props.loadUserProfileDetail(userName);
                       }}>
                       My Articles
-                    </Link>
+                    </NavLink>
                   </li>
 
                   <li className='nav-item'>
-                    <Link
+                    <NavLink
                       to='/user_profile/favorited_articles'
                       className='nav-link'
+                      activeClassName={props.favorited_Nav}
                       onClick={userName => {
+                        // 
+                        // 
+                        props.setProfileNavStatus("null", "active")
                         props.onFavoritedArticleClicked(userName);
                       }}>
                       Favorited Articles
-                    </Link>
+                    </NavLink>
                   </li>
                 </ul>
               </div>
 
-              {/* ---------------- One Article ----------------  */}
+              {/* ---------------- Article Area ----------------  */}
+
+
               {(props.favoritedArticles || props.currentUsersArticles).map(
                 (article, index) => {
                   return (
@@ -143,14 +154,18 @@ const mapStateToProps = ({
   currentUsersArticles,
   onFavoritedArticleClicked,
   favoritedArticles,
-  userInfo
+  userInfo,
+  myNav,
+  favorited_Nav
 }) => {
   return {
     currentProfileData,
     currentUsersArticles,
     onFavoritedArticleClicked,
     userInfo,
-    favoritedArticles
+    favoritedArticles,
+    myNav,
+    favorited_Nav
   };
 };
 
@@ -159,7 +174,9 @@ const mapDispatchToProps = dispatch => {
     loadUserProfileDetail: userName =>
       dispatch(loadUserProfileDetail(userName)),
     onFavoritedArticleClicked: userName =>
-      dispatch(favoritedArticleClicked(userName))
+      dispatch(favoritedArticleClicked(userName)),
+    setProfileNavStatus: (myNav, favorited_Nav) =>
+      dispatch(setProfileNavStatus(myNav, favorited_Nav)),
   };
 };
 

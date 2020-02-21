@@ -32,6 +32,10 @@ export const CHECK_USER_INFO_POSITION = Symbol("CHECK_USER_INFO_POSITION")
 export const ARTICLE_RELOADED = Symbol("ARTICLE_RELOADED")
 // ON_EDIT_ARTICLE_CLICKED
 export const ON_EDIT_ARTICLE_CLICKED = Symbol("ON_EDIT_ARTICLE_CLICKED")
+// SET_PROFILE_NAV
+export const SET_PROFILE_NAV = Symbol("SET_PROFILE_NAV")
+
+
 
 export const loadInitialData = () => {
     return { type: INITIALDATA_LOADED };
@@ -160,4 +164,9 @@ export const articleReloaded = (status) => {
 // ?onEditArticleClicked
 export const onEditArticleClicked = (status) => {
     return { type: ON_EDIT_ARTICLE_CLICKED, status: status};
+}
+
+// setProfileNavStatus
+export const setProfileNavStatus = (myNav, favorited_Nav) => {
+    return { type: SET_PROFILE_NAV, myNav: myNav, favorited_Nav: favorited_Nav};
 }

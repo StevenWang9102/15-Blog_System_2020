@@ -9,6 +9,9 @@ import { UserProfile } from "../UserComponent/UserProfile";
 import { ArticleDetails } from "../MainPageComponent/ArticleDetails";
 import PropTypes from "prop-types";
 import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas"
+import {
+  loadUserProfileDetail,setProfileNavStatus
+} from "../../ReduxStore/FeedDetails/feedActions";
 
 import {
   BrowserRouter as Router,
@@ -55,7 +58,16 @@ export const InternalNavbar = props => {
 
                   {/* ---- Logged User ---- */}
                   <li className='nav-item'>
-                    <Link className='nav-link' to='/user_profile'>
+                    <Link 
+                      className='nav-link' 
+                      to='/user_profile'
+                      onClick={()=>
+                        {
+                          const userName = getUserInformation().username
+                          props.loadUserProfileDetail(userName)
+                          props.setProfileNavStatus("active", "null")
+                        }}
+                      >
                       {getUserInformation().username}
                     </Link>
                   </li>
@@ -115,8 +127,17 @@ InternalNavbar.propTypes = {
   userInfo: PropTypes.object
 };
 
-const mapStateToProps = ({ userInfo }) => {
-  return { userInfo };
+const mapStateToProps = ({ userInfo, loadUserProfileDetail }) => {
+  return { userInfo,loadUserProfileDetail };
+};
+// loadUserProfileDetail
+const mapDispatchToProps = dispatch => {
+  return {
+    loadUserProfileDetail: userName =>
+      dispatch(loadUserProfileDetail(userName)),
+      setProfileNavStatus: (myNav, favorited_Nav) =>
+      dispatch(setProfileNavStatus(myNav, favorited_Nav)),
+  };
 };
 
-export const Navbar = connect(mapStateToProps)(InternalNavbar);
+export const Navbar = connect(mapStateToProps, mapDispatchToProps)(InternalNavbar);

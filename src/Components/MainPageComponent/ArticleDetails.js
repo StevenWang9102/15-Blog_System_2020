@@ -61,7 +61,6 @@ const InternalArticleDetails = props => {
                       type="button"
                       className='btn btn-sm btn-info'
                       onClick={event => {
-                        // 清空flag
                         props.onEditArticleClicked(false)
                       }}>
                       Edit Article

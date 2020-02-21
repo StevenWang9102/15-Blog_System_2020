@@ -19,7 +19,8 @@ import {
   SMALL_NAV_SET_CLICKED,
   YOURE_FEED_CLICKED,
   ARTICLE_RELOADED,
-  ON_EDIT_ARTICLE_CLICKED
+  ON_EDIT_ARTICLE_CLICKED,
+  SET_PROFILE_NAV
 } from "./feedActions";
 
 const initialState = {
@@ -42,7 +43,9 @@ const initialState = {
   status1: "null",
   status2: "active",
   status3: "active",
-  article_reloaded: false
+  article_reloaded: false,
+  myNav: "active",
+  favorited_Nav: "null"
 };
 
 export const feedReducer = (state = initialState, action) => {
@@ -61,7 +64,11 @@ export const feedReducer = (state = initialState, action) => {
       };
 
     case ARTICLE_CONTENT_LOADED:
-      return { ...state, currentArticleDetails: action.initArticleData, newSlug: action.initArticleData.slug};
+      return {
+        ...state,
+        currentArticleDetails: action.initArticleData,
+        newSlug: action.initArticleData.slug
+      };
 
     case ARTICLE_COMMENTS_LOADED:
       return { ...state, currentComments: action.initCommentData };
@@ -88,7 +95,11 @@ export const feedReducer = (state = initialState, action) => {
       return { ...state, currentUsersArticles: action.userRelatedArticles };
 
     case FAVERATED_ARITICLE_LOADED:
-      return { ...state, favoritedArticles: action.favoritedArticles };
+      return {
+        ...state,
+        favoritedArticles:
+          (action.favoritedArticles.length()===0 ? null : action.favoritedArticles)
+      };
 
     case USER_TOKEN_LOADED:
       return { ...state, userInfo: action.userInfo };
@@ -119,10 +130,15 @@ export const feedReducer = (state = initialState, action) => {
     case ARTICLE_RELOADED:
       return { ...state, article_reloaded: action.status };
 
-      // ON_EDIT_ARTICLE_CLICKED
+    // ON_EDIT_ARTICLE_CLICKED
     case ON_EDIT_ARTICLE_CLICKED:
       return { ...state, article_reloaded: action.status };
-   
+
+
+      // SET_PROFILE_NAV
+  case SET_PROFILE_NAV:
+        return { ...state, myNav:action.myNav, favorited_Nav: action.favorited_Nav };
+
     default:
       return state;
   }
