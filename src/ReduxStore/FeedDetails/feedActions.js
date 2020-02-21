@@ -110,8 +110,8 @@ export const userTokedLoaded = (payload) => {
 
 }
 
-export const loadYourArticles = (token ) => {
-    return { type: YOURE_FEED_CLICKED, token: token };
+export const loadYourArticles = () => {
+    return { type: YOURE_FEED_CLICKED };
 }
 
 export const yourFeedsLoaded = (articles) => {

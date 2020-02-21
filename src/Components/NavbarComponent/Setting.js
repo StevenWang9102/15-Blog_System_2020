@@ -51,14 +51,16 @@ const InternalSetting = props => {
                       placeholder='Password'></input>
                   </fieldset>
 
-                  <button className='btn btn-lg btn-primary pull-xs-right'>
+                  <button className='btn btn-lg btn-primary pull-xs-right' type="button"
+>
                     Update Settings
                   </button>
                   
                   <hr className='hr-setting' / >
 
                   <Link to='/home' className='logout-button'>
-                  <button 
+                  <button
+                                  type="button"
                     className="btn btn-lg btn-danger"
                     onClick={()=>setUser(null)}
                   >

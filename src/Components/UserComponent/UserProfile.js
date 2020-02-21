@@ -41,7 +41,8 @@ const InternalUserProfile = props => {
                   {props.currentProfileData.profile &&
                     props.currentProfileData.profile.bio}
                 </p>
-                <button className='btn btn-sm btn-outline-secondary action-btn'>
+                <button className='btn btn-sm btn-outline-secondary action-btn' type="button"
+>
                   <i className='ion-plus-round'></i>
                   <Link className='nav-link' to='/setting'>
                     <img src='./icon/004-settings.png' alt='setting' />
@@ -104,7 +105,8 @@ const InternalUserProfile = props => {
                             {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
                           </span>
                         </div>
-                        <button className='btn btn-outline-primary btn-sm pull-xs-right'>
+                        <button className='btn btn-outline-primary btn-sm pull-xs-right' type="button"
+>
                           <i className='ion-heart'></i>
                           {article.favoritesCount}
                         </button>

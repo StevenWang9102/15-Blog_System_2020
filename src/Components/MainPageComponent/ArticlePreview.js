@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
 import { Link } from "react-router-dom";
-import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
+// import { getUserInformation, getUserInformation2 } from "../../ReduxStore/FeedDetails/feedSagas";
 
 import {
   articleTitleClicked,
@@ -23,17 +23,22 @@ const InternalArticlePreview = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(props.userInfo);
+  
+
   return (
     <div className='col-md-9 col-sm-12'>
+
       {/* --------------------- Navigation --------------------- */}
       <div className='feed-toggle'>
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
+            
             {/* ----- Your Feed ----- */}
-            {getUserInformation() && getUserInformation().token && (
+            {props.userInfo.token && (
               <NavLink
                 onClick={() => {
-                  props.onYourFeedClicked(props.userInfo.token);
+                  props.onYourFeedClicked();
                   props.setNavStatus("active", "null", "null");
                 }}
                 className='nav-link display-inline'
@@ -69,12 +74,12 @@ const InternalArticlePreview = props => {
       </div>
 
       {/* --------------------- Article --------------------- */}
-      {getUserInformation() &&
+      {props.userInfo.username &&
       props.yourArticles === null &&
       !props.globalFeeds ? (
         <div className='article-preview'>No articles are here... yet.</div>
       ) : (
-        (getUserInformation()
+        (props.userInfo.username
           ? props.tagRelatedArticles ||
             (props.yourArticles !== [] && props.yourArticles) ||
             props.globalFeeds
@@ -99,9 +104,10 @@ const InternalArticlePreview = props => {
                 </Link>
 
                 <button
+                  type="button"
                   className='btn btn-outline-primary btn-sm pull-xs-right'
                   onClick={() => {
-                    const token = getUserInformation().token;
+                    const token = props.userInfo.token;
                     if (token)
                       props.onFavoritedButtonClicked(token, article.slug);
                   }}>
@@ -168,15 +174,18 @@ const mapStateToProps = ({
   };
 };
 
+
+
+
 const mapDispatchToProps = dispatch => {
   return {
     onArticleClick: (title, slug) => dispatch(articleTitleClicked(title, slug)),
     onGlobeFeedClicked: () => dispatch(loadInitialData()),
     setNavStatus: (status1, status2, status3) =>
       dispatch(setNavStatus(status1, status2, status3)),
-    onYourFeedClicked: token => dispatch(loadYourArticles(token)),
+    onYourFeedClicked: token => dispatch(loadYourArticles()),
 
-    onYourArticleNeeded: token => dispatch(loadYourArticles(token)),
+    onYourArticleNeeded: token => dispatch(loadYourArticles()),
     onFavoritedButtonClicked: (token, slug) =>
       dispatch(favoritedButtonClicked(token, slug))
   };

@@ -29,9 +29,10 @@ const InternalArticleComments = props => {
                 className='comment-author-img'
                 alt='au'
               />
-              <button 
+              <button
+                type="button"
                 className='btn btn-sm btn-primary'
-                onClick={(event)=>
+                onClick={()=>
                   {
                     props.onPostCommentsClicked(props.currentSlug, myComment)
                   }

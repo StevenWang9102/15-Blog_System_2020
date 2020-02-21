@@ -31,7 +31,8 @@ export const SignUp = props => {
                   type='password'
                   placeholder='Password'></input>
               </fieldset>
-              <button className='btn btn-lg btn-primary pull-xs-right'>
+              <button className='btn btn-lg btn-primary pull-xs-right' type="button"
+>
                 Sign up
               </button>
             </form>

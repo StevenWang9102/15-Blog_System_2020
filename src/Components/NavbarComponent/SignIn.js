@@ -45,6 +45,7 @@ const InternalSignIn = props => {
                 
                   <Link>
                     <button
+                      type="button"
                       className='btn btn-lg btn-primary pull-xs-right'
                       onClick={()=> {
                         props.onSignInClicked(email, password);
