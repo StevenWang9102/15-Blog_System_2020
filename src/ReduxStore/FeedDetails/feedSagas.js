@@ -24,7 +24,8 @@ import {
   setNavStatus,
   globalDataLoaded,
   POST_COMMENTS_CLICKED,
-  CHECK_USER_INFO_POSITION
+  CHECK_USER_INFO_POSITION,
+  articleReloaded
 } from "./feedActions";
 
 
@@ -79,10 +80,6 @@ export const feedSaga = function*() {
   });
 
   // ARTICLE_DETAILS_LOADED 
-  // 目前这里面获取失败
-  // 这篇文章 404报错，
-  // 携带token，是谁
-  // 是get方法，
   yield takeLatest(INIT_ARTICLE_DETAILS_GET, function*(action) {
     const initArticleData = yield call(
       fetchInitialData,
@@ -100,6 +97,7 @@ export const feedSaga = function*() {
       `/articles/${action.slug}/comments`,
       "Load Article Comments"
     );
+    
     yield put(articleCommentsLoaded(initCommentData));
   });
 
@@ -129,7 +127,7 @@ export const feedSaga = function*() {
     yield put(relatedTagLoaded(action.tagName));
   });
 
-  // USER PROFILE LOADED
+  // USER_PROFILE_LOADED
   yield takeLatest(USERS_NAME_LOADED, function*(action) {
     yield saveUserInfoToStore()
     const [userProfileData, userRelatedArticles] = yield all([
@@ -202,7 +200,17 @@ export const feedSaga = function*() {
       body: `${action.content}`,
       tagList: `${action.tags}`
     };
-    yield call(postDataToServerAll, token, url, postData, message, "POST");
+
+    const yourArticle = yield call(postDataToServerAll, token, url, postData, message, "POST");    
+    // 重新发布一次post 文章
+    // 重新发布一次post 文章
+    // 重新发布一次post 文章
+    console.log(yourArticle);
+    // 获取数据成功
+    // 新的slug给到redirect
+    yield put(articleContentLoaded(yourArticle.article));
+    yield put(articleCommentsLoaded(yourArticle));
+    yield put(articleReloaded(true))
   });
 };
 

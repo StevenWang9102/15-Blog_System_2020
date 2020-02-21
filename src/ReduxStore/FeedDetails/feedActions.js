@@ -28,6 +28,10 @@ export const GLOBAL_DATA_LOADED = Symbol("GLOBAL_DATA_LOADED")
 export const POST_COMMENTS_CLICKED = Symbol("POST_COMMENTS_CLICKED")
 export const POST_ARTICLE_CLICKED = Symbol("POST_ARTICLE_CLICKED")
 export const CHECK_USER_INFO_POSITION = Symbol("CHECK_USER_INFO_POSITION")
+// ARTICLE_RELOADED
+export const ARTICLE_RELOADED = Symbol("ARTICLE_RELOADED")
+// ON_EDIT_ARTICLE_CLICKED
+export const ON_EDIT_ARTICLE_CLICKED = Symbol("ON_EDIT_ARTICLE_CLICKED")
 
 export const loadInitialData = () => {
     return { type: INITIALDATA_LOADED };
@@ -146,4 +150,14 @@ export const onPostArticleClicked = (title, description, content, tags, slug ) =
 // checkUserSavedPosition
 export const checkUserSavedPosition = () => {
     return { type: CHECK_USER_INFO_POSITION};
+}
+
+// articleReloaded
+export const articleReloaded = (status) => {
+    return { type: ARTICLE_RELOADED, status: status};
+}
+
+// ?onEditArticleClicked
+export const onEditArticleClicked = (status) => {
+    return { type: ON_EDIT_ARTICLE_CLICKED, status: status};
 }

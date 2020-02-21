@@ -101,6 +101,10 @@ p{
   margin-top: 20px;
 }
 
+.edit-button button{
+  margin-right: 5px;
+}
+
 .article-source
 {
   display: inline-block;

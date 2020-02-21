@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-
 import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
 import { Link } from "react-router-dom";
 import dateFormat from "dateformat";
@@ -19,6 +18,8 @@ const InternalUserProfile = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(props.currentUsersArticles);
+  
   return (
     <div>
       <div className='profile-page'>

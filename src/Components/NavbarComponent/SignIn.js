@@ -43,7 +43,6 @@ const InternalSignIn = props => {
                       placeholder='Password'></input>
                   </fieldset>
                 
-                  <Link>
                     <button
                       type="button"
                       className='btn btn-lg btn-primary pull-xs-right'
@@ -52,8 +51,6 @@ const InternalSignIn = props => {
                       }}>
                       Sign in
                     </button>
-                  </Link>
-                  {/* @@@@ 不理解为什么可以重新跳转了。。。。。。。。 */}
                 </form>
               </div>
             </div>

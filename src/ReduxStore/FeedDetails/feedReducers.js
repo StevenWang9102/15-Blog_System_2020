@@ -17,7 +17,9 @@ import {
   SMALL_NAV_CLICKED,
   YOUR_FEED_NAV_CLICKED,
   SMALL_NAV_SET_CLICKED,
-  YOURE_FEED_CLICKED
+  YOURE_FEED_CLICKED,
+  ARTICLE_RELOADED,
+  ON_EDIT_ARTICLE_CLICKED
 } from "./feedActions";
 
 const initialState = {
@@ -39,7 +41,8 @@ const initialState = {
   selfStatus: "null",
   status1: "null",
   status2: "active",
-  status3: "active"
+  status3: "active",
+  article_reloaded: false
 };
 
 export const feedReducer = (state = initialState, action) => {
@@ -58,7 +61,7 @@ export const feedReducer = (state = initialState, action) => {
       };
 
     case ARTICLE_CONTENT_LOADED:
-      return { ...state, currentArticleDetails: action.initArticleData };
+      return { ...state, currentArticleDetails: action.initArticleData, newSlug: action.initArticleData.slug};
 
     case ARTICLE_COMMENTS_LOADED:
       return { ...state, currentComments: action.initCommentData };
@@ -113,6 +116,13 @@ export const feedReducer = (state = initialState, action) => {
     case INIT_ARTICLE_DETAILS_GET:
       return { ...state, currentSlug: action.slug };
 
+    case ARTICLE_RELOADED:
+      return { ...state, article_reloaded: action.status };
+
+      // ON_EDIT_ARTICLE_CLICKED
+    case ON_EDIT_ARTICLE_CLICKED:
+      return { ...state, article_reloaded: action.status };
+   
     default:
       return state;
   }

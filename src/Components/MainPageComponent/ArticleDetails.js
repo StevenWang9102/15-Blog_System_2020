@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import dateFormat from "dateformat";
-import { loadInitArticleDetail } from "../../ReduxStore/FeedDetails/feedActions";
+import { loadInitArticleDetail, onEditArticleClicked } from "../../ReduxStore/FeedDetails/feedActions";
 import { useParams } from "react-router-dom";
 import { ArticleComments } from "./ArticleComments";
 import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
@@ -61,10 +61,8 @@ const InternalArticleDetails = props => {
                       type="button"
                       className='btn btn-sm btn-info'
                       onClick={event => {
-                        // 发送目前slug
-                        // 发送一个请求：https://conduit.productionready.io/api/articles/111-yq91b
-                        // 同时页面跳转: 应该是New Post，但是有数据读进来
-                        // 只需要重新Post这些数据就可以覆盖
+                        // 清空flag
+                        props.onEditArticleClicked(false)
                       }}>
                       Edit Article
                     </button>
@@ -125,9 +123,11 @@ const mapStateToProps = ({ currentArticleDetails, currentProfileData }) => {
 };
 
 const mapDispatchToProps = dispatch => {
+
   return {
     loadInitArticleDetail: article_slug =>
-      dispatch(loadInitArticleDetail(article_slug))
+      dispatch(loadInitArticleDetail(article_slug)),
+      onEditArticleClicked: flag => dispatch(onEditArticleClicked(flag))
   };
 };
 
