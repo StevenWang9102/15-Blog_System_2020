@@ -1,0 +1,5 @@
+- global feed and personal feed is not loading until refresh
+- add comments not working
+- newly added comments not showing up 
+- not populating user details on the setting page
+- click logout not taking user to home page

@@ -8,15 +8,15 @@ const InternalNewPost = props => {
   const [content, setContent] = useState("");
   const [tags, setTags] = useState("");
 
-// 从哪里拿到这篇文章的slug， 应该是内存
-// 每次进入这个界面，都去看看这篇文章有没有值
-// 目前请求失败@@@@@@@
+  // 从哪里拿到这篇文章的slug， 应该是内存
+  // 每次进入这个界面，都去看看这篇文章有没有值
+  // 目前请求失败@@@@@@@
 
-useEffect(() => {
-  props.loadInitArticleDetail(props.currentSlug);
-  // 发送请求这篇文章的内容
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
+  useEffect(() => {
+    props.loadInitArticleDetail(props.currentSlug);
+    // 发送请求这篇文章的内容
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className='auth-page'>
@@ -26,7 +26,7 @@ useEffect(() => {
             <div class='col-md-10 offset-md-1 col-xs-12'>
               <form>
                 <fieldset>
-                  
+
                   {/* ---- Title ---- */}
                   <fieldset class='form-group'>
                     <input
@@ -67,12 +67,12 @@ useEffect(() => {
                   <button
                     class='btn btn-lg pull-xs-right btn-primary'
                     type='button'
-                    onClick={()=> {
-                      props.onPostArticleClicked(title, description, content, tags, props.currentSlug );
+                    onClick={() => {
+                      props.onPostArticleClicked(title, description, content, tags, props.currentSlug);
                     }}>
                     Publish Article
                   </button>
-                
+
                 </fieldset>
               </form>
             </div>

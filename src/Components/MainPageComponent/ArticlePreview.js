@@ -33,7 +33,7 @@ const InternalArticlePreview = props => {
             {getUserInformation() && getUserInformation().token && (
               <NavLink
                 onClick={() => {
-                  props.onYourFeedClicked(props.userInfo.token);
+                  props.onYourFeedClicked();
                   props.setNavStatus("active", "null", "null");
                 }}
                 className='nav-link display-inline'
@@ -70,62 +70,62 @@ const InternalArticlePreview = props => {
 
       {/* --------------------- Article --------------------- */}
       {getUserInformation() &&
-      props.yourArticles === null &&
-      !props.globalFeeds ? (
-        <div className='article-preview'>No articles are here... yet.</div>
-      ) : (
-        (getUserInformation()
-          ? props.tagRelatedArticles ||
-            (props.yourArticles !== [] && props.yourArticles) ||
+        props.yourArticles === null &&
+        !props.globalFeeds ? (
+          <div className='article-preview'>No articles are here... yet.</div>
+        ) : (
+          (getUserInformation()
+            ? props.tagRelatedArticles ||
+            (props.yourArticles && props.yourArticles.length > 0 && props.yourArticles) ||
             props.globalFeeds
-          : props.tagRelatedArticles || props.globalFeeds
-        ).map((article, index) => {
-          return (
-            <div className='article-preview' key={index}>
-              <div className='article-meta'>
-                <Link to={"/user_profile/" + article.author.username}>
-                  <img
-                    className='author-image'
-                    src={article.author.image}
-                    alt='au'
-                  />
+            : props.tagRelatedArticles || props.globalFeeds
+          ).map((article, index) => {
+            return (
+              <div className='article-preview' key={index}>
+                <div className='article-meta'>
+                  <Link to={"/user_profile/" + article.author.username}>
+                    <img
+                      className='author-image'
+                      src={article.author.image}
+                      alt='au'
+                    />
 
-                  <div className='info author'>
-                    {article.author.username}
-                    <span className='date'>
-                      {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
-                    </span>
-                  </div>
+                    <div className='info author'>
+                      {article.author.username}
+                      <span className='date'>
+                        {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
+                      </span>
+                    </div>
+                  </Link>
+
+                  <button
+                    className='btn btn-outline-primary btn-sm pull-xs-right'
+                    onClick={() => {
+                      const token = getUserInformation().token;
+                      if (token)
+                        props.onFavoritedButtonClicked(token, article.slug);
+                    }}>
+                    <img src='./icon/002-heart-2.png' alt='love' />
+                    {article.favoritesCount}
+                  </button>
+                </div>
+
+                <Link
+                  className='nav-link preview-link article-detail'
+                  to={"/article-detail/" + article.slug}>
+                  <h1
+                    onClick={() => {
+                      props.onArticleClick(article.title, article.slug);
+                    }}>
+                    {article.title}
+                  </h1>
+                  <p>{article.description}</p>
+                  <span>Read more...</span>
                 </Link>
-
-                <button
-                  className='btn btn-outline-primary btn-sm pull-xs-right'
-                  onClick={() => {
-                    const token = getUserInformation().token;
-                    if (token)
-                      props.onFavoritedButtonClicked(token, article.slug);
-                  }}>
-                  <img src='./icon/002-heart-2.png' alt='love' />
-                  {article.favoritesCount}
-                </button>
               </div>
-
-              <Link
-                className='nav-link preview-link article-detail'
-                to={"/article-detail/" + article.slug}>
-                <h1
-                  onClick={() => {
-                    props.onArticleClick(article.title, article.slug);
-                  }}>
-                  {article.title}
-                </h1>
-                <p>{article.description}</p>
-                <span>Read more...</span>
-              </Link>
-            </div>
-          );
-        })
-      )}
+            );
+          })
+        )}
     </div>
   );
 };
@@ -174,9 +174,9 @@ const mapDispatchToProps = dispatch => {
     onGlobeFeedClicked: () => dispatch(loadInitialData()),
     setNavStatus: (status1, status2, status3) =>
       dispatch(setNavStatus(status1, status2, status3)),
-    onYourFeedClicked: token => dispatch(loadYourArticles(token)),
+    onYourFeedClicked: token => dispatch(loadYourArticles()),
 
-    onYourArticleNeeded: token => dispatch(loadYourArticles(token)),
+    onYourArticleNeeded: token => dispatch(loadYourArticles()),
     onFavoritedButtonClicked: (token, slug) =>
       dispatch(favoritedButtonClicked(token, slug))
   };

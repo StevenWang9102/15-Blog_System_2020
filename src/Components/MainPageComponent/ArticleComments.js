@@ -7,15 +7,15 @@ import { onPostCommentsClicked } from "../../ReduxStore/FeedDetails/feedActions"
 
 
 const InternalArticleComments = props => {
-   const [myComment, setMyComment] = useState("");
-  
+  const [myComment, setMyComment] = useState("");
+
   return (
     <div className='commonts-container'>
 
       {/* ---------------- Your Comments ----------------  */}
       <div className='row'>
         <div className='col-xs-12 col-md-8 offset-md-2'>
-          <form className='card comment-form'>
+          <div className='card comment-form'>
             <div className='card-block'>
               <textarea
                 onChange={event => setMyComment(event.target.value)}
@@ -29,16 +29,15 @@ const InternalArticleComments = props => {
                 className='comment-author-img'
                 alt='au'
               />
-              <button 
+              <button
                 className='btn btn-sm btn-primary'
-                onClick={(event)=>
-                  {
-                    props.onPostCommentsClicked(props.currentSlug, myComment)
-                  }
+                onClick={(event) => {
+                  props.onPostCommentsClicked(props.currentSlug, myComment)
                 }
-                >Post Comment</button>
+                }
+              >Post Comment</button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
 
@@ -94,8 +93,8 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export const ArticleComments = connect( 
+export const ArticleComments = connect(
   mapStateToProps,
   mapDispatchToProps)(
-  InternalArticleComments
-);
+    InternalArticleComments
+  );

@@ -34,27 +34,27 @@ export const loadInitialData = () => {
 };
 
 export const globalDataLoaded = (payload) => {
-    return { type: GLOBAL_DATA_LOADED, payload  };
+    return { type: GLOBAL_DATA_LOADED, payload };
 };
 
-export const loadInitArticleDetail = (slug) =>{
+export const loadInitArticleDetail = (slug) => {
     return { type: INIT_ARTICLE_DETAILS_GET, slug };
 }
 
-export const articleDataLoaded = (articleData) =>{
-    return { type: ARTICLE_DATA_LOADED, articleData};
+export const articleDataLoaded = (articleData) => {
+    return { type: ARTICLE_DATA_LOADED, articleData };
 }
 
 export const articleContentLoaded = (initArticleData) => {
-    return { type: ARTICLE_CONTENT_LOADED, initArticleData};
+    return { type: ARTICLE_CONTENT_LOADED, initArticleData };
 }
 
-export const tagsDataLoaded = (tagsData) =>{
-    return { type: TAGS_DATA_LOADED, tagsData};
+export const tagsDataLoaded = (tagsData) => {
+    return { type: TAGS_DATA_LOADED, tagsData };
 }
 
-export const articleCommentsLoaded = (initCommentData) =>{
-    return { type: ARTICLE_COMMENTS_LOADED, initCommentData};
+export const articleCommentsLoaded = (initCommentData) => {
+    return { type: ARTICLE_COMMENTS_LOADED, initCommentData };
 }
 
 export const articleTitleClicked = (title, slug) => {
@@ -62,11 +62,11 @@ export const articleTitleClicked = (title, slug) => {
 }
 
 export const popularTagClicked = (tagName) => {
-    return { type: POPULAR_TAG_CLICKED, tagName }; 
+    return { type: POPULAR_TAG_CLICKED, tagName };
 }
 
 export const popularTagIsDiplayed = (tagName) => {
-    return { type: POPULAR_TAG_DISPLAYED, tagName }; 
+    return { type: POPULAR_TAG_DISPLAYED, tagName };
 }
 
 export const tagRelatedArticleLoaded = (tagRelatedArticles) => {
@@ -106,12 +106,12 @@ export const signInClicked = (email, password) => {
 }
 
 export const userTokedLoaded = (payload) => {
-    return { type: USER_TOKEN_LOADED, userInfo: payload.user };
+    return { type: USER_TOKEN_LOADED, userInfo: payload };
 
 }
 
-export const loadYourArticles = (token ) => {
-    return { type: YOURE_FEED_CLICKED, token: token };
+export const loadYourArticles = () => {
+    return { type: YOURE_FEED_CLICKED };
 }
 
 export const yourFeedsLoaded = (articles) => {
@@ -120,11 +120,11 @@ export const yourFeedsLoaded = (articles) => {
 
 
 export const favoritedButtonClicked = (token, slug) => {
-    return { type: FAVORITED_BUTTON_CLICKED, token: token, slug: slug};
+    return { type: FAVORITED_BUTTON_CLICKED, token: token, slug: slug };
 }
 
 export const smallNavClicked = (status) => {
-    return { type: SMALL_NAV_CLICKED, status:status };
+    return { type: SMALL_NAV_CLICKED, status: status };
 }
 
 export const yourFeedNavClicked = (self) => {
@@ -139,6 +139,6 @@ export const onPostCommentsClicked = (slug, myComment) => {
     return { type: POST_COMMENTS_CLICKED, slug: slug, myComment: myComment };
 }
 
-export const onPostArticleClicked = (title, description, content, tags, slug ) => {
-    return { type: POST_ARTICLE_CLICKED, title:title, description:description, content:content, tags:tags, slug:slug };
+export const onPostArticleClicked = (title, description, content, tags, slug) => {
+    return { type: POST_ARTICLE_CLICKED, title: title, description: description, content: content, tags: tags, slug: slug };
 }

@@ -54,15 +54,15 @@ const InternalSetting = props => {
                   <button className='btn btn-lg btn-primary pull-xs-right'>
                     Update Settings
                   </button>
-                  
-                  <hr className='hr-setting' / >
+
+                  <hr className='hr-setting' />
 
                   <Link to='/home' className='logout-button'>
-                  <button 
-                    className="btn btn-lg btn-danger"
-                    onClick={()=>setUser(null)}
-                  >
-                    click here to logout
+                    <button
+                      className="btn btn-lg btn-danger"
+                      onClick={() => setUser(null)}
+                    >
+                      click here to logout
                   </button>
                   </Link>
                 </fieldset>
