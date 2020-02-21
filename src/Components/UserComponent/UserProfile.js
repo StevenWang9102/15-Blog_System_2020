@@ -15,7 +15,7 @@ const InternalUserProfile = props => {
   const userName = getUserInformation().username || null;
 
   useEffect(() => {
-      userName && props.loadUserProfileDetail(userName);
+    userName && props.loadUserProfileDetail(userName);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -41,8 +41,7 @@ const InternalUserProfile = props => {
                   {props.currentProfileData.profile &&
                     props.currentProfileData.profile.bio}
                 </p>
-                <button className='btn btn-sm btn-outline-secondary action-btn' type="button"
->
+                <button className='btn btn-sm btn-outline-secondary action-btn'>
                   <i className='ion-plus-round'></i>
                   <Link className='nav-link' to='/setting'>
                     <img src='./icon/004-settings.png' alt='setting' />
@@ -105,8 +104,7 @@ const InternalUserProfile = props => {
                             {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
                           </span>
                         </div>
-                        <button className='btn btn-outline-primary btn-sm pull-xs-right' type="button"
->
+                        <button className='btn btn-outline-primary btn-sm pull-xs-right'>
                           <i className='ion-heart'></i>
                           {article.favoritesCount}
                         </button>

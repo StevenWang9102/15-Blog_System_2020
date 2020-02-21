@@ -23,19 +23,19 @@ import {
   FAVORITED_BUTTON_CLICKED,
   setNavStatus,
   globalDataLoaded,
-  POST_COMMENTS_CLICKED
+  POST_COMMENTS_CLICKED,
+  CHECK_USER_INFO_POSITION
 } from "./feedActions";
 
-export const getUserInformation = function(state) {
+
+export const getUserInformation = function () {
   return getUser();
 };
 
-export const getUserInformation2 = function* (){
+export const saveUserInfoToStore = function*(){
   // 优先使用state存user信息
   // 
   const reduxStoredUserInfo = yield select(state => state.userInfo);
-
-  
   if(!reduxStoredUserInfo) {
     const sessionStoredUserInfo = getUser();
     if(sessionStoredUserInfo)
@@ -48,7 +48,20 @@ export const getUserInformation2 = function* (){
 
 
 export const feedSaga = function*() {
-  
+
+  // CHECK_USER_INFO_POSITION
+  yield takeLatest(CHECK_USER_INFO_POSITION, function*() {
+      const reduxStoredUserInfo = yield select(state => state.userInfo);
+      if(!reduxStoredUserInfo) {
+        const sessionStoredUserInfo = getUser();
+        if(sessionStoredUserInfo)
+        yield put(userTokedLoaded(sessionStoredUserInfo))
+      }else{
+        // return reduxStoredUserInfo;
+      }
+      // return getUser();
+  });
+
   // GLOBAL_FEEDS_LOADED
   yield takeLatest(INITIALDATA_LOADED, function*() {
     const initArticData = yield call(
@@ -65,14 +78,10 @@ export const feedSaga = function*() {
     yield put(tagsDataLoaded(initTagData["tags"]));
   });
 
-  // ARTICLE_COMMENT_LOADED 这里面获取失败
-  // ARTICLE_COMMENT_LOADED
-
+  // ARTICLE_DETAILS_LOADED 目前这里面获取失败
   // 这篇文章 404报错，
   // 携带token，是谁
   // 是get方法，
-  // 哪片文章。。。。。。。。。。。。。。。。。。。。。。。。。。。
-
   yield takeLatest(INIT_ARTICLE_DETAILS_GET, function*(action) {
     const initArticleData = yield call(
       fetchInitialData,
@@ -80,7 +89,12 @@ export const feedSaga = function*() {
       "Load Article"
     );
     yield put(articleContentLoaded(initArticleData.article));
+  });
 
+  // 这两个可以合并！！！！！！！！！！！！！！！！！！！！！！！
+
+  // ARTICLE_COMMENT_LOADED
+  yield takeLatest(INIT_ARTICLE_DETAILS_GET, function*(action) {
     const initCommentData = yield call(
       fetchInitialData,
       `/articles/${action.slug}/comments`,
@@ -88,6 +102,22 @@ export const feedSaga = function*() {
     );
     yield put(articleCommentsLoaded(initCommentData));
   });
+
+  // POST_COMMENTS_CLICKED
+  yield takeLatest(POST_COMMENTS_CLICKED, function* (action) {
+    const token = getUserInformation().token;
+    const url = `/articles/${action.slug}/comments`;
+    const postData = {};
+    postData.comment = { body: `${action.myComment}` };
+    // const yourPostData =
+    yield call(postDataToServerAll, token, url, postData);
+    const initCommentData = yield call(
+      fetchInitialData,
+      `/articles/${action.slug}/comments`
+    );
+    yield put(articleCommentsLoaded(initCommentData));
+  });
+  
 
   // POPULAR_TAG_CLICKED
   yield takeLatest(POPULAR_TAG_CLICKED, function*(action) {
@@ -102,15 +132,13 @@ export const feedSaga = function*() {
 
   // USER PROFILE LOADED
   yield takeLatest(USERS_NAME_LOADED, function*(action) {
+    yield saveUserInfoToStore()
     const [userProfileData, userRelatedArticles] = yield all([
       call(fetchInitialData, `/profiles/${action.userName}`, "Load User Profile"),
       call(
         fetchInitialData,
-        `/articles?author=${action.userName}&limit=5&offset=0`,
-        "Load User Articles"
-      )
-    ]);
-
+        `/articles?author=${action.userName}&limit=5&offset=0`, "Load User Articles"
+      )]);
     yield put(userProfileDataLoaded(userProfileData));
     yield put(userRelatedArticlesLoaded(userRelatedArticles.articles));
   });
@@ -122,7 +150,6 @@ export const feedSaga = function*() {
       `/articles?favorited=${action.userName}&limit=5&offset=0`,
       "Load Your Favorited Articles"
     );
-
     yield put(favoritedArticleLoaded(favoritedArticlesData.articles));
   });
 
@@ -138,16 +165,15 @@ export const feedSaga = function*() {
     const postData = { user: userData };
     const userPostedData = yield call(postDataToServerAll, null, url, postData, message);
 
-    setUser(userPostedData.user);
-    console.log(userPostedData);
-    
+    setUser(userPostedData.user);    
     yield put(userTokedLoaded(userPostedData));
     yield put(setNavStatus("active", "null", "null"));
   });
 
   // YOURE_FEED_CLICKED
   yield takeLatest(YOURE_FEED_CLICKED, function*() {
-    const token = getUserInformation().token;
+    yield saveUserInfoToStore()
+    const token = saveUserInfoToStore().token;
     const yourArticleData = yield call(getDataFromServerWithToken, token);
 
     yield put(yourFeedsLoaded(yourArticleData.articles));
@@ -159,26 +185,13 @@ export const feedSaga = function*() {
     const token = action.token;
     const url = `/articles/${slug}/favorite`;
     const message = 'Post Favoriated Articles'
-    const yourFavoritedData = yield call(postDataToServerAll, token, url, message);
-  });
-
-  // POST_COMMENTS_CLICKED
-  yield takeLatest(POST_COMMENTS_CLICKED, function*(action) {
-    const token = getUserInformation().token;
-    console.log(token);
-    const url = `/articles/${action.slug}/comments`;
-    const message = 'Post Comments'
-    const postData = {};
-    postData.comment = { body: `${action.myComment}` };
-    const yourPostData = yield call(postDataToServerAll, token, url, postData, message);
-    console.log(yourPostData);
-    
+    yield call(postDataToServerAll, token, url, message);
   });
 
   // POST_ARTICLE_CLICKED
   yield takeLatest(POST_ARTICLE_CLICKED, function*(action) {
     
-    const token = getUserInformation().token;
+    const token = saveUserInfoToStore().token;
     const url = "/articles";
     const postData = {};
     const message = "Post an Article"
@@ -189,7 +202,6 @@ export const feedSaga = function*() {
       body: `${action.content}`,
       tagList: `${action.tags}`
     };
-    // const postArticleData =
     yield call(postDataToServerAll, token, url, postData, message);
   });
 };

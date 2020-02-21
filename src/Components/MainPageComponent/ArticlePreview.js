@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
 import { Link } from "react-router-dom";
-// import { getUserInformation, getUserInformation2 } from "../../ReduxStore/FeedDetails/feedSagas";
 
 import {
   articleTitleClicked,
@@ -33,9 +32,12 @@ const InternalArticlePreview = props => {
       <div className='feed-toggle'>
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
-            
+
             {/* ----- Your Feed ----- */}
-            {props.userInfo.token && (
+            {/* 不对啊！！！
+            
+            */}
+            {props.userInfo && (
               <NavLink
                 onClick={() => {
                   props.onYourFeedClicked();

@@ -19,9 +19,6 @@ const InternalArticleDetails = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(props.currentArticleDetails.author && props.currentArticleDetails.author.username);
-  console.log(getUserInformation());
-  
   return (
     <div className='article-page'>
       <div className='banner'>
@@ -61,7 +58,7 @@ const InternalArticleDetails = props => {
                 <div className='edit-button'>
                   <Link to={`/new_post/${article_slug}`}>
                     <button
-                                    type="button"
+                      type="button"
                       className='btn btn-sm btn-info'
                       onClick={event => {
                         // 发送目前slug
@@ -74,7 +71,6 @@ const InternalArticleDetails = props => {
                   </Link>
 
                   <button
-                    type="button"
                     className='btn btn-sm btn-warning'
                     onClick={event => {
                       // props.onPostCommentsClicked(props.currentSlug, myComment)
@@ -99,7 +95,6 @@ const InternalArticleDetails = props => {
       </div>
 
       {/* ---------------- Sign in options  ----------------  */}
-
       {!getUserInformation() && (
         <div className='container page'>
           <div className='row'>

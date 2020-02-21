@@ -27,7 +27,7 @@ export const SMALL_NAV_SET_CLICKED = Symbol("SMALL_NAV_SET_CLICKED")
 export const GLOBAL_DATA_LOADED = Symbol("GLOBAL_DATA_LOADED")
 export const POST_COMMENTS_CLICKED = Symbol("POST_COMMENTS_CLICKED")
 export const POST_ARTICLE_CLICKED = Symbol("POST_ARTICLE_CLICKED")
-
+export const CHECK_USER_INFO_POSITION = Symbol("CHECK_USER_INFO_POSITION")
 
 export const loadInitialData = () => {
     return { type: INITIALDATA_LOADED };
@@ -141,4 +141,9 @@ export const onPostCommentsClicked = (slug, myComment) => {
 
 export const onPostArticleClicked = (title, description, content, tags, slug ) => {
     return { type: POST_ARTICLE_CLICKED, title:title, description:description, content:content, tags:tags, slug:slug };
+}
+
+// checkUserSavedPosition
+export const checkUserSavedPosition = () => {
+    return { type: CHECK_USER_INFO_POSITION};
 }
