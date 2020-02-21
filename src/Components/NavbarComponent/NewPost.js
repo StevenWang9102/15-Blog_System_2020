@@ -4,10 +4,10 @@ import { useParams } from "react-router-dom";
 import { onPostArticleClicked, loadInitArticleDetail } from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalNewPost = props => {
-  const [title, setTitle] = useState(props.currentArticleDetails.title);
-  const [description, setDescription] = useState(props.currentArticleDetails.description);
-  const [content, setContent] = useState(props.currentArticleDetails.body);
-  const [tags, setTags] = useState(props.currentArticleDetails.tagList);
+  const [title, setTitle] = useState(props.currentArticleDetails.title || "");
+  const [description, setDescription] = useState(props.currentArticleDetails.description || "");
+  const [content, setContent] = useState(props.currentArticleDetails.body || "");
+  const [tags, setTags] = useState(props.currentArticleDetails.tagList || []);
   // tagList
 
 // 从哪里拿到这篇文章的slug， 应该是内存
@@ -67,7 +67,7 @@ useEffect(() => {
                     <input
                       type='text'
                       class='form-control'
-                      value= {tags && tags.join(',')}
+                      // value= {tags && tags.join('')}
                       onChange={event => setTags(event.target.value)}
                       placeholder='Enter tags'></input>
                     <div class='tag-list'></div>
@@ -80,6 +80,12 @@ useEffect(() => {
                       props.onPostArticleClicked(title, description, content, tags, props.currentSlug );
                     }}>
                     Publish Article
+
+                    {/* 
+                      在文章已经发布成功之后吧，
+                      点击后跳转到新的文章
+                    */}
+
                   </button>
                 
                 </fieldset>

@@ -78,7 +78,8 @@ export const feedSaga = function*() {
     yield put(tagsDataLoaded(initTagData["tags"]));
   });
 
-  // ARTICLE_DETAILS_LOADED 目前这里面获取失败
+  // ARTICLE_DETAILS_LOADED 
+  // 目前这里面获取失败
   // 这篇文章 404报错，
   // 携带token，是谁
   // 是get方法，
@@ -91,8 +92,7 @@ export const feedSaga = function*() {
     yield put(articleContentLoaded(initArticleData.article));
   });
 
-  // 这两个可以合并！！！！！！！！！！！！！！！！！！！！！！！
-
+  
   // ARTICLE_COMMENT_LOADED
   yield takeLatest(INIT_ARTICLE_DETAILS_GET, function*(action) {
     const initCommentData = yield call(
@@ -109,8 +109,7 @@ export const feedSaga = function*() {
     const url = `/articles/${action.slug}/comments`;
     const postData = {};
     postData.comment = { body: `${action.myComment}` };
-    // const yourPostData =
-    yield call(postDataToServerAll, token, url, postData);
+    yield call(postDataToServerAll, token, url, postData, "POST");
     const initCommentData = yield call(
       fetchInitialData,
       `/articles/${action.slug}/comments`
@@ -163,7 +162,7 @@ export const feedSaga = function*() {
     userData.password = action.password;
 
     const postData = { user: userData };
-    const userPostedData = yield call(postDataToServerAll, null, url, postData, message);
+    const userPostedData = yield call(postDataToServerAll, null, url, postData, message, "POST");
 
     setUser(userPostedData.user);    
     yield put(userTokedLoaded(userPostedData));
@@ -173,9 +172,10 @@ export const feedSaga = function*() {
   // YOURE_FEED_CLICKED
   yield takeLatest(YOURE_FEED_CLICKED, function*() {
     yield saveUserInfoToStore()
-    const token = saveUserInfoToStore().token;
-    const yourArticleData = yield call(getDataFromServerWithToken, token);
-
+    const token = getUserInformation().token;
+    const url ="/articles/feed?limit=10&offset=0";
+    const message = "Your Feed Loaded"
+    const yourArticleData = yield call(postDataToServerAll, token, url, null, message, "GET");
     yield put(yourFeedsLoaded(yourArticleData.articles));
   });
 
@@ -185,13 +185,13 @@ export const feedSaga = function*() {
     const token = action.token;
     const url = `/articles/${slug}/favorite`;
     const message = 'Post Favoriated Articles'
-    yield call(postDataToServerAll, token, url, message);
+    yield call(postDataToServerAll, token, url, message, "POST");
   });
 
   // POST_ARTICLE_CLICKED
   yield takeLatest(POST_ARTICLE_CLICKED, function*(action) {
     
-    const token = saveUserInfoToStore().token;
+    const token = getUserInformation().token;
     const url = "/articles";
     const postData = {};
     const message = "Post an Article"
@@ -202,19 +202,19 @@ export const feedSaga = function*() {
       body: `${action.content}`,
       tagList: `${action.tags}`
     };
-    yield call(postDataToServerAll, token, url, postData, message);
+    yield call(postDataToServerAll, token, url, postData, message, "POST");
   });
 };
 
-const postDataToServerAll = (token, url, postData, message) => {
+const postDataToServerAll = (token, url, postData, message, type) => {
   const headers = { "Content-Type": "application/json"}
-  
+
   if(token !== null){
     headers["Authorization"] = `Token ${token}`;
   }   
   
   return fetch(`https://conduit.productionready.io/api${url}`, {
-    method: "POST",
+    method: `${type}`,
     headers,
     body: JSON.stringify(postData)
   }).then(response => {
@@ -224,26 +224,6 @@ const postDataToServerAll = (token, url, postData, message) => {
         return response;
       });
     } else console.error(` -- Your Error: ${message} failed -- `);
-  });
-};
-
-const getDataFromServerWithToken = token => {
-  return fetch(
-    "https://conduit.productionready.io/api/articles/feed?limit=10&offset=0",
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Token ${token}`
-      }
-    }
-  ).then(response => {
-    if (response.ok) {
-      return response.json().then(response => {
-        console.log(" -- Get Your Feeds Success -- :", response);
-        return response;
-      });
-    } else console.error(" -- Error: get data failed -- ");
   });
 };
 
@@ -257,3 +237,23 @@ const fetchInitialData = (url, message) => {
     }
   );
 };
+
+// const getDataFromServerWithToken = token => {
+//   return fetch(
+//     "https://conduit.productionready.io/api/articles/feed?limit=10&offset=0",
+//     {
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Token ${token}`
+//       }
+//     }
+//   ).then(response => {
+//     if (response.ok) {
+//       return response.json().then(response => {
+//         console.log(" -- Get Your Feeds Success -- :", response);
+//         return response;
+//       });
+//     } else console.error(" -- Error: get data failed -- ");
+//   });
+// };
