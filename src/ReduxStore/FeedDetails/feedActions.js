@@ -34,7 +34,8 @@ export const ARTICLE_RELOADED = Symbol("ARTICLE_RELOADED")
 export const ON_EDIT_ARTICLE_CLICKED = Symbol("ON_EDIT_ARTICLE_CLICKED")
 // SET_PROFILE_NAV
 export const SET_PROFILE_NAV = Symbol("SET_PROFILE_NAV")
-
+// CURRENT_PROFILE_ARTICLE_LOADED
+export const CURRENT_PROFILE_ARTICLE_LOADED = Symbol("CURRENT_PROFILE_ARTICLE_LOADED")
 
 
 export const loadInitialData = () => {
@@ -95,6 +96,10 @@ export const loadUserProfileDetail = (userName) => {
 
 export const userProfileDataLoaded = (userProfileData) => {
     return { type: USERS_PROFILE_LOADED, userProfileData };
+}
+// currentProfileArticleLoaded
+export const currentProfileArticleLoaded = (userProfileData) => {
+    return { type: CURRENT_PROFILE_ARTICLE_LOADED, userProfileData };
 }
 
 export const userRelatedArticlesLoaded = (userRelatedArticles) => {

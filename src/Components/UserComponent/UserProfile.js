@@ -13,15 +13,15 @@ import {
 const InternalUserProfile = props => {
 
   const userName = getUserInformation().username;
-  // const [navStatus, setNavStatus] = useState(["active", "null"])
 
   useEffect(() => {
-    userName && props.loadUserProfileDetail(userName);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    props.loadUserProfileDetail(userName);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
-  console.log(props.myNav);
-
+  // console.log(props.currentProfileArticle);
+  console.log(props.currentUsersArticles);
+  console.log(props.currentProfileArticle);
 
   return (
     <div>
@@ -72,6 +72,7 @@ const InternalUserProfile = props => {
                       onClick={() => {
                         props.setProfileNavStatus("active", "null")
                         props.loadUserProfileDetail(userName);
+                        //此处要更新 - props.currentProfileArticle【完成】
                       }}>
                       My Articles
                     </NavLink>
@@ -82,11 +83,12 @@ const InternalUserProfile = props => {
                       to='/user_profile/favorited_articles'
                       className='nav-link'
                       activeClassName={props.favorited_Nav}
-                      onClick={userName => {
-                        // 
+                      onClick={() => {
                         // 
                         props.setProfileNavStatus("null", "active")
                         props.onFavoritedArticleClicked(userName);
+                        //此处要更新 - props.currentProfileArticle【完成】
+
                       }}>
                       Favorited Articles
                     </NavLink>
@@ -97,7 +99,8 @@ const InternalUserProfile = props => {
               {/* ---------------- Article Area ----------------  */}
 
 
-              {(props.favoritedArticles || props.currentUsersArticles).map(
+              {/* {(props.favoritedArticles || props.currentUsersArticles).map( */}
+              {props.currentProfileArticle.map(
                 (article, index) => {
                   return (
                     <div className='article-preview' key={index}>
@@ -133,6 +136,7 @@ const InternalUserProfile = props => {
                   );
                 }
               )}
+              { props.currentProfileArticle.length ===0 && (<div className='article-preview'>No articles are here... yet.</div>)}
             </div>
           </div>
         </div>
@@ -156,7 +160,8 @@ const mapStateToProps = ({
   favoritedArticles,
   userInfo,
   myNav,
-  favorited_Nav
+  favorited_Nav,
+  currentProfileArticle
 }) => {
   return {
     currentProfileData,
@@ -165,7 +170,8 @@ const mapStateToProps = ({
     userInfo,
     favoritedArticles,
     myNav,
-    favorited_Nav
+    favorited_Nav,
+    currentProfileArticle
   };
 };
 

@@ -12,6 +12,7 @@ import {
   USERS_RELATED_ARTICLES_LOADED,
   FAVERATED_ARITICLE_LOADED,
   USER_TOKEN_LOADED,
+  CURRENT_PROFILE_ARTICLE_LOADED,
   YOURE_FEED_LOADED,
   GLOBAL_DATA_LOADED,
   SMALL_NAV_CLICKED,
@@ -45,7 +46,8 @@ const initialState = {
   status3: "active",
   article_reloaded: false,
   myNav: "active",
-  favorited_Nav: "null"
+  favorited_Nav: "null",
+  currentProfileArticle:[]
 };
 
 export const feedReducer = (state = initialState, action) => {
@@ -92,14 +94,13 @@ export const feedReducer = (state = initialState, action) => {
       return { ...state, currentProfileData: action.userProfileData };
 
     case USERS_RELATED_ARTICLES_LOADED:
-      return { ...state, currentUsersArticles: action.userRelatedArticles };
+      return { ...state, 
+        currentUsersArticles: action.userRelatedArticles,
+        currentProfileArticle: action.userRelatedArticles
+      };
 
     case FAVERATED_ARITICLE_LOADED:
-      return {
-        ...state,
-        favoritedArticles:
-          (action.favoritedArticles.length()===0 ? null : action.favoritedArticles)
-      };
+      return { ...state, favoritedArticles: action.favoritedArticles  };
 
     case USER_TOKEN_LOADED:
       return { ...state, userInfo: action.userInfo };
@@ -139,6 +140,10 @@ export const feedReducer = (state = initialState, action) => {
   case SET_PROFILE_NAV:
         return { ...state, myNav:action.myNav, favorited_Nav: action.favorited_Nav };
 
+    // CURRENT_PROFILE_ARTICLE_LOADED
+    case CURRENT_PROFILE_ARTICLE_LOADED:
+      return { ...state, currentProfileArticle: action.userProfileData };
+ 
     default:
       return state;
   }

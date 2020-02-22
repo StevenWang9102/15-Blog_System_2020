@@ -25,7 +25,8 @@ import {
   globalDataLoaded,
   POST_COMMENTS_CLICKED,
   CHECK_USER_INFO_POSITION,
-  articleReloaded
+  articleReloaded,
+  currentProfileArticleLoaded
 } from "./feedActions";
 
 
@@ -127,7 +128,9 @@ export const feedSaga = function*() {
     yield put(relatedTagLoaded(action.tagName));
   });
 
-  // USER_PROFILE_LOADED
+  // USER_PROFILE_LOADED 进行中。。。。。。。。。。。。。。。。。。
+  // USER_PROFILE_LOADED 进行中。。。。。。。。。。。。。。。。。。
+  // USER_PROFILE_LOADED 进行中。。。。。。。。。。。。。。。。。。
   yield takeLatest(USERS_NAME_LOADED, function*(action) {
     // yield saveUserInfoToStore()
     const [userProfileData, userRelatedArticles] = yield all([
@@ -138,16 +141,35 @@ export const feedSaga = function*() {
       )]);
     yield put(userProfileDataLoaded(userProfileData));
     yield put(userRelatedArticlesLoaded(userRelatedArticles.articles));
+    yield put(currentProfileArticleLoaded(userRelatedArticles.articles));
+
   });
 
   // FAVERATED_ARITICLE_CLICKED
+    // FAVERATED_ARITICLE_CLICKED
+
+      // FAVERATED_ARITICLE_CLICKED
+
+        // FAVERATED_ARITICLE_CLICKED
+
+          // FAVERATED_ARITICLE_CLICKED
+
+
   yield takeLatest(FAVERATED_ARITICLE_CLICKED, function*(action) {
+    const userName = action.userName
+    console.log(action);
+    
     const favoritedArticlesData = yield call(
       fetchInitialData,
-      `/articles?favorited=${action.userName}&limit=5&offset=0`,
+      `/articles?favorited=${userName}&limit=5&offset=0`,
       "Load Your Favorited Articles"
     );
+    // https://conduit.productionready.io/api/articles?favorited=Steven%20Wang&limit=5&offset=0
+    // https://conduit.productionready.io/api/articles?favorited=[object%20Object]&limit=5&offset=0
+    console.log(favoritedArticlesData);
+    
     yield put(favoritedArticleLoaded(favoritedArticlesData.articles));
+    yield put(currentProfileArticleLoaded(favoritedArticlesData.articles));
   });
 
   // SIGN_IN_BUTTON_CLICKED
