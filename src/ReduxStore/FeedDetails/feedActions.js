@@ -36,7 +36,8 @@ export const ON_EDIT_ARTICLE_CLICKED = Symbol("ON_EDIT_ARTICLE_CLICKED")
 export const SET_PROFILE_NAV = Symbol("SET_PROFILE_NAV")
 // CURRENT_PROFILE_ARTICLE_LOADED
 export const CURRENT_PROFILE_ARTICLE_LOADED = Symbol("CURRENT_PROFILE_ARTICLE_LOADED")
-
+// CURRENT_HOME_DISPLAY_ARTICLES_LOADED
+export const CURRENT_HOME_DISPLAY_ARTICLES_LOADED = Symbol("CURRENT_HOME_DISPLAY_ARTICLES_LOADED")
 
 export const loadInitialData = () => {
     return { type: INITIALDATA_LOADED };
@@ -90,15 +91,15 @@ export const relatedTagLoaded = (tagName) => {
     return { type: RELATED_TAG_LOADED, tagName };
 }
 
-export const loadUserProfileDetail = (userName) => {
-    return { type: USERS_NAME_LOADED, userName };
+export const loadUserProfileDetail = () => {
+    return { type: USERS_NAME_LOADED };
 }
 
 export const userProfileDataLoaded = (userProfileData) => {
     return { type: USERS_PROFILE_LOADED, userProfileData };
 }
-// currentProfileArticleLoaded
-export const currentProfileArticleLoaded = (userProfileData) => {
+// currentDisplayArticleLoaded
+export const currentDisplayArticleLoaded = (userProfileData) => {
     return { type: CURRENT_PROFILE_ARTICLE_LOADED, userProfileData };
 }
 
@@ -174,4 +175,8 @@ export const onEditArticleClicked = (status) => {
 // setProfileNavStatus
 export const setProfileNavStatus = (myNav, favorited_Nav) => {
     return { type: SET_PROFILE_NAV, myNav: myNav, favorited_Nav: favorited_Nav};
+}
+// currentHomeDisplayArticleLoaded
+export const currentHomeDisplayArticleLoaded = (payload) => {
+    return { type: CURRENT_HOME_DISPLAY_ARTICLES_LOADED, payload: payload };
 }

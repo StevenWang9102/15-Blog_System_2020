@@ -63,8 +63,7 @@ export const InternalNavbar = props => {
                       to='/user_profile'
                       onClick={()=>
                         {
-                          const userName = getUserInformation().username
-                          props.loadUserProfileDetail(userName)
+                          props.loadUserProfileDetail()
                           props.setProfileNavStatus("active", "null")
                         }}
                       >
@@ -133,8 +132,8 @@ const mapStateToProps = ({ userInfo, loadUserProfileDetail }) => {
 // loadUserProfileDetail
 const mapDispatchToProps = dispatch => {
   return {
-    loadUserProfileDetail: userName =>
-      dispatch(loadUserProfileDetail(userName)),
+    loadUserProfileDetail: () =>
+      dispatch(loadUserProfileDetail()),
       setProfileNavStatus: (myNav, favorited_Nav) =>
       dispatch(setProfileNavStatus(myNav, favorited_Nav)),
   };

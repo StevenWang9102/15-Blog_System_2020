@@ -26,7 +26,8 @@ import {
   POST_COMMENTS_CLICKED,
   CHECK_USER_INFO_POSITION,
   articleReloaded,
-  currentProfileArticleLoaded
+  currentDisplayArticleLoaded,
+  currentHomeDisplayArticleLoaded
 } from "./feedActions";
 
 
@@ -34,7 +35,7 @@ export const getUserInformation = function () {
   return getUser();
 };
 
-export const saveUserInfoToStore = function*(){
+export const getUserInformation2 = function*(){
   // 优先使用state存user信息
   // 
   const reduxStoredUserInfo = yield select(state => state.userInfo);
@@ -131,45 +132,39 @@ export const feedSaga = function*() {
   // USER_PROFILE_LOADED 进行中。。。。。。。。。。。。。。。。。。
   // USER_PROFILE_LOADED 进行中。。。。。。。。。。。。。。。。。。
   // USER_PROFILE_LOADED 进行中。。。。。。。。。。。。。。。。。。
-  yield takeLatest(USERS_NAME_LOADED, function*(action) {
-    // yield saveUserInfoToStore()
+  yield takeLatest(USERS_NAME_LOADED, function*() {
+    // yield getUserInformation2()
+    const userName = getUserInformation().username;
+    
     const [userProfileData, userRelatedArticles] = yield all([
-      call(fetchInitialData, `/profiles/${action.userName}`, "Load User Profile"),
+      call(fetchInitialData, `/profiles/${userName}`, "Load User Profile"),
       call(
         fetchInitialData,
-        `/articles?author=${action.userName}&limit=5&offset=0`, "Load User Articles"
+        `/articles?author=${userName}&limit=5&offset=0`, "Load User Articles"
       )]);
+    console.log(userRelatedArticles);
+    
     yield put(userProfileDataLoaded(userProfileData));
     yield put(userRelatedArticlesLoaded(userRelatedArticles.articles));
-    yield put(currentProfileArticleLoaded(userRelatedArticles.articles));
+    yield put(currentDisplayArticleLoaded(userRelatedArticles.articles));
 
   });
 
   // FAVERATED_ARITICLE_CLICKED
     // FAVERATED_ARITICLE_CLICKED
 
-      // FAVERATED_ARITICLE_CLICKED
-
-        // FAVERATED_ARITICLE_CLICKED
-
-          // FAVERATED_ARITICLE_CLICKED
-
-
   yield takeLatest(FAVERATED_ARITICLE_CLICKED, function*(action) {
-    const userName = action.userName
-    console.log(action);
-    
-    const favoritedArticlesData = yield call(
+    const userName = getUserInformation().username;
+        const favoritedArticlesData = yield call(
       fetchInitialData,
       `/articles?favorited=${userName}&limit=5&offset=0`,
       "Load Your Favorited Articles"
     );
-    // https://conduit.productionready.io/api/articles?favorited=Steven%20Wang&limit=5&offset=0
-    // https://conduit.productionready.io/api/articles?favorited=[object%20Object]&limit=5&offset=0
+
     console.log(favoritedArticlesData);
     
     yield put(favoritedArticleLoaded(favoritedArticlesData.articles));
-    yield put(currentProfileArticleLoaded(favoritedArticlesData.articles));
+    yield put(currentDisplayArticleLoaded(favoritedArticlesData.articles));
   });
 
   // SIGN_IN_BUTTON_CLICKED
@@ -190,13 +185,18 @@ export const feedSaga = function*() {
   });
 
   // YOURE_FEED_CLICKED
+  // YOURE_FEED_CLICKED
+  // YOURE_FEED_CLICKED
+  
   yield takeLatest(YOURE_FEED_CLICKED, function*() {
-    yield saveUserInfoToStore()
+    yield getUserInformation2()
     const token = getUserInformation().token;
     const url ="/articles/feed?limit=10&offset=0";
     const message = "Your Feed Loaded"
     const yourArticleData = yield call(postDataToServerAll, token, url, null, message, "GET");
     yield put(yourFeedsLoaded(yourArticleData.articles));
+    yield put(currentHomeDisplayArticleLoaded(yourArticleData.articles));
+
   });
 
   // FAVORITED_BUTTON_CLICKED

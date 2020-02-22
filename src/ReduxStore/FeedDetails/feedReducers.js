@@ -19,6 +19,7 @@ import {
   YOUR_FEED_NAV_CLICKED,
   SMALL_NAV_SET_CLICKED,
   YOURE_FEED_CLICKED,
+  CURRENT_HOME_DISPLAY_ARTICLES_LOADED,
   ARTICLE_RELOADED,
   ON_EDIT_ARTICLE_CLICKED,
   SET_PROFILE_NAV
@@ -47,7 +48,8 @@ const initialState = {
   article_reloaded: false,
   myNav: "active",
   favorited_Nav: "null",
-  currentProfileArticle:[]
+  currentDisplayArticle:[],
+  currentHomeDisplayArticle:[]
 };
 
 export const feedReducer = (state = initialState, action) => {
@@ -96,7 +98,7 @@ export const feedReducer = (state = initialState, action) => {
     case USERS_RELATED_ARTICLES_LOADED:
       return { ...state, 
         currentUsersArticles: action.userRelatedArticles,
-        currentProfileArticle: action.userRelatedArticles
+        currentDisplayArticle: action.userRelatedArticles
       };
 
     case FAVERATED_ARITICLE_LOADED:
@@ -142,8 +144,11 @@ export const feedReducer = (state = initialState, action) => {
 
     // CURRENT_PROFILE_ARTICLE_LOADED
     case CURRENT_PROFILE_ARTICLE_LOADED:
-      return { ...state, currentProfileArticle: action.userProfileData };
- 
+      return { ...state, currentDisplayArticle: action.userProfileData };
+//  CURRENT_HOME_DISPLAY_ARTICLES_LOADED
+case CURRENT_HOME_DISPLAY_ARTICLES_LOADED:
+  return { ...state, currentHomeDisplayArticle: action.payload };
+
     default:
       return state;
   }

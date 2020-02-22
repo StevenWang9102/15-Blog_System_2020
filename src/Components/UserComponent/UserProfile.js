@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
@@ -15,13 +15,12 @@ const InternalUserProfile = props => {
   const userName = getUserInformation().username;
 
   useEffect(() => {
-    props.loadUserProfileDetail(userName);
+    props.loadUserProfileDetail();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log(props.userInfo);
   
-  // console.log(props.currentProfileArticle);
-  console.log(props.currentUsersArticles);
-  console.log(props.currentProfileArticle);
 
   return (
     <div>
@@ -71,8 +70,8 @@ const InternalUserProfile = props => {
                       activeClassName={props.myNav}
                       onClick={() => {
                         props.setProfileNavStatus("active", "null")
-                        props.loadUserProfileDetail(userName);
-                        //此处要更新 - props.currentProfileArticle【完成】
+                        props.loadUserProfileDetail();
+                        //此处要更新 - props.currentDisplayArticle【完成】
                       }}>
                       My Articles
                     </NavLink>
@@ -84,11 +83,9 @@ const InternalUserProfile = props => {
                       className='nav-link'
                       activeClassName={props.favorited_Nav}
                       onClick={() => {
-                        // 
-                        props.setProfileNavStatus("null", "active")
-                        props.onFavoritedArticleClicked(userName);
-                        //此处要更新 - props.currentProfileArticle【完成】
 
+                        props.setProfileNavStatus("null", "active")
+                        props.onFavoritedArticleClicked();
                       }}>
                       Favorited Articles
                     </NavLink>
@@ -100,7 +97,7 @@ const InternalUserProfile = props => {
 
 
               {/* {(props.favoritedArticles || props.currentUsersArticles).map( */}
-              {props.currentProfileArticle.map(
+              {props.currentDisplayArticle.map(
                 (article, index) => {
                   return (
                     <div className='article-preview' key={index}>
@@ -136,7 +133,7 @@ const InternalUserProfile = props => {
                   );
                 }
               )}
-              { props.currentProfileArticle.length ===0 && (<div className='article-preview'>No articles are here... yet.</div>)}
+              { props.currentDisplayArticle.length ===0 && (<div className='article-preview'>No articles are here... yet.</div>)}
             </div>
           </div>
         </div>
@@ -161,7 +158,7 @@ const mapStateToProps = ({
   userInfo,
   myNav,
   favorited_Nav,
-  currentProfileArticle
+  currentDisplayArticle
 }) => {
   return {
     currentProfileData,
@@ -171,16 +168,16 @@ const mapStateToProps = ({
     favoritedArticles,
     myNav,
     favorited_Nav,
-    currentProfileArticle
+    currentDisplayArticle
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadUserProfileDetail: userName =>
-      dispatch(loadUserProfileDetail(userName)),
-    onFavoritedArticleClicked: userName =>
-      dispatch(favoritedArticleClicked(userName)),
+    loadUserProfileDetail: () =>
+      dispatch(loadUserProfileDetail()),
+    onFavoritedArticleClicked: () =>
+      dispatch(favoritedArticleClicked()),
     setProfileNavStatus: (myNav, favorited_Nav) =>
       dispatch(setProfileNavStatus(myNav, favorited_Nav)),
   };

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
 import { Link } from "react-router-dom";
-
+import {getUserInformation} from "../../ReduxStore/FeedDetails/feedSagas"
 import {
   articleTitleClicked,
   loadInitialData,
@@ -15,14 +15,17 @@ import {
 import { NavLink } from "react-router-dom";
 
 const InternalArticlePreview = props => {
+
   useEffect(() => {
-    props.userInfo &&
-      props.userInfo.token &&
+      props.onGlobeFeedClicked();
       props.onYourArticleNeeded(props.userInfo.token);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // getUserInformation().id &&
+    // 这里怎么这样？？？？？？？太乱！！！！！！
+    // 在某种情况下发送
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(props.userInfo);
+  console.log(props.currentHomeDisplayArticle);
   
 
   return (
@@ -34,10 +37,10 @@ const InternalArticlePreview = props => {
           <li className='nav-item'>
 
             {/* ----- Your Feed ----- */}
-            {/* 不对啊！！！
-            
+            {/* 
+                    暂时用 getUserInformation()
             */}
-            {props.userInfo && (
+            {getUserInformation() && getUserInformation().id && (
               <NavLink
                 onClick={() => {
                   props.onYourFeedClicked();
@@ -58,7 +61,7 @@ const InternalArticlePreview = props => {
               }}
               className='nav-link display-inline'
               activeClassName={props.status2}
-              to='/home#global_feed'>
+              to='/home/global_feed'>
               Global Feed
             </NavLink>
 
@@ -67,7 +70,7 @@ const InternalArticlePreview = props => {
               <NavLink
                 className='nav-link display-inline'
                 activeClassName='active'
-                to='/home#popular_tags'>
+                to='/home/popular_tags'>
                 # {props.currentTagName}
               </NavLink>
             )}
@@ -76,17 +79,8 @@ const InternalArticlePreview = props => {
       </div>
 
       {/* --------------------- Article --------------------- */}
-      {props.userInfo.username &&
-      props.yourArticles === null &&
-      !props.globalFeeds ? (
-        <div className='article-preview'>No articles are here... yet.</div>
-      ) : (
-        (props.userInfo.username
-          ? props.tagRelatedArticles ||
-            (props.yourArticles !== [] && props.yourArticles) ||
-            props.globalFeeds
-          : props.tagRelatedArticles || props.globalFeeds
-        ).map((article, index) => {
+      {/* <div className='article-preview'>No articles are here... yet.</div> */}
+      {props.currentHomeDisplayArticle.map((article, index) => {
           return (
             <div className='article-preview' key={index}>
               <div className='article-meta'>
@@ -133,7 +127,7 @@ const InternalArticlePreview = props => {
             </div>
           );
         })
-      )}
+      }
     </div>
   );
 };
@@ -158,7 +152,8 @@ const mapStateToProps = ({
   status3,
   status2,
   status1,
-  globalFeeds
+  globalFeeds,
+  currentHomeDisplayArticle
 }) => {
   return {
     articleLibrary,
@@ -172,7 +167,8 @@ const mapStateToProps = ({
     status3,
     status2,
     status1,
-    globalFeeds
+    globalFeeds,
+    currentHomeDisplayArticle
   };
 };
 
