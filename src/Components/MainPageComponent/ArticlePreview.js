@@ -38,9 +38,7 @@ const InternalArticlePreview = props => {
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
             {/* ----- Your Feed ----- */}
-            {/* 
-                    暂时用 getUserInformation()
-            */}
+  
             {getUserInformation() && getUserInformation().id && (
               <NavLink
                 onClick={() => {
@@ -104,7 +102,10 @@ const InternalArticlePreview = props => {
                 type='button'
                 className='btn btn-outline-primary btn-sm pull-xs-right'
                 onClick={() => {
-                  const token = props.userInfo.token;
+                  // 
+                  // 
+                  // 暂时用这个 getUserInformation
+                  const token = getUserInformation().token;
                   if (token)
                     props.onFavoritedButtonClicked(token, article.slug);
                 }}>

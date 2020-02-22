@@ -74,6 +74,7 @@ export const feedReducer = (state = initialState, action) => {
       return {
         ...state,
         currentArticleDetails: action.initArticleData,
+        // currentHomeDisplayArticle: action.initArticleData,
         newSlug: action.initArticleData.slug
       };
 

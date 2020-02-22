@@ -12,6 +12,12 @@ import { Link } from "react-router-dom";
 
 const InternalArticleDetails = props => {
   const { article_slug } = useParams();
+  
+  const isAuthorized = () =>{
+    if(getUserInformation()){
+      return getUserInformation().username === props.currentArticleDetails.author.username
+    }  
+  }
   let history = useHistory();
 
   useEffect(() => {
@@ -19,6 +25,8 @@ const InternalArticleDetails = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(props.currentArticleDetails);
+  
   return (
     <div className='article-page'>
       <div className='banner'>
@@ -41,11 +49,13 @@ const InternalArticleDetails = props => {
                     alt='au'
                   />
                   <div className='info author'>
-                    {props.currentArticleDetails &&
+                    
+                    {props.currentArticleDetails && props.currentArticleDetails.author &&
                       props.currentArticleDetails.author.username}
+                    
                     <span className='date'>
                       {dateFormat(
-                        props.currentArticleDetails.author.updatedAt,
+                        props.currentArticleDetails.author && props.currentArticleDetails.author.updatedAt,
                         "ddd mmm dd yyyy"
                       )}
                     </span>
@@ -54,7 +64,9 @@ const InternalArticleDetails = props => {
               </div>
 
               {/* ---------------- Edit and Delete Button ----------------  */}
-              {(getUserInformation().username === props.currentArticleDetails.author.username) && (
+              {/* {props.currentArticleDetails.author &&(getUserInformation().username === props.currentArticleDetails.author.username) && ( */}
+              {  isAuthorized() && 
+              (
                 <div className='edit-button'>
                   <Link to={`/new_post/${article_slug}`}>
                     <button

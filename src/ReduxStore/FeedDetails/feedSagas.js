@@ -110,12 +110,17 @@ export const feedSaga = function*() {
   });
 
   // POST_COMMENTS_CLICKED
+    // POST_COMMENTS_CLICKED
+      // POST_COMMENTS_CLICKED
+
   yield takeLatest(POST_COMMENTS_CLICKED, function* (action) {
     const token = getUserInformation().token;
     const url = `/articles/${action.slug}/comments`;
+    const message = "Post My Comments"
     const postData = {};
     postData.comment = { body: `${action.myComment}` };
-    yield call(postDataToServerAll, token, url, postData, "POST");
+    yield call(postDataToServerAll, token, url, postData, message, "POST");
+
     const initCommentData = yield call(
       fetchInitialData,
       `/articles/${action.slug}/comments`
@@ -146,7 +151,6 @@ export const feedSaga = function*() {
         fetchInitialData,
         `/articles?author=${userName}&limit=5&offset=0`, "Load User Articles"
       )]);
-    console.log(userRelatedArticles);
     
     yield put(userProfileDataLoaded(userProfileData));
     yield put(userRelatedArticlesLoaded(userRelatedArticles.articles));
@@ -155,8 +159,6 @@ export const feedSaga = function*() {
   });
 
   // FAVERATED_ARITICLE_CLICKED
-    // FAVERATED_ARITICLE_CLICKED
-
   yield takeLatest(FAVERATED_ARITICLE_CLICKED, function*(action) {
     const userName = getUserInformation().username;
         const favoritedArticlesData = yield call(
@@ -164,8 +166,6 @@ export const feedSaga = function*() {
       `/articles?favorited=${userName}&limit=5&offset=0`,
       "Load Your Favorited Articles"
     );
-
-    console.log(favoritedArticlesData);
     
     yield put(favoritedArticleLoaded(favoritedArticlesData.articles));
     yield put(currentDisplayArticleLoaded(favoritedArticlesData.articles));
@@ -181,8 +181,7 @@ export const feedSaga = function*() {
     userData.password = action.password;
 
     const postData = { user: userData };
-    const userPostedData = yield call(postDataToServerAll2, null, url, postData, message, "POST");
-    // const postDataToServerAll = (token, url, postData, message, type) => {
+    const userPostedData = yield call(postDataToServerAll, null, url, postData, message, "POST");
 
     setUser(userPostedData.user);    
     yield put(userTokedLoaded(userPostedData));
@@ -190,19 +189,11 @@ export const feedSaga = function*() {
   });
 
   // YOURE_FEED_CLICKED
-  // YOURE_FEED_CLICKED
-  // YOURE_FEED_CLICKED
-  
   yield takeLatest(YOURE_FEED_CLICKED, function*() {
     const token = getUserInformation().token;
-    // https://conduit.productionready.io/api/articles/feed?limit=10&offset=0
     const url ="/articles/feed?limit=10&offset=0";
     const message = "Load Your Feed"
-    const yourArticleData = yield call(postDataToServerAll, token, url, "NothingToPost", message, "GET");
-
-    // console.log(token);
-    console.log(yourArticleData);
-    
+    const yourArticleData = yield call(postDataToServerAll, token, url, "NothingToPost", message, "GET");    
     yield put(yourFeedsLoaded(yourArticleData.articles));
     yield put(currentHomeDisplayArticleLoaded(yourArticleData.articles));
 
@@ -212,19 +203,30 @@ export const feedSaga = function*() {
   yield takeLatest(FAVORITED_BUTTON_CLICKED, function*(action) {    
     const slug = action.slug;
     const token = action.token;
+    console.log(token);
+    
     const url = `/articles/${slug}/favorite`;
     const message = 'Post Favoriated Articles'
-    yield call(postDataToServerAll, token, url, message, "POST");
-    // 这里好像缺 "NothingToPost"
+    const favoriedArticles = yield call(postDataToServerAll, token, url,"NothingToPost", message, "POST");
+    // 重新加载 count
+    // yield put(currentHomeDisplayArticleLoaded(favoriedArticles.article));
   });
 
   // POST_ARTICLE_CLICKED
   yield takeLatest(POST_ARTICLE_CLICKED, function*(action) {
     
     const token = getUserInformation().token;
-    const url = `/articles/${action.slug}`;
+    let url, type = "";
     const postData = {};
     const message = "Post an Article"
+
+    if(action.slug){
+      type = "PUT";
+      url = `/articles/${action.slug}`
+    } else { 
+      type = "POST";
+      url = "/articles"
+    }
 
     postData.article = {
       title: `${action.title}`,
@@ -233,9 +235,8 @@ export const feedSaga = function*() {
       tagList: `${action.tags}`
     };
 
-    const yourArticle = yield call(postDataToServerAll, token, url, postData, message, "PUT");   
-    // 重新发布一次post 文章
-    console.log(yourArticle);
+    const yourArticle = yield call(postDataToServerAll, token, url, postData, message, type);   
+
     yield put(articleContentLoaded(yourArticle.article));
     yield put(articleCommentsLoaded(yourArticle));
     yield put(articleReloaded(true))
@@ -244,20 +245,22 @@ export const feedSaga = function*() {
 
 const postDataToServerAll = (token, url, postData, message, type) => {
   let headers = { "Content-Type": "application/json"}
-  let body = null
+  
+  let request = {
+    method: `${type}`,
+    headers,
+  }
+
+  if(postData !== "NothingToPost" ) {
+    request["body"] = JSON.stringify(postData)
+   }
 
   if(token !== null){
     headers["Authorization"] = `Token ${token}`;
   }
 
-  if(postData !== "NothingToPost" ) body["body"] = JSON.stringify(postData)
   
-  return fetch(`https://conduit.productionready.io/api${url}`, {
-    method: `${type}`,
-    headers,
-    body
-    // body: JSON.stringify(postData)
-  }).then(response => {
+  return fetch(`https://conduit.productionready.io/api${url}`, request).then(response => {
     if (response.ok) {
       return response.json().then(response => {
         console.log(` -- Your ${message} Success —- `, response);
@@ -267,27 +270,6 @@ const postDataToServerAll = (token, url, postData, message, type) => {
   });
 };
 
-const postDataToServerAll2 = (token, url, postData, message, type) => {
-  let headers = { "Content-Type": "application/json"}
-
-  if(token !== null){
-    headers["Authorization"] = `Token ${token}`;
-  }
-  
-  return fetch(`https://conduit.productionready.io/api${url}`, {
-    method: `${type}`,
-    headers,
-    body:JSON.stringify(postData)
-    // body: JSON.stringify(postData)
-  }).then(response => {
-    if (response.ok) {
-      return response.json().then(response => {
-        console.log(` -- Your ${message} Success —- `, response);
-        return response;
-      });
-    } else console.error(` -- Your Error: ${message} failed -- `);
-  });
-};
 
 const fetchInitialData = (url, message) => {
   return fetch("https://conduit.productionready.io/api" + url).then(
@@ -299,23 +281,3 @@ const fetchInitialData = (url, message) => {
     }
   );
 };
-
-// const getDataFromServerWithToken = token => {
-//   return fetch(
-//     "https://conduit.productionready.io/api/articles/feed?limit=10&offset=0",
-//     {
-//       method: "GET",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Token ${token}`
-//       }
-//     }
-//   ).then(response => {
-//     if (response.ok) {
-//       return response.json().then(response => {
-//         console.log(" -- Get Your Feeds Success -- :", response);
-//         return response;
-//       });
-//     } else console.error(" -- Error: get data failed -- ");
-//   });
-// };
