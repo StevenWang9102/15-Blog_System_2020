@@ -16,6 +16,7 @@ const InternalUserProfile = props => {
 
   useEffect(() => {
     props.loadUserProfileDetail();
+    props.setProfileNavStatus("active", "null")
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -67,7 +68,7 @@ const InternalUserProfile = props => {
                     <NavLink
                       to='/user_profile/my_articles'
                       className='nav-link'
-                      activeClassName={props.myNav}
+                      activeClassName = {props.myNav}
                       onClick={() => {
                         props.setProfileNavStatus("active", "null")
                         props.loadUserProfileDetail();
