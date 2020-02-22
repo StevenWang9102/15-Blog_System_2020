@@ -11,13 +11,12 @@ import {
   LOAD_GLOBAL_FEEDS,
   USERS_RELATED_ARTICLES_LOADED,
   FAVERATED_ARITICLE_LOADED,
-  USER_TOKEN_LOADED,
+  USER_INFORMATION_LOADED,
   CURRENT_PROFILE_ARTICLE_LOADED,
   YOURE_FEED_LOADED,
-  GLOBAL_DATA_LOADED,
   SMALL_NAV_CLICKED,
   YOUR_FEED_NAV_CLICKED,
-  SMALL_NAV_SET_CLICKED,
+  HOME_NAV_SET_CLICKED,
   YOURE_FEED_CLICKED,
   CURRENT_HOME_DISPLAY_ARTICLES_LOADED,
   ARTICLE_RELOADED,
@@ -29,7 +28,6 @@ const initialState = {
   currentComments: {},
   currentArticleDetails: {},
   globalArticles: [],
-  // globalFeeds: [],
   popularTags: [],
   currentArticleTitle: "",
   currentArticleSlug: "",
@@ -38,24 +36,22 @@ const initialState = {
   favoritedArticles: null,
   tagRelatedArticles: null,
   currentTagName: "",
-  userInfo: {},
+  userInformation: {},
   yourArticles: null,
   smallNavStatus: "active",
   selfStatus: "null",
-  status1: "null",
-  status2: "active",
-  status3: "active",
   article_reloaded: false,
   myNav: "active",
   favorited_Nav: "null",
-  currentDisplayArticle:[],
-  currentHomeDisplayArticle:[]
+  currentDisplayArticle: [],
+  currentHomeDisplayArticle: []
 };
 
 export const feedReducer = (state = initialState, action) => {
   switch (action.type) {
     case ARTICLE_DATA_LOADED:
-      return { ...state, 
+      return {
+        ...state,
         globalArticles: action.articleData,
         currentHomeDisplayArticle: action.articleData
       };
@@ -82,9 +78,10 @@ export const feedReducer = (state = initialState, action) => {
       return { ...state, currentComments: action.initCommentData };
 
     case TAG_RELATED_ARTICLE_LOADED:
-      return { ...state, 
+      return {
+        ...state,
         tagRelatedArticles: action.tagRelatedArticles,
-        currentHomeDisplayArticle: action.tagRelatedArticles,
+        currentHomeDisplayArticle: action.tagRelatedArticles
       };
 
     case RELATED_TAG_LOADED:
@@ -103,16 +100,17 @@ export const feedReducer = (state = initialState, action) => {
       return { ...state, currentProfileData: action.userProfileData };
 
     case USERS_RELATED_ARTICLES_LOADED:
-      return { ...state, 
+      return {
+        ...state,
         currentUsersArticles: action.userRelatedArticles,
         currentDisplayArticle: action.userRelatedArticles
       };
 
     case FAVERATED_ARITICLE_LOADED:
-      return { ...state, favoritedArticles: action.favoritedArticles  };
+      return { ...state, favoritedArticles: action.favoritedArticles };
 
-    case USER_TOKEN_LOADED:
-      return { ...state, userInfo: action.userInfo };
+    case USER_INFORMATION_LOADED:
+      return { ...state, userInformation: action.userInformation };
 
     case YOURE_FEED_LOADED:
       return { ...state, yourArticles: action.articles };
@@ -127,12 +125,10 @@ export const feedReducer = (state = initialState, action) => {
         tagRelatedArticles: null
       };
 
-    case SMALL_NAV_SET_CLICKED:
+    case HOME_NAV_SET_CLICKED:
       return {
         ...state,
-        status1: action.status1,
-        status2: action.status2,
-        status3: action.status3
+        homeNavStatus: action.status
       };
     case INIT_ARTICLE_DETAILS_GET:
       return { ...state, currentSlug: action.slug };
@@ -144,17 +140,18 @@ export const feedReducer = (state = initialState, action) => {
     case ON_EDIT_ARTICLE_CLICKED:
       return { ...state, article_reloaded: action.status };
 
-
-      // SET_PROFILE_NAV
-  case SET_PROFILE_NAV:
-        return { ...state, myNav:action.myNav, favorited_Nav: action.favorited_Nav };
+    // SET_PROFILE_NAV
+    case SET_PROFILE_NAV:
+      return {
+        ...state,
+        profileNavStatus: action.profileNavStatus};
 
     // CURRENT_PROFILE_ARTICLE_LOADED
     case CURRENT_PROFILE_ARTICLE_LOADED:
       return { ...state, currentDisplayArticle: action.userProfileData };
-//  CURRENT_HOME_DISPLAY_ARTICLES_LOADED
-case CURRENT_HOME_DISPLAY_ARTICLES_LOADED:
-  return { ...state, currentHomeDisplayArticle: action.payload };
+    //  CURRENT_HOME_DISPLAY_ARTICLES_LOADED
+    case CURRENT_HOME_DISPLAY_ARTICLES_LOADED:
+      return { ...state, currentHomeDisplayArticle: action.payload };
 
     default:
       return state;

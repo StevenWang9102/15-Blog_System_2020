@@ -16,11 +16,9 @@ const InternalUserProfile = props => {
 
   useEffect(() => {
     props.loadUserProfileDetail();
-    props.setProfileNavStatus("active", "null")
+    props.setProfileNavStatus(["active", "null"])
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(props.userInfo);
   
 
   return (
@@ -68,9 +66,9 @@ const InternalUserProfile = props => {
                     <NavLink
                       to='/user_profile/my_articles'
                       className='nav-link'
-                      activeClassName = {props.myNav}
+                      activeClassName = {props.profileNavStatus && props.profileNavStatus[0]}
                       onClick={() => {
-                        props.setProfileNavStatus("active", "null")
+                        props.setProfileNavStatus(["active", "null"])
                         props.loadUserProfileDetail();
                         //此处要更新 - props.currentDisplayArticle【完成】
                       }}>
@@ -82,10 +80,9 @@ const InternalUserProfile = props => {
                     <NavLink
                       to='/user_profile/favorited_articles'
                       className='nav-link'
-                      activeClassName={props.favorited_Nav}
+                      activeClassName={props.profileNavStatus && props.profileNavStatus[1]}
                       onClick={() => {
-
-                        props.setProfileNavStatus("null", "active")
+                        props.setProfileNavStatus(["null", "active"])
                         props.onFavoritedArticleClicked();
                       }}>
                       Favorited Articles
@@ -148,7 +145,6 @@ InternalUserProfile.propTypes = {
   currentUsersArticles: PropTypes.array.isRequired,
   loadUserProfileDetail: PropTypes.func.isRequired,
   favoritedArticles: PropTypes.array,
-  userInfo: PropTypes.object
 };
 
 const mapStateToProps = ({
@@ -156,19 +152,15 @@ const mapStateToProps = ({
   currentUsersArticles,
   onFavoritedArticleClicked,
   favoritedArticles,
-  userInfo,
-  myNav,
-  favorited_Nav,
+  profileNavStatus,
   currentDisplayArticle
 }) => {
   return {
     currentProfileData,
     currentUsersArticles,
     onFavoritedArticleClicked,
-    userInfo,
     favoritedArticles,
-    myNav,
-    favorited_Nav,
+    profileNavStatus,
     currentDisplayArticle
   };
 };
@@ -179,8 +171,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(loadUserProfileDetail()),
     onFavoritedArticleClicked: () =>
       dispatch(favoritedArticleClicked()),
-    setProfileNavStatus: (myNav, favorited_Nav) =>
-      dispatch(setProfileNavStatus(myNav, favorited_Nav)),
+    setProfileNavStatus: (profileNavStatus) =>
+      dispatch(setProfileNavStatus(profileNavStatus)),
   };
 };
 

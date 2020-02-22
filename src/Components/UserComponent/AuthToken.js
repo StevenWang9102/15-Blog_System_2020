@@ -1,9 +1,9 @@
 export const USER_KEY = 'USER_KEY';
 
-export const setUser = (user) => {
+export const setUserOnSession = (user) => {
     sessionStorage.setItem(USER_KEY, JSON.stringify(user))
 }
 
-export const getUser = () => {
+export const getUserFromSession = () => {
     return JSON.parse(sessionStorage.getItem(USER_KEY))
 }

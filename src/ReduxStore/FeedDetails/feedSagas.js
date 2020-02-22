@@ -1,5 +1,5 @@
 import { takeLatest, put, call, all, select } from "redux-saga/effects";
-import { getUser, setUser } from "../../Components/UserComponent/AuthToken";
+import { getUserFromSession, setUserOnSession } from "../../Components/UserComponent/AuthToken";
 import {
   LOAD_GLOBAL_FEEDS,
   INIT_ARTICLE_DETAILS_GET,
@@ -18,71 +18,58 @@ import {
   LOAD_INIT_POPULAR_TAGS,
   favoritedArticleLoaded,
   SIGN_IN_BUTTON_CLICKED,
-  userTokedLoaded,
+  userInformationLoaded,
   YOURE_FEED_CLICKED,
   yourFeedsLoaded,
   FAVORITED_BUTTON_CLICKED,
-  setNavStatus,
+  setHomeNavStatus,
   POST_COMMENTS_CLICKED,
-  CHECK_USER_INFO_POSITION,
   articleReloaded,
   currentDisplayArticleLoaded,
-  currentHomeDisplayArticleLoaded
+  currentHomeDisplayArticleLoaded,
+  SAVE_USER_INFOR_TO_STORE
 } from "./feedActions";
 
 
 export const getUserInformation = function () {
-  return getUser();
+  return getUserFromSession();
 };
 
 export const getUserInformation2 = function*(){
-  // 优先使用state存user信息
-  // 
-  const reduxStoredUserInfo = yield select(state => state.userInfo);
-  if(!reduxStoredUserInfo) {
-    const sessionStoredUserInfo = getUser();
-    if(sessionStoredUserInfo)
-    yield put(userTokedLoaded(sessionStoredUserInfo))
-  }else{
-    return reduxStoredUserInfo;
-  }
-  return getUser();
-};
 
+  const reduxStoredUserInfo = yield select(state => state.userInformation);
+
+  if(reduxStoredUserInfo) {
+    // 优先返回redux store上的 uerInformation
+    return reduxStoredUserInfo;
+  }else{
+    // 其次考虑在session上的
+    const sessionStoredUserInfo = getUserFromSession();
+    if(sessionStoredUserInfo)
+    yield put(userInformationLoaded(sessionStoredUserInfo))
+    return getUserFromSession();
+  }
+};
 
 export const feedSaga = function*() {
 
-  // CHECK_USER_INFO_POSITION
-  yield takeLatest(CHECK_USER_INFO_POSITION, function*() {
-      const reduxStoredUserInfo = yield select(state => state.userInfo);
-      if(!reduxStoredUserInfo) {
-        const sessionStoredUserInfo = getUser();
-        if(sessionStoredUserInfo)
-        yield put(userTokedLoaded(sessionStoredUserInfo))
-      }else{
-        // return reduxStoredUserInfo;
-      }
-      // return getUser();
+  // SAVE_USER_INFOR_TO_STORE
+  yield takeLatest(SAVE_USER_INFOR_TO_STORE, function*(action) {
+    yield getUserInformation2(action.userInformation)
   });
 
   // GLOBAL_FEEDS_LOADED
   yield takeLatest(LOAD_GLOBAL_FEEDS, function*() {
     const initArticData = yield call(
-      fetchInitialData,
+      fetchDataFromServer(),
       "/articles?limit=50&offset=10", "Load Global Feeds"
-    );
-    console.log(initArticData);
-    
+    );    
     yield put(articleDataLoaded(initArticData["articles"]));
-    // yield put(globalDataLoaded(initArticData["articles"]));
-    // 下面这个是不是多余？？？？
-      // 下面这个是不是多余？？？？
-
   });
 
   // LOAD_POPULAR_TAGS
   yield takeLatest(LOAD_INIT_POPULAR_TAGS, function*() {
-    const initTagData = yield call(fetchInitialData, "/tags", "Load Initial Popular Tags");
+    const initTagData = yield call(fetchDataFromServer(), "/tags", "Load Initial Popular Tags");
     console.log(initTagData);
     yield put(tagsDataLoaded(initTagData["tags"]));
   });
@@ -90,7 +77,7 @@ export const feedSaga = function*() {
   // ARTICLE_DETAILS_LOADED 
   yield takeLatest(INIT_ARTICLE_DETAILS_GET, function*(action) {
     const initArticleData = yield call(
-      fetchInitialData,
+      fetchDataFromServer(),
       `/articles/${action.slug}`,
       "Load Article"
     );
@@ -101,7 +88,7 @@ export const feedSaga = function*() {
   // ARTICLE_COMMENT_LOADED
   yield takeLatest(INIT_ARTICLE_DETAILS_GET, function*(action) {
     const initCommentData = yield call(
-      fetchInitialData,
+      fetchDataFromServer(),
       `/articles/${action.slug}/comments`,
       "Load Article Comments"
     );
@@ -110,9 +97,6 @@ export const feedSaga = function*() {
   });
 
   // POST_COMMENTS_CLICKED
-    // POST_COMMENTS_CLICKED
-      // POST_COMMENTS_CLICKED
-
   yield takeLatest(POST_COMMENTS_CLICKED, function* (action) {
     const token = getUserInformation().token;
     const url = `/articles/${action.slug}/comments`;
@@ -122,7 +106,7 @@ export const feedSaga = function*() {
     yield call(postDataToServerAll, token, url, postData, message, "POST");
 
     const initCommentData = yield call(
-      fetchInitialData,
+      fetchDataFromServer(),
       `/articles/${action.slug}/comments`
     );
     yield put(articleCommentsLoaded(initCommentData));
@@ -132,7 +116,7 @@ export const feedSaga = function*() {
   // POPULAR_TAG_CLICKED
   yield takeLatest(POPULAR_TAG_CLICKED, function*(action) {
     const tagRelatedData = yield call(
-      fetchInitialData,
+      fetchDataFromServer(),
       `/articles?tag=${action.tagName}&limit=10&offset=0`,
       "Load Popular Tags"
     );
@@ -142,13 +126,13 @@ export const feedSaga = function*() {
 
   // USER_PROFILE_LOADED
   yield takeLatest(USERS_NAME_LOADED, function*() {
-    // yield getUserInformation2()
-    const userName = getUserInformation().username;
+
+    const userName = yield getUserInformation2().username;
     
     const [userProfileData, userRelatedArticles] = yield all([
-      call(fetchInitialData, `/profiles/${userName}`, "Load User Profile"),
+      call(fetchDataFromServer(), `/profiles/${userName}`, "Load User Profile"),
       call(
-        fetchInitialData,
+        fetchDataFromServer(),
         `/articles?author=${userName}&limit=5&offset=0`, "Load User Articles"
       )]);
     
@@ -159,10 +143,12 @@ export const feedSaga = function*() {
   });
 
   // FAVERATED_ARITICLE_CLICKED
-  yield takeLatest(FAVERATED_ARITICLE_CLICKED, function*(action) {
-    const userName = getUserInformation().username;
-        const favoritedArticlesData = yield call(
-      fetchInitialData,
+  yield takeLatest(FAVERATED_ARITICLE_CLICKED, function*() {
+    
+    const userName = getUserInformation2().username;
+
+    const favoritedArticlesData = yield call(
+      fetchDataFromServer(),
       `/articles?favorited=${userName}&limit=5&offset=0`,
       "Load Your Favorited Articles"
     );
@@ -183,14 +169,17 @@ export const feedSaga = function*() {
     const postData = { user: userData };
     const userPostedData = yield call(postDataToServerAll, null, url, postData, message, "POST");
 
-    setUser(userPostedData.user);    
-    yield put(userTokedLoaded(userPostedData));
-    yield put(setNavStatus("active", "null", "null"));
+    setUserOnSession(userPostedData.user);    
+    yield put(userInformationLoaded(userPostedData));
+    yield put(setHomeNavStatus(["active", "null", "null"]));
   });
 
   // YOURE_FEED_CLICKED
   yield takeLatest(YOURE_FEED_CLICKED, function*() {
+
     const token = getUserInformation().token;
+    console.log(token);
+    
     const url ="/articles/feed?limit=10&offset=0";
     const message = "Load Your Feed"
     const yourArticleData = yield call(postDataToServerAll, token, url, "NothingToPost", message, "GET");    
@@ -208,7 +197,8 @@ export const feedSaga = function*() {
     const url = `/articles/${slug}/favorite`;
     const message = 'Post Favoriated Articles'
     const favoriedArticles = yield call(postDataToServerAll, token, url,"NothingToPost", message, "POST");
-    // 重新加载 count
+    // 重新加载单篇文章的 count
+    // 直接重新渲染就行了
     // yield put(currentHomeDisplayArticleLoaded(favoriedArticles.article));
   });
 
@@ -259,7 +249,6 @@ const postDataToServerAll = (token, url, postData, message, type) => {
     headers["Authorization"] = `Token ${token}`;
   }
 
-  
   return fetch(`https://conduit.productionready.io/api${url}`, request).then(response => {
     if (response.ok) {
       return response.json().then(response => {
@@ -271,7 +260,7 @@ const postDataToServerAll = (token, url, postData, message, type) => {
 };
 
 
-const fetchInitialData = (url, message) => {
+const fetchDataFromServer = (url, message) => {
   return fetch("https://conduit.productionready.io/api" + url).then(
     response => {
       if (response.ok) {

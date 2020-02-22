@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { signInClicked } from "../../ReduxStore/FeedDetails/feedActions";
 import {
   Route,
-  Link,
   Redirect,
 } from "react-router-dom";
 const InternalSignIn = props => {
@@ -12,9 +11,9 @@ const InternalSignIn = props => {
 
   return (
     <Route>
-      {props.userInfo.token ? (
-        <Redirect to='/home' />
-      ) : (
+      {props.userInformation.token ? 
+        <Redirect to='/home'/>
+       : 
         <div className='auth-page'>
           <div className='container page'>
             <div className='row'>
@@ -56,7 +55,7 @@ const InternalSignIn = props => {
             </div>
           </div>
         </div>
-      )}
+      }
     </Route>
   );
 };

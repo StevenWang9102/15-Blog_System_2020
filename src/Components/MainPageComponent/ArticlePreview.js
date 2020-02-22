@@ -10,56 +10,53 @@ import {
   loadGlobalFeeds,
   loadYourArticles,
   favoritedButtonClicked,
-  setNavStatus,
+  setHomeNavStatus,
   loadPopularTags
 } from "../../ReduxStore/FeedDetails/feedActions";
 import { NavLink } from "react-router-dom";
 
 const InternalArticlePreview = props => {
-  
-
   useEffect(() => {
-    props.loadPopularTags()
-    if(getUserInformation() && getUserInformation().username){
-      props.setNavStatus("active", "null", "null");
+    if (getUserInformation() && getUserInformation().username) {
+      props.setHomeNavStatus(["active", "null", "null"]);
+      props.loadPopularTags();
       props.loadYourFeedArticles();
-    }else{
+    } else {
+      props.loadPopularTags();
       props.loadGlobalFeeds();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   return (
     <div className='col-md-9 col-sm-12'>
-
-      {/* --------------------- Navigation --------------------- */}
       <div className='feed-toggle'>
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
-            {/* ----- Your Feed ----- */}
-  
-            {getUserInformation() && getUserInformation().id && (
+            {/* ------------ Your Feed ------------ */}
+            {getUserInformation() && getUserInformation().token && (
               <NavLink
                 onClick={() => {
                   props.onYourFeedClicked();
-                  props.setNavStatus("active", "null", "null");
+                  props.setHomeNavStatus(["active", "null", "null"]);
                 }}
                 className='nav-link display-inline'
-                activeClassName={props.status1}
+                activeClassName={props.homeNavStatus && props.homeNavStatus[0]}
                 to='/home#your_feed'>
                 Your Feed
               </NavLink>
             )}
 
-            {/* ----- Global Feed ----- */}
+            {/* ------------ Global Feed ------------ */}
             <NavLink
               onClick={() => {
                 props.onGlobeFeedClicked();
-                props.setNavStatus("null", "active", "null");
+                props.setHomeNavStatus(["null", "active", "null"]);
               }}
               className='nav-link display-inline'
-              activeClassName={props.status2}
+              //
+              //
+              activeClassName={props.homeNavStatus && props.homeNavStatus[1]}
               to='/home#global_feed'>
               Global Feed
             </NavLink>
@@ -68,7 +65,7 @@ const InternalArticlePreview = props => {
             {props.currentTagName && (
               <NavLink
                 className='nav-link display-inline'
-                activeClassName='active'
+                activeClassName={props.homeNavStatus && props.homeNavStatus[2]}
                 to='/home#popular_tags'>
                 # {props.currentTagName}
               </NavLink>
@@ -102,8 +99,8 @@ const InternalArticlePreview = props => {
                 type='button'
                 className='btn btn-outline-primary btn-sm pull-xs-right'
                 onClick={() => {
-                  // 
-                  // 
+                  //
+                  //
                   // 暂时用这个 getUserInformation
                   const token = getUserInformation().token;
                   if (token)
@@ -129,7 +126,9 @@ const InternalArticlePreview = props => {
           </div>
         );
       })}
-      {props.currentHomeDisplayArticle.length ===0 && <div className='article-preview'>No articles are here... yet.</div>}
+      {props.currentHomeDisplayArticle.length === 0 && (
+        <div className='article-preview'>No articles are here... yet.</div>
+      )}
     </div>
   );
 };
@@ -138,8 +137,7 @@ InternalArticlePreview.propTypes = {
   currentTagName: PropTypes.string,
   tagRelatedArticles: PropTypes.array,
   globalArticles: PropTypes.array.isRequired,
-  onArticleClick: PropTypes.func,
-  userInfo: PropTypes.object
+  onArticleClick: PropTypes.func
 };
 
 const mapStateToProps = ({
@@ -147,27 +145,23 @@ const mapStateToProps = ({
   onArticleClick,
   tagRelatedArticles,
   currentTagName,
-  userInfo,
   yourArticles,
+  userInformation,
   smallNavStatus,
   selfStatus,
-  status3,
-  status2,
-  status1,
+  homeNavStatus,
   currentHomeDisplayArticle
 }) => {
   return {
     globalArticles,
     onArticleClick,
     tagRelatedArticles,
+    userInformation,
     currentTagName,
-    userInfo,
     yourArticles,
     smallNavStatus,
     selfStatus,
-    status3,
-    status2,
-    status1,
+    homeNavStatus,
     // globalFeeds,
     currentHomeDisplayArticle
   };
@@ -176,14 +170,13 @@ const mapStateToProps = ({
 const mapDispatchToProps = dispatch => {
   return {
     // 以下似乎很多冗余
-        // 以下似乎很多冗余
-            // 以下似乎很多冗余
+    // 以下似乎很多冗余
+    // 以下似乎很多冗余
 
     onArticleClick: (title, slug) => dispatch(articleTitleClicked(title, slug)),
     onGlobeFeedClicked: () => dispatch(loadGlobalFeeds()),
-    setNavStatus: (status1, status2, status3) =>
-      dispatch(setNavStatus(status1, status2, status3)),
-    onYourFeedClicked: token => dispatch(loadYourArticles()),
+    setHomeNavStatus: status => dispatch(setHomeNavStatus(status)),
+    onYourFeedClicked: () => dispatch(loadYourArticles()),
     loadYourFeedArticles: () => dispatch(loadYourArticles()),
     onFavoritedButtonClicked: (token, slug) =>
       dispatch(favoritedButtonClicked(token, slug)),

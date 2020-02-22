@@ -125,11 +125,10 @@ export const InternalNavbar = props => {
 };
 
 InternalNavbar.propTypes = {
-  userInfo: PropTypes.object
 };
 
-const mapStateToProps = ({ userInfo, loadUserProfileDetail }) => {
-  return { userInfo,loadUserProfileDetail };
+const mapStateToProps = ({  loadUserProfileDetail }) => {
+  return { loadUserProfileDetail };
 };
 // loadUserProfileDetail
 const mapDispatchToProps = dispatch => {

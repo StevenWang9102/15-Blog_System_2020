@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import dateFormat from "dateformat";
-import { loadInitArticleDetail, onEditArticleClicked } from "../../ReduxStore/FeedDetails/feedActions";
+import { loadInitArticleDetail, onEditArticleClicked, saveUserInformationToStore } from "../../ReduxStore/FeedDetails/feedActions";
 import { useParams } from "react-router-dom";
 import { ArticleComments } from "./ArticleComments";
 import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
@@ -25,7 +25,10 @@ const InternalArticleDetails = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(props.currentArticleDetails);
+  // 为什么一刷新就丢失 redux store 上的 userInformation 
+  // 只要刷新，就检查 2号 函数
+  // 在 redux store的情况下，也会吧sesstion的传递到 store上
+
   
   return (
     <div className='article-page'>
@@ -64,7 +67,6 @@ const InternalArticleDetails = props => {
               </div>
 
               {/* ---------------- Edit and Delete Button ----------------  */}
-              {/* {props.currentArticleDetails.author &&(getUserInformation().username === props.currentArticleDetails.author.username) && ( */}
               {  isAuthorized() && 
               (
                 <div className='edit-button'>
@@ -129,16 +131,16 @@ InternalArticleDetails.propTypes = {
   currentArticleDetails: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ currentArticleDetails, currentProfileData }) => {
-  return { currentArticleDetails, currentProfileData };
+const mapStateToProps = ({ currentArticleDetails, currentProfileData, userInformation }) => {
+  return { currentArticleDetails, currentProfileData, userInformation };
 };
 
 const mapDispatchToProps = dispatch => {
-
   return {
     loadInitArticleDetail: article_slug =>
       dispatch(loadInitArticleDetail(article_slug)),
-      onEditArticleClicked: flag => dispatch(onEditArticleClicked(flag))
+    onEditArticleClicked: flag => dispatch(onEditArticleClicked(flag)),
+    saveUserInformationToStore: (userInformation) => dispatch(saveUserInformationToStore(userInformation)),
   };
 };
 

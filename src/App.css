@@ -109,3 +109,11 @@ p{
 {
   display: inline-block;
 }
+
+.feed-toggle .nav-link{
+  cursor: pointer !important;
+  text-align: center;
+  margin-right: 0;
+  width: 150px;
+  font-weight: 450;
+}

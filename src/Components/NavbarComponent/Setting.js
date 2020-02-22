@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setUser } from '../../Components/UserComponent/AuthToken'
+import { setUserOnSession } from '../../Components/UserComponent/AuthToken'
 import {
   Link,
 } from "react-router-dom";
@@ -62,7 +62,7 @@ const InternalSetting = props => {
                   <button
                                   type="button"
                     className="btn btn-lg btn-danger"
-                    onClick={()=>setUser(null)}
+                    onClick={()=>setUserOnSession(null)}
                   >
                     click here to logout
                   </button>

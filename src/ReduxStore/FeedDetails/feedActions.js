@@ -16,18 +16,18 @@ export const USERS_RELATED_ARTICLES_LOADED = Symbol("USERS_RELATED_ARTICLES_LOAD
 export const FAVERATED_ARITICLE_CLICKED = Symbol("FAVERATED_ARITICLE_CLICKED")
 export const FAVERATED_ARITICLE_LOADED = Symbol("FAVERATED_ARITICLE_LOADED")
 export const SIGN_IN_BUTTON_CLICKED = Symbol("SIGN_IN_BUTTON_CLICKED")
-export const USER_TOKEN_LOADED = Symbol("USER_TOKEN_LOADED")
+export const USER_INFORMATION_LOADED = Symbol("USER_INFORMATION_LOADED")
 export const USER_TOKEN_NAME_LOADED = Symbol("USER_TOKEN_NAME_LOADED")
 export const YOURE_FEED_CLICKED = Symbol("YOURE_FEED_CLICKED")
 export const YOURE_FEED_LOADED = Symbol("YOURE_FEED_LOADED")
 export const FAVORITED_BUTTON_CLICKED = Symbol("FAVORITED_BUTTON_CLICKED")
 export const SMALL_NAV_CLICKED = Symbol("SMALL_NAV_CLICKED")
 export const YOUR_FEED_NAV_CLICKED = Symbol("YOUR_FEED_NAV_CLICKED")
-export const SMALL_NAV_SET_CLICKED = Symbol("SMALL_NAV_SET_CLICKED")
+export const HOME_NAV_SET_CLICKED = Symbol("HOME_NAV_SET_CLICKED")
 export const GLOBAL_DATA_LOADED = Symbol("GLOBAL_DATA_LOADED")
 export const POST_COMMENTS_CLICKED = Symbol("POST_COMMENTS_CLICKED")
 export const POST_ARTICLE_CLICKED = Symbol("POST_ARTICLE_CLICKED")
-export const CHECK_USER_INFO_POSITION = Symbol("CHECK_USER_INFO_POSITION")
+// export const CHECK_USER_INFO_POSITION = Symbol("CHECK_USER_INFO_POSITION")
 // ARTICLE_RELOADED
 export const ARTICLE_RELOADED = Symbol("ARTICLE_RELOADED")
 // ON_EDIT_ARTICLE_CLICKED
@@ -40,6 +40,8 @@ export const CURRENT_PROFILE_ARTICLE_LOADED = Symbol("CURRENT_PROFILE_ARTICLE_LO
 export const CURRENT_HOME_DISPLAY_ARTICLES_LOADED = Symbol("CURRENT_HOME_DISPLAY_ARTICLES_LOADED")
 // LOAD_INIT_POPULAR_TAGS
 export const LOAD_INIT_POPULAR_TAGS = Symbol("LOAD_INIT_POPULAR_TAGS")
+// SAVE_USER_INFOR_TO_STORE
+export const SAVE_USER_INFOR_TO_STORE = Symbol("SAVE_USER_INFOR_TO_STORE")
 
 
 // -----------------------------------------------------------
@@ -123,8 +125,8 @@ export const signInClicked = (email, password) => {
     return { type: SIGN_IN_BUTTON_CLICKED, email: email, password: password };
 }
 
-export const userTokedLoaded = (payload) => {
-    return { type: USER_TOKEN_LOADED, userInfo: payload.user };
+export const userInformationLoaded = (payload) => {
+    return { type: USER_INFORMATION_LOADED, userInformation: payload.user };
 
 }
 
@@ -149,8 +151,8 @@ export const yourFeedNavClicked = (self) => {
     return { type: YOUR_FEED_NAV_CLICKED, selfStatus: self };
 }
 
-export const setNavStatus = (status1, status2, status3) => {
-    return { type: SMALL_NAV_SET_CLICKED, status1: status1, status2: status2, status3: status3 };
+export const setHomeNavStatus = (status ) => {
+    return { type: HOME_NAV_SET_CLICKED, status: status };
 }
 
 export const onPostCommentsClicked = (slug, myComment) => {
@@ -161,10 +163,10 @@ export const onPostArticleClicked = (title, description, content, tags, slug ) =
     return { type: POST_ARTICLE_CLICKED, title:title, description:description, content:content, tags:tags, slug:slug };
 }
 
-// checkUserSavedPosition
-export const checkUserSavedPosition = () => {
-    return { type: CHECK_USER_INFO_POSITION};
-}
+// // checkUserSavedPosition
+// export const checkUserSavedPosition = () => {
+//     return { type: CHECK_USER_INFO_POSITION};
+// }
 
 // articleReloaded
 export const articleReloaded = (status) => {
@@ -177,8 +179,8 @@ export const onEditArticleClicked = (status) => {
 }
 
 // setProfileNavStatus
-export const setProfileNavStatus = (myNav, favorited_Nav) => {
-    return { type: SET_PROFILE_NAV, myNav: myNav, favorited_Nav: favorited_Nav};
+export const setProfileNavStatus = (profileNavStatus) => {
+    return { type: SET_PROFILE_NAV, profileNavStatus: profileNavStatus};
 }
 // currentHomeDisplayArticleLoaded
 export const currentHomeDisplayArticleLoaded = (payload) => {
@@ -188,4 +190,9 @@ export const currentHomeDisplayArticleLoaded = (payload) => {
 // loadPopularTags
 export const loadPopularTags = (payload) => {
     return { type: LOAD_INIT_POPULAR_TAGS, payload: payload };
+}
+
+// saveUserInformationToStore
+export const saveUserInformationToStore = (userInformation) => {
+    return { type: SAVE_USER_INFOR_TO_STORE, userInformation: userInformation };
 }
