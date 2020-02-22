@@ -1,7 +1,7 @@
 import { takeLatest, put, call, all, select } from "redux-saga/effects";
 import { getUser, setUser } from "../../Components/UserComponent/AuthToken";
 import {
-  INITIALDATA_LOADED,
+  LOAD_GLOBAL_FEEDS,
   INIT_ARTICLE_DETAILS_GET,
   POPULAR_TAG_CLICKED,
   articleDataLoaded,
@@ -15,6 +15,7 @@ import {
   userRelatedArticlesLoaded,
   POST_ARTICLE_CLICKED,
   FAVERATED_ARITICLE_CLICKED,
+  LOAD_INIT_POPULAR_TAGS,
   favoritedArticleLoaded,
   SIGN_IN_BUTTON_CLICKED,
   userTokedLoaded,
@@ -22,7 +23,6 @@ import {
   yourFeedsLoaded,
   FAVORITED_BUTTON_CLICKED,
   setNavStatus,
-  globalDataLoaded,
   POST_COMMENTS_CLICKED,
   CHECK_USER_INFO_POSITION,
   articleReloaded,
@@ -66,18 +66,24 @@ export const feedSaga = function*() {
   });
 
   // GLOBAL_FEEDS_LOADED
-  yield takeLatest(INITIALDATA_LOADED, function*() {
+  yield takeLatest(LOAD_GLOBAL_FEEDS, function*() {
     const initArticData = yield call(
       fetchInitialData,
-      "/articles?limit=50&offset=10", "Load Initial Global Feeds"
+      "/articles?limit=50&offset=10", "Load Global Feeds"
     );
+    console.log(initArticData);
+    
     yield put(articleDataLoaded(initArticData["articles"]));
-    yield put(globalDataLoaded(initArticData["articles"]));
+    // yield put(globalDataLoaded(initArticData["articles"]));
+    // 下面这个是不是多余？？？？
+      // 下面这个是不是多余？？？？
+
   });
 
-  // POPULAR TAGS
-  yield takeLatest(INITIALDATA_LOADED, function*() {
+  // LOAD_POPULAR_TAGS
+  yield takeLatest(LOAD_INIT_POPULAR_TAGS, function*() {
     const initTagData = yield call(fetchInitialData, "/tags", "Load Initial Popular Tags");
+    console.log(initTagData);
     yield put(tagsDataLoaded(initTagData["tags"]));
   });
 
@@ -129,9 +135,7 @@ export const feedSaga = function*() {
     yield put(relatedTagLoaded(action.tagName));
   });
 
-  // USER_PROFILE_LOADED 进行中。。。。。。。。。。。。。。。。。。
-  // USER_PROFILE_LOADED 进行中。。。。。。。。。。。。。。。。。。
-  // USER_PROFILE_LOADED 进行中。。。。。。。。。。。。。。。。。。
+  // USER_PROFILE_LOADED
   yield takeLatest(USERS_NAME_LOADED, function*() {
     // yield getUserInformation2()
     const userName = getUserInformation().username;
@@ -177,7 +181,8 @@ export const feedSaga = function*() {
     userData.password = action.password;
 
     const postData = { user: userData };
-    const userPostedData = yield call(postDataToServerAll, null, url, postData, message, "POST");
+    const userPostedData = yield call(postDataToServerAll2, null, url, postData, message, "POST");
+    // const postDataToServerAll = (token, url, postData, message, type) => {
 
     setUser(userPostedData.user);    
     yield put(userTokedLoaded(userPostedData));
@@ -189,11 +194,15 @@ export const feedSaga = function*() {
   // YOURE_FEED_CLICKED
   
   yield takeLatest(YOURE_FEED_CLICKED, function*() {
-    yield getUserInformation2()
     const token = getUserInformation().token;
+    // https://conduit.productionready.io/api/articles/feed?limit=10&offset=0
     const url ="/articles/feed?limit=10&offset=0";
-    const message = "Your Feed Loaded"
-    const yourArticleData = yield call(postDataToServerAll, token, url, null, message, "GET");
+    const message = "Load Your Feed"
+    const yourArticleData = yield call(postDataToServerAll, token, url, "NothingToPost", message, "GET");
+
+    // console.log(token);
+    console.log(yourArticleData);
+    
     yield put(yourFeedsLoaded(yourArticleData.articles));
     yield put(currentHomeDisplayArticleLoaded(yourArticleData.articles));
 
@@ -206,6 +215,7 @@ export const feedSaga = function*() {
     const url = `/articles/${slug}/favorite`;
     const message = 'Post Favoriated Articles'
     yield call(postDataToServerAll, token, url, message, "POST");
+    // 这里好像缺 "NothingToPost"
   });
 
   // POST_ARTICLE_CLICKED
@@ -223,7 +233,7 @@ export const feedSaga = function*() {
       tagList: `${action.tags}`
     };
 
-    const yourArticle = yield call(postDataToServerAll, token, url, postData, message, "PUT");    
+    const yourArticle = yield call(postDataToServerAll, token, url, postData, message, "PUT");   
     // 重新发布一次post 文章
     console.log(yourArticle);
     yield put(articleContentLoaded(yourArticle.article));
@@ -233,16 +243,42 @@ export const feedSaga = function*() {
 };
 
 const postDataToServerAll = (token, url, postData, message, type) => {
-  const headers = { "Content-Type": "application/json"}
+  let headers = { "Content-Type": "application/json"}
+  let body = null
 
   if(token !== null){
     headers["Authorization"] = `Token ${token}`;
-  }   
+  }
+
+  if(postData !== "NothingToPost" ) body["body"] = JSON.stringify(postData)
   
   return fetch(`https://conduit.productionready.io/api${url}`, {
     method: `${type}`,
     headers,
-    body: JSON.stringify(postData)
+    body
+    // body: JSON.stringify(postData)
+  }).then(response => {
+    if (response.ok) {
+      return response.json().then(response => {
+        console.log(` -- Your ${message} Success —- `, response);
+        return response;
+      });
+    } else console.error(` -- Your Error: ${message} failed -- `);
+  });
+};
+
+const postDataToServerAll2 = (token, url, postData, message, type) => {
+  let headers = { "Content-Type": "application/json"}
+
+  if(token !== null){
+    headers["Authorization"] = `Token ${token}`;
+  }
+  
+  return fetch(`https://conduit.productionready.io/api${url}`, {
+    method: `${type}`,
+    headers,
+    body:JSON.stringify(postData)
+    // body: JSON.stringify(postData)
   }).then(response => {
     if (response.ok) {
       return response.json().then(response => {

@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Navbar } from "./Components/NavbarComponent/Navbar";
 import "./App.css";
-import { loadInitialData } from "./ReduxStore/FeedDetails/feedActions";
+import { loadGlobalFeeds } from "./ReduxStore/FeedDetails/feedActions";
 
 const InternalApp = props => {
-  useEffect(() => {
-    props.loadInitialData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   props.loadGlobalFeeds();
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <div className="App">
@@ -23,8 +23,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadInitialData: () => {
-      dispatch(loadInitialData());
+    loadGlobalFeeds: () => {
+      dispatch(loadGlobalFeeds());
     }
   };
 };

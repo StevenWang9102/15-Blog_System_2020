@@ -8,7 +8,7 @@ import {
   TAG_RELATED_ARTICLE_LOADED,
   RELATED_TAG_LOADED,
   USERS_PROFILE_LOADED,
-  INITIALDATA_LOADED,
+  LOAD_GLOBAL_FEEDS,
   USERS_RELATED_ARTICLES_LOADED,
   FAVERATED_ARITICLE_LOADED,
   USER_TOKEN_LOADED,
@@ -28,8 +28,8 @@ import {
 const initialState = {
   currentComments: {},
   currentArticleDetails: {},
-  articleLibrary: [],
-  globalFeeds: [],
+  globalArticles: [],
+  // globalFeeds: [],
   popularTags: [],
   currentArticleTitle: "",
   currentArticleSlug: "",
@@ -55,7 +55,10 @@ const initialState = {
 export const feedReducer = (state = initialState, action) => {
   switch (action.type) {
     case ARTICLE_DATA_LOADED:
-      return { ...state, articleLibrary: action.articleData };
+      return { ...state, 
+        globalArticles: action.articleData,
+        currentHomeDisplayArticle: action.articleData
+      };
 
     case TAGS_DATA_LOADED:
       return { ...state, popularTags: action.tagsData };
@@ -78,7 +81,10 @@ export const feedReducer = (state = initialState, action) => {
       return { ...state, currentComments: action.initCommentData };
 
     case TAG_RELATED_ARTICLE_LOADED:
-      return { ...state, tagRelatedArticles: action.tagRelatedArticles };
+      return { ...state, 
+        tagRelatedArticles: action.tagRelatedArticles,
+        currentHomeDisplayArticle: action.tagRelatedArticles,
+      };
 
     case RELATED_TAG_LOADED:
       return { ...state, currentTagName: action.tagName };
@@ -86,11 +92,11 @@ export const feedReducer = (state = initialState, action) => {
     case YOURE_FEED_CLICKED:
       return { ...state, currentTagName: null, tagRelatedArticles: null };
 
-    case INITIALDATA_LOADED:
+    case LOAD_GLOBAL_FEEDS:
       return { ...state, currentTagName: "", tagRelatedArticles: null };
 
-    case GLOBAL_DATA_LOADED:
-      return { ...state, globalFeeds: action.payload };
+    // case GLOBAL_DATA_LOADED:
+    //   return { ...state, globalFeeds: action.payload };
 
     case USERS_PROFILE_LOADED:
       return { ...state, currentProfileData: action.userProfileData };

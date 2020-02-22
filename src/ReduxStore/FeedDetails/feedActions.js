@@ -1,4 +1,4 @@
-export const INITIALDATA_LOADED = Symbol("INITIALDATA_LOADED");
+export const LOAD_GLOBAL_FEEDS = Symbol("LOAD_GLOBAL_FEEDS");
 export const ARTICLE_DATA_LOADED = Symbol("ARTICLE_DATA_LOADED")
 export const TAGS_DATA_LOADED = Symbol("TAGS_DATA_LOADED")
 export const ARTICLE_TITLE_CLICKED = Symbol("ARTICLE_TITLE_CLICKED")
@@ -38,9 +38,13 @@ export const SET_PROFILE_NAV = Symbol("SET_PROFILE_NAV")
 export const CURRENT_PROFILE_ARTICLE_LOADED = Symbol("CURRENT_PROFILE_ARTICLE_LOADED")
 // CURRENT_HOME_DISPLAY_ARTICLES_LOADED
 export const CURRENT_HOME_DISPLAY_ARTICLES_LOADED = Symbol("CURRENT_HOME_DISPLAY_ARTICLES_LOADED")
+// LOAD_INIT_POPULAR_TAGS
+export const LOAD_INIT_POPULAR_TAGS = Symbol("LOAD_INIT_POPULAR_TAGS")
 
-export const loadInitialData = () => {
-    return { type: INITIALDATA_LOADED };
+
+// -----------------------------------------------------------
+export const loadGlobalFeeds = () => {
+    return { type: LOAD_GLOBAL_FEEDS };
 };
 
 export const globalDataLoaded = (payload) => {
@@ -179,4 +183,9 @@ export const setProfileNavStatus = (myNav, favorited_Nav) => {
 // currentHomeDisplayArticleLoaded
 export const currentHomeDisplayArticleLoaded = (payload) => {
     return { type: CURRENT_HOME_DISPLAY_ARTICLES_LOADED, payload: payload };
+}
+
+// loadPopularTags
+export const loadPopularTags = (payload) => {
+    return { type: LOAD_INIT_POPULAR_TAGS, payload: payload };
 }
