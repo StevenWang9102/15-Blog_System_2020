@@ -10,7 +10,7 @@ import { ArticleDetails } from "../MainPageComponent/ArticleDetails";
 import PropTypes from "prop-types";
 import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas"
 import {
-  loadUserProfileDetail,setProfileNavStatus
+  loadUserProfileDetail,setProfileNavStatus,onSignUpButtonClicked
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 import {
@@ -72,7 +72,7 @@ export const InternalNavbar = props => {
                           props.setProfileNavStatus("active", "null")
                         }}
                       >
-                      {getUserInformation().username}
+                      {getUserInformation() && getUserInformation().username}
                     </Link>
                   </li>
                 </div>
@@ -89,7 +89,11 @@ export const InternalNavbar = props => {
                     </Link>
                   </li>
                   <li className='nav-item'>
-                    <Link className='nav-link' to='/sign_up'>
+                    <Link 
+                      className='nav-link' 
+                      to='/sign_up'
+                      onClick={()=>{props.onSignUpButtonClicked(null)}}
+                    >
                       Sign up
                     </Link>
                   </li>
@@ -139,8 +143,10 @@ const mapDispatchToProps = dispatch => {
   return {
     loadUserProfileDetail: () =>
       dispatch(loadUserProfileDetail()),
-      setProfileNavStatus: (myNav, favorited_Nav) =>
+    setProfileNavStatus: (myNav, favorited_Nav) =>
       dispatch(setProfileNavStatus(myNav, favorited_Nav)),
+    onSignUpButtonClicked: (data) =>
+      dispatch(onSignUpButtonClicked(data)),
   };
 };
 

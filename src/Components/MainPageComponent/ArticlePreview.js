@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
@@ -16,6 +16,9 @@ import {
 import { NavLink } from "react-router-dom";
 
 const InternalArticlePreview = props => {
+
+  const [httpMethod, setHttpMethod] = useState({});
+
   useEffect(() => {
     if (getUserInformation() && getUserInformation().username) {
       props.setHomeNavStatus(["active", "null", "null"]);
@@ -27,6 +30,8 @@ const InternalArticlePreview = props => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log(props.favorited_article.slug);
 
   return (
     <div className='col-md-9 col-sm-12'>
@@ -54,8 +59,6 @@ const InternalArticlePreview = props => {
                 props.setHomeNavStatus(["null", "active", "null"]);
               }}
               className='nav-link display-inline'
-              //
-              //
               activeClassName={props.homeNavStatus && props.homeNavStatus[1]}
               to='/home#global_feed'>
               Global Feed
@@ -75,8 +78,8 @@ const InternalArticlePreview = props => {
       </div>
 
       {/* --------------------- Article --------------------- */}
-      {/* <div className='article-preview'>No articles are here... yet.</div> */}
       {props.currentHomeDisplayArticle.map((article, index) => {
+        
         return (
           <div className='article-preview' key={index}>
             <div className='article-meta'>
@@ -99,12 +102,22 @@ const InternalArticlePreview = props => {
                 type='button'
                 className='btn btn-outline-primary btn-sm pull-xs-right'
                 onClick={() => {
-                  //
-                  //
+                  // 
+                  // 
+                  // 
                   // 暂时用这个 getUserInformation
+
+                  const tempMethod = {...httpMethod}
+                  
+                  if(tempMethod[article.slug]=== "POST") {
+                    tempMethod[article.slug] = "DELETE"}
+                  else {
+                    tempMethod[article.slug] = "POST"}
+
                   const token = getUserInformation().token;
-                  if (token)
-                    props.onFavoritedButtonClicked(token, article.slug);
+                  token && props.onFavoritedButtonClicked(token, article.slug, tempMethod[article.slug]);
+                  setHttpMethod(tempMethod)
+
                 }}>
                 <img src='./icon/002-heart-2.png' alt='love' />
                 {article.favoritesCount}
@@ -144,6 +157,7 @@ const mapStateToProps = ({
   globalArticles,
   onArticleClick,
   tagRelatedArticles,
+  favorited_article,
   currentTagName,
   yourArticles,
   userInformation,
@@ -156,13 +170,13 @@ const mapStateToProps = ({
     globalArticles,
     onArticleClick,
     tagRelatedArticles,
+    favorited_article,
     userInformation,
     currentTagName,
     yourArticles,
     smallNavStatus,
     selfStatus,
     homeNavStatus,
-    // globalFeeds,
     currentHomeDisplayArticle
   };
 };
@@ -170,16 +184,13 @@ const mapStateToProps = ({
 const mapDispatchToProps = dispatch => {
   return {
     // 以下似乎很多冗余
-    // 以下似乎很多冗余
-    // 以下似乎很多冗余
-
     onArticleClick: (title, slug) => dispatch(articleTitleClicked(title, slug)),
     onGlobeFeedClicked: () => dispatch(loadGlobalFeeds()),
     setHomeNavStatus: status => dispatch(setHomeNavStatus(status)),
     onYourFeedClicked: () => dispatch(loadYourArticles()),
     loadYourFeedArticles: () => dispatch(loadYourArticles()),
-    onFavoritedButtonClicked: (token, slug) =>
-      dispatch(favoritedButtonClicked(token, slug)),
+    onFavoritedButtonClicked: (token, slug, httpMethod) =>
+      dispatch(favoritedButtonClicked(token, slug, httpMethod)),
     loadGlobalFeeds: () => {
       dispatch(loadGlobalFeeds());
     },

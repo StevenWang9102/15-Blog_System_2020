@@ -87,10 +87,6 @@ const InternalArticleDetails = props => {
                      }}>
                      Delete Article
                    </button>
-                   {/* 
-                     如果删除完成，重新到home
-                     判据是什么呢 - 应该是saga中，有个信号
-                   */}
                  </div>
                )}
              </div>

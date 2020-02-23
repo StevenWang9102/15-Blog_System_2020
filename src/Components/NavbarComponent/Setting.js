@@ -114,16 +114,8 @@ const InternalSetting = props => {
         }
     </div>
   );
-  // return (
-  //   {props.yourSettingStatus === "updated" && (
-  // )}
-
-  // );
 };
 
-// const mapStateToProps = state => {
-//   return {};
-// };
 
 const mapStateToProps = ({ yourSettingStatus }) => {
   return { yourSettingStatus };

@@ -43,8 +43,12 @@ export const UPDATED_YOUR_SETTING = Symbol("UPDATED_YOUR_SETTING")
 export const DELETE_ARTICLE_BUTTON = Symbol("DELETE_ARTICLE_BUTTON")
 // DELETE_YOUR_ARTICLE_DONE
 export const DELETE_YOUR_ARTICLE_DONE = Symbol("DELETE_YOUR_ARTICLE_DONE")
-
-
+// SIGN_UP_BUTTON_CLICK
+export const SIGN_UP_BUTTON_CLICK = Symbol("SIGN_UP_BUTTON_CLICK")
+// SIGN_UP_USER_LOADED
+export const SIGN_UP_USER_LOADED = Symbol("SIGN_UP_USER_LOADED")
+// FAVORITED_ARTICLES_LOADED
+export const FAVORITED_ARTICLES_LOADED = Symbol("FAVORITED_ARTICLES_LOADED")
 
 
 // ---------------------------     Functions     --------------------------------
@@ -142,8 +146,8 @@ export const yourFeedsLoaded = (articles) => {
 }
 
 
-export const favoritedButtonClicked = (token, slug) => {
-    return { type: FAVORITED_BUTTON_CLICKED, token: token, slug: slug};
+export const favoritedButtonClicked = (token, slug, httpMethod) => {
+    return { type: FAVORITED_BUTTON_CLICKED, token: token, slug: slug, httpMethod: httpMethod};
 }
 
 export const smallNavClicked = (status) => {
@@ -213,4 +217,19 @@ export const onDeleteArticleClicked = (slug) => {
 // deleteYourArticle
 export const deleteYourArticle = (status) => {
     return { type: DELETE_YOUR_ARTICLE_DONE, status: status };
+}
+
+// onSignUpButtonClicked
+export const onSignUpButtonClicked = (userName, email, password) => {
+    return { type: SIGN_UP_BUTTON_CLICK, userName:userName, email:email, password:password };
+}
+
+// signUpUserLoaded
+export const signUpUserLoaded = (data) => {
+    return { type: SIGN_UP_USER_LOADED, data: data };
+}
+
+// favoritedArticlesLoaded
+export const favoritedArticlesLoaded = (data) => {
+    return { type: FAVORITED_ARTICLES_LOADED, data: data };
 }

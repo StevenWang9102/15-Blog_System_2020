@@ -7,7 +7,9 @@ import {
   ARTICLE_CONTENT_LOADED,
   TAG_RELATED_ARTICLE_LOADED,
   RELATED_TAG_LOADED,
+  SIGN_UP_USER_LOADED,
   USERS_PROFILE_LOADED,
+  FAVORITED_ARTICLES_LOADED,
   LOG_OUT_BUTTON_CLICK,
   LOAD_GLOBAL_FEEDS,
   USERS_RELATED_ARTICLES_LOADED,
@@ -48,7 +50,8 @@ const initialState = {
   myNav: "active",
   favorited_Nav: "null",
   currentDisplayArticle: [],
-  currentHomeDisplayArticle: []
+  currentHomeDisplayArticle: [],
+  favorited_article: {}
 };
 
 export const feedReducer = (state = initialState, action) => {
@@ -170,7 +173,14 @@ export const feedReducer = (state = initialState, action) => {
     //  DELETE_YOUR_ARTICLE_DONE
     case DELETE_YOUR_ARTICLE_DONE:
       return { ...state, deleteYourArticleStatus: action.status };
-      
+    
+    // SIGN_UP_USER_LOADED
+    case SIGN_UP_USER_LOADED:
+      return { ...state, signUpStatus: action.data };
+
+    // FAVORITED_ARTICLES_LOADED
+    case FAVORITED_ARTICLES_LOADED:
+      return { ...state, favorited_article: action.data };   
     default:
       return state;
   }
