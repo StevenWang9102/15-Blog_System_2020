@@ -39,6 +39,10 @@ export const LOG_OUT_BUTTON_CLICK = Symbol("LOG_OUT_BUTTON_CLICK")
 export const UPDATE_SETTING_BUTTON_CLICK = Symbol("UPDATE_SETTING_BUTTON_CLICK")
 // UPDATED_YOUR_SETTING
 export const UPDATED_YOUR_SETTING = Symbol("UPDATED_YOUR_SETTING")
+// DELETE_ARTICLE_BUTTON
+export const DELETE_ARTICLE_BUTTON = Symbol("DELETE_ARTICLE_BUTTON")
+// DELETE_YOUR_ARTICLE_DONE
+export const DELETE_YOUR_ARTICLE_DONE = Symbol("DELETE_YOUR_ARTICLE_DONE")
 
 
 
@@ -200,4 +204,13 @@ export const onUpdateSettingClicked = (request) => {
 // updatedYourSetting
 export const updatedYourSetting = (status) => {
     return { type: UPDATED_YOUR_SETTING, status: status };
+}
+// onDeleteArticleClicked
+
+export const onDeleteArticleClicked = (slug) => {
+    return { type: DELETE_ARTICLE_BUTTON, slug: slug };
+}
+// deleteYourArticle
+export const deleteYourArticle = (status) => {
+    return { type: DELETE_YOUR_ARTICLE_DONE, status: status };
 }

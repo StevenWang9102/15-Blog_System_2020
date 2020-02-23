@@ -22,7 +22,6 @@ const InternalUserProfile = props => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
-  // still 目的是
 
   return (
     <div>
@@ -73,7 +72,6 @@ const InternalUserProfile = props => {
                       onClick={() => {
                         props.setProfileNavStatus(["active", "null"])
                         props.loadUserProfileDetail();
-                        //此处要更新 - props.currentDisplayArticle【完成】
                       }}>
                       My Articles
                     </NavLink>
@@ -95,9 +93,6 @@ const InternalUserProfile = props => {
               </div>
 
               {/* ---------------- Article Area ----------------  */}
-
-
-              {/* {(props.favoritedArticles || props.currentUsersArticles).map( */}
               {props.currentDisplayArticle.map(
                 (article, index) => {
                   return (

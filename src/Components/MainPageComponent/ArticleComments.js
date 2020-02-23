@@ -47,7 +47,7 @@ const InternalArticleComments = props => {
       {/* ---------------- Public Comments ----------------  */}
       <div className='row'>
         <div className='col-xs-12 col-md-8 offset-md-2'>
-          {props.currentComments.comments &&
+          {props.currentComments && props.currentComments.comments &&
             props.currentComments.comments.map((comment, index) => {
               return (
                 <div key={index}>

@@ -5,6 +5,7 @@ import {
   INIT_ARTICLE_DETAILS_GET,
   POPULAR_TAG_CLICKED,
   articleDataLoaded,
+  deleteYourArticle,
   articleContentLoaded,
   articleCommentsLoaded,
   tagRelatedArticleLoaded,
@@ -19,6 +20,7 @@ import {
   FAVERATED_ARITICLE_CLICKED,
   LOAD_INIT_POPULAR_TAGS,
   favoritedArticleLoaded,
+  DELETE_ARTICLE_BUTTON,
   SIGN_IN_BUTTON_CLICKED,
   setLogInStatus,
   userInformationLoaded,
@@ -249,16 +251,31 @@ export const feedSaga = function*() {
     const message = "Update User Setting"
     const postData = action.request;
     const userSetting = yield call(postDataToServerAll, token, url, postData, message, "PUT");  
-
-    // 测试一下【完成】
-    // 数据传递正确【完成】
-    // 发送成功【完成】
-    // 返回成功【完成】
-    // 渲染有问题，更新的是 userInformation
     setUserOnSession(userSetting.user);
     yield put(updatedYourSetting("updated"));
-
   });
+
+  // DELETE_ARTICLE_BUTTON
+  // DELETE_ARTICLE_BUTTON
+  // DELETE_ARTICLE_BUTTON
+
+  yield takeLatest(DELETE_ARTICLE_BUTTON, function*(action) {
+
+    const token = getUserInformation().token;
+    const url = `/articles/${action.slug}`
+    const message = "Delete Article"
+    const postData = "NothingToPost";
+    const deleteArticle = yield call(postDataToServerAll, token, url, postData, message, "DELETE");  
+    console.log(deleteArticle);
+    // 
+    // 
+    // 
+    yield put(deleteYourArticle(deleteArticle));
+
+    // setUserOnSession(userSetting.user);
+    // yield put(updatedYourSetting("updated"));
+  });
+
 };
 
 const postDataToServerAll = (token, url, postData, message, type) => {

@@ -19,6 +19,7 @@ import {
   SET_LOG_IN_STSTUS,
   SMALL_NAV_CLICKED,
   YOUR_FEED_NAV_CLICKED,
+  DELETE_YOUR_ARTICLE_DONE,
   HOME_NAV_SET_CLICKED,
   YOURE_FEED_CLICKED,
   CURRENT_HOME_DISPLAY_ARTICLES_LOADED,
@@ -159,14 +160,17 @@ export const feedReducer = (state = initialState, action) => {
     // SET_LOG_IN_STSTUS
     case SET_LOG_IN_STSTUS:
       return { ...state, loginStatus: action.loginStatus };
-    // LOG_OUT_BUTTON_CLICK
+    
     case LOG_OUT_BUTTON_CLICK:
       return { ...state, loginStatus: action.loginStatus };
-    
-      // UPDATED_YOUR_SETTING
-      case UPDATED_YOUR_SETTING:
+
+    case UPDATED_YOUR_SETTING:
       return { ...state, yourSettingStatus: action.status };
-     
+
+    //  DELETE_YOUR_ARTICLE_DONE
+    case DELETE_YOUR_ARTICLE_DONE:
+      return { ...state, deleteYourArticleStatus: action.status };
+      
     default:
       return state;
   }
