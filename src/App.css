@@ -117,3 +117,9 @@ p{
   width: 150px;
   font-weight: 450;
 }
+
+.user-pic
+{
+  height: 26px !important;
+  width: 26px !important;
+}

@@ -5,12 +5,15 @@ import { MainPage } from "../MainPageComponent/MainPage";
 import { NewPost } from "./NewPost";
 import { Setting } from "./Setting";
 import { connect } from "react-redux";
+import { createUseStyles } from "react-jss";
 import { UserProfile } from "../UserComponent/UserProfile";
 import { ArticleDetails } from "../MainPageComponent/ArticleDetails";
 import PropTypes from "prop-types";
-import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas"
+import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
 import {
-  loadUserProfileDetail,setProfileNavStatus,onSignUpButtonClicked
+  loadUserProfileDetail,
+  setProfileNavStatus,
+  onSignUpButtonClicked
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 import {
@@ -21,25 +24,44 @@ import {
   Redirect
 } from "react-router-dom";
 
+// ---------------- React-JSS-Configuration -------------------- //
+// const useStyles = createUseStyles({
+//   // 这个是公用的定义
+//   myImage: {
+//       height: 26 !important,
+//       width: 26,
+//       objectFit: 'cover',
+//       marginRight: 3
+//   }
+// });
 
-export const InternalNavbar = props => {
+// // 这个是制定的定义
+// const Img = ({ children }) => {
+//   const classes = useStyles(); // 调取公用的定义
+//   return (
+//     <div className= {`${classes.myImage} user-pic`}>
+//       <img src={getUserInformation() && getUserInformation().image}  alt="user"/>
+//       {children}
+//     </div>
+//   );
+// };
 
-  console.log(props.loginStatus);
+// ---------------- React-Component -------------------- //
+const InternalNavbar = props => {
+  console.log(getUserInformation());
 
   return (
     <Router>
       <div>
         <nav className='navbar navbar-light'>
           <div className='container'>
-
             {/* --------------- ROUTER LINK --------------- */}
             <Link className='navbar-brand' to='/home'>
               conduit
-            </Link> 
+            </Link>
 
             <ul className='nav navbar-nav pull-xs-right'>
-
-              { (props.loginStatus==="log_in") ? (
+              {getUserInformation() ? (
                 <div>
                   <li className='nav-item'>
                     <Link className='nav-link active' to='/home'>
@@ -63,16 +85,20 @@ export const InternalNavbar = props => {
 
                   {/* ---- Logged User ---- */}
                   <li className='nav-item'>
-                    <Link 
-                      className='nav-link' 
+                    <Link
+                      className='nav-link'
                       to='/user_profile'
-                      onClick={()=>
-                        {
-                          props.loadUserProfileDetail()
-                          props.setProfileNavStatus("active", "null")
-                        }}
-                      >
-                      {getUserInformation() && getUserInformation().username}
+                      onClick={() => {
+                        props.loadUserProfileDetail();
+                        props.setProfileNavStatus("active", "null");
+                      }}>
+                      <img
+                        className='user-pic'
+                        src={getUserInformation().image}
+                        alt='user'
+                      />
+                      {/* <Img/> */}
+                      {getUserInformation().username}
                     </Link>
                   </li>
                 </div>
@@ -89,11 +115,12 @@ export const InternalNavbar = props => {
                     </Link>
                   </li>
                   <li className='nav-item'>
-                    <Link 
-                      className='nav-link' 
+                    <Link
+                      className='nav-link'
                       to='/sign_up'
-                      onClick={()=>{props.onSignUpButtonClicked(null)}}
-                    >
+                      onClick={() => {
+                        props.onSignUpButtonClicked(null);
+                      }}>
                       Sign up
                     </Link>
                   </li>
@@ -109,19 +136,22 @@ export const InternalNavbar = props => {
             <Redirect to='/home' />
           </Route>
           <Route exact path='/home' component={MainPage} />
-          
+
           <Route exact path='/article-detail/sign_in'>
             <Redirect to='/sign_in' />
           </Route>
           <Route exact path='/sign_in' component={SignIn} />
-          
+
           <Route exact path='/article-detail/sign_up'>
             <Redirect to='/sign_up' />
           </Route>
-          <Route exact path='/sign_up'component={SignUp} />
+          <Route exact path='/sign_up' component={SignUp} />
 
           <Route path='/user_profile' component={UserProfile} />
-          <Route path='/article-detail/:article_slug' component={ArticleDetails} />
+          <Route
+            path='/article-detail/:article_slug'
+            component={ArticleDetails}
+          />
           <Route path='/new_post/:slug' component={NewPost} />
           <Route path='/new_post' component={NewPost} />
 
@@ -132,8 +162,7 @@ export const InternalNavbar = props => {
   );
 };
 
-InternalNavbar.propTypes = {
-};
+InternalNavbar.propTypes = {};
 
 const mapStateToProps = ({ loadUserProfileDetail, loginStatus }) => {
   return { loadUserProfileDetail, loginStatus };
@@ -141,13 +170,14 @@ const mapStateToProps = ({ loadUserProfileDetail, loginStatus }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadUserProfileDetail: () =>
-      dispatch(loadUserProfileDetail()),
+    loadUserProfileDetail: () => dispatch(loadUserProfileDetail()),
     setProfileNavStatus: (myNav, favorited_Nav) =>
       dispatch(setProfileNavStatus(myNav, favorited_Nav)),
-    onSignUpButtonClicked: (data) =>
-      dispatch(onSignUpButtonClicked(data)),
+    onSignUpButtonClicked: data => dispatch(onSignUpButtonClicked(data))
   };
 };
 
-export const Navbar = connect(mapStateToProps, mapDispatchToProps)(InternalNavbar);
+export const Navbar = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(InternalNavbar);

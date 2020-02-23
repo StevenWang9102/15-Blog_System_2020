@@ -20,6 +20,10 @@ const InternalArticlePreview = props => {
   const [httpMethod, setHttpMethod] = useState({});
 
   useEffect(() => {
+    // 什么时候保存的？ setSessionStorage【完成】
+    // 其实刷新的时候，sesstion storage还在呀【完成】
+    // 为什么Nav刷新就看不见了呢？【props.loginStatus被清空了】
+    // sessionStorage在浏览器的哪里
     if (getUserInformation() && getUserInformation().username) {
       props.setHomeNavStatus(["active", "null", "null"]);
       props.loadPopularTags();
