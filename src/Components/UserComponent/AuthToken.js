@@ -7,3 +7,7 @@ export const setUserOnSession = (user) => {
 export const getUserFromSession = () => {
     return JSON.parse(sessionStorage.getItem(USER_KEY))
 }
+
+export const removeUserFromSession = () => {
+    sessionStorage.removeItem(USER_KEY);
+}

@@ -23,18 +23,23 @@ import {
 
 
 export const InternalNavbar = props => {
+
+  console.log(props.loginStatus);
+
   return (
     <Router>
       <div>
         <nav className='navbar navbar-light'>
           <div className='container'>
+
             {/* --------------- ROUTER LINK --------------- */}
             <Link className='navbar-brand' to='/home'>
               conduit
             </Link> 
 
             <ul className='nav navbar-nav pull-xs-right'>
-              {getUserInformation() && getUserInformation().token  ? (
+
+              { (props.loginStatus==="log_in") ? (
                 <div>
                   <li className='nav-item'>
                     <Link className='nav-link active' to='/home'>
@@ -118,7 +123,6 @@ export const InternalNavbar = props => {
 
           <Route exact path='/setting' component={Setting} />
         </Switch>
-
       </div>
     </Router>
   );
@@ -127,10 +131,10 @@ export const InternalNavbar = props => {
 InternalNavbar.propTypes = {
 };
 
-const mapStateToProps = ({  loadUserProfileDetail }) => {
-  return { loadUserProfileDetail };
+const mapStateToProps = ({ loadUserProfileDetail, loginStatus }) => {
+  return { loadUserProfileDetail, loginStatus };
 };
-// loadUserProfileDetail
+
 const mapDispatchToProps = dispatch => {
   return {
     loadUserProfileDetail: () =>

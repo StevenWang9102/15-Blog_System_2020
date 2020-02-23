@@ -10,7 +10,7 @@ export const POPULAR_TAG_DISPLAYED = Symbol("POPULAR_TAG_DISPLAYED")
 export const TAG_RELATED_ARTICLE_LOADED = Symbol("TAG_RELATED_ARTICLE_LOADED")
 export const RELATED_TAG_LOADED = Symbol("RELATED_TAG_LOADED")
 export const GLOBLE_FEED_CLICKED = Symbol("GLOBLE_FEED_CLICKED")
-export const USERS_NAME_LOADED = Symbol("USERS_NAME_LOADED")
+export const LOADED_USER_PROFILE = Symbol("LOADED_USER_PROFILE")
 export const USERS_PROFILE_LOADED = Symbol("USERS_PROFILE_LOADED")
 export const USERS_RELATED_ARTICLES_LOADED = Symbol("USERS_RELATED_ARTICLES_LOADED")
 export const FAVERATED_ARITICLE_CLICKED = Symbol("FAVERATED_ARITICLE_CLICKED")
@@ -27,24 +27,23 @@ export const HOME_NAV_SET_CLICKED = Symbol("HOME_NAV_SET_CLICKED")
 export const GLOBAL_DATA_LOADED = Symbol("GLOBAL_DATA_LOADED")
 export const POST_COMMENTS_CLICKED = Symbol("POST_COMMENTS_CLICKED")
 export const POST_ARTICLE_CLICKED = Symbol("POST_ARTICLE_CLICKED")
-// export const CHECK_USER_INFO_POSITION = Symbol("CHECK_USER_INFO_POSITION")
-// ARTICLE_RELOADED
 export const ARTICLE_RELOADED = Symbol("ARTICLE_RELOADED")
-// ON_EDIT_ARTICLE_CLICKED
 export const ON_EDIT_ARTICLE_CLICKED = Symbol("ON_EDIT_ARTICLE_CLICKED")
-// SET_PROFILE_NAV
 export const SET_PROFILE_NAV = Symbol("SET_PROFILE_NAV")
-// CURRENT_PROFILE_ARTICLE_LOADED
 export const CURRENT_PROFILE_ARTICLE_LOADED = Symbol("CURRENT_PROFILE_ARTICLE_LOADED")
-// CURRENT_HOME_DISPLAY_ARTICLES_LOADED
 export const CURRENT_HOME_DISPLAY_ARTICLES_LOADED = Symbol("CURRENT_HOME_DISPLAY_ARTICLES_LOADED")
-// LOAD_INIT_POPULAR_TAGS
 export const LOAD_INIT_POPULAR_TAGS = Symbol("LOAD_INIT_POPULAR_TAGS")
-// SAVE_USER_INFOR_TO_STORE
 export const SAVE_USER_INFOR_TO_STORE = Symbol("SAVE_USER_INFOR_TO_STORE")
+export const SET_LOG_IN_STSTUS = Symbol("SET_LOG_IN_STSTUS")
+export const LOG_OUT_BUTTON_CLICK = Symbol("LOG_OUT_BUTTON_CLICK")
+export const UPDATE_SETTING_BUTTON_CLICK = Symbol("UPDATE_SETTING_BUTTON_CLICK")
+// UPDATED_YOUR_SETTING
+export const UPDATED_YOUR_SETTING = Symbol("UPDATED_YOUR_SETTING")
 
 
-// -----------------------------------------------------------
+
+
+// ---------------------------     Functions     --------------------------------
 export const loadGlobalFeeds = () => {
     return { type: LOAD_GLOBAL_FEEDS };
 };
@@ -98,7 +97,7 @@ export const relatedTagLoaded = (tagName) => {
 }
 
 export const loadUserProfileDetail = () => {
-    return { type: USERS_NAME_LOADED };
+    return { type: LOADED_USER_PROFILE };
 }
 
 export const userProfileDataLoaded = (userProfileData) => {
@@ -163,36 +162,42 @@ export const onPostArticleClicked = (title, description, content, tags, slug ) =
     return { type: POST_ARTICLE_CLICKED, title:title, description:description, content:content, tags:tags, slug:slug };
 }
 
-// // checkUserSavedPosition
-// export const checkUserSavedPosition = () => {
-//     return { type: CHECK_USER_INFO_POSITION};
-// }
-
-// articleReloaded
 export const articleReloaded = (status) => {
     return { type: ARTICLE_RELOADED, status: status};
 }
 
-// ?onEditArticleClicked
 export const onEditArticleClicked = (status) => {
     return { type: ON_EDIT_ARTICLE_CLICKED, status: status};
 }
 
-// setProfileNavStatus
 export const setProfileNavStatus = (profileNavStatus) => {
     return { type: SET_PROFILE_NAV, profileNavStatus: profileNavStatus};
 }
-// currentHomeDisplayArticleLoaded
+
 export const currentHomeDisplayArticleLoaded = (payload) => {
     return { type: CURRENT_HOME_DISPLAY_ARTICLES_LOADED, payload: payload };
 }
 
-// loadPopularTags
 export const loadPopularTags = (payload) => {
     return { type: LOAD_INIT_POPULAR_TAGS, payload: payload };
 }
 
-// saveUserInformationToStore
 export const saveUserInformationToStore = (userInformation) => {
     return { type: SAVE_USER_INFOR_TO_STORE, userInformation: userInformation };
+}
+export const setLogInStatus = (status) => {
+    return { type: SET_LOG_IN_STSTUS, loginStatus: status };
+}
+
+export const logOutButtonClicked = (status) => {
+    return { type: LOG_OUT_BUTTON_CLICK, loginStatus: status };
+}
+
+export const onUpdateSettingClicked = (request) => {
+    return { type: UPDATE_SETTING_BUTTON_CLICK, request: request };
+}
+
+// updatedYourSetting
+export const updatedYourSetting = (status) => {
+    return { type: UPDATED_YOUR_SETTING, status: status };
 }

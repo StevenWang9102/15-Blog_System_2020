@@ -20,6 +20,11 @@ const InternalUserProfile = props => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
+  // 直接进入页面没有数据：好像是人名 undefined
+  // 检查请求
+  // 检查返回数据
+  // 检查渲染情况 
+  
 
   return (
     <div>

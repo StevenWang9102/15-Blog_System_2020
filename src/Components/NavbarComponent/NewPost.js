@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { onPostArticleClicked, loadInitArticleDetail } from "../../ReduxStore/FeedDetails/feedActions";
-
-import {
-  Redirect
-} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 const InternalNewPost = props => {
 
@@ -15,16 +12,15 @@ const InternalNewPost = props => {
   const [tags, setTags] = useState(props.currentArticleDetails.tagList || []);
 
   const { slug } = useParams();
-  // 还是通过 props.currentSlug
 
   useEffect(() => {
-    // 此处是在存在这篇文章的情况下，才执行的 - 判据：
     slug && props.loadInitArticleDetail(slug);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(slug);
   console.log(props.currentSlug);
-  
+
   return (
     <div>
       {props.article_reloaded ? (
@@ -37,6 +33,7 @@ const InternalNewPost = props => {
                   <div className='col-md-10 offset-md-1 col-xs-12'>
                     <form>
                       <fieldset>
+                        
                         {/* ---- Title ---- */}
                         <fieldset className='form-group'>
                           <input
@@ -88,7 +85,6 @@ const InternalNewPost = props => {
                               content,
                               tags,
                               props.currentSlug,
-                              // 这样拿好吗？？？？
                             );
                           }}>
                           Publish Article

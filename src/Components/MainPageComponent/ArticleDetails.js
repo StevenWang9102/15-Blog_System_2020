@@ -137,8 +137,8 @@ const mapStateToProps = ({ currentArticleDetails, currentProfileData, userInform
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadInitArticleDetail: article_slug =>
-      dispatch(loadInitArticleDetail(article_slug)),
+    loadInitArticleDetail: slug =>
+      dispatch(loadInitArticleDetail(slug)),
     onEditArticleClicked: flag => dispatch(onEditArticleClicked(flag)),
     saveUserInformationToStore: (userInformation) => dispatch(saveUserInformationToStore(userInformation)),
   };

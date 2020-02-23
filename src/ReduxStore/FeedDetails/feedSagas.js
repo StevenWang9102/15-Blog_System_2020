@@ -9,15 +9,18 @@ import {
   articleCommentsLoaded,
   tagRelatedArticleLoaded,
   relatedTagLoaded,
-  USERS_NAME_LOADED,
+  UPDATE_SETTING_BUTTON_CLICK,
+  LOADED_USER_PROFILE,
   userProfileDataLoaded,
   tagsDataLoaded,
   userRelatedArticlesLoaded,
+  updatedYourSetting,
   POST_ARTICLE_CLICKED,
   FAVERATED_ARITICLE_CLICKED,
   LOAD_INIT_POPULAR_TAGS,
   favoritedArticleLoaded,
   SIGN_IN_BUTTON_CLICKED,
+  setLogInStatus,
   userInformationLoaded,
   YOURE_FEED_CLICKED,
   yourFeedsLoaded,
@@ -61,7 +64,7 @@ export const feedSaga = function*() {
   // GLOBAL_FEEDS_LOADED
   yield takeLatest(LOAD_GLOBAL_FEEDS, function*() {
     const initArticData = yield call(
-      fetchDataFromServer(),
+      fetchDataFromServer,
       "/articles?limit=50&offset=10", "Load Global Feeds"
     );    
     yield put(articleDataLoaded(initArticData["articles"]));
@@ -69,7 +72,7 @@ export const feedSaga = function*() {
 
   // LOAD_POPULAR_TAGS
   yield takeLatest(LOAD_INIT_POPULAR_TAGS, function*() {
-    const initTagData = yield call(fetchDataFromServer(), "/tags", "Load Initial Popular Tags");
+    const initTagData = yield call(fetchDataFromServer, "/tags", "Load Initial Popular Tags");
     console.log(initTagData);
     yield put(tagsDataLoaded(initTagData["tags"]));
   });
@@ -77,7 +80,7 @@ export const feedSaga = function*() {
   // ARTICLE_DETAILS_LOADED 
   yield takeLatest(INIT_ARTICLE_DETAILS_GET, function*(action) {
     const initArticleData = yield call(
-      fetchDataFromServer(),
+      fetchDataFromServer,
       `/articles/${action.slug}`,
       "Load Article"
     );
@@ -88,7 +91,7 @@ export const feedSaga = function*() {
   // ARTICLE_COMMENT_LOADED
   yield takeLatest(INIT_ARTICLE_DETAILS_GET, function*(action) {
     const initCommentData = yield call(
-      fetchDataFromServer(),
+      fetchDataFromServer,
       `/articles/${action.slug}/comments`,
       "Load Article Comments"
     );
@@ -106,7 +109,7 @@ export const feedSaga = function*() {
     yield call(postDataToServerAll, token, url, postData, message, "POST");
 
     const initCommentData = yield call(
-      fetchDataFromServer(),
+      fetchDataFromServer,
       `/articles/${action.slug}/comments`
     );
     yield put(articleCommentsLoaded(initCommentData));
@@ -116,7 +119,7 @@ export const feedSaga = function*() {
   // POPULAR_TAG_CLICKED
   yield takeLatest(POPULAR_TAG_CLICKED, function*(action) {
     const tagRelatedData = yield call(
-      fetchDataFromServer(),
+      fetchDataFromServer,
       `/articles?tag=${action.tagName}&limit=10&offset=0`,
       "Load Popular Tags"
     );
@@ -124,15 +127,17 @@ export const feedSaga = function*() {
     yield put(relatedTagLoaded(action.tagName));
   });
 
-  // USER_PROFILE_LOADED
-  yield takeLatest(USERS_NAME_LOADED, function*() {
+  // LOADED_USER_PROFILE
 
-    const userName = yield getUserInformation2().username;
+  yield takeLatest(LOADED_USER_PROFILE, function*() {
+    yield getUserInformation2();    
+    const userName = getUserInformation().username;
+    // 这里不对。。暂时这样
     
     const [userProfileData, userRelatedArticles] = yield all([
-      call(fetchDataFromServer(), `/profiles/${userName}`, "Load User Profile"),
+      call(fetchDataFromServer, `/profiles/${userName}`, "Load User Profile"),
       call(
-        fetchDataFromServer(),
+        fetchDataFromServer,
         `/articles?author=${userName}&limit=5&offset=0`, "Load User Articles"
       )]);
     
@@ -145,10 +150,13 @@ export const feedSaga = function*() {
   // FAVERATED_ARITICLE_CLICKED
   yield takeLatest(FAVERATED_ARITICLE_CLICKED, function*() {
     
-    const userName = getUserInformation2().username;
+    yield getUserInformation2();    
+    const userName = getUserInformation().username;
+    // 这里不对。。暂时这样
+
 
     const favoritedArticlesData = yield call(
-      fetchDataFromServer(),
+      fetchDataFromServer,
       `/articles?favorited=${userName}&limit=5&offset=0`,
       "Load Your Favorited Articles"
     );
@@ -172,6 +180,7 @@ export const feedSaga = function*() {
     setUserOnSession(userPostedData.user);    
     yield put(userInformationLoaded(userPostedData));
     yield put(setHomeNavStatus(["active", "null", "null"]));
+    yield put(setLogInStatus("log_in"));
   });
 
   // YOURE_FEED_CLICKED
@@ -231,9 +240,31 @@ export const feedSaga = function*() {
     yield put(articleCommentsLoaded(yourArticle));
     yield put(articleReloaded(true))
   });
+
+  // UPDATE_SETTING_BUTTON_CLICK
+  yield takeLatest(UPDATE_SETTING_BUTTON_CLICK, function*(action) {
+    console.log(action);
+    const token = getUserInformation().token;
+    const url = "/user"
+    const message = "Update User Setting"
+    const postData = action.request;
+    const userSetting = yield call(postDataToServerAll, token, url, postData, message, "PUT");  
+
+    // 测试一下【完成】
+    // 数据传递正确【完成】
+    // 发送成功【完成】
+    // 返回成功【完成】
+    // 渲染有问题，更新的是 userInformation
+    setUserOnSession(userSetting.user);
+    yield put(updatedYourSetting("updated"));
+
+  });
 };
 
 const postDataToServerAll = (token, url, postData, message, type) => {
+  
+  console.log(postData);
+  
   let headers = { "Content-Type": "application/json"}
   
   let request = {

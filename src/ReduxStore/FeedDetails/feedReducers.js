@@ -8,12 +8,15 @@ import {
   TAG_RELATED_ARTICLE_LOADED,
   RELATED_TAG_LOADED,
   USERS_PROFILE_LOADED,
+  LOG_OUT_BUTTON_CLICK,
   LOAD_GLOBAL_FEEDS,
   USERS_RELATED_ARTICLES_LOADED,
   FAVERATED_ARITICLE_LOADED,
+  UPDATED_YOUR_SETTING,
   USER_INFORMATION_LOADED,
   CURRENT_PROFILE_ARTICLE_LOADED,
   YOURE_FEED_LOADED,
+  SET_LOG_IN_STSTUS,
   SMALL_NAV_CLICKED,
   YOUR_FEED_NAV_CLICKED,
   HOME_NAV_SET_CLICKED,
@@ -70,7 +73,6 @@ export const feedReducer = (state = initialState, action) => {
       return {
         ...state,
         currentArticleDetails: action.initArticleData,
-        // currentHomeDisplayArticle: action.initArticleData,
         newSlug: action.initArticleData.slug
       };
 
@@ -144,7 +146,8 @@ export const feedReducer = (state = initialState, action) => {
     case SET_PROFILE_NAV:
       return {
         ...state,
-        profileNavStatus: action.profileNavStatus};
+        profileNavStatus: action.profileNavStatus
+      };
 
     // CURRENT_PROFILE_ARTICLE_LOADED
     case CURRENT_PROFILE_ARTICLE_LOADED:
@@ -153,6 +156,17 @@ export const feedReducer = (state = initialState, action) => {
     case CURRENT_HOME_DISPLAY_ARTICLES_LOADED:
       return { ...state, currentHomeDisplayArticle: action.payload };
 
+    // SET_LOG_IN_STSTUS
+    case SET_LOG_IN_STSTUS:
+      return { ...state, loginStatus: action.loginStatus };
+    // LOG_OUT_BUTTON_CLICK
+    case LOG_OUT_BUTTON_CLICK:
+      return { ...state, loginStatus: action.loginStatus };
+    
+      // UPDATED_YOUR_SETTING
+      case UPDATED_YOUR_SETTING:
+      return { ...state, yourSettingStatus: action.status };
+     
     default:
       return state;
   }

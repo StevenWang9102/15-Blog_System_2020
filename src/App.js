@@ -5,11 +5,7 @@ import "./App.css";
 import { loadGlobalFeeds } from "./ReduxStore/FeedDetails/feedActions";
 
 const InternalApp = props => {
-  // useEffect(() => {
-  //   props.loadGlobalFeeds();
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
+  
   return (
     <div className="App">
       <Navbar />

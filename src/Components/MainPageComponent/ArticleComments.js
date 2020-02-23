@@ -7,6 +7,7 @@ import { onPostCommentsClicked } from "../../ReduxStore/FeedDetails/feedActions"
 
 
 const InternalArticleComments = props => {
+  
    const [myComment, setMyComment] = useState("");
   
   return (
@@ -84,8 +85,8 @@ InternalArticleComments.propTypes = {
   currentComments: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ currentComments, currentArticleSlug, currentSlug }) => {
-  return { currentComments, currentArticleSlug, currentSlug };
+const mapStateToProps = ({ currentComments, currentSlug }) => {
+  return { currentComments,  currentSlug };
 };
 
 const mapDispatchToProps = dispatch => {
