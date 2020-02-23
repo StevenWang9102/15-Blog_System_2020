@@ -7,7 +7,8 @@ import dateFormat from "dateformat";
 import {
   loadUserProfileDetail,
   favoritedArticleClicked,
-  setProfileNavStatus
+  setProfileNavStatus,
+  updatedYourSetting
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalUserProfile = props => {
@@ -17,14 +18,11 @@ const InternalUserProfile = props => {
   useEffect(() => {
     props.loadUserProfileDetail();
     props.setProfileNavStatus(["active", "null"])
+    props.updatedYourSetting("still")
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
-  // 直接进入页面没有数据：好像是人名 undefined
-  // 检查请求
-  // 检查返回数据
-  // 检查渲染情况 
-  
+  // still 目的是
 
   return (
     <div>
@@ -178,6 +176,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(favoritedArticleClicked()),
     setProfileNavStatus: (profileNavStatus) =>
       dispatch(setProfileNavStatus(profileNavStatus)),
+      // updatedYourSetting
+      updatedYourSetting: (status) =>
+      dispatch(updatedYourSetting(status)),
   };
 };
 
