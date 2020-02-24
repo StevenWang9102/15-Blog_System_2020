@@ -2,7 +2,7 @@ export const LOAD_GLOBAL_FEEDS = Symbol("LOAD_GLOBAL_FEEDS");
 export const ARTICLE_DATA_LOADED = Symbol("ARTICLE_DATA_LOADED")
 export const TAGS_DATA_LOADED = Symbol("TAGS_DATA_LOADED")
 export const ARTICLE_TITLE_CLICKED = Symbol("ARTICLE_TITLE_CLICKED")
-export const INIT_ARTICLE_DETAILS_GET = Symbol("INIT_ARTICLE_DETAILS_GET")
+export const LOAD_INIT_ARTICLE_DETAIL = Symbol("LOAD_INIT_ARTICLE_DETAIL")
 export const ARTICLE_COMMENTS_LOADED = Symbol("ARTICLE_COMMENTS_LOADED")
 export const ARTICLE_CONTENT_LOADED = Symbol("ARTICLE_CONTENT_LOADED")
 export const POPULAR_TAG_CLICKED = Symbol("POPULAR_TAG_CLICKED")
@@ -13,7 +13,7 @@ export const GLOBLE_FEED_CLICKED = Symbol("GLOBLE_FEED_CLICKED")
 export const LOADED_USER_PROFILE = Symbol("LOADED_USER_PROFILE")
 export const USERS_PROFILE_LOADED = Symbol("USERS_PROFILE_LOADED")
 export const USERS_RELATED_ARTICLES_LOADED = Symbol("USERS_RELATED_ARTICLES_LOADED")
-export const FAVERATED_ARITICLE_CLICKED = Symbol("FAVERATED_ARITICLE_CLICKED")
+export const FAVERATED_NAV_CLICKED = Symbol("FAVERATED_NAV_CLICKED")
 export const FAVERATED_ARITICLE_LOADED = Symbol("FAVERATED_ARITICLE_LOADED")
 export const SIGN_IN_BUTTON_CLICKED = Symbol("SIGN_IN_BUTTON_CLICKED")
 export const USER_INFORMATION_LOADED = Symbol("USER_INFORMATION_LOADED")
@@ -49,6 +49,10 @@ export const SIGN_UP_BUTTON_CLICK = Symbol("SIGN_UP_BUTTON_CLICK")
 export const SIGN_UP_USER_LOADED = Symbol("SIGN_UP_USER_LOADED")
 // FAVORITED_ARTICLES_LOADED
 export const FAVORITED_ARTICLES_LOADED = Symbol("FAVORITED_ARTICLES_LOADED")
+// LOAD_ARTICLE_SETTING_DETAIL
+export const LOAD_ARTICLE_SETTING_DETAIL = Symbol("LOAD_ARTICLE_SETTING_DETAIL")
+// ARTICLE_SETTING_DETAIL_LOADED
+export const ARTICLE_SETTING_DETAIL_LOADED = Symbol("ARTICLE_SETTING_DETAIL_LOADED")
 
 
 // ---------------------------     Functions     --------------------------------
@@ -61,7 +65,7 @@ export const globalDataLoaded = (payload) => {
 };
 
 export const loadInitArticleDetail = (slug) =>{
-    return { type: INIT_ARTICLE_DETAILS_GET, slug };
+    return { type: LOAD_INIT_ARTICLE_DETAIL, slug };
 }
 
 export const articleDataLoaded = (articleData) =>{
@@ -104,8 +108,8 @@ export const relatedTagLoaded = (tagName) => {
     return { type: RELATED_TAG_LOADED, tagName };
 }
 
-export const loadUserProfileDetail = () => {
-    return { type: LOADED_USER_PROFILE };
+export const loadUserProfileDetail = (author_name) => {
+    return { type: LOADED_USER_PROFILE, author_name:author_name };
 }
 
 export const userProfileDataLoaded = (userProfileData) => {
@@ -120,8 +124,8 @@ export const userRelatedArticlesLoaded = (userRelatedArticles) => {
     return { type: USERS_RELATED_ARTICLES_LOADED, userRelatedArticles };
 }
 
-export const favoritedArticleClicked = (userName) => {
-    return { type: FAVERATED_ARITICLE_CLICKED, userName };
+export const favoritedArticleClicked = (author_name) => {
+    return { type: FAVERATED_NAV_CLICKED, author_name: author_name };
 }
 
 export const favoritedArticleLoaded = (favoritedArticles) => {
@@ -178,8 +182,8 @@ export const onEditArticleClicked = (status) => {
     return { type: ON_EDIT_ARTICLE_CLICKED, status: status};
 }
 
-export const setProfileNavStatus = (profileNavStatus) => {
-    return { type: SET_PROFILE_NAV, profileNavStatus: profileNavStatus};
+export const setProfileNavStatus = (profileNavStatusLeft, profileNavStatusRight) => {
+    return { type: SET_PROFILE_NAV, profileNavStatusLeft:profileNavStatusLeft, profileNavStatusRight:profileNavStatusRight};
 }
 
 export const currentHomeDisplayArticleLoaded = (payload) => {
@@ -232,4 +236,14 @@ export const signUpUserLoaded = (data) => {
 // favoritedArticlesLoaded
 export const favoritedArticlesLoaded = (data) => {
     return { type: FAVORITED_ARTICLES_LOADED, data: data };
+}
+
+// loadArticleSettingDetail
+export const loadArticleSettingDetail = (slug) => {
+    return { type: LOAD_ARTICLE_SETTING_DETAIL, slug: slug };
+}
+
+// articleSettingContentLoaded,articleSettingContentLoaded
+export const articleSettingContentLoaded = (data) => {
+    return { type: ARTICLE_SETTING_DETAIL_LOADED, data: data };
 }

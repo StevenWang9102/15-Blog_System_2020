@@ -10,7 +10,6 @@ export const InternalSignUp = props => {
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState(" ");
 
-  // signUpStatus
   return (
     <div>
       {props.signUpStatus?  <Redirect to="/home" />

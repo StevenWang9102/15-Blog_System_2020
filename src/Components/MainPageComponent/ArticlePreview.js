@@ -20,10 +20,7 @@ const InternalArticlePreview = props => {
   const [httpMethod, setHttpMethod] = useState({});
 
   useEffect(() => {
-    // 什么时候保存的？ setSessionStorage【完成】
-    // 其实刷新的时候，sesstion storage还在呀【完成】
-    // 为什么Nav刷新就看不见了呢？【props.loginStatus被清空了】
-    // sessionStorage在浏览器的哪里
+  
     if (getUserInformation() && getUserInformation().username) {
       props.setHomeNavStatus(["active", "null", "null"]);
       props.loadPopularTags();
@@ -42,7 +39,8 @@ const InternalArticlePreview = props => {
       <div className='feed-toggle'>
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
-            {/* ------------ Your Feed ------------ */}
+
+            {/* ------------------ Your Feed ----------------- */}
             {getUserInformation() && getUserInformation().token && (
               <NavLink
                 onClick={() => {
@@ -56,7 +54,7 @@ const InternalArticlePreview = props => {
               </NavLink>
             )}
 
-            {/* ------------ Global Feed ------------ */}
+            {/* ------------------ Global Feed ------------------ */}
             <NavLink
               onClick={() => {
                 props.onGlobeFeedClicked();
@@ -68,7 +66,7 @@ const InternalArticlePreview = props => {
               Global Feed
             </NavLink>
 
-            {/* ----------- Popular Tags --------- */}
+            {/* ----------------- Popular Tags --------------- */}
             {props.currentTagName && (
               <NavLink
                 className='nav-link display-inline'
@@ -81,9 +79,8 @@ const InternalArticlePreview = props => {
         </ul>
       </div>
 
-      {/* --------------------- Article --------------------- */}
+      {/* --------------------- Related Article --------------------- */}
       {props.currentHomeDisplayArticle.map((article, index) => {
-        
         return (
           <div className='article-preview' key={index}>
             <div className='article-meta'>

@@ -1,25 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { onPostArticleClicked, loadInitArticleDetail } from "../../ReduxStore/FeedDetails/feedActions";
+import { onPostArticleClicked, loadArticleSettingDetail } from "../../ReduxStore/FeedDetails/feedActions";
 import { Redirect } from "react-router-dom";
 
 const InternalNewPost = props => {
 
-  const [title, setTitle] = useState(props.currentArticleDetails.title || "");
-  const [description, setDescription] = useState( props.currentArticleDetails.description || "" );
-  const [content, setContent] = useState( props.currentArticleDetails.body || "" );
-  const [tags, setTags] = useState(props.currentArticleDetails.tagList || []);
-
   const { slug } = useParams();
 
-  useEffect(() => {
-    slug && props.loadInitArticleDetail(slug);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  console.log(slug);
-  console.log(props.currentSlug);
+  const [title, setTitle] = useState(slug && (props.currentArticleDetails.title || ""));
+  const [description, setDescription] = useState( slug && (props.currentArticleDetails.description || "" ));
+  const [content, setContent] = useState( slug && (props.currentArticleDetails.body || "" ));
+  const [tags, setTags] = useState(slug && (props.currentArticleDetails.tagList || []));
 
   return (
     <div>
@@ -109,7 +101,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onPostArticleClicked: (title, description, content, tags, slug) =>
       dispatch(onPostArticleClicked(title, description, content, tags, slug)),
-    loadInitArticleDetail: slug => dispatch(loadInitArticleDetail(slug))
+    loadArticleSettingDetail: slug => dispatch(loadArticleSettingDetail(slug))
   };
 };
 export const NewPost = connect(

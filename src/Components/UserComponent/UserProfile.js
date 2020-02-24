@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
 import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
 import { Link, NavLink } from "react-router-dom";
 import dateFormat from "dateformat";
@@ -37,22 +38,26 @@ const Button = ({ children }) => {
   );
 };
 
-// 使用的时候只需要包裹就行了
 
 // ---------------- React-Component -------------------- //
 const InternalUserProfile = props => {
-  const userName = getUserInformation().username;
+
+  // 测试一下刷新情况
+
+  const { author_name } = useParams();
 
   useEffect(() => {
-    props.loadUserProfileDetail();
-    props.setProfileNavStatus(["active", "null"]);
-    props.updatedYourSetting("still");
+    props.loadUserProfileDetail(author_name);
+    // props.setProfileNavStatus("active", "null"); // navigation status 、
+    props.updatedYourSetting("still"); // flag of setting status
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  
   return (
     <div>
+
       <div className='profile-page'>
+
         {/* ---------------- User Information ---------------- */}
         <div className='user-info'>
           <div className='container'>
@@ -66,17 +71,17 @@ const InternalUserProfile = props => {
                   className='user-img'
                   alt='au'
                 />
-                <h4>{userName}</h4>
+                <h4>{author_name}</h4>
                 <p>
-                  {props.currentProfileData.profile &&
+                  {props.currentProfileData && props.currentProfileData.profile &&
                     props.currentProfileData.profile.bio}
                 </p>
                 <Button>
                   <i className='ion-plus-round'></i>
-                  <Link className='nav-link' to='/setting'>
-                    <img src='./icon/004-settings.png' alt='setting' />
-                    Edit Profile Setting
-                  </Link>
+                  <a className='nav-link'>
+                    <img src='./icon/004-settings.png' alt='' />
+                    <b>+</b> Follow {author_name} Now
+                  </a>
                 </Button>
               </div>
             </div>
@@ -91,14 +96,12 @@ const InternalUserProfile = props => {
                 <ul className='nav nav-pills outline-active'>
                   <li className='nav-item'>
                     <NavLink
-                      to='/user_profile/my_articles'
+                      to={`/user_profile/${author_name }/my_articles`}
                       className='nav-link'
-                      activeClassName={
-                        props.profileNavStatus && props.profileNavStatus[0]
-                      }
+                      activeClassName={props.profileNavStatusLeft}
                       onClick={() => {
-                        props.setProfileNavStatus(["active", "null"]);
-                        props.loadUserProfileDetail();
+                        props.setProfileNavStatus("active", "null");
+                        props.loadUserProfileDetail(author_name);
                       }}>
                       My Articles
                     </NavLink>
@@ -106,14 +109,12 @@ const InternalUserProfile = props => {
 
                   <li className='nav-item'>
                     <NavLink
-                      to='/user_profile/favorited_articles'
+                      to={`/user_profile/${author_name}/favorited_articles`}
                       className='nav-link'
-                      activeClassName={
-                        props.profileNavStatus && props.profileNavStatus[1]
-                      }
+                      activeClassName={ props.profileNavStatusRight}
                       onClick={() => {
-                        props.setProfileNavStatus(["null", "active"]);
-                        props.onFavoritedArticleClicked();
+                        props.setProfileNavStatus("null", "active");
+                        props.onFavoritedArticleClicked(author_name);
                       }}>
                       Favorited Articles
                     </NavLink>
@@ -181,7 +182,8 @@ const mapStateToProps = ({
   currentUsersArticles,
   onFavoritedArticleClicked,
   favoritedArticles,
-  profileNavStatus,
+  profileNavStatusLeft,
+  profileNavStatusRight,
   currentDisplayArticle
 }) => {
   return {
@@ -189,17 +191,18 @@ const mapStateToProps = ({
     currentUsersArticles,
     onFavoritedArticleClicked,
     favoritedArticles,
-    profileNavStatus,
+    profileNavStatusLeft,
+    profileNavStatusRight,
     currentDisplayArticle
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadUserProfileDetail: () => dispatch(loadUserProfileDetail()),
-    onFavoritedArticleClicked: () => dispatch(favoritedArticleClicked()),
-    setProfileNavStatus: profileNavStatus =>
-      dispatch(setProfileNavStatus(profileNavStatus)),
+    loadUserProfileDetail: (author_name) => dispatch(loadUserProfileDetail(author_name)),
+    onFavoritedArticleClicked: (author_name) => dispatch(favoritedArticleClicked(author_name)),
+    setProfileNavStatus: (profileNavStatusLeft, profileNavStatusRight) =>
+      dispatch(setProfileNavStatus(profileNavStatusLeft, profileNavStatusRight)),
     // updatedYourSetting
     updatedYourSetting: status => dispatch(updatedYourSetting(status))
   };

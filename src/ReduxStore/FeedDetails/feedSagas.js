@@ -5,9 +5,10 @@ import {
 } from "../../Components/UserComponent/AuthToken";
 import {
   LOAD_GLOBAL_FEEDS,
-  INIT_ARTICLE_DETAILS_GET,
+  LOAD_INIT_ARTICLE_DETAIL,
   signUpUserLoaded,
   POPULAR_TAG_CLICKED,
+  LOAD_ARTICLE_SETTING_DETAIL,
   articleDataLoaded,
   deleteYourArticle,
   SIGN_UP_BUTTON_CLICK,
@@ -24,8 +25,9 @@ import {
   userRelatedArticlesLoaded,
   updatedYourSetting,
   POST_ARTICLE_CLICKED,
-  FAVERATED_ARITICLE_CLICKED,
+  FAVERATED_NAV_CLICKED,
   LOAD_INIT_POPULAR_TAGS,
+  articleSettingContentLoaded,
   favoritedArticleLoaded,
   DELETE_ARTICLE_BUTTON,
   SIGN_IN_BUTTON_CLICKED,
@@ -89,17 +91,28 @@ export const feedSaga = function*() {
   });
 
   // ARTICLE_DETAILS_LOADED
-  yield takeLatest(INIT_ARTICLE_DETAILS_GET, function*(action) {
+  yield takeLatest(LOAD_INIT_ARTICLE_DETAIL, function*(action) {
     const initArticleData = yield call(
       fetchDataFromServer,
       `/articles/${action.slug}`,
       "Load Article"
     );
     yield put(articleContentLoaded(initArticleData.article));
+    // yield put(articleSettingContentLoaded(initArticleData.article));
+  });
+
+  // LOAD_ARTICLE_SETTING_DETAIL
+  yield takeLatest(LOAD_ARTICLE_SETTING_DETAIL, function*(action) {
+    const initArticleData = yield call(
+      fetchDataFromServer,
+      `/articles/${action.slug}`,
+      "Load Article Setting"
+    );
+    yield put(articleSettingContentLoaded(initArticleData.article));
   });
 
   // ARTICLE_COMMENT_LOADED
-  yield takeLatest(INIT_ARTICLE_DETAILS_GET, function*(action) {
+  yield takeLatest(LOAD_INIT_ARTICLE_DETAIL, function*(action) {
     const initCommentData = yield call(
       fetchDataFromServer,
       `/articles/${action.slug}/comments`,
@@ -137,10 +150,9 @@ export const feedSaga = function*() {
   });
 
   // LOADED_USER_PROFILE
-
-  yield takeLatest(LOADED_USER_PROFILE, function*() {
-    yield getUserInformation2();
-    const userName = getUserInformation().username;
+  yield takeLatest(LOADED_USER_PROFILE, function*(action) {
+    // yield getUserInformation2();
+    const userName = action.author_name;
     // 这里不对。。暂时这样
 
     const [userProfileData, userRelatedArticles] = yield all([
@@ -157,15 +169,14 @@ export const feedSaga = function*() {
     yield put(currentDisplayArticleLoaded(userRelatedArticles.articles));
   });
 
-  // FAVERATED_ARITICLE_CLICKED
-  yield takeLatest(FAVERATED_ARITICLE_CLICKED, function*() {
+  // FAVERATED_NAV_CLICKED
+  yield takeLatest(FAVERATED_NAV_CLICKED, function*(action) {
     yield getUserInformation2();
-    const userName = getUserInformation().username;
-    // 这里不对。。暂时这样
+    const userName = action.author_name;
 
     const favoritedArticlesData = yield call(
       fetchDataFromServer,
-      `/articles?favorited=${userName}&limit=5&offset=0`,
+      `/articles?favorited=${userName}&limit=30&offset=0`,
       "Load Your Favorited Articles"
     );
 
@@ -219,7 +230,6 @@ export const feedSaga = function*() {
 
   // FAVORITED_BUTTON_CLICKED
   yield takeLatest(FAVORITED_BUTTON_CLICKED, function*(action) {
-    
     const slug = action.slug;
     const token = action.token;
     const url = `/articles/${slug}/favorite`;

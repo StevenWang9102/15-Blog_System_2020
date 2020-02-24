@@ -71,14 +71,14 @@ const InternalNavbar = props => {
 
                   <li className='nav-item'>
                     <Link className='nav-link' to='/new_post'>
-                      <img src='./icon/008-edit.png' alt='post' />
+                      <img src='./icon/008-edit.png' alt='' />
                       New Post
                     </Link>
                   </li>
 
                   <li className='nav-item'>
                     <Link className='nav-link' to='/setting'>
-                      <img src='./icon/004-settings.png' alt='setting' />
+                      <img src='./icon/004-settings.png' alt='' />
                       Setting
                     </Link>
                   </li>
@@ -87,7 +87,7 @@ const InternalNavbar = props => {
                   <li className='nav-item'>
                     <Link
                       className='nav-link'
-                      to='/user_profile'
+                      to = {`/user_profile/${getUserInformation().username}`}
                       onClick={() => {
                         props.loadUserProfileDetail();
                         props.setProfileNavStatus("active", "null");
@@ -95,7 +95,7 @@ const InternalNavbar = props => {
                       <img
                         className='user-pic'
                         src={getUserInformation().image}
-                        alt='user'
+                        alt=''
                       />
                       {/* <Img/> */}
                       {getUserInformation().username}
@@ -147,7 +147,10 @@ const InternalNavbar = props => {
           </Route>
           <Route exact path='/sign_up' component={SignUp} />
 
-          <Route path='/user_profile' component={UserProfile} />
+          {/* <Route path='/user_profile' component={UserProfile} /> */}
+          <Route path='/user_profile/:author_name' component={UserProfile} />
+          {/* <Route path='/user_profile' component={UserProfile} /> */}
+
           <Route
             path='/article-detail/:article_slug'
             component={ArticleDetails}

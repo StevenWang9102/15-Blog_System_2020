@@ -3,9 +3,10 @@ import {
   TAGS_DATA_LOADED,
   ARTICLE_TITLE_CLICKED,
   ARTICLE_COMMENTS_LOADED,
-  INIT_ARTICLE_DETAILS_GET,
+  LOAD_INIT_ARTICLE_DETAIL,
   ARTICLE_CONTENT_LOADED,
   TAG_RELATED_ARTICLE_LOADED,
+  ARTICLE_SETTING_DETAIL_LOADED,
   RELATED_TAG_LOADED,
   SIGN_UP_USER_LOADED,
   USERS_PROFILE_LOADED,
@@ -51,6 +52,9 @@ const initialState = {
   favorited_Nav: "null",
   currentDisplayArticle: [],
   currentHomeDisplayArticle: [],
+  // profileNavStatus: ["active", "null"],
+  profileNavStatusLeft: "active",
+  profileNavStatusRight: "null",
   favorited_article: {}
 };
 
@@ -136,7 +140,7 @@ export const feedReducer = (state = initialState, action) => {
         ...state,
         homeNavStatus: action.status
       };
-    case INIT_ARTICLE_DETAILS_GET:
+    case LOAD_INIT_ARTICLE_DETAIL:
       return { ...state, currentSlug: action.slug };
 
     case ARTICLE_RELOADED:
@@ -150,7 +154,8 @@ export const feedReducer = (state = initialState, action) => {
     case SET_PROFILE_NAV:
       return {
         ...state,
-        profileNavStatus: action.profileNavStatus
+        profileNavStatusLeft: action.profileNavStatusLeft,
+        profileNavStatusRight: action.profileNavStatusRight,
       };
 
     // CURRENT_PROFILE_ARTICLE_LOADED
@@ -180,7 +185,12 @@ export const feedReducer = (state = initialState, action) => {
 
     // FAVORITED_ARTICLES_LOADED
     case FAVORITED_ARTICLES_LOADED:
-      return { ...state, favorited_article: action.data };   
+      return { ...state, favorited_article: action.data }; 
+      
+    // ARTICLE_SETTING_DETAIL_LOADED
+    case ARTICLE_SETTING_DETAIL_LOADED:
+      return { ...state, articles_setting: action.data }; 
+      
     default:
       return state;
   }
