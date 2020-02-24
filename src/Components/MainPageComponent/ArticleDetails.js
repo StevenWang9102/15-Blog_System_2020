@@ -1,15 +1,18 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import dateFormat from "dateformat";
 import { loadInitArticleDetail } from "../../ReduxStore/FeedDetails/feedActions";
 import { useParams } from "react-router-dom";
 import { ArticleComments } from "./ArticleComments";
+import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
+
+import { Link } from "react-router-dom";
 
 const InternalArticleDetails = props => {
-  
   const { article_slug } = useParams();
+  let history = useHistory();
 
   useEffect(() => {
     props.loadInitArticleDetail(article_slug);
@@ -26,20 +29,20 @@ const InternalArticleDetails = props => {
             <div>
               <h1>{props.currentArticleDetails.title}</h1>
 
-              <div className='article-meta'>
-
-                <Link to= {'/user-profile/' + props.currentArticleDetails.author.username}>
-                  <a href='#top'>
-                    <img
-                      className='author-image'
-                      src={props.currentArticleDetails.author.image}
-                      alt='au'
-                    />
-                  </a>
-                  <div className='info'>
-                    <a href='#top' className='author'>
-                      {props.currentArticleDetails && props.currentArticleDetails.author.username}
-                    </a>
+              <div className='article-meta article-source'>
+                <Link
+                  to={
+                    "/user-profile/" +
+                    props.currentArticleDetails.author.username
+                  }>
+                  <img
+                    className='author-image'
+                    src={props.currentArticleDetails.author.image}
+                    alt='au'
+                  />
+                  <div className='info author'>
+                    {props.currentArticleDetails &&
+                      props.currentArticleDetails.author.username}
                     <span className='date'>
                       {dateFormat(
                         props.currentArticleDetails.author.updatedAt,
@@ -49,6 +52,32 @@ const InternalArticleDetails = props => {
                   </div>
                 </Link>
               </div>
+
+              {/* ---------------- Edit and Delete Button ----------------  */}
+              {getUserInformation() && (
+                <div className='edit-button'>
+                  <Link to={`/new_post/${article_slug}`}>
+                    <button
+                      className='btn btn-sm btn-info'
+                      onClick={event => {
+                        // 发送目前slug
+                        // 发送一个请求：https://conduit.productionready.io/api/articles/111-yq91b
+                        // 同时页面跳转: 应该是New Post，但是有数据读进来
+                        // 只需要重新Post这些数据就可以覆盖
+                      }}>
+                      Edit Article
+                    </button>
+                  </Link>
+
+                  <button
+                    className='btn btn-sm btn-warning'
+                    onClick={event => {
+                      // props.onPostCommentsClicked(props.currentSlug, myComment)
+                    }}>
+                    Delete Article
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -61,9 +90,27 @@ const InternalArticleDetails = props => {
             {props.currentArticleDetails.body}
           </div>
         </div>
-        <hr/>
-        <ArticleComments />
+        <hr />
       </div>
+
+      {/* ---------------- Sign in options  ----------------  */}
+      {!getUserInformation() && (
+        <div className='container page'>
+          <div className='row'>
+            <div className='col-md-12'>
+              <Link to='sign_in' onClick={() => history.push("sign_in")}>
+                Sign in
+              </Link>
+              or
+              <Link to='sign_up'> sign up </Link>
+              to add comments on this article.
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ---------------- Comments ----------------  */}
+      {getUserInformation() && <ArticleComments />}
     </div>
   );
 };
@@ -72,13 +119,14 @@ InternalArticleDetails.propTypes = {
   currentArticleDetails: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ currentArticleDetails,currentProfileData }) => {
-  return { currentArticleDetails,currentProfileData };
+const mapStateToProps = ({ currentArticleDetails, currentProfileData }) => {
+  return { currentArticleDetails, currentProfileData };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadInitArticleDetail: article_slug => dispatch(loadInitArticleDetail(article_slug))
+    loadInitArticleDetail: article_slug =>
+      dispatch(loadInitArticleDetail(article_slug))
   };
 };
 

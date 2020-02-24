@@ -9,6 +9,7 @@ import { UserProfile } from "../UserComponent/UserProfile";
 import { ArticleDetails } from "../MainPageComponent/ArticleDetails";
 import PropTypes from "prop-types";
 import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas"
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -19,9 +20,6 @@ import {
 
 
 export const InternalNavbar = props => {
-
-  console.log(getUserInformation());
-  
   return (
     <Router>
       <div>
@@ -34,7 +32,6 @@ export const InternalNavbar = props => {
 
             <ul className='nav navbar-nav pull-xs-right'>
               {getUserInformation() && getUserInformation().token  ? (
-                // && 好像不好吧。。。
                 <div>
                   <li className='nav-item'>
                     <Link className='nav-link active' to='/home'>
@@ -92,11 +89,20 @@ export const InternalNavbar = props => {
             <Redirect to='/home' />
           </Route>
           <Route exact path='/home' component={MainPage} />
+          
+          <Route exact path='/article-detail/sign_in'>
+            <Redirect to='/sign_in' />
+          </Route>
           <Route exact path='/sign_in' component={SignIn} />
+          
+          <Route exact path='/article-detail/sign_up'>
+            <Redirect to='/sign_up' />
+          </Route>
           <Route exact path='/sign_up'component={SignUp} />
+
           <Route path='/user_profile' component={UserProfile} />
           <Route path='/article-detail/:article_slug' component={ArticleDetails} />
-          <Route exact path='/new_post' component={NewPost} />
+          <Route path='/new_post' component={NewPost} />
           <Route exact path='/setting' component={Setting} />
         </Switch>
 

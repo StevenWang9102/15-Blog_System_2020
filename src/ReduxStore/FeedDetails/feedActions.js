@@ -2,7 +2,7 @@ export const INITIALDATA_LOADED = Symbol("INITIALDATA_LOADED");
 export const ARTICLE_DATA_LOADED = Symbol("ARTICLE_DATA_LOADED")
 export const TAGS_DATA_LOADED = Symbol("TAGS_DATA_LOADED")
 export const ARTICLE_TITLE_CLICKED = Symbol("ARTICLE_TITLE_CLICKED")
-export const INIT_ARTICLE_COMMENT_GET = Symbol("INIT_ARTICLE_COMMENT_GET")
+export const INIT_ARTICLE_DETAILS_GET = Symbol("INIT_ARTICLE_DETAILS_GET")
 export const ARTICLE_COMMENTS_LOADED = Symbol("ARTICLE_COMMENTS_LOADED")
 export const ARTICLE_CONTENT_LOADED = Symbol("ARTICLE_CONTENT_LOADED")
 export const POPULAR_TAG_CLICKED = Symbol("POPULAR_TAG_CLICKED")
@@ -23,23 +23,22 @@ export const YOURE_FEED_LOADED = Symbol("YOURE_FEED_LOADED")
 export const FAVORITED_BUTTON_CLICKED = Symbol("FAVORITED_BUTTON_CLICKED")
 export const SMALL_NAV_CLICKED = Symbol("SMALL_NAV_CLICKED")
 export const YOUR_FEED_NAV_CLICKED = Symbol("YOUR_FEED_NAV_CLICKED")
-// SMALL_NAV_SET_CLICKED
 export const SMALL_NAV_SET_CLICKED = Symbol("SMALL_NAV_SET_CLICKED")
-// GLOBAL_DATA_LOADED
 export const GLOBAL_DATA_LOADED = Symbol("GLOBAL_DATA_LOADED")
-
+export const POST_COMMENTS_CLICKED = Symbol("POST_COMMENTS_CLICKED")
+export const POST_ARTICLE_CLICKED = Symbol("POST_ARTICLE_CLICKED")
 
 
 export const loadInitialData = () => {
     return { type: INITIALDATA_LOADED };
 };
-// globalDataLoaded
+
 export const globalDataLoaded = (payload) => {
     return { type: GLOBAL_DATA_LOADED, payload  };
 };
 
 export const loadInitArticleDetail = (slug) =>{
-    return { type: INIT_ARTICLE_COMMENT_GET, slug };
+    return { type: INIT_ARTICLE_DETAILS_GET, slug };
 }
 
 export const articleDataLoaded = (articleData) =>{
@@ -131,8 +130,15 @@ export const smallNavClicked = (status) => {
 export const yourFeedNavClicked = (self) => {
     return { type: YOUR_FEED_NAV_CLICKED, selfStatus: self };
 }
-// setNavStatus
 
 export const setNavStatus = (status1, status2, status3) => {
     return { type: SMALL_NAV_SET_CLICKED, status1: status1, status2: status2, status3: status3 };
+}
+
+export const onPostCommentsClicked = (slug, myComment) => {
+    return { type: POST_COMMENTS_CLICKED, slug: slug, myComment: myComment };
+}
+
+export const onPostArticleClicked = (title, description, content, tags, slug ) => {
+    return { type: POST_ARTICLE_CLICKED, title:title, description:description, content:content, tags:tags, slug:slug };
 }

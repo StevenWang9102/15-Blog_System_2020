@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
 
+import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
+import { Link } from "react-router-dom";
 import dateFormat from "dateformat";
 import {
   loadUserProfileDetail,
@@ -10,19 +11,16 @@ import {
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 const InternalUserProfile = props => {
-  
-  // 这个UserName不需要从URL获取，应该是从内存访问的
-  const userName = getUserInformation.username || null;
+
+  const userName = getUserInformation().username || null;
 
   useEffect(() => {
-    if (userName) {
-      props.loadUserProfileDetail(userName);
-    }
+      userName && props.loadUserProfileDetail(userName);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div> 
+    <div>
       <div className='profile-page'>
 
         {/* ---------------- User Information ---------------- */}
@@ -45,7 +43,10 @@ const InternalUserProfile = props => {
                 </p>
                 <button className='btn btn-sm btn-outline-secondary action-btn'>
                   <i className='ion-plus-round'></i>
-                  &nbsp; + Follow {userName}
+                  <Link className='nav-link' to='/setting'>
+                    <img src='./icon/004-settings.png' alt='setting' />
+                    Edit Profile Setting
+                  </Link>
                 </button>
               </div>
             </div>
@@ -60,20 +61,25 @@ const InternalUserProfile = props => {
               <div className='articles-toggle'>
                 <ul className='nav nav-pills outline-active'>
                   <li className='nav-item'>
-                    <a className='nav-link active' href='#top'>
+                    <Link
+                      to='/user_profile/my_articles'
+                      className='nav-link active'
+                      onClick={() => {
+                        props.loadUserProfileDetail(userName);
+                      }}>
                       My Articles
-                    </a>
+                    </Link>
                   </li>
 
                   <li className='nav-item'>
-                    <a
+                    <Link
+                      to='/user_profile/favorited_articles'
                       className='nav-link'
-                      href='#top'
                       onClick={userName => {
                         props.onFavoritedArticleClicked(userName);
                       }}>
                       Favorited Articles
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -84,26 +90,33 @@ const InternalUserProfile = props => {
                   return (
                     <div className='article-preview' key={index}>
                       <div className='article-meta'>
-                        <a href='#top'>
+                        <Link to={"/user_profile/" + article.author.username}>
                           <img src={article.author.image} alt='au' />
-                        </a>
+                        </Link>
+
                         <div className='info'>
-                          <a href='#top' className='author'>
+                          <Link
+                            to={"/user_profile/" + article.author.username}
+                            className='author'>
                             {article.author.username}
-                          </a>
+                          </Link>
                           <span className='date'>
                             {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
                           </span>
                         </div>
                         <button className='btn btn-outline-primary btn-sm pull-xs-right'>
-                          <i className='ion-heart'></i> {article.favoritesCount}
+                          <i className='ion-heart'></i>
+                          {article.favoritesCount}
                         </button>
                       </div>
-                      <a href='#top' className='preview-link'>
+
+                      <Link
+                        to={"/article-detail/" + article.slug}
+                        className='preview-link'>
                         <h1>{article.title}</h1>
                         <p>{article.description}</p>
                         <span>Read more...</span>
-                      </a>
+                      </Link>
                     </div>
                   );
                 }
