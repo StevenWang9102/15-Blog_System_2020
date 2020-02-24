@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { onPostArticleClicked, loadArticleSettingDetail } from "../../ReduxStore/FeedDetails/feedActions";
+import { onPostArticleClicked, loadArticleSettingDetail, postedArticleReloaded } from "../../ReduxStore/FeedDetails/feedActions";
 import { Redirect } from "react-router-dom";
 
 const InternalNewPost = props => {
 
-  const { slug } = useParams();
-  console.log(slug);
-  
-
+  const { slug } = useParams();  
   const [title, setTitle] = useState((slug && props.currentArticleDetails.title) || "");
   const [description, setDescription] = useState((slug && props.currentArticleDetails.description) || "" );
   const [content, setContent] = useState((slug && props.currentArticleDetails.body)|| "");
@@ -17,10 +14,10 @@ const InternalNewPost = props => {
 
   return (
     <div>
-      {props.article_reloaded ? (
-        <Redirect to={`/article-detail/${props.newSlug}`} />
-      ) : (
-          <div className='auth-page'>
+      {props.article_reloaded ? 
+        <Redirect to={`/article-detail/${props.newPosedArticleSlug}`} /> 
+        : 
+        <div className='auth-page'>
             <div className='editor-page'>
               <div className='container page'>
                 <div className='row'>
@@ -34,7 +31,7 @@ const InternalNewPost = props => {
                             type='text'
                             className='form-control form-control-lg'
                             onChange={event => setTitle(event.target.value)}
-                            value={slug && title}
+                            value={title}
                             placeholder='Article Title'></input>
                         </fieldset>
 
@@ -43,7 +40,7 @@ const InternalNewPost = props => {
                           <input
                             type='text'
                             className='form-control'
-                            value={slug && description}
+                            value={description}
                             onChange={event => setDescription(event.target.value)}
                             placeholder="What's this article about?"></input>
                         </fieldset>
@@ -53,7 +50,7 @@ const InternalNewPost = props => {
                           <textarea
                             className='form-control'
                             rows='8'
-                            value={slug && content}
+                            value={content}
                             onChange={event => setContent(event.target.value)}
                             placeholder='Write your article (in markdown)'></textarea>
                         </fieldset>
@@ -90,20 +87,22 @@ const InternalNewPost = props => {
               </div>
             </div>
           </div>
-        )}
+        }
     </div>
   );
 };
 
-const mapStateToProps = ({ currentSlug, currentArticleDetails, article_reloaded, newSlug }) => {
-  return { currentSlug, currentArticleDetails, article_reloaded, newSlug };
+const mapStateToProps = ({ currentSlug, currentArticleDetails, article_reloaded, newPosedArticleSlug }) => {
+  return { currentSlug, currentArticleDetails, article_reloaded, newPosedArticleSlug };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onPostArticleClicked: (title, description, content, tags, slug) =>
       dispatch(onPostArticleClicked(title, description, content, tags, slug)),
-    loadArticleSettingDetail: slug => dispatch(loadArticleSettingDetail(slug))
+    // loadArticleSettingDetail: slug => dispatch(loadArticleSettingDetail(slug)),
+    // postedArticleReloaded: slug => dispatch(postedArticleReloaded(slug)),
+
   };
 };
 export const NewPost = connect(

@@ -16,11 +16,9 @@ import {
 import { NavLink } from "react-router-dom";
 
 const InternalArticlePreview = props => {
-
   const [httpMethod, setHttpMethod] = useState({});
 
   useEffect(() => {
-  
     if (getUserInformation() && getUserInformation().username) {
       props.setHomeNavStatus(["active", "null", "null"]);
       props.loadPopularTags();
@@ -32,14 +30,11 @@ const InternalArticlePreview = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(props.favorited_article.slug);
-
   return (
     <div className='col-md-9 col-sm-12'>
       <div className='feed-toggle'>
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
-
             {/* ------------------ Your Feed ----------------- */}
             {getUserInformation() && getUserInformation().token && (
               <NavLink
@@ -79,7 +74,7 @@ const InternalArticlePreview = props => {
         </ul>
       </div>
 
-      {/* --------------------- Related Article --------------------- */}
+      {/* --------------------- Related Articles --------------------- */}
       {props.currentHomeDisplayArticle.map((article, index) => {
         return (
           <div className='article-preview' key={index}>
@@ -103,22 +98,21 @@ const InternalArticlePreview = props => {
                 type='button'
                 className='btn btn-outline-primary btn-sm pull-xs-right'
                 onClick={() => {
-                  // 
-                  // 
-                  // 
-                  // 暂时用这个 getUserInformation
-
-                  const tempMethod = {...httpMethod}
-                  
-                  if(tempMethod[article.slug]=== "POST") {
-                    tempMethod[article.slug] = "DELETE"}
-                  else {
-                    tempMethod[article.slug] = "POST"}
-
-                  const token = getUserInformation() && getUserInformation().token;
-                  token && props.onFavoritedButtonClicked(token, article.slug, tempMethod[article.slug]);
-                  setHttpMethod(tempMethod)
-
+                  const tempMethod = { ...httpMethod };
+                  if (tempMethod[article.slug] === "POST") {
+                    tempMethod[article.slug] = "DELETE";
+                  } else {
+                    tempMethod[article.slug] = "POST";
+                  }
+                  const token =
+                    getUserInformation() && getUserInformation().token;
+                  token &&
+                    props.onFavoritedButtonClicked(
+                      token,
+                      article.slug,
+                      tempMethod[article.slug]
+                    );
+                  setHttpMethod(tempMethod);
                 }}>
                 <img src='./icon/002-heart-2.png' alt='love' />
                 {article.favoritesCount}
@@ -184,7 +178,6 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    // 以下似乎很多冗余
     onArticleClick: (title, slug) => dispatch(articleTitleClicked(title, slug)),
     onGlobeFeedClicked: () => dispatch(loadGlobalFeeds()),
     setHomeNavStatus: status => dispatch(setHomeNavStatus(status)),

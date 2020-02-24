@@ -13,7 +13,8 @@ import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
 import {
   loadUserProfileDetail,
   setProfileNavStatus,
-  onSignUpButtonClicked
+  onSignUpButtonClicked,
+  postedArticleReloaded
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 import {
@@ -48,13 +49,13 @@ import {
 
 // ---------------- React-Component -------------------- //
 const InternalNavbar = props => {
-  console.log(getUserInformation());
 
   return (
     <Router>
       <div>
         <nav className='navbar navbar-light'>
           <div className='container'>
+
             {/* --------------- ROUTER LINK --------------- */}
             <Link className='navbar-brand' to='/home'>
               conduit
@@ -70,7 +71,11 @@ const InternalNavbar = props => {
                   </li>
 
                   <li className='nav-item'>
-                    <Link className='nav-link' to='/new_post'>
+                    <Link 
+                      className='nav-link' 
+                      to='/new_post'
+                      onClick={()=>{props.postedArticleReloaded(false)}}  
+                    >
                       <img src='./icon/008-edit.png' alt='' />
                       New Post
                     </Link>
@@ -147,9 +152,7 @@ const InternalNavbar = props => {
           </Route>
           <Route exact path='/sign_up' component={SignUp} />
 
-          {/* <Route path='/user_profile' component={UserProfile} /> */}
           <Route path='/user_profile/:author_name' component={UserProfile} />
-          {/* <Route path='/user_profile' component={UserProfile} /> */}
 
           <Route
             path='/article-detail/:article_slug'
@@ -165,10 +168,13 @@ const InternalNavbar = props => {
   );
 };
 
-InternalNavbar.propTypes = {};
 
-const mapStateToProps = ({ loadUserProfileDetail, loginStatus }) => {
-  return { loadUserProfileDetail, loginStatus };
+InternalNavbar.propTypes = {
+  loadUserProfileDetail: PropTypes.func,
+};
+
+const mapStateToProps = ({ loadUserProfileDetail }) => {
+  return { loadUserProfileDetail };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -176,7 +182,10 @@ const mapDispatchToProps = dispatch => {
     loadUserProfileDetail: () => dispatch(loadUserProfileDetail()),
     setProfileNavStatus: (myNav, favorited_Nav) =>
       dispatch(setProfileNavStatus(myNav, favorited_Nav)),
-    onSignUpButtonClicked: data => dispatch(onSignUpButtonClicked(data))
+    onSignUpButtonClicked: data => dispatch(onSignUpButtonClicked(data)),
+    // postedArticleReloaded
+    postedArticleReloaded: data => dispatch(postedArticleReloaded(data)),
+
   };
 };
 

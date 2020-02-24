@@ -34,9 +34,7 @@ const InternalArticleComments = props => {
                 type="button"
                 className='btn btn-sm btn-primary'
                 onClick={()=>
-                  {
                     props.onPostCommentsClicked(props.currentSlug, myComment)
-                  }
                 }
                 >Post Comment</button>
             </div>
@@ -60,7 +58,7 @@ const InternalArticleComments = props => {
                         <img
                           src={comment.author.image}
                           className='comment-author-img'
-                          alt='au'
+                          alt=''
                         />
                       </a>
                       &nbsp;
