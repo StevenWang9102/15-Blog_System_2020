@@ -43,6 +43,8 @@ const Button = ({ children }) => {
 const InternalUserProfile = props => {
 
   // 测试一下刷新情况
+  console.log("进入简介页面");
+  
 
   const { author_name } = useParams();
 

@@ -7,11 +7,13 @@ import { Redirect } from "react-router-dom";
 const InternalNewPost = props => {
 
   const { slug } = useParams();
+  console.log(slug);
+  
 
-  const [title, setTitle] = useState(slug && (props.currentArticleDetails.title || ""));
-  const [description, setDescription] = useState( slug && (props.currentArticleDetails.description || "" ));
-  const [content, setContent] = useState( slug && (props.currentArticleDetails.body || "" ));
-  const [tags, setTags] = useState(slug && (props.currentArticleDetails.tagList || []));
+  const [title, setTitle] = useState((slug && props.currentArticleDetails.title) || "");
+  const [description, setDescription] = useState((slug && props.currentArticleDetails.description) || "" );
+  const [content, setContent] = useState((slug && props.currentArticleDetails.body)|| "");
+  const [tags, setTags] = useState((slug && props.currentArticleDetails.tagList) || []);
 
   return (
     <div>
@@ -32,7 +34,7 @@ const InternalNewPost = props => {
                             type='text'
                             className='form-control form-control-lg'
                             onChange={event => setTitle(event.target.value)}
-                            value={title}
+                            value={slug && title}
                             placeholder='Article Title'></input>
                         </fieldset>
 
@@ -41,7 +43,7 @@ const InternalNewPost = props => {
                           <input
                             type='text'
                             className='form-control'
-                            value={description}
+                            value={slug && description}
                             onChange={event => setDescription(event.target.value)}
                             placeholder="What's this article about?"></input>
                         </fieldset>
@@ -51,7 +53,7 @@ const InternalNewPost = props => {
                           <textarea
                             className='form-control'
                             rows='8'
-                            value={content}
+                            value={slug && content}
                             onChange={event => setContent(event.target.value)}
                             placeholder='Write your article (in markdown)'></textarea>
                         </fieldset>

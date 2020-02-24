@@ -115,7 +115,7 @@ const InternalArticlePreview = props => {
                   else {
                     tempMethod[article.slug] = "POST"}
 
-                  const token = getUserInformation().token;
+                  const token = getUserInformation() && getUserInformation().token;
                   token && props.onFavoritedButtonClicked(token, article.slug, tempMethod[article.slug]);
                   setHttpMethod(tempMethod)
 
