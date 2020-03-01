@@ -49,6 +49,10 @@ export const feedSaga = function*() {
   const getUserInfoSagaLocal =()=>{
     return getUserFromSession();
   }
+<<<<<<< Updated upstream
+=======
+  
+>>>>>>> Stashed changes
   // const userInfoLocal = getUserFromSession();
   // 一定在方程内部
 // 这句此处还需要思考
