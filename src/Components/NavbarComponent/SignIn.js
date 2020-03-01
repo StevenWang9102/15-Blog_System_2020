@@ -14,7 +14,7 @@ const InternalSignIn = props => {
 
   return (
     <Route>
-      {props.userInformation.token ? 
+      {props.userInformation && props.userInformation.token ? 
         <Redirect to='/home'/>
        : 
         <div className='auth-page'>

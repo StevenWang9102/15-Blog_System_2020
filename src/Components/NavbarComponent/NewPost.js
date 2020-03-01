@@ -76,6 +76,9 @@ const InternalNewPost = props => {
                         className='btn btn-lg pull-xs-right btn-primary'
                         type='button'
                         onClick={() => {
+                          console.log("点击");
+                          console.log(title, description, content, tags, props.currentSlug);
+
                           props.onPostArticleClicked(
                             title,
                             description,

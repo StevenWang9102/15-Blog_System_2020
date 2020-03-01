@@ -9,7 +9,7 @@ import {
   loadUserProfileDetail,
   favoritedArticleNavClicked,
   setProfileNavStatus,
-  updatedYourSetting,
+  updateSettingStatus,
   favoritedButtonClicked
 } from "../../ReduxStore/FeedDetails/feedActions";
 
@@ -46,8 +46,8 @@ const InternalUserProfile = props => {
 
   useEffect(() => {
     props.loadUserProfileDetail(author_name);
-    props.updatedYourSetting("not updated"); // flag of setting status
-    // 这句有啥用
+    props.updateSettingStatus("not updated");
+    // 更新是否改动setting的
 
     if (article_type === "favorited_articles") {
       props.setProfileNavStatus("null", "active");
@@ -197,11 +197,7 @@ InternalUserProfile.propTypes = {
 };
 
 const mapStateToProps = ({ syncReducer, asyncReducer }) => {
-  
-  const {
-    profileNavStatusLeft,
-    profileNavStatusRight,
-  } = syncReducer;
+  const { profileNavStatusLeft, profileNavStatusRight } = syncReducer;
 
   const {
     userInformation,
@@ -234,7 +230,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(
         setProfileNavStatus(profileNavStatusLeft, profileNavStatusRight)
       ),
-    updatedYourSetting: status => dispatch(updatedYourSetting(status)),
+    updateSettingStatus: status => dispatch(updateSettingStatus(status)),
     onFavoritedButtonClicked: (token, slug, httpMethod, author_name) =>
       dispatch(favoritedButtonClicked(token, slug, httpMethod, author_name))
   };

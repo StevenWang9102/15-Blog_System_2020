@@ -232,8 +232,8 @@ export const onUpdateSettingClicked = request => {
   return { type: UPDATE_SETTING_BUTTON_CLICK, request: request };
 };
 
-export const updatedYourSetting = status => {
-  return { type: UPDATED_YOUR_SETTING, status: status };
+export const updateSettingStatus = (status) => {
+  return { type: UPDATED_YOUR_SETTING, status: status};
 };
 
 export const onDeleteArticleClicked = slug => {

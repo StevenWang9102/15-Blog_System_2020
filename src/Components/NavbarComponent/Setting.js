@@ -13,6 +13,7 @@ const InternalSetting = props => {
   const [name, setName] = useState(props.userInformation.username);
   const [bio, setBio] = useState(props.userInformation.bio);
   const [email, setEmail] = useState(props.userInformation.email);
+  const [passWord, setPassWord] = useState("");
 
   return (
     <div>
@@ -68,8 +69,8 @@ const InternalSetting = props => {
                         <input
                           className='form-control form-control-lg'
                           type='password'
-                          // onChange={event => setEmail(event.target.value)}
-                          // value={email}
+                          onChange={event => setPassWord(event.target.value)}
+                          value={passWord}
                           placeholder='Password'></input>
                       </fieldset>
 
@@ -82,7 +83,8 @@ const InternalSetting = props => {
                             image,
                             name,
                             bio,
-                            email
+                            email,
+                            passWord
                           })
                         }>
                         Update Settings

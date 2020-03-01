@@ -15,7 +15,7 @@ const initialState = {
   article_reloaded: false,
   yourNav: "active", 
   favoriteNav: "null",
-  yourSettingStatus:"",
+  yourSettingStatus:"not updated",
   popularNav: "null",
   profileNavStatusLeft: "active",
   profileNavStatusRight: "null",

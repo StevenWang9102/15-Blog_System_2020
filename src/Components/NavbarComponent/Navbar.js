@@ -14,7 +14,8 @@ import {
   setProfileNavStatus,
   onSignUpButtonClicked,
   postedArticleReloaded,
-  userInformationLoaded
+  userInformationLoaded,
+  updateSettingStatus
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 import {
@@ -88,7 +89,10 @@ const InternalNavbar = props => {
 
                   <li className='nav-item'>
                     <Link className='nav-link' to='/setting'>
-                      <img src='./icon/004-settings.png' alt='' />
+                      <img src='./icon/004-settings.png' alt='' 
+                        // onClick={()=>{props.updateSettingStatus("no updated");
+                      // }}
+                      />
                       Setting
                     </Link>
                   </li>
@@ -193,6 +197,7 @@ const mapStateToProps = ({asyncReducer}) => {
 const mapDispatchToProps = dispatch => {
   return {
     loadUserProfileDetail: () => dispatch(loadUserProfileDetail()),
+    updateSettingStatus: status => dispatch(updateSettingStatus(status)),
     setProfileNavStatus: (profileNavStatusLeft, profileNavStatusRight) =>
       dispatch(
         setProfileNavStatus(profileNavStatusLeft, profileNavStatusRight)

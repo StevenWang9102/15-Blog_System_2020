@@ -3,6 +3,7 @@ import {
   TAGS_DATA_LOADED,
   LOG_OUT_BUTTON_CLICK,
   ARTICLE_TITLE_CLICKED,
+  UPDATED_YOUR_SETTING,
   ARTICLE_COMMENTS_LOADED,
   LOAD_INIT_ARTICLE_DETAIL,
   ARTICLE_CONTENT_LOADED,
@@ -70,8 +71,8 @@ export const asyncReducer = (state = initialState, action) => {
         currentHomeDisplayArticle: action.tagRelatedArticles
       };
 
-    // case RELATED_TAG_LOADED:
-    //   return { ...state, currentTagName: action.tagName };
+    // case UPDATED_YOUR_SETTING:
+    //   return { ...state, userInformation: action.info };
 
     case USERS_PROFILE_LOADED:
       return { ...state, currentProfileDetail: action.userProfileData };

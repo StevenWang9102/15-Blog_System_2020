@@ -10,7 +10,8 @@ import {
   loadYourArticles,
   favoritedButtonClicked,
   setHomeNavStatus,
-  loadPopularTags
+  loadPopularTags,
+  updateSettingStatus
 } from "../../ReduxStore/FeedDetails/feedActions";
 // import { NavLink } from "react-router-dom";
 
@@ -18,6 +19,7 @@ const InternalArticlePreview = props => {
   const [httpMethod, setHttpMethod] = useState({});
 
   useEffect(() => {
+    props.updateSettingStatus("not updated"); 
     if (props.userInformation.username) {
       props.setHomeNavStatus("active", "null", "null");
       props.loadPopularTags();
@@ -182,6 +184,7 @@ const mapDispatchToProps = dispatch => {
     setHomeNavStatus: (your, favorite, popular) => dispatch(setHomeNavStatus(your, favorite, popular)),
     onYourFeedClicked: () => dispatch(loadYourArticles()),
     loadYourFeedArticles: () => dispatch(loadYourArticles()),
+    updateSettingStatus: status => dispatch(updateSettingStatus(status)),
     onFavoritedButtonClicked: (token, slug, httpMethod) =>
       dispatch(favoritedButtonClicked(token, slug, httpMethod)),
     loadGlobalFeeds: () => {
