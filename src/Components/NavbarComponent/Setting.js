@@ -77,6 +77,7 @@ const InternalSetting = props => {
                         className='btn btn-lg btn-primary pull-xs-right'
                         type='button'
                         onClick={() =>
+                          // 此处应该重新的清空userInformation
                           props.onUpdateSettingClicked({
                             image,
                             name,

@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import { SignIn } from "./SignIn";
 import { SignUp } from "./SignUp";
 import { MainPage } from "../MainPageComponent/MainPage";
@@ -25,28 +26,34 @@ import {
 } from "react-router-dom";
 import { getUserFromSession } from "../UserComponent/AuthToken";
 
-
-
 const InternalNavbar = props => {
-
-  const getUserInformationLocal = () =>{
-    if(!props.userInformation || (props.userInformation && !props.userInformation.token)){
-      // 上面再细节研究一下，为什么？@@@@@@@@@
-      const userInfo = getUserFromSession();
-      if(userInfo) {
-        props.userInformationLoaded({user:userInfo}); 
-      }// send userInfo to redux store
-      return userInfo;
-    }else{
-      return props.userInformation
-    }
-  }
-
-  console.log(getUserFromSession());
-  // 说明储存目前用户的信息都是失败的。。。
   
+  const getUserInformationLocal = () => {
+    if (
+      !props.userInformation ||
+      (props.userInformation && !props.userInformation.token)
+    ) {
+      // 上面再细节研究一下，为什么？@@@@@@@@@
+      const userInformationOnSession = getUserFromSession();
+      if (userInformationOnSession) {
+        props.userInformationLoaded({ user: userInformationOnSession });
+      }
+      return userInformationOnSession;
+    } else {
+      return props.userInformation;
+    }
+  };
+
+
+  useEffect(() => {
+    getUserInformationLocal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const userInfoLocal = getUserInformationLocal();
+
+
   return (
-    
     <Router>
       <div>
         <nav className='navbar navbar-light'>
@@ -58,12 +65,8 @@ const InternalNavbar = props => {
             </Link>
 
             <ul className='nav navbar-nav pull-xs-right'>
-              {getUserInformationLocal() ? (
-                // 为什么现在登录之后，并不更新状态
-                // 因为这个判据要是从state上面拿到，当发生变化的时候，才会更新Nav
-                // 也就是说，在触发登录按钮的时候，我们要更新userInformation
-                // 确实是设置了 userInformation
-                // 
+
+              {props.userInformation.token ? (  
                 <div>
                   <li className='nav-item'>
                     <Link className='nav-link active' to='/home'>
@@ -94,17 +97,17 @@ const InternalNavbar = props => {
                   <li className='nav-item'>
                     <Link
                       className='nav-link'
-                      // to={`/user_profile/${getUserInformationLocal().username}`}
-                      onClick={() => {
-                        props.loadUserProfileDetail();
-                        props.setProfileNavStatus("active", "null");
-                      }}>
+                      to={`/user_profile/${userInfoLocal.username}`}
+                      // onClick={() => {
+                      //   // props.loadUserProfileDetail();
+                      // }}
+                      >
                       <img
                         className='user-pic'
-                        // src={getUserInformationLocal().image}
+                        src={userInfoLocal.image}
                         alt=''
                       />
-                      {/* {getUserInformationLocal().username} */}
+                      {userInfoLocal.username}
                     </Link>
                   </li>
                 </div>
@@ -153,7 +156,10 @@ const InternalNavbar = props => {
           </Route>
           <Route exact path='/sign_up' component={SignUp} />
 
-          <Route path='/user_profile/:author_name/:article_type' component={UserProfile} />
+          <Route
+            path='/user_profile/:author_name/:article_type'
+            component={UserProfile}
+          />
           <Route path='/user_profile/:author_name' component={UserProfile} />
 
           <Route
@@ -174,8 +180,8 @@ InternalNavbar.propTypes = {
   loadUserProfileDetail: PropTypes.func
 };
 
-const mapStateToProps = ({ loadUserProfileDetail, userInformation }) => {
-  return { loadUserProfileDetail, userInformation };
+const mapStateToProps = ({ userInformation }) => {
+  return { userInformation };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -186,11 +192,8 @@ const mapDispatchToProps = dispatch => {
         setProfileNavStatus(profileNavStatusLeft, profileNavStatusRight)
       ),
     onSignUpButtonClicked: data => dispatch(onSignUpButtonClicked(data)),
-    // postedArticleReloaded
     postedArticleReloaded: data => dispatch(postedArticleReloaded(data)),
-    // userInformationLoaded
-    userInformationLoaded: user => dispatch(userInformationLoaded(user)),
-
+    userInformationLoaded: user => dispatch(userInformationLoaded(user))
   };
 };
 

@@ -19,6 +19,7 @@ import {
   USER_INFORMATION_LOADED,
   CURRENT_PROFILE_ARTICLE_LOADED,
   YOURE_FEED_LOADED,
+  UPDATE_SETTING_BUTTON_CLICK,
   SET_LOG_IN_STSTUS,
   YOUR_FEED_NAV_CLICKED,
   DELETE_YOUR_ARTICLE_DONE,
@@ -164,7 +165,11 @@ export const feedReducer = (state = initialState, action) => {
       return { ...state, loginStatus: action.loginStatus };
 
     case LOG_OUT_BUTTON_CLICK:
-      return { ...state, loginStatus: action.loginStatus };
+      return { 
+        ...state, 
+        loginStatus: action.loginStatus,
+        userInformation:{}
+      };
 
     case UPDATED_YOUR_SETTING:
       return { ...state, yourSettingStatus: action.status };
@@ -180,6 +185,10 @@ export const feedReducer = (state = initialState, action) => {
 
     case ARTICLE_SETTING_DETAIL_LOADED:
       return { ...state, articles_setting: action.data };
+
+    // UPDATE_SETTING_BUTTON_CLICK
+    // case UPDATE_SETTING_BUTTON_CLICK:
+    //   return { ...state, userInformation: {} };
 
     default:
       return state;

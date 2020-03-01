@@ -47,16 +47,13 @@ import {
 export const feedSaga = function*() {
 
   const getUserInfoSagaLocal =()=>{
+    // 一定在方程内部
+    // 这句此处还需要思考
+    // 或是从 redux store 上面拿到
+
     return getUserFromSession();
   }
-<<<<<<< Updated upstream
-=======
-  
->>>>>>> Stashed changes
-  // const userInfoLocal = getUserFromSession();
-  // 一定在方程内部
-// 这句此处还需要思考
-// 或是从 redux store 上面拿到
+
 
 // const getUserInfoSagaLocal= function() {
 //   return select(state => state.userInformation)
@@ -117,7 +114,7 @@ export const feedSaga = function*() {
   yield takeLatest(POST_COMMENTS_CLICKED, function*(action) {
     // console.log(getUserInfoSagaLocal());
 
-    const token = getUserInfoSagaLocal.token;
+    const token = getUserInfoSagaLocal().token;
 
     const url = `/articles/${action.slug}/comments`;
     const message = "Post My Comments";
@@ -224,7 +221,7 @@ export const feedSaga = function*() {
 
   // YOURE_FEED_CLICKED
   yield takeLatest(YOURE_FEED_CLICKED, function*() {
-    const token = getUserInfoSagaLocal.token;
+    const token = getUserInfoSagaLocal().token;
     const url = "/articles/feed?limit=10&offset=0";
     const message = "Load Your Feed";
     const yourArticleData = yield call(
@@ -241,7 +238,7 @@ export const feedSaga = function*() {
 
   // POST_ARTICLE_CLICKED
   yield takeLatest(POST_ARTICLE_CLICKED, function*(action) {
-    const token = getUserInfoSagaLocal.token;
+    const token = getUserInfoSagaLocal().token;
     let url,
       type = "";
     const postData = {};
@@ -278,7 +275,7 @@ export const feedSaga = function*() {
 
   // UPDATE_SETTING_BUTTON_CLICK
   yield takeLatest(UPDATE_SETTING_BUTTON_CLICK, function*(action) {
-    const token = getUserInfoSagaLocal.token;
+    const token = getUserInfoSagaLocal().token;
     const url = "/user";
     const message = "Update User Setting";
     const postData = action.request;
@@ -296,7 +293,7 @@ export const feedSaga = function*() {
 
   // DELETE_ARTICLE_BUTTON
   yield takeLatest(DELETE_ARTICLE_BUTTON, function*(action) {
-    const token = getUserInfoSagaLocal.token;
+    const token = getUserInfoSagaLocal().token;
     const url = `/articles/${action.slug}`;
     const message = "Delete Article";
     const postData = "NothingToPost";

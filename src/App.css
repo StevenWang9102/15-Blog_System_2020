@@ -56,9 +56,9 @@ p{
   text-align: left;
 }
 
-.display-inline
+.nav-item .display-inline
 {
-  display: inline-block !important;
+  display: inline-block;
   margin-right: 15px;
 }
 
@@ -81,15 +81,13 @@ p{
 }
 
 .commonts-container{
-
-  width: 70% !important;
-  text-align:left !important;
-  margin-left: 10% !important;
+  width: 70%;
+  text-align:left;
+  margin-left: 10%;
 }
 
-.hr-setting{
-
-  margin-top: 80px !important;
+.settings-page .hr-setting{
+  margin-top: 80px;
 }
 
 .logout-button{
@@ -111,15 +109,15 @@ p{
 }
 
 .feed-toggle .nav-link{
-  cursor: pointer !important;
+  cursor: pointer;
   text-align: center;
   margin-right: 0;
   width: 130px;
   font-weight: 450;
 }
 
-.user-pic
+.navbar-nav .nav-item .user-pic
 {
-  height: 26px !important;
-  width: 26px !important;
+  height: 26px;
+  width: 26px;
 }

@@ -53,10 +53,11 @@ const InternalUserProfile = props => {
   useEffect(() => {
     props.loadUserProfileDetail(author_name);
     props.updatedYourSetting("still"); // flag of setting status
-    props.setProfileNavStatus("active", "null");
     
     if(article_type === "favorited_articles"){
       props.setProfileNavStatus("null", "active");
+    } else{
+      props.setProfileNavStatus("active", "null");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
