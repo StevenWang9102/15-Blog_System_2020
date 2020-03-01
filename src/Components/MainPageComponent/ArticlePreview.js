@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
 import { Link } from "react-router-dom";
-import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
 import {
   articleTitleClicked,
   loadGlobalFeeds,
@@ -13,17 +12,18 @@ import {
   setHomeNavStatus,
   loadPopularTags
 } from "../../ReduxStore/FeedDetails/feedActions";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 
 const InternalArticlePreview = props => {
   const [httpMethod, setHttpMethod] = useState({});
 
   useEffect(() => {
-    if (getUserInformation() && getUserInformation().username) {
-      props.setHomeNavStatus(["active", "null", "null"]);
+    if (props.userInformation.username) {
+      props.setHomeNavStatus("active", "null", "null");
       props.loadPopularTags();
       props.loadYourFeedArticles();
     } else {
+      props.setHomeNavStatus("active", "active", "null");
       props.loadPopularTags();
       props.loadGlobalFeeds();
     }
@@ -35,40 +35,38 @@ const InternalArticlePreview = props => {
       <div className='feed-toggle'>
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
+
             {/* ------------------ Your Feed ----------------- */}
-            {getUserInformation() && getUserInformation().token && (
-              <NavLink
+            {props.userInformation.token && (
+              <Link
                 onClick={() => {
                   props.onYourFeedClicked();
-                  props.setHomeNavStatus(["active", "null", "null"]);
+                  props.setHomeNavStatus("active", "null", "null");
                 }}
-                className='nav-link display-inline'
-                activeClassName={props.homeNavStatus && props.homeNavStatus[0]}
+                className={`nav-link display-inline ${props.yourNav} `}
                 to='/home#your_feed'>
                 Your Feed
-              </NavLink>
+              </Link>
             )}
 
             {/* ------------------ Global Feed ------------------ */}
-            <NavLink
+            <Link
               onClick={() => {
                 props.onGlobeFeedClicked();
-                props.setHomeNavStatus(["null", "active", "null"]);
+                props.setHomeNavStatus("null", "active", "null");
               }}
-              className='nav-link display-inline'
-              activeClassName={props.homeNavStatus && props.homeNavStatus[1]}
+              className={`nav-link ${props.favoriteNav} display-inline`}
               to='/home#global_feed'>
               Global Feed
-            </NavLink>
+            </Link>
 
             {/* ----------------- Popular Tags --------------- */}
             {props.currentTagName && (
-              <NavLink
-                className='nav-link display-inline'
-                activeClassName={props.homeNavStatus && props.homeNavStatus[2]}
+              <Link
+                className={`nav-link ${props.popularNav} display-inline`}
                 to='/home#popular_tags'>
                 # {props.currentTagName}
-              </NavLink>
+              </Link>
             )}
           </li>
         </ul>
@@ -105,7 +103,7 @@ const InternalArticlePreview = props => {
                     tempMethod[article.slug] = "POST";
                   }
                   const token =
-                    getUserInformation() && getUserInformation().token;
+                  props.userInformation.token;
                   token &&
                     props.onFavoritedButtonClicked(
                       token,
@@ -158,7 +156,9 @@ const mapStateToProps = ({
   userInformation,
   smallNavStatus,
   selfStatus,
-  homeNavStatus,
+  yourNav,
+  favoriteNav,
+  popularNav,
   currentHomeDisplayArticle
 }) => {
   return {
@@ -171,7 +171,9 @@ const mapStateToProps = ({
     yourArticles,
     smallNavStatus,
     selfStatus,
-    homeNavStatus,
+    yourNav,
+    favoriteNav,
+    popularNav,
     currentHomeDisplayArticle
   };
 };
@@ -180,7 +182,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onArticleClick: (title, slug) => dispatch(articleTitleClicked(title, slug)),
     onGlobeFeedClicked: () => dispatch(loadGlobalFeeds()),
-    setHomeNavStatus: status => dispatch(setHomeNavStatus(status)),
+    setHomeNavStatus: (your, favorite, popular) => dispatch(setHomeNavStatus(your, favorite, popular)),
     onYourFeedClicked: () => dispatch(loadYourArticles()),
     loadYourFeedArticles: () => dispatch(loadYourArticles()),
     onFavoritedButtonClicked: (token, slug, httpMethod) =>

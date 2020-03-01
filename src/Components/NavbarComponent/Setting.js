@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { removeUserFromSession } from "../../Components/UserComponent/AuthToken";
-import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
 import {
   logOutButtonClicked,
   onUpdateSettingClicked
@@ -10,10 +9,10 @@ import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 
 const InternalSetting = props => {
-  const [image, setImage] = useState(getUserInformation().image);
-  const [name, setName] = useState(getUserInformation().username);
-  const [bio, setBio] = useState(getUserInformation().bio);
-  const [email, setEmail] = useState(getUserInformation().email);
+  const [image, setImage] = useState(props.userInformation.image);
+  const [name, setName] = useState(props.userInformation.username);
+  const [bio, setBio] = useState(props.userInformation.bio);
+  const [email, setEmail] = useState(props.userInformation.email);
 
   return (
     <div>
@@ -113,8 +112,8 @@ const InternalSetting = props => {
   );
 };
 
-const mapStateToProps = ({ yourSettingStatus }) => {
-  return { yourSettingStatus };
+const mapStateToProps = ({ yourSettingStatus, userInformation }) => {
+  return { yourSettingStatus, userInformation };
 };
 
 const mapDispatchToProps = dispatch => {

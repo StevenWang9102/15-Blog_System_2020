@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
 import { Link, NavLink } from "react-router-dom";
 import dateFormat from "dateformat";
 import { createUseStyles } from "react-jss";
@@ -16,6 +15,7 @@ import {
 
 // ---------------- React-JSS-Configuration -------------------- //
 const useStyles = createUseStyles({
+
   // Public Style
   myButton: {
     "& img": {
@@ -42,12 +42,22 @@ const Button = ({ children }) => {
 
 // ---------------- React-Component -------------------- //
 const InternalUserProfile = props => {
+
+
   const [httpMethod, setHttpMethod] = useState({});
   const { author_name } = useParams();
+  const { article_type } = useParams();
+
+
 
   useEffect(() => {
     props.loadUserProfileDetail(author_name);
     props.updatedYourSetting("still"); // flag of setting status
+    props.setProfileNavStatus("active", "null");
+    
+    if(article_type === "favorited_articles"){
+      props.setProfileNavStatus("null", "active");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
@@ -95,9 +105,8 @@ const InternalUserProfile = props => {
                 <ul className='nav nav-pills outline-active'>
                   <li className='nav-item'>
                     <NavLink
-                      to={`/user_profile/${author_name }/my_articles`}
-                      className='nav-link'
-                      activeClassName={props.profileNavStatusLeft}
+                      to={`/user_profile/${author_name}/my_articles`}
+                      className= {`nav-link ${props.profileNavStatusLeft}`}
                       onClick={() => {
                         props.setProfileNavStatus("active", "null");
                         props.loadUserProfileDetail(author_name);
@@ -109,8 +118,7 @@ const InternalUserProfile = props => {
                   <li className='nav-item'>
                     <NavLink
                       to={`/user_profile/${author_name}/favorited_articles`}
-                      className='nav-link'
-                      activeClassName={ props.profileNavStatusRight}
+                      className= {`nav-link ${props.profileNavStatusRight}`}
                       onClick={() => {
                         props.setProfileNavStatus("null", "active");
                         props.onFavoritedArticleNavClicked(author_name);
@@ -148,7 +156,7 @@ const InternalUserProfile = props => {
                             tempMethod[article.slug] = "POST"}
                           else {
                             tempMethod[article.slug] = "DELETE"}
-                          const token = getUserInformation() && getUserInformation().token;
+                          const token = props.userInformation.token;
                           token && props.onFavoritedButtonClicked(token, article.slug, tempMethod[article.slug], author_name);
                           setHttpMethod(tempMethod)
                         }}

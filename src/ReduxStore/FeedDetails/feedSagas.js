@@ -39,31 +39,24 @@ import {
   POST_COMMENTS_CLICKED,
   postedArticleReloaded,
   currentDisplayArticleLoaded,
-  currentHomeDisplayArticleLoaded,
-  SAVE_USER_INFOR_TO_STORE
+  currentHomeDisplayArticleLoaded
 } from "./feedActions";
 
-export const getUserInformation = function() {
-  return getUserFromSession();
-};
 
-export const getUserInformation2 = function*() {
-  const reduxStoredUserInfo = yield select(state => state.userInformation);
-
-  if (reduxStoredUserInfo) {
-    return reduxStoredUserInfo;
-  } else {
-    const sessionStoredUserInfo = getUserFromSession();
-    if (sessionStoredUserInfo)
-      yield put(userInformationLoaded(sessionStoredUserInfo));
-    return getUserFromSession();
-  }
-};
 
 export const feedSaga = function*() {
-  yield takeLatest(SAVE_USER_INFOR_TO_STORE, function*(action) {
-    yield getUserInformation2(action.userInformation);
-  });
+
+  const getUserInfoSagaLocal =()=>{
+    return getUserFromSession();
+  }
+  // const userInfoLocal = getUserFromSession();
+  // 一定在方程内部
+// 这句此处还需要思考
+// 或是从 redux store 上面拿到
+
+// const getUserInfoSagaLocal= function() {
+//   return select(state => state.userInformation)
+// }
 
   // GLOBAL_FEEDS_LOADED
   yield takeLatest(LOAD_GLOBAL_FEEDS, function*() {
@@ -118,7 +111,10 @@ export const feedSaga = function*() {
 
   // POST_COMMENTS_CLICKED
   yield takeLatest(POST_COMMENTS_CLICKED, function*(action) {
-    const token = getUserInformation().token;
+    // console.log(getUserInfoSagaLocal());
+
+    const token = getUserInfoSagaLocal.token;
+
     const url = `/articles/${action.slug}/comments`;
     const message = "Post My Comments";
     const postData = {};
@@ -145,7 +141,6 @@ export const feedSaga = function*() {
 
   // LOADED_USER_PROFILE
   yield takeLatest(LOADED_USER_PROFILE, function*(action) {
-    // yield getUserInformation2();
     const userName = action.author_name;
 
     const [userProfileData, userRelatedArticles] = yield all([
@@ -164,7 +159,6 @@ export const feedSaga = function*() {
 
   // FAVERATED_NAV_CLICKED
   yield takeLatest(FAVERATED_NAV_CLICKED, function*(action) {
-    yield getUserInformation2();
     const userName = action.author_name;
 
     const favoritedArticlesData = yield call(
@@ -216,14 +210,17 @@ export const feedSaga = function*() {
       "POST"
     );
 
+    console.log(userPostedData);
+    
     setUserOnSession(userPostedData.user);
     yield put(userInformationLoaded(userPostedData));
+    // 此处要设置userInformation 
     yield put(setHomeNavStatus(["active", "null", "null"]));
   });
 
   // YOURE_FEED_CLICKED
   yield takeLatest(YOURE_FEED_CLICKED, function*() {
-    const token = getUserInformation().token;
+    const token = getUserInfoSagaLocal.token;
     const url = "/articles/feed?limit=10&offset=0";
     const message = "Load Your Feed";
     const yourArticleData = yield call(
@@ -240,7 +237,7 @@ export const feedSaga = function*() {
 
   // POST_ARTICLE_CLICKED
   yield takeLatest(POST_ARTICLE_CLICKED, function*(action) {
-    const token = getUserInformation().token;
+    const token = getUserInfoSagaLocal.token;
     let url,
       type = "";
     const postData = {};
@@ -277,7 +274,7 @@ export const feedSaga = function*() {
 
   // UPDATE_SETTING_BUTTON_CLICK
   yield takeLatest(UPDATE_SETTING_BUTTON_CLICK, function*(action) {
-    const token = getUserInformation().token;
+    const token = getUserInfoSagaLocal.token;
     const url = "/user";
     const message = "Update User Setting";
     const postData = action.request;
@@ -295,7 +292,7 @@ export const feedSaga = function*() {
 
   // DELETE_ARTICLE_BUTTON
   yield takeLatest(DELETE_ARTICLE_BUTTON, function*(action) {
-    const token = getUserInformation().token;
+    const token = getUserInfoSagaLocal.token;
     const url = `/articles/${action.slug}`;
     const message = "Delete Article";
     const postData = "NothingToPost";

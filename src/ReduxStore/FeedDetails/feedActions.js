@@ -168,8 +168,8 @@ export const yourFeedNavClicked = self => {
   return { type: YOUR_FEED_NAV_CLICKED, selfStatus: self };
 };
 
-export const setHomeNavStatus = status => {
-  return { type: SET_HOME_NAV_STATUS, status: status };
+export const setHomeNavStatus = (your, favorite, popular) => {
+  return { type: SET_HOME_NAV_STATUS, your:your, favorite:favorite, popular:popular};
 };
 
 export const onPostCommentsClicked = (slug, myComment) => {

@@ -47,10 +47,13 @@ const initialState = {
   smallNavStatus: "active",
   selfStatus: "null",
   article_reloaded: false,
-  myNav: "active",
-  favorited_Nav: "null",
+  // myNav: "active",
+  // favorited_Nav: "null",
   currentDisplayArticle: [],
   currentHomeDisplayArticle: [],
+  yourNav: "active", 
+  favoriteNav: "null",
+  popularNav: "null",
   profileNavStatusLeft: "active",
   profileNavStatusRight: "null",
   favorited_article: {}
@@ -130,7 +133,10 @@ export const feedReducer = (state = initialState, action) => {
     case SET_HOME_NAV_STATUS:
       return {
         ...state,
-        homeNavStatus: action.status
+        // your:your, favorite:favorite, popular:popular};
+        yourNav: action.your,
+        favoriteNav: action.favorite,
+        popularNav: action.popular,
       };
     case LOAD_INIT_ARTICLE_DETAIL:
       return { ...state, currentSlug: action.slug };

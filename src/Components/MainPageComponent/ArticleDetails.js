@@ -11,7 +11,6 @@ import {
 } from "../../ReduxStore/FeedDetails/feedActions";
 import { useParams } from "react-router-dom";
 import { ArticleComments } from "./ArticleComments";
-import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
 import { Route, Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -19,9 +18,9 @@ const InternalArticleDetails = props => {
   const { article_slug } = useParams();
 
   const isAuthorized = () => {
-    if (getUserInformation()) {
+    if (props.userInformation) {
       return (
-        getUserInformation().username ===
+        props.userInformation.username ===
         props.currentArticleDetails.author.username
       );
     }
@@ -112,7 +111,7 @@ const InternalArticleDetails = props => {
           </div>
 
           {/* ---------------- Sign in options  ----------------  */}
-          {!getUserInformation() && (
+          {!props.userInformation && (
             <div className='container page'>
               <div className='row'>
                 <div className='col-md-12'>
@@ -128,7 +127,7 @@ const InternalArticleDetails = props => {
           )}
 
           {/* ---------------- Comments ----------------  */}
-          {getUserInformation() && <ArticleComments />}
+          {props.userInformation && <ArticleComments />}
         </div>
       )}
     </Route>
@@ -143,13 +142,13 @@ const mapStateToProps = ({
   currentArticleDetails,
   currentProfileData,
   userInformation,
-  deleteYourArticleStatus
+  deleteYourArticleStatus,
 }) => {
   return {
     currentArticleDetails,
     currentProfileData,
     userInformation,
-    deleteYourArticleStatus
+    deleteYourArticleStatus,
   };
 };
 
