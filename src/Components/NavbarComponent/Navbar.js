@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { SignIn } from "./SignIn";
 import { SignUp } from "./SignUp";
 import { MainPage } from "../MainPageComponent/MainPage";
@@ -66,7 +66,7 @@ const InternalNavbar = props => {
 
             <ul className='nav navbar-nav pull-xs-right'>
 
-              {props.userInformation.token ? (  
+              {props.userInformation && props.userInformation.token ? (  
                 <div>
                   <li className='nav-item'>
                     <Link className='nav-link active' to='/home'>
@@ -180,8 +180,14 @@ InternalNavbar.propTypes = {
   loadUserProfileDetail: PropTypes.func
 };
 
-const mapStateToProps = ({ userInformation }) => {
-  return { userInformation };
+const mapStateToProps = ({syncReducer}) => {
+  const {
+    userInformation
+  } = syncReducer
+
+  return {
+    userInformation
+  };
 };
 
 const mapDispatchToProps = dispatch => {

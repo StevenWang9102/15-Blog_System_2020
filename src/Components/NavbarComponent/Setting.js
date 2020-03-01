@@ -113,9 +113,14 @@ const InternalSetting = props => {
   );
 };
 
-const mapStateToProps = ({ yourSettingStatus, userInformation }) => {
-  return { yourSettingStatus, userInformation };
+const mapStateToProps = ({syncReducer}) => {
+  const {
+    yourSettingStatus, userInformation   } = syncReducer
+
+  return {
+    yourSettingStatus, userInformation   };
 };
+
 
 const mapDispatchToProps = dispatch => {
   return {

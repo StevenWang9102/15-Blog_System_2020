@@ -15,14 +15,13 @@ import {
 
 // ---------------- React-JSS-Configuration -------------------- //
 const useStyles = createUseStyles({
-
   // Public Style
   myButton: {
     "& img": {
       margin: {
-        top:2,
+        top: 2,
         right: 5,
-        bottom: 2,
+        bottom: 2
       }
     }
   }
@@ -30,7 +29,7 @@ const useStyles = createUseStyles({
 
 const Button = ({ children }) => {
   // Custumized Styles
-  const classes = useStyles(); 
+  const classes = useStyles();
   return (
     <button
       className={`btn btn-sm btn-outline-secondary action-btn ${classes.myButton}`}>
@@ -39,34 +38,28 @@ const Button = ({ children }) => {
   );
 };
 
-
 // ---------------- React-Component -------------------- //
 const InternalUserProfile = props => {
-
-
   const [httpMethod, setHttpMethod] = useState({});
   const { author_name } = useParams();
   const { article_type } = useParams();
 
-
-
   useEffect(() => {
     props.loadUserProfileDetail(author_name);
-    props.updatedYourSetting("still"); // flag of setting status
-    
-    if(article_type === "favorited_articles"){
+    props.updatedYourSetting("not updated"); // flag of setting status
+    // 这句有啥用
+
+    if (article_type === "favorited_articles") {
       props.setProfileNavStatus("null", "active");
-    } else{
+    } else {
       props.setProfileNavStatus("active", "null");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   return (
     <div>
-
       <div className='profile-page'>
-
         {/* ---------------- User Information ---------------- */}
         <div className='user-info'>
           <div className='container'>
@@ -74,16 +67,17 @@ const InternalUserProfile = props => {
               <div className='col-xs-12 col-md-10 offset-md-1'>
                 <img
                   src={
-                    props.currentProfileData.profile &&
-                    props.currentProfileData.profile.image
+                    props.currentProfileDetail.profile &&
+                    props.currentProfileDetail.profile.image
                   }
                   className='user-img'
                   alt='au'
                 />
                 <h4>{author_name}</h4>
                 <p>
-                  {props.currentProfileData && props.currentProfileData.profile &&
-                    props.currentProfileData.profile.bio}
+                  {props.currentProfileDetail &&
+                    props.currentProfileDetail.profile &&
+                    props.currentProfileDetail.profile.bio}
                 </p>
                 <Button>
                   <i className='ion-plus-round'></i>
@@ -100,14 +94,13 @@ const InternalUserProfile = props => {
         <div className='container'>
           <div className='row'>
             <div className='col-xs-12 col-md-10 offset-md-1'>
-              
               {/* ---------------- Navigation ---------------- */}
               <div className='articles-toggle'>
                 <ul className='nav nav-pills outline-active'>
                   <li className='nav-item'>
                     <NavLink
                       to={`/user_profile/${author_name}/my_articles`}
-                      className= {`nav-link ${props.profileNavStatusLeft}`}
+                      className={`nav-link ${props.profileNavStatusLeft}`}
                       onClick={() => {
                         props.setProfileNavStatus("active", "null");
                         props.loadUserProfileDetail(author_name);
@@ -119,7 +112,7 @@ const InternalUserProfile = props => {
                   <li className='nav-item'>
                     <NavLink
                       to={`/user_profile/${author_name}/favorited_articles`}
-                      className= {`nav-link ${props.profileNavStatusRight}`}
+                      className={`nav-link ${props.profileNavStatusRight}`}
                       onClick={() => {
                         props.setProfileNavStatus("null", "active");
                         props.onFavoritedArticleNavClicked(author_name);
@@ -131,7 +124,7 @@ const InternalUserProfile = props => {
               </div>
 
               {/* ---------------- Related Article Area ----------------  */}
-              {props.currentDisplayArticle.map((article, index) => {
+              {props.currentProfileDisplayArticle.map((article, index) => {
                 return (
                   <div className='article-preview' key={index}>
                     <div className='article-meta'>
@@ -149,19 +142,25 @@ const InternalUserProfile = props => {
                           {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
                         </span>
                       </div>
-                      <button 
+                      <button
                         className='btn btn-outline-primary btn-sm pull-xs-right'
                         onClick={() => {
-                          const tempMethod = {...httpMethod}
-                          if(tempMethod[article.slug]=== "DELETE") {
-                            tempMethod[article.slug] = "POST"}
-                          else {
-                            tempMethod[article.slug] = "DELETE"}
+                          const tempMethod = { ...httpMethod };
+                          if (tempMethod[article.slug] === "DELETE") {
+                            tempMethod[article.slug] = "POST";
+                          } else {
+                            tempMethod[article.slug] = "DELETE";
+                          }
                           const token = props.userInformation.token;
-                          token && props.onFavoritedButtonClicked(token, article.slug, tempMethod[article.slug], author_name);
-                          setHttpMethod(tempMethod)
-                        }}
-                      >
+                          token &&
+                            props.onFavoritedButtonClicked(
+                              token,
+                              article.slug,
+                              tempMethod[article.slug],
+                              author_name
+                            );
+                          setHttpMethod(tempMethod);
+                        }}>
                         <i className='ion-heart'></i>
                         {article.favoritesCount}
                       </button>
@@ -177,7 +176,7 @@ const InternalUserProfile = props => {
                   </div>
                 );
               })}
-              {props.currentDisplayArticle.length === 0 && (
+              {props.currentProfileDisplayArticle.length === 0 && (
                 <div className='article-preview'>
                   No articles are here... yet.
                 </div>
@@ -191,41 +190,47 @@ const InternalUserProfile = props => {
 };
 
 InternalUserProfile.propTypes = {
-  currentProfileData: PropTypes.object.isRequired,
+  currentProfileDetail: PropTypes.object.isRequired,
   currentUsersArticles: PropTypes.array.isRequired,
   loadUserProfileDetail: PropTypes.func.isRequired,
   favoritedArticles: PropTypes.array
 };
 
-const mapStateToProps = ({
-  currentProfileData,
-  currentUsersArticles,
-  onFavoritedArticleNavClicked,
-  favoritedArticles,
-  profileNavStatusLeft,
-  profileNavStatusRight,
-  currentDisplayArticle
-}) => {
-  return {
-    currentProfileData,
+const mapStateToProps = ({ syncReducer }) => {
+  const {
+    currentProfileDetail,
     currentUsersArticles,
     onFavoritedArticleNavClicked,
     favoritedArticles,
     profileNavStatusLeft,
     profileNavStatusRight,
-    currentDisplayArticle
+    currentProfileDisplayArticle
+  } = syncReducer;
+
+  return {
+    currentProfileDetail,
+    currentUsersArticles,
+    onFavoritedArticleNavClicked,
+    favoritedArticles,
+    profileNavStatusLeft,
+    profileNavStatusRight,
+    currentProfileDisplayArticle
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadUserProfileDetail: (author_name) => dispatch(loadUserProfileDetail(author_name)),
-    onFavoritedArticleNavClicked: (author_name) => dispatch(favoritedArticleNavClicked(author_name)),
+    loadUserProfileDetail: author_name =>
+      dispatch(loadUserProfileDetail(author_name)),
+    onFavoritedArticleNavClicked: author_name =>
+      dispatch(favoritedArticleNavClicked(author_name)),
     setProfileNavStatus: (profileNavStatusLeft, profileNavStatusRight) =>
-      dispatch(setProfileNavStatus(profileNavStatusLeft, profileNavStatusRight)),
+      dispatch(
+        setProfileNavStatus(profileNavStatusLeft, profileNavStatusRight)
+      ),
     updatedYourSetting: status => dispatch(updatedYourSetting(status)),
     onFavoritedButtonClicked: (token, slug, httpMethod, author_name) =>
-      dispatch(favoritedButtonClicked(token, slug, httpMethod, author_name)),
+      dispatch(favoritedButtonClicked(token, slug, httpMethod, author_name))
   };
 };
 

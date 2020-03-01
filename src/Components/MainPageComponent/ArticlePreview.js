@@ -37,7 +37,7 @@ const InternalArticlePreview = props => {
           <li className='nav-item'>
 
             {/* ------------------ Your Feed ----------------- */}
-            {props.userInformation.token && (
+            {props.userInformation && props.userInformation.token && (
               <Link
                 onClick={() => {
                   props.onYourFeedClicked();
@@ -146,26 +146,26 @@ InternalArticlePreview.propTypes = {
   onArticleClick: PropTypes.func
 };
 
-const mapStateToProps = ({
-  globalArticles,
-  onArticleClick,
-  tagRelatedArticles,
-  favorited_article,
-  currentTagName,
-  yourArticles,
-  userInformation,
-  smallNavStatus,
-  selfStatus,
-  yourNav,
-  favoriteNav,
-  popularNav,
-  currentHomeDisplayArticle
-}) => {
+const mapStateToProps = ({syncReducer}) => {
+  const {
+    globalArticles,
+    onArticleClick,
+    tagRelatedArticles,
+    currentTagName,
+    yourArticles,
+    userInformation,
+    smallNavStatus,
+    selfStatus,
+    yourNav,
+    favoriteNav,
+    popularNav,
+    currentHomeDisplayArticle
+  } = syncReducer
+  
   return {
     globalArticles,
     onArticleClick,
     tagRelatedArticles,
-    favorited_article,
     userInformation,
     currentTagName,
     yourArticles,

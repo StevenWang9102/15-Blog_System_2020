@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { onPostArticleClicked, loadArticleSettingDetail, postedArticleReloaded } from "../../ReduxStore/FeedDetails/feedActions";
+import { onPostArticleClicked } from "../../ReduxStore/FeedDetails/feedActions";
 import { Redirect } from "react-router-dom";
 
 const InternalNewPost = props => {
@@ -92,17 +92,20 @@ const InternalNewPost = props => {
   );
 };
 
-const mapStateToProps = ({ currentSlug, currentArticleDetails, article_reloaded, newPosedArticleSlug }) => {
-  return { currentSlug, currentArticleDetails, article_reloaded, newPosedArticleSlug };
+const mapStateToProps = ({syncReducer}) => {
+  const {
+    currentSlug, currentArticleDetails, article_reloaded, newPosedArticleSlug
+  } = syncReducer
+
+  return {
+    currentSlug, currentArticleDetails, article_reloaded, newPosedArticleSlug
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onPostArticleClicked: (title, description, content, tags, slug) =>
       dispatch(onPostArticleClicked(title, description, content, tags, slug)),
-    // loadArticleSettingDetail: slug => dispatch(loadArticleSettingDetail(slug)),
-    // postedArticleReloaded: slug => dispatch(postedArticleReloaded(slug)),
-
   };
 };
 export const NewPost = connect(

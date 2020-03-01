@@ -66,8 +66,12 @@ export const InternalSignUp = props => {
   );
 };
 
-const mapStateToProps = state => {
-  return { ...state };
+const mapStateToProps = ({syncReducer}) => {
+  const {
+    signUpStatus  } = syncReducer
+
+  return {
+    signUpStatus  };
 };
 
 const mapDispatchToProps = dispatch => {

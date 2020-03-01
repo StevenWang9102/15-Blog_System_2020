@@ -4,6 +4,7 @@ import {
   setUserOnSession
 } from "../../Components/UserComponent/AuthToken";
 import {
+  // 如何分成两类
   LOAD_GLOBAL_FEEDS,
   LOAD_INIT_ARTICLE_DETAIL,
   signUpUserLoaded,
@@ -32,7 +33,7 @@ import {
   DELETE_ARTICLE_BUTTON,
   SIGN_IN_BUTTON_CLICKED,
   userInformationLoaded,
-  YOURE_FEED_CLICKED,
+  LOAD_YOUR_FEED,
   yourFeedsLoaded,
   FAVORITED_BUTTON_CLICKED,
   setHomeNavStatus,
@@ -40,7 +41,7 @@ import {
   postedArticleReloaded,
   currentDisplayArticleLoaded,
   currentHomeDisplayArticleLoaded
-} from "./feedActions";
+} from "../FeedDetails/feedActions";
 
 
 
@@ -219,8 +220,8 @@ export const feedSaga = function*() {
     yield put(setHomeNavStatus(["active", "null", "null"]));
   });
 
-  // YOURE_FEED_CLICKED
-  yield takeLatest(YOURE_FEED_CLICKED, function*() {
+  // LOAD_YOUR_FEED
+  yield takeLatest(LOAD_YOUR_FEED, function*() {
     const token = getUserInfoSagaLocal().token;
     const url = "/articles/feed?limit=10&offset=0";
     const message = "Load Your Feed";

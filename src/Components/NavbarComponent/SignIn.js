@@ -61,9 +61,15 @@ const InternalSignIn = props => {
   );
 };
 
-const mapStateToProps = state => {
-  return { ...state };
+
+const mapStateToProps = ({syncReducer}) => {
+  const {
+    userInformation  } = syncReducer
+
+  return {
+    userInformation  };
 };
+
 
 const mapDispatchToProps = dispatch => {
   return {

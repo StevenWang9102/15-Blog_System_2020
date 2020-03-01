@@ -138,16 +138,17 @@ InternalArticleDetails.propTypes = {
   currentArticleDetails: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({
-  currentArticleDetails,
-  currentProfileData,
-  userInformation,
-  deleteYourArticleStatus,
-}) => {
+
+const mapStateToProps = ({syncReducer}) => {
+  const {
+    currentArticleDetails,
+    userInformation,
+    deleteYourArticleStatus,
+  } = syncReducer
+  
   return {
     currentArticleDetails,
-    currentProfileData,
-    userInformation,
+   userInformation,
     deleteYourArticleStatus,
   };
 };

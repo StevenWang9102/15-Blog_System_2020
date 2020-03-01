@@ -17,7 +17,7 @@ export const FAVERATED_NAV_CLICKED = Symbol("FAVERATED_NAV_CLICKED");
 export const FAVERATED_ARITICLE_LOADED = Symbol("FAVERATED_ARITICLE_LOADED");
 export const SIGN_IN_BUTTON_CLICKED = Symbol("SIGN_IN_BUTTON_CLICKED");
 export const USER_INFORMATION_LOADED = Symbol("USER_INFORMATION_LOADED");
-export const YOURE_FEED_CLICKED = Symbol("YOURE_FEED_CLICKED");
+export const LOAD_YOUR_FEED = Symbol("LOAD_YOUR_FEED");
 export const YOURE_FEED_LOADED = Symbol("YOURE_FEED_LOADED");
 export const FAVORITED_BUTTON_CLICKED = Symbol("FAVORITED_BUTTON_CLICKED");
 export const YOUR_FEED_NAV_CLICKED = Symbol("YOUR_FEED_NAV_CLICKED");
@@ -48,7 +48,7 @@ export const DELETE_ARTICLE_BUTTON = Symbol("DELETE_ARTICLE_BUTTON");
 export const DELETE_YOUR_ARTICLE_DONE = Symbol("DELETE_YOUR_ARTICLE_DONE");
 export const SIGN_UP_BUTTON_CLICK = Symbol("SIGN_UP_BUTTON_CLICK");
 export const SIGN_UP_USER_LOADED = Symbol("SIGN_UP_USER_LOADED");
-export const FAVORITED_ARTICLES_LOADED = Symbol("FAVORITED_ARTICLES_LOADED");
+// export const FAVORITED_ARTICLES_LOADED = Symbol("FAVORITED_ARTICLES_LOADED");
 export const LOAD_ARTICLE_SETTING_DETAIL = Symbol(
   "LOAD_ARTICLE_SETTING_DETAIL"
 );
@@ -142,7 +142,7 @@ export const userInformationLoaded = payload => {
 };
 
 export const loadYourArticles = () => {
-  return { type: YOURE_FEED_CLICKED };
+  return { type: LOAD_YOUR_FEED };
 };
 
 export const yourFeedsLoaded = articles => {
@@ -224,9 +224,6 @@ export const saveUserInformationToStore = userInformation => {
   return { type: SAVE_USER_INFOR_TO_STORE, userInformation: userInformation };
 };
 
-export const logOutButtonClicked = status => {
-  return { type: LOG_OUT_BUTTON_CLICK, loginStatus: status };
-};
 
 export const onUpdateSettingClicked = request => {
   return { type: UPDATE_SETTING_BUTTON_CLICK, request: request };
@@ -255,10 +252,6 @@ export const onSignUpButtonClicked = (userName, email, password) => {
 
 export const signUpUserLoaded = data => {
   return { type: SIGN_UP_USER_LOADED, data: data };
-};
-
-export const favoritedArticlesLoaded = data => {
-  return { type: FAVORITED_ARTICLES_LOADED, data: data };
 };
 
 export const loadArticleSettingDetail = slug => {

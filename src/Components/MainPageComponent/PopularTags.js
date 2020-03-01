@@ -41,8 +41,14 @@ InternalPopularTages.propTypes = {
   onPopularTagClicked: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ popularTags }) => {
-  return { popularTags };
+const mapStateToProps = ({syncReducer}) => {
+  const {
+    popularTags
+  } = syncReducer
+
+  return {
+    popularTags
+  };
 };
 
 const mapDispatchToProps = dispatch => {
