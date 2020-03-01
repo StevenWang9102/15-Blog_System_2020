@@ -146,18 +146,21 @@ InternalArticlePreview.propTypes = {
   onArticleClick: PropTypes.func
 };
 
-const mapStateToProps = ({syncReducer}) => {
+const mapStateToProps = ({syncReducer, asyncReducer}) => {
   const {
-    globalArticles,
-    onArticleClick,
     tagRelatedArticles,
     currentTagName,
-    userInformation,
     yourNav,
     favoriteNav,
     popularNav,
+  } = syncReducer; 
+
+  const {
+    userInformation,
+    globalArticles,
+    onArticleClick,
     currentHomeDisplayArticle
-  } = syncReducer
+  } = asyncReducer;
   
   return {
     globalArticles,

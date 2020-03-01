@@ -22,7 +22,7 @@ const InternalPopularTages = props => {
                 onClick = {()=> {
                   const tag = tagName
                   props.onPopularTagClicked(tag)
-                  props.setHomeNavStatus(['null', 'null', 'active'])
+                  props.setHomeNavStatus('null', 'null', 'active')
                 }}
                 to='/home#popular_tags'
                 >
@@ -41,10 +41,10 @@ InternalPopularTages.propTypes = {
   onPopularTagClicked: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({syncReducer}) => {
+const mapStateToProps = ({asyncReducer}) => {
   const {
     popularTags
-  } = syncReducer
+  } = asyncReducer
 
   return {
     popularTags
@@ -54,7 +54,7 @@ const mapStateToProps = ({syncReducer}) => {
 const mapDispatchToProps = dispatch => {
   return {
     onPopularTagClicked: (tagName) => dispatch(popularTagClicked(tagName)),
-    setHomeNavStatus: (status) => dispatch(setHomeNavStatus(status)),
+    setHomeNavStatus: (your, favorited, popular) => dispatch(setHomeNavStatus(your, favorited, popular)),
   };
 };
 

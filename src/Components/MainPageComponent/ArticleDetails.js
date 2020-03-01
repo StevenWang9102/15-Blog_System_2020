@@ -139,16 +139,19 @@ InternalArticleDetails.propTypes = {
 };
 
 
-const mapStateToProps = ({syncReducer}) => {
+const mapStateToProps = ({syncReducer, asyncReducer}) => {
   const {
-    currentArticleDetails,
-    userInformation,
     deleteYourArticleStatus,
   } = syncReducer
+
+  const {
+    userInformation,
+    currentArticleDetails,
+  } = asyncReducer
   
   return {
     currentArticleDetails,
-   userInformation,
+    userInformation,
     deleteYourArticleStatus,
   };
 };

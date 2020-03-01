@@ -2,9 +2,9 @@ import {
   LOAD_YOUR_FEED,
   LOAD_GLOBAL_FEEDS,
   SIGN_UP_USER_LOADED,
-  LOG_OUT_BUTTON_CLICK,
   UPDATED_YOUR_SETTING,
   DELETE_YOUR_ARTICLE_DONE,
+  POPULAR_TAG_CLICKED,
   SET_HOME_NAV_STATUS,
   POSTED_ARTICLE_RELOADED,
   EDIT_ARTICLE_BUTTON_CLICKED,
@@ -12,7 +12,6 @@ import {
 } from "./feedActions";
 
 const initialState = {  
-  userInformation: {},
   article_reloaded: false,
   yourNav: "active", 
   favoriteNav: "null",
@@ -52,12 +51,6 @@ export const syncReducer = (state = initialState, action) => {
         profileNavStatusRight: action.profileNavStatusRight
       };
 
-    case LOG_OUT_BUTTON_CLICK:
-      return { 
-        ...state, 
-        userInformation:{}
-      };
-
     case UPDATED_YOUR_SETTING:
       return { ...state, yourSettingStatus: action.status };
 
@@ -67,6 +60,10 @@ export const syncReducer = (state = initialState, action) => {
     case SIGN_UP_USER_LOADED:
       return { ...state, signUpStatus: action.data };
 
+      // POPULAR_TAG_CLICKED
+      case POPULAR_TAG_CLICKED:
+        return { ...state, currentTagName: action.tagName };
+  
     default:
       return state;
   }

@@ -5,6 +5,8 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+
+
 const InternalSignIn = props => {
   
   const [email, setEmail] = useState("");
@@ -62,12 +64,15 @@ const InternalSignIn = props => {
 };
 
 
-const mapStateToProps = ({syncReducer}) => {
+const mapStateToProps = ({asyncReducer}) => {
+
   const {
-    userInformation  } = syncReducer
+    userInformation  
+  } = asyncReducer
 
   return {
-    userInformation  };
+    userInformation  
+  };
 };
 
 

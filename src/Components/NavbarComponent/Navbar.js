@@ -180,10 +180,10 @@ InternalNavbar.propTypes = {
   loadUserProfileDetail: PropTypes.func
 };
 
-const mapStateToProps = ({syncReducer}) => {
+const mapStateToProps = ({asyncReducer}) => {
   const {
     userInformation
-  } = syncReducer
+  } = asyncReducer
 
   return {
     userInformation

@@ -48,13 +48,13 @@ export const DELETE_ARTICLE_BUTTON = Symbol("DELETE_ARTICLE_BUTTON");
 export const DELETE_YOUR_ARTICLE_DONE = Symbol("DELETE_YOUR_ARTICLE_DONE");
 export const SIGN_UP_BUTTON_CLICK = Symbol("SIGN_UP_BUTTON_CLICK");
 export const SIGN_UP_USER_LOADED = Symbol("SIGN_UP_USER_LOADED");
-// export const FAVORITED_ARTICLES_LOADED = Symbol("FAVORITED_ARTICLES_LOADED");
 export const LOAD_ARTICLE_SETTING_DETAIL = Symbol(
   "LOAD_ARTICLE_SETTING_DETAIL"
 );
 export const ARTICLE_SETTING_DETAIL_LOADED = Symbol(
   "ARTICLE_SETTING_DETAIL_LOADED"
 );
+
 
 // ---------------------------     Functions     --------------------------------
 export const loadGlobalFeeds = () => {
@@ -105,9 +105,9 @@ export const globeFeedClicked = () => {
   return { type: GLOBLE_FEED_CLICKED };
 };
 
-export const relatedTagLoaded = tagName => {
-  return { type: RELATED_TAG_LOADED, tagName };
-};
+// export const relatedTagLoaded = tagName => {
+//   return { type: RELATED_TAG_LOADED, tagName };
+// };
 
 export const loadUserProfileDetail = author_name => {
   return { type: LOADED_USER_PROFILE, author_name: author_name };
@@ -224,6 +224,9 @@ export const saveUserInformationToStore = userInformation => {
   return { type: SAVE_USER_INFOR_TO_STORE, userInformation: userInformation };
 };
 
+export const logOutButtonClicked = status => {
+  return { type: LOG_OUT_BUTTON_CLICK, loginStatus: status };
+};
 
 export const onUpdateSettingClicked = request => {
   return { type: UPDATE_SETTING_BUTTON_CLICK, request: request };

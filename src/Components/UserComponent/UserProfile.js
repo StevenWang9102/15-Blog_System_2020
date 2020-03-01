@@ -196,18 +196,24 @@ InternalUserProfile.propTypes = {
   favoritedArticles: PropTypes.array
 };
 
-const mapStateToProps = ({ syncReducer }) => {
+const mapStateToProps = ({ syncReducer, asyncReducer }) => {
+  
   const {
+    profileNavStatusLeft,
+    profileNavStatusRight,
+  } = syncReducer;
+
+  const {
+    userInformation,
     currentProfileDetail,
     currentUsersArticles,
     onFavoritedArticleNavClicked,
     favoritedArticles,
-    profileNavStatusLeft,
-    profileNavStatusRight,
     currentProfileDisplayArticle
-  } = syncReducer;
+  } = asyncReducer;
 
   return {
+    userInformation,
     currentProfileDetail,
     currentUsersArticles,
     onFavoritedArticleNavClicked,
