@@ -12,7 +12,7 @@ export const RELATED_TAG_LOADED = Symbol("RELATED_TAG_LOADED");
 export const GLOBLE_FEED_CLICKED = Symbol("GLOBLE_FEED_CLICKED");
 export const LOADED_USER_PROFILE = Symbol("LOADED_USER_PROFILE");
 export const USERS_PROFILE_LOADED = Symbol("USERS_PROFILE_LOADED");
-export const USERS_RELATED_ARTICLES_LOADED = Symbol(  "USERS_RELATED_ARTICLES_LOADED" );
+export const USERS_RELATED_ARTICLES_LOADED = Symbol("USERS_RELATED_ARTICLES_LOADED");
 export const FAVERATED_NAV_CLICKED = Symbol("FAVERATED_NAV_CLICKED");
 export const FAVERATED_ARITICLE_LOADED = Symbol("FAVERATED_ARITICLE_LOADED");
 export const SIGN_IN_BUTTON_CLICKED = Symbol("SIGN_IN_BUTTON_CLICKED");
@@ -26,6 +26,8 @@ export const GLOBAL_FEED_DATA_LOADED = Symbol("GLOBAL_FEED_DATA_LOADED");
 export const POST_COMMENTS_CLICKED = Symbol("POST_COMMENTS_CLICKED");
 export const POST_ARTICLE_CLICKED = Symbol("POST_ARTICLE_CLICKED");
 export const POSTED_ARTICLE_RELOADED = Symbol("POSTED_ARTICLE_RELOADED");
+export const FOLLOW_AUTHOR_CLICKED = Symbol("FOLLOW_AUTHOR_CLICKED");
+
 export const EDIT_ARTICLE_BUTTON_CLICKED = Symbol(
   "EDIT_ARTICLE_BUTTON_CLICKED"
 );
@@ -54,7 +56,10 @@ export const LOAD_ARTICLE_SETTING_DETAIL = Symbol(
 export const ARTICLE_SETTING_DETAIL_LOADED = Symbol(
   "ARTICLE_SETTING_DETAIL_LOADED"
 );
-
+// FOLLOW_AUTHOR_LOADED
+export const FOLLOW_AUTHOR_LOADED = Symbol(
+  "FOLLOW_AUTHOR_LOADED"
+);
 
 // ---------------------------     Functions     --------------------------------
 export const loadGlobalFeeds = () => {
@@ -104,10 +109,6 @@ export const tagRelatedArticleLoaded = tagRelatedArticles => {
 export const globeFeedClicked = () => {
   return { type: GLOBLE_FEED_CLICKED };
 };
-
-// export const relatedTagLoaded = tagName => {
-//   return { type: RELATED_TAG_LOADED, tagName };
-// };
 
 export const loadUserProfileDetail = author_name => {
   return { type: LOADED_USER_PROFILE, author_name: author_name };
@@ -169,7 +170,7 @@ export const yourFeedNavClicked = self => {
 };
 
 export const setHomeNavStatus = (your, favorite, popular) => {
-  return { type: SET_HOME_NAV_STATUS, your:your, favorite:favorite, popular:popular};
+  return { type: SET_HOME_NAV_STATUS, your: your, favorite: favorite, popular: popular };
 };
 
 export const onPostCommentsClicked = (slug, myComment) => {
@@ -233,7 +234,7 @@ export const onUpdateSettingClicked = request => {
 };
 
 export const updateSettingStatus = (status) => {
-  return { type: UPDATED_YOUR_SETTING, status: status};
+  return { type: UPDATED_YOUR_SETTING, status: status };
 };
 
 export const onDeleteArticleClicked = slug => {
@@ -263,4 +264,14 @@ export const loadArticleSettingDetail = slug => {
 
 export const articleSettingContentLoaded = data => {
   return { type: ARTICLE_SETTING_DETAIL_LOADED, data: data };
+};
+
+// onFollowAuthorClick
+export const onFollowAuthorClick = (author_name, method) => {
+  return { type: FOLLOW_AUTHOR_CLICKED, author_name: author_name, method:method };
+};
+
+// followAuthorLoaded
+export const followAuthorLoaded = data => {
+  return { type: FOLLOW_AUTHOR_LOADED, data: data };
 };

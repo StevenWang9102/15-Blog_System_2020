@@ -44,6 +44,8 @@ import {
   UPDATE_SETTING_BUTTON_CLICK,
   updateSettingStatus,
   DELETE_ARTICLE_BUTTON,
+  FOLLOW_AUTHOR_CLICKED,
+  followAuthorLoaded,
 } from "./feedActions";
 
 
@@ -57,6 +59,8 @@ export const postSaga = function*(){
       "/articles?limit=50&offset=10",
       "Load Global Feeds"
     );
+    console.log(initArticData);
+    
     yield put(articleDataLoaded(initArticData["articles"]));
   });
 
@@ -142,7 +146,9 @@ export const postSaga = function*(){
       )
     ]);
 
-    yield put(userProfileDataLoaded(userProfileData));
+    console.log(userProfileData);
+    
+    yield put(userProfileDataLoaded(userProfileData.profile));
     yield put(userRelatedArticlesLoaded(userRelatedArticles.articles));
     yield put(currentDisplayArticleLoaded(userRelatedArticles.articles));
   });
@@ -322,6 +328,30 @@ export const postSaga = function*(){
       "DELETE"
     );
     yield put(deleteYourArticle(deleteArticle));
+  });
+
+  // FOLLOW_AUTHOR_CLICKED
+  yield takeLatest(FOLLOW_AUTHOR_CLICKED, function*(action) {
+    const token = getUserInfoSagaLocal().token;
+    console.log(token);
+    
+    // https://conduit.productionready.io/api/profiles/sid893/follow
+    // const url = `/articles/${action.slug}`;
+    const url = `/profiles/${action.author_name}/follow`;
+    const message = 'Follow  SUCCESS';
+    const postData = "NothingToPost";
+    const followAuthor = yield call(
+      postDataToServerAll,
+      token,
+      url,
+      postData,
+      message,
+      action.method
+    );
+    console.log(followAuthor);
+    
+    yield put(userProfileDataLoaded(followAuthor.profile));
+    // 
   });
 };
 

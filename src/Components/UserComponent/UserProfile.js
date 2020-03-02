@@ -10,7 +10,8 @@ import {
   favoritedArticleNavClicked,
   setProfileNavStatus,
   updateSettingStatus,
-  favoritedButtonClicked
+  favoritedButtonClicked,
+  onFollowAuthorClick
 } from "../../ReduxStore/FeedDetails/feedActions";
 
 // ---------------- React-JSS-Configuration -------------------- //
@@ -57,6 +58,8 @@ const InternalUserProfile = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // console.log(props.currentProfileDetail);
+
   return (
     <div>
       <div className='profile-page'>
@@ -67,8 +70,8 @@ const InternalUserProfile = props => {
               <div className='col-xs-12 col-md-10 offset-md-1'>
                 <img
                   src={
-                    props.currentProfileDetail.profile &&
-                    props.currentProfileDetail.profile.image
+                    props.currentProfileDetail &&
+                    props.currentProfileDetail.image
                   }
                   className='user-img'
                   alt='au'
@@ -76,14 +79,26 @@ const InternalUserProfile = props => {
                 <h4>{author_name}</h4>
                 <p>
                   {props.currentProfileDetail &&
-                    props.currentProfileDetail.profile &&
-                    props.currentProfileDetail.profile.bio}
+                    props.currentProfileDetail.bio}
                 </p>
                 <Button>
+                  {/* 
+                  // 
+                  // 
+                   */}
                   <i className='ion-plus-round'></i>
-                  <a className='nav-link'>
+                  <a
+                    className='nav-link'
+                    onClick={() => {
+                      if(props.currentProfileDetail.following === false)
+                        props.onFollowAuthorClick(author_name, "POST")
+                      else 
+                        props.onFollowAuthorClick(author_name, "DELETE");
+                    }}>
                     <img src='./icon/004-settings.png' alt='' />
-                    <b>+</b> Follow {author_name} Now
+                    {/* {props.currentProfileDetail.following} */}
+                    {/* {props.currentProfileDetail.following} */}
+                    {props.currentProfileDetail.following? `- Unfollow ${author_name}` : `+ Follow ${author_name} Now`}
                   </a>
                 </Button>
               </div>
@@ -205,7 +220,8 @@ const mapStateToProps = ({ syncReducer, asyncReducer }) => {
     currentUsersArticles,
     onFavoritedArticleNavClicked,
     favoritedArticles,
-    currentProfileDisplayArticle
+    currentProfileDisplayArticle,
+    followAuthorStatus
   } = asyncReducer;
 
   return {
@@ -216,7 +232,8 @@ const mapStateToProps = ({ syncReducer, asyncReducer }) => {
     favoritedArticles,
     profileNavStatusLeft,
     profileNavStatusRight,
-    currentProfileDisplayArticle
+    currentProfileDisplayArticle,
+    followAuthorStatus
   };
 };
 
@@ -232,7 +249,8 @@ const mapDispatchToProps = dispatch => {
       ),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
     onFavoritedButtonClicked: (token, slug, httpMethod, author_name) =>
-      dispatch(favoritedButtonClicked(token, slug, httpMethod, author_name))
+      dispatch(favoritedButtonClicked(token, slug, httpMethod, author_name)),
+    onFollowAuthorClick: (author_name, method) => dispatch(onFollowAuthorClick(author_name, method)),
   };
 };
 

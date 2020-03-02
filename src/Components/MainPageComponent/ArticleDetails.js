@@ -111,7 +111,7 @@ const InternalArticleDetails = props => {
           </div>
 
           {/* ---------------- Sign in options  ----------------  */}
-          {!props.userInformation && (
+          {!props.userInformation.token && (
             <div className='container page'>
               <div className='row'>
                 <div className='col-md-12'>
@@ -119,7 +119,7 @@ const InternalArticleDetails = props => {
                     Sign in
                   </Link>
                   or
-                  <Link to='sign_up'> sign up </Link>
+                  <Link to='sign_up'> Sign up </Link>
                   to add comments on this article.
                 </div>
               </div>
@@ -127,7 +127,7 @@ const InternalArticleDetails = props => {
           )}
 
           {/* ---------------- Comments ----------------  */}
-          {props.userInformation && <ArticleComments />}
+          {props.userInformation.token && <ArticleComments />}
         </div>
       )}
     </Route>

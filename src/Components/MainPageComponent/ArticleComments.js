@@ -26,7 +26,7 @@ const InternalArticleComments = props => {
             </div>
             <div className='card-footer'>
               <img
-                src='http://i.imgur.com/Qr71crq.jpg'
+                src={props.userInformation.image}
                 className='comment-author-img'
                 alt='au'
               />
@@ -85,11 +85,11 @@ InternalArticleComments.propTypes = {
 
 const mapStateToProps = ({ asyncReducer}) => {
   const {
-    currentComments, currentSlug
+    currentComments, currentSlug, userInformation
   } = asyncReducer
   
   return {
-    currentComments, currentSlug
+    currentComments, currentSlug, userInformation
   };
 };
 

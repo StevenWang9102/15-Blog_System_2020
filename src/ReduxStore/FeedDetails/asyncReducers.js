@@ -3,8 +3,9 @@ import {
   TAGS_DATA_LOADED,
   LOG_OUT_BUTTON_CLICK,
   ARTICLE_TITLE_CLICKED,
-  UPDATED_YOUR_SETTING,
+  FOLLOW_AUTHOR_LOADED,
   ARTICLE_COMMENTS_LOADED,
+  LOADED_USER_PROFILE,
   LOAD_INIT_ARTICLE_DETAIL,
   ARTICLE_CONTENT_LOADED,
   TAG_RELATED_ARTICLE_LOADED,
@@ -33,6 +34,7 @@ const initialState = {
   userInformation: {},
   currentProfileDisplayArticle: [],
   currentHomeDisplayArticle: [],
+  followAuthorStatus: false,
 };
 
 export const asyncReducer = (state = initialState, action) => {
@@ -113,6 +115,9 @@ export const asyncReducer = (state = initialState, action) => {
 
     case ARTICLE_SETTING_DETAIL_LOADED:
       return { ...state, articles_setting: action.data };
+    
+    case FOLLOW_AUTHOR_LOADED:
+      return { ...state, followAuthorStatus: action.data };
 
     default:
       return state;
