@@ -42,8 +42,9 @@ export const asyncReducer = (state = initialState, action) => {
     case ARTICLE_DATA_LOADED:
       return {
         ...state,
-        globalArticles: action.articleData,
-        currentHomeDisplayArticle: action.articleData
+        globalArticles: action.articleData["articles"],
+        currentHomeDisplayArticle: action.articleData["articles"],
+        articleCount: action.articleData["articlesCount"]
       };
 
     case TAGS_DATA_LOADED:
@@ -82,12 +83,19 @@ export const asyncReducer = (state = initialState, action) => {
     case USERS_RELATED_ARTICLES_LOADED:
       return {
         ...state,
-        currentUsersArticles: action.userRelatedArticles,
-        currentProfileDisplayArticle: action.userRelatedArticles
+        currentUsersArticles: action.userRelatedArticles.articles,
+        currentProfileDisplayArticle: action.userRelatedArticles.articles,
+        // 
+        // 
+        // 
+        articleCount: action.userRelatedArticles.articlesCount
       };
 
     case FAVERATED_ARITICLE_LOADED:
-      return { ...state, favoritedArticles: action.favoritedArticles };
+      return { ...state, 
+          favoritedArticles: action.favoritedArticles.articles,
+          articleCount: action.favoritedArticles.articlesCount
+         };
 
     case USER_INFORMATION_LOADED:
       return { ...state, userInformation: action.userInformation };

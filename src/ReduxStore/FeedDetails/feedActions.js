@@ -62,8 +62,8 @@ export const FOLLOW_AUTHOR_LOADED = Symbol(
 );
 
 // ---------------------------     Functions     --------------------------------
-export const loadGlobalFeeds = () => {
-  return { type: LOAD_GLOBAL_FEEDS };
+export const loadGlobalFeeds = (articleCountDisplay, articleOffSet) => {
+  return { type: LOAD_GLOBAL_FEEDS, articleCountDisplay, articleOffSet };
 };
 
 export const globalDataLoaded = payload => {
@@ -110,8 +110,8 @@ export const globeFeedClicked = () => {
   return { type: GLOBLE_FEED_CLICKED };
 };
 
-export const loadUserProfileDetail = author_name => {
-  return { type: LOADED_USER_PROFILE, author_name: author_name };
+export const loadUserProfileDetail = (author_name, articleCountDisplay, articleOffSet) => {
+  return { type: LOADED_USER_PROFILE, author_name, articleCountDisplay, articleOffSet };
 };
 
 export const userProfileDataLoaded = userProfileData => {
@@ -126,8 +126,8 @@ export const userRelatedArticlesLoaded = userRelatedArticles => {
   return { type: USERS_RELATED_ARTICLES_LOADED, userRelatedArticles };
 };
 
-export const favoritedArticleNavClicked = author_name => {
-  return { type: FAVERATED_NAV_CLICKED, author_name: author_name };
+export const favoritedArticleNavClicked = (author_name, articleCountDisplay, articleOffSet) => {
+  return { type: FAVERATED_NAV_CLICKED, author_name, articleCountDisplay, articleOffSet };
 };
 
 export const favoritedArticleLoaded = favoritedArticles => {
@@ -174,7 +174,7 @@ export const setHomeNavStatus = (your, favorite, popular) => {
 };
 
 export const onPostCommentsClicked = (slug, myComment) => {
-  return { type: POST_COMMENTS_CLICKED, slug: slug, myComment: myComment };
+  return { type: POST_COMMENTS_CLICKED, slug, myComment };
 };
 
 export const onPostArticleClicked = (

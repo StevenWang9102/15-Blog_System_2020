@@ -53,15 +53,15 @@ export const postSaga = function*(){
 
   // ------------------------------ GET SAGA --------------------
   // GLOBAL_FEEDS_LOADED
-  yield takeLatest(LOAD_GLOBAL_FEEDS, function*() {
+  yield takeLatest(LOAD_GLOBAL_FEEDS, function*(action) {
     const initArticData = yield call(
       fetchDataFromServer,
-      "/articles?limit=50&offset=10",
+      `/articles?limit=${action.articleCountDisplay}&offset=${action.articleOffSet}`,
       "Load Global Feeds"
     );
     console.log(initArticData);
     
-    yield put(articleDataLoaded(initArticData["articles"]));
+    yield put(articleDataLoaded(initArticData));
   });
 
   // LOAD_POPULAR_TAGS
@@ -136,12 +136,12 @@ export const postSaga = function*(){
   // LOADED_USER_PROFILE
   yield takeLatest(LOADED_USER_PROFILE, function*(action) {
     const userName = action.author_name;
-
+// author_name, articleCountDisplay, articleOffSet
     const [userProfileData, userRelatedArticles] = yield all([
       call(fetchDataFromServer, `/profiles/${userName}`, "Load User Profile"),
       call(
         fetchDataFromServer,
-        `/articles?author=${userName}&limit=5&offset=0`,
+        `/articles?author=${userName}&limit=${action.articleCountDisplay}&offset=${action.articleOffSet}`,
         "Load User Articles"
       )
     ]);
@@ -149,21 +149,27 @@ export const postSaga = function*(){
     console.log(userProfileData);
     
     yield put(userProfileDataLoaded(userProfileData.profile));
-    yield put(userRelatedArticlesLoaded(userRelatedArticles.articles));
+    yield put(userRelatedArticlesLoaded(userRelatedArticles));
     yield put(currentDisplayArticleLoaded(userRelatedArticles.articles));
   });
 
   // FAVERATED_NAV_CLICKED
+  // author_name, articleCountDisplay, articleOffSet
   yield takeLatest(FAVERATED_NAV_CLICKED, function*(action) {
     const userName = action.author_name;
 
     const favoritedArticlesData = yield call(
       fetchDataFromServer,
-      `/articles?favorited=${userName}&limit=30&offset=0`,
+      `/articles?favorited=${userName}&limit=${action.articleCountDisplay}&offset=${action.articleOffSet}`,
       "Load Your Favorited Articles"
     );
 
-    yield put(favoritedArticleLoaded(favoritedArticlesData.articles));
+    yield put(favoritedArticleLoaded(favoritedArticlesData));
+    // 重新渲染count
+    // 
+    // 
+    console.log(favoritedArticlesData);
+    
     yield put(currentDisplayArticleLoaded(favoritedArticlesData.articles));
   });
   // FAVORITED_BUTTON_CLICKED

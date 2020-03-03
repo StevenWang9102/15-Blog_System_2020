@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { createUseStyles } from "react-jss";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
 import { Link } from "react-router-dom";
@@ -15,11 +16,44 @@ import {
 } from "../../ReduxStore/FeedDetails/feedActions";
 // import { NavLink } from "react-router-dom";
 
+
 const InternalArticlePreview = props => {
+  const useStyles = createUseStyles({
+    myButton: {
+        border: '0px',
+        padding: '0px',
+        // borderRadius:'5px'
+    },
+    '& a': {
+        height: '5px',
+        width: '5px',
+    }
+  });
+  
+  const Page = ({ children }) => {
+    const classes = useStyles();
+    return (
+      <button
+        className={`page-item ${classes.myButton}`}>
+        {children}
+      </button>
+    );
+  };
+  
   const [httpMethod, setHttpMethod] = useState({});
+  const articleCountDisplay = 10
+  const articleOffSet = 0
+  const pageNumber = Math.round(props.articleCount / articleCountDisplay)
+
+  const myPageNumArray = []
+  for (let i = 1; i <= pageNumber; i++) {
+    myPageNumArray.push(i)
+  }
+  console.log(myPageNumArray);
+
 
   useEffect(() => {
-    props.updateSettingStatus("not updated"); 
+    props.updateSettingStatus("not updated");
     if (props.userInformation.username) {
       props.setHomeNavStatus("active", "null", "null");
       props.loadPopularTags();
@@ -27,10 +61,13 @@ const InternalArticlePreview = props => {
     } else {
       props.setHomeNavStatus("active", "active", "null");
       props.loadPopularTags();
-      props.loadGlobalFeeds();
+      props.loadGlobalFeeds(articleCountDisplay, articleOffSet);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+
+  console.log(props.articleCount, pageNumber);
 
   return (
     <div className='col-md-9 col-sm-12'>
@@ -54,7 +91,7 @@ const InternalArticlePreview = props => {
             {/* ------------------ Global Feed ------------------ */}
             <Link
               onClick={() => {
-                props.onGlobeFeedClicked();
+                props.loadGlobalFeeds(articleCountDisplay, articleOffSet);
                 props.setHomeNavStatus("null", "active", "null");
               }}
               className={`nav-link ${props.favoriteNav} display-inline`}
@@ -105,7 +142,7 @@ const InternalArticlePreview = props => {
                     tempMethod[article.slug] = "POST";
                   }
                   const token =
-                  props.userInformation.token;
+                    props.userInformation.token;
                   token &&
                     props.onFavoritedButtonClicked(
                       token,
@@ -137,7 +174,27 @@ const InternalArticlePreview = props => {
       {props.currentHomeDisplayArticle.length === 0 && (
         <div className='article-preview'>No articles are here... yet.</div>
       )}
+
+      {/* --------------------- Page Tunner --------------------- */}
+      <nav>
+        <ul class="pagination">
+
+          {myPageNumArray.map((pageNumber, index) => {
+            const articleOffSet = index * articleCountDisplay
+            return (<Page>
+              <a 
+                class="page-link" 
+                href="#"
+                onClick={()=>{props.loadGlobalFeeds(articleCountDisplay, articleOffSet)}}
+                > {pageNumber} </a>
+            </Page>)
+          })}
+
+        </ul>
+      </nav>
     </div>
+
+
   );
 };
 
@@ -148,22 +205,23 @@ InternalArticlePreview.propTypes = {
   onArticleClick: PropTypes.func
 };
 
-const mapStateToProps = ({syncReducer, asyncReducer}) => {
+const mapStateToProps = ({ syncReducer, asyncReducer }) => {
   const {
     tagRelatedArticles,
     currentTagName,
     yourNav,
     favoriteNav,
     popularNav,
-  } = syncReducer; 
+  } = syncReducer;
 
   const {
     userInformation,
     globalArticles,
     onArticleClick,
-    currentHomeDisplayArticle
+    currentHomeDisplayArticle,
+    articleCount
   } = asyncReducer;
-  
+
   return {
     globalArticles,
     onArticleClick,
@@ -173,22 +231,23 @@ const mapStateToProps = ({syncReducer, asyncReducer}) => {
     yourNav,
     favoriteNav,
     popularNav,
-    currentHomeDisplayArticle
+    currentHomeDisplayArticle,
+    articleCount
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onArticleClick: (title, slug) => dispatch(articleTitleClicked(title, slug)),
-    onGlobeFeedClicked: () => dispatch(loadGlobalFeeds()),
+    // loadGlobalFeeds: () => dispatch(loadGlobalFeeds()),
     setHomeNavStatus: (your, favorite, popular) => dispatch(setHomeNavStatus(your, favorite, popular)),
     onYourFeedClicked: () => dispatch(loadYourArticles()),
     loadYourFeedArticles: () => dispatch(loadYourArticles()),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
     onFavoritedButtonClicked: (token, slug, httpMethod) =>
       dispatch(favoritedButtonClicked(token, slug, httpMethod)),
-    loadGlobalFeeds: () => {
-      dispatch(loadGlobalFeeds());
+    loadGlobalFeeds: (articleCountDisplay, articleOffSet) => {
+      dispatch(loadGlobalFeeds(articleCountDisplay, articleOffSet));
     },
     loadPopularTags: () => {
       dispatch(loadPopularTags());

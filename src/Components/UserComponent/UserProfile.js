@@ -41,12 +41,42 @@ const Button = ({ children }) => {
 
 // ---------------- React-Component -------------------- //
 const InternalUserProfile = props => {
+  const useStyles = createUseStyles({
+    myButton: {
+        border: '0px',
+        padding: '0px',
+    },
+    '& a': {
+        height: '5px',
+        width: '5px',
+    }
+  });
+  
+  const Page = ({ children }) => {
+    const classes = useStyles();
+    return (
+      <button
+        className={`page-item ${classes.myButton}`}>
+        {children}
+      </button>
+    );
+  };
+
   const [httpMethod, setHttpMethod] = useState({});
   const { author_name } = useParams();
   const { article_type } = useParams();
 
+  const articleCountDisplay = 5
+  const articleOffSet = 0
+  const pageNumber = Math.round(props.articleCount / articleCountDisplay)
+
+  const myPageNumArray = []
+  for (let i = 1; i <= pageNumber; i++) {
+    myPageNumArray.push(i)
+  }
+
   useEffect(() => {
-    props.loadUserProfileDetail(author_name);
+    props.loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet);
     props.updateSettingStatus("not updated");
     // 更新是否改动setting的
 
@@ -58,7 +88,7 @@ const InternalUserProfile = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // console.log(props.currentProfileDetail);
+  console.log(props.articleCount);
 
   return (
     <div>
@@ -82,10 +112,6 @@ const InternalUserProfile = props => {
                     props.currentProfileDetail.bio}
                 </p>
                 <Button>
-                  {/* 
-                  // 
-                  // 
-                   */}
                   <i className='ion-plus-round'></i>
                   <a
                     className='nav-link'
@@ -118,7 +144,7 @@ const InternalUserProfile = props => {
                       className={`nav-link ${props.profileNavStatusLeft}`}
                       onClick={() => {
                         props.setProfileNavStatus("active", "null");
-                        props.loadUserProfileDetail(author_name);
+                        props.loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet);
                       }}>
                       My Articles
                     </NavLink>
@@ -129,8 +155,12 @@ const InternalUserProfile = props => {
                       to={`/user_profile/${author_name}/favorited_articles`}
                       className={`nav-link ${props.profileNavStatusRight}`}
                       onClick={() => {
+                        // 
+                        // 
+                        // 
+                        // 
                         props.setProfileNavStatus("null", "active");
-                        props.onFavoritedArticleNavClicked(author_name);
+                        props.onFavoritedArticleNavClicked(author_name, articleCountDisplay, articleOffSet);
                       }}>
                       Favorited Articles
                     </NavLink>
@@ -196,6 +226,27 @@ const InternalUserProfile = props => {
                   No articles are here... yet.
                 </div>
               )}
+                    {/* --------------------- Page Tunner --------------------- */}
+      <nav>
+        <ul class="pagination">
+
+          {myPageNumArray.map((pageNumber, index) => {
+            const articleOffSet = index * articleCountDisplay
+            return (<Page>
+              <a 
+                class="page-link" 
+                href="#"
+                onClick={()=>{
+                  // 加入判断
+                  // 本地记录目前是哪个？？
+                  // 
+                  props.loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet)}}
+                > {pageNumber} </a>
+            </Page>)
+          })}
+
+        </ul>
+      </nav>
             </div>
           </div>
         </div>
@@ -221,7 +272,8 @@ const mapStateToProps = ({ syncReducer, asyncReducer }) => {
     onFavoritedArticleNavClicked,
     favoritedArticles,
     currentProfileDisplayArticle,
-    followAuthorStatus
+    followAuthorStatus,
+    articleCount
   } = asyncReducer;
 
   return {
@@ -233,16 +285,17 @@ const mapStateToProps = ({ syncReducer, asyncReducer }) => {
     profileNavStatusLeft,
     profileNavStatusRight,
     currentProfileDisplayArticle,
-    followAuthorStatus
+    followAuthorStatus,
+    articleCount
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadUserProfileDetail: author_name =>
-      dispatch(loadUserProfileDetail(author_name)),
-    onFavoritedArticleNavClicked: author_name =>
-      dispatch(favoritedArticleNavClicked(author_name)),
+    loadUserProfileDetail: (author_name, articleCountDisplay, articleOffSet) =>
+      dispatch(loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet)),
+    onFavoritedArticleNavClicked: (author_name, articleCountDisplay, articleOffSet) =>
+      dispatch(favoritedArticleNavClicked(author_name, articleCountDisplay, articleOffSet)),
     setProfileNavStatus: (profileNavStatusLeft, profileNavStatusRight) =>
       dispatch(
         setProfileNavStatus(profileNavStatusLeft, profileNavStatusRight)
