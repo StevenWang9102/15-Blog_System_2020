@@ -102,9 +102,10 @@ const InternalNavbar = props => {
                     <Link
                       className='nav-link'
                       to={`/user_profile/${userInfoLocal.username}`}
-                      // onClick={() => {
-                      //   // props.loadUserProfileDetail();
-                      // }}
+                      onClick={() => {
+                        props.loadUserProfileDetail(userInfoLocal.username, 5, 0);
+                        props.setProfileNavStatus("active", "null");
+                      }}
                       >
                       <img
                         className='user-pic'
@@ -148,7 +149,7 @@ const InternalNavbar = props => {
           <Route exact path='/'>
             <Redirect to='/home' />
           </Route>
-          <Route exact path='/home' component={MainPage} />
+          <Route path='/home' component={MainPage} />
 
           <Route exact path='/article-detail/sign_in'>
             <Redirect to='/sign_in' />
@@ -196,7 +197,7 @@ const mapStateToProps = ({asyncReducer}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadUserProfileDetail: () => dispatch(loadUserProfileDetail()),
+    loadUserProfileDetail: (author_name, articleCountDisplay, articleOffSet) => dispatch(loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet)),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
     setProfileNavStatus: (profileNavStatusLeft, profileNavStatusRight) =>
       dispatch(
@@ -204,7 +205,8 @@ const mapDispatchToProps = dispatch => {
       ),
     onSignUpButtonClicked: data => dispatch(onSignUpButtonClicked(data)),
     postedArticleReloaded: data => dispatch(postedArticleReloaded(data)),
-    userInformationLoaded: user => dispatch(userInformationLoaded(user))
+    userInformationLoaded: user => dispatch(userInformationLoaded(user)),
+    
   };
 };
 

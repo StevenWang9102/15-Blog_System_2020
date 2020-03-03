@@ -14,43 +14,19 @@ import {
   onFollowAuthorClick
 } from "../../ReduxStore/FeedDetails/feedActions";
 
-// ---------------- React-JSS-Configuration -------------------- //
+// ------------------------- JSS -----------------------
 const useStyles = createUseStyles({
-  // Public Style
   myButton: {
-    "& img": {
-      margin: {
-        top: 2,
-        right: 5,
-        bottom: 2
-      }
-    }
+    border: '0px',
+    padding: '0px',
+  },
+  '& a': {
+    height: '5px',
+    width: '5px',
   }
 });
 
-const Button = ({ children }) => {
-  // Custumized Styles
-  const classes = useStyles();
-  return (
-    <button
-      className={`btn btn-sm btn-outline-secondary action-btn ${classes.myButton}`}>
-      {children}
-    </button>
-  );
-};
-
-// ---------------- React-Component -------------------- //
 const InternalUserProfile = props => {
-  const useStyles = createUseStyles({
-    myButton: {
-        border: '0px',
-        padding: '0px',
-    },
-    '& a': {
-        height: '5px',
-        width: '5px',
-    }
-  });
   
   const Page = ({ children }) => {
     const classes = useStyles();
@@ -61,10 +37,24 @@ const InternalUserProfile = props => {
       </button>
     );
   };
+  
+  const Button = ({ children }) => {
+    // Custumized Styles
+    const classes = useStyles();
+    return (
+      <button
+        className={`btn btn-sm btn-outline-secondary action-btn ${classes.myButton}`}>
+        {children}
+      </button>
+    );
+  };
 
+  // ------------------------- Component -----------------------
   const [httpMethod, setHttpMethod] = useState({});
   const { author_name } = useParams();
   const { article_type } = useParams();
+  
+  console.log(author_name);
 
   const articleCountDisplay = 5
   const articleOffSet = 0
@@ -76,6 +66,8 @@ const InternalUserProfile = props => {
   }
 
   useEffect(() => {
+    // 从别处转移过来的时候，用户名没有及时更新
+    // 好像只是页面跳转，但是没有发送请求？
     props.loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet);
     props.updateSettingStatus("not updated");
     // 更新是否改动setting的
@@ -88,7 +80,6 @@ const InternalUserProfile = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(props.articleCount);
 
   return (
     <div>
@@ -116,15 +107,15 @@ const InternalUserProfile = props => {
                   <a
                     className='nav-link'
                     onClick={() => {
-                      if(props.currentProfileDetail.following === false)
+                      if (props.currentProfileDetail.following === false)
                         props.onFollowAuthorClick(author_name, "POST")
-                      else 
+                      else
                         props.onFollowAuthorClick(author_name, "DELETE");
                     }}>
                     <img src='./icon/004-settings.png' alt='' />
                     {/* {props.currentProfileDetail.following} */}
                     {/* {props.currentProfileDetail.following} */}
-                    {props.currentProfileDetail.following? `- Unfollow ${author_name}` : `+ Follow ${author_name} Now`}
+                    {props.currentProfileDetail.following ? `- Unfollow ${author_name}` : `+ Follow ${author_name} Now`}
                   </a>
                 </Button>
               </div>
@@ -155,10 +146,6 @@ const InternalUserProfile = props => {
                       to={`/user_profile/${author_name}/favorited_articles`}
                       className={`nav-link ${props.profileNavStatusRight}`}
                       onClick={() => {
-                        // 
-                        // 
-                        // 
-                        // 
                         props.setProfileNavStatus("null", "active");
                         props.onFavoritedArticleNavClicked(author_name, articleCountDisplay, articleOffSet);
                       }}>
@@ -178,9 +165,20 @@ const InternalUserProfile = props => {
                       </Link>
 
                       <div className='info'>
+                        {/* 
+                            // 目前只是链接过去了
+                            // 但是似乎没有重新请求吧
+                            // 似乎此时的作者名字不对
+                            // 应该请求并且渲染页面
+                            // 好像目前页面内容还是不对劲
+                            // 点击玩作者之后，在点击Nav为啥又不能找到我自己的内容了。。。
+
+                            */}
                         <Link
                           to={"/user_profile/" + article.author.username}
-                          className='author'>
+                          className='author'
+                          onClick={()=>props.loadUserProfileDetail(article.author.username, articleCountDisplay, articleOffSet)}
+                          >
                           {article.author.username}
                         </Link>
                         <span className='date'>
@@ -226,27 +224,27 @@ const InternalUserProfile = props => {
                   No articles are here... yet.
                 </div>
               )}
-                    {/* --------------------- Page Tunner --------------------- */}
-      <nav>
-        <ul class="pagination">
+              {/* --------------------- Page Tunner --------------------- */}
+              <nav>
+                <ul class="pagination">
 
-          {myPageNumArray.map((pageNumber, index) => {
-            const articleOffSet = index * articleCountDisplay
-            return (<Page>
-              <a 
-                class="page-link" 
-                href="#"
-                onClick={()=>{
-                  // 加入判断
-                  // 本地记录目前是哪个？？
-                  // 
-                  props.loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet)}}
-                > {pageNumber} </a>
-            </Page>)
-          })}
+                  {myPageNumArray.map((pageNumber, index) => {
+                    const articleOffSet = index * articleCountDisplay
+                    return (<Page>
+                      <a
+                        class="page-link"
+                        href={`#p${pageNumber}`}
+                        onClick={() => {
+                          if (props.profileNavStatusLeft === "active")
+                            props.loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet)
+                          else props.onFavoritedArticleNavClicked(author_name, articleCountDisplay, articleOffSet)
+                        }}
+                      > {pageNumber} </a>
+                    </Page>)
+                  })}
 
-        </ul>
-      </nav>
+                </ul>
+              </nav>
             </div>
           </div>
         </div>

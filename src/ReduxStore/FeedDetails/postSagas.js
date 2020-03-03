@@ -45,7 +45,6 @@ import {
   updateSettingStatus,
   DELETE_ARTICLE_BUTTON,
   FOLLOW_AUTHOR_CLICKED,
-  followAuthorLoaded,
 } from "./feedActions";
 
 
@@ -66,6 +65,7 @@ export const postSaga = function*(){
 
   // LOAD_POPULAR_TAGS
   yield takeLatest(LOAD_POPULAR_TAGS, function*() {
+    // articleCountDisplay, articleOffSet
     const initTagData = yield call(
       fetchDataFromServer,
       "/tags",
@@ -135,8 +135,8 @@ export const postSaga = function*(){
 
   // LOADED_USER_PROFILE
   yield takeLatest(LOADED_USER_PROFILE, function*(action) {
+    
     const userName = action.author_name;
-// author_name, articleCountDisplay, articleOffSet
     const [userProfileData, userRelatedArticles] = yield all([
       call(fetchDataFromServer, `/profiles/${userName}`, "Load User Profile"),
       call(
@@ -221,9 +221,10 @@ export const postSaga = function*(){
   });
 
   // LOAD_YOUR_FEED
-  yield takeLatest(LOAD_YOUR_FEED, function*() {
+  yield takeLatest(LOAD_YOUR_FEED, function*(action) {
+    // articleCountDisplay, articleOffSet
     const token = getUserInfoSagaLocal().token;
-    const url = "/articles/feed?limit=10&offset=0";
+    const url = `/articles/feed?limit=${action.articleCountDisplay}&offset=${action.articleOffSet}`;
     const message = "Load Your Feed";
     const yourArticleData = yield call(
       postDataToServerAll,
@@ -233,8 +234,7 @@ export const postSaga = function*(){
       message,
       "GET"
     );
-    yield put(yourFeedsLoaded(yourArticleData.articles));
-    yield put(currentHomeDisplayArticleLoaded(yourArticleData.articles));
+    yield put(currentHomeDisplayArticleLoaded(yourArticleData));
   });
 
   // POST_ARTICLE_CLICKED

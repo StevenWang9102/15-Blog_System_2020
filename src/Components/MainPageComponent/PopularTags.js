@@ -24,7 +24,7 @@ const InternalPopularTages = props => {
                   props.onPopularTagClicked(tag)
                   props.setHomeNavStatus('null', 'null', 'active')
                 }}
-                to='/home#popular_tags'
+                to='/home/popular_tags'
                 >
                 {tagName}
               </NavLink>

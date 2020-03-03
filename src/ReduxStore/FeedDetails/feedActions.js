@@ -18,7 +18,7 @@ export const FAVERATED_ARITICLE_LOADED = Symbol("FAVERATED_ARITICLE_LOADED");
 export const SIGN_IN_BUTTON_CLICKED = Symbol("SIGN_IN_BUTTON_CLICKED");
 export const USER_INFORMATION_LOADED = Symbol("USER_INFORMATION_LOADED");
 export const LOAD_YOUR_FEED = Symbol("LOAD_YOUR_FEED");
-export const YOURE_FEED_LOADED = Symbol("YOURE_FEED_LOADED");
+export const YOUR_FEED_LOADED = Symbol("YOUR_FEED_LOADED");
 export const FAVORITED_BUTTON_CLICKED = Symbol("FAVORITED_BUTTON_CLICKED");
 export const YOUR_FEED_NAV_CLICKED = Symbol("YOUR_FEED_NAV_CLICKED");
 export const SET_HOME_NAV_STATUS = Symbol("SET_HOME_NAV_STATUS");
@@ -142,12 +142,8 @@ export const userInformationLoaded = payload => {
   return { type: USER_INFORMATION_LOADED, userInformation: payload.user };
 };
 
-export const loadYourArticles = () => {
-  return { type: LOAD_YOUR_FEED };
-};
-
-export const yourFeedsLoaded = articles => {
-  return { type: YOURE_FEED_LOADED, articles: articles };
+export const loadYourArticles = (articleCountDisplay, articleOffSet) => {
+  return { type: LOAD_YOUR_FEED, articleCountDisplay, articleOffSet };
 };
 
 export const favoritedButtonClicked = (
@@ -217,8 +213,8 @@ export const currentHomeDisplayArticleLoaded = payload => {
   return { type: CURRENT_HOME_DISPLAY_ARTICLES_LOADED, payload: payload };
 };
 
-export const loadPopularTags = payload => {
-  return { type: LOAD_POPULAR_TAGS, payload: payload };
+export const loadPopularTags = () => {
+  return { type: LOAD_POPULAR_TAGS };
 };
 
 export const saveUserInformationToStore = userInformation => {

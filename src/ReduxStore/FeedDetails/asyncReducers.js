@@ -119,7 +119,10 @@ export const asyncReducer = (state = initialState, action) => {
       return { ...state, currentProfileDisplayArticle: action.userProfileData };
 
     case CURRENT_HOME_DISPLAY_ARTICLES_LOADED:
-      return { ...state, currentHomeDisplayArticle: action.payload };
+      return { ...state, 
+        currentHomeDisplayArticle: action.payload.articles,
+        articleCount: action.payload.articlesCount
+      };
 
     case ARTICLE_SETTING_DETAIL_LOADED:
       return { ...state, articles_setting: action.data };

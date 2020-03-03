@@ -8,18 +8,18 @@ const InternalNewPost = props => {
   const { slug } = useParams();
 
   const [title, setTitle] = useState(
-    props.currentArticleDetails.title
+    slug? props.currentArticleDetails.title : ""
   );
   const [description, setDescription] = useState(
-    props.currentArticleDetails.description
+    slug?  props.currentArticleDetails.description: ""
   );
   const [content, setContent] = useState(
-    props.currentArticleDetails.body
+    slug? props.currentArticleDetails.body: ""
   );
   const [tags, setTags] = useState(
-    props.currentArticleDetails.tagList
+    slug? props.currentArticleDetails.tagList: ""
   );
-
+  
   return (
     <div>
       {props.article_reloaded ? (
@@ -38,7 +38,7 @@ const InternalNewPost = props => {
                             type='text'
                             className='form-control form-control-lg'
                             onChange={event => setTitle(event.target.value)}
-                            value={slug ? title : ""}
+                            value={title}
                             placeholder='Article Title'></input>
                         </fieldset>
 
@@ -47,7 +47,7 @@ const InternalNewPost = props => {
                           <input
                             type='text'
                             className='form-control'
-                            value={slug ? description : ''}
+                            value={description}
                             onChange={event => setDescription(event.target.value)}
                             placeholder="What's this article about?"></input>
                         </fieldset>
@@ -57,7 +57,7 @@ const InternalNewPost = props => {
                           <textarea
                             className='form-control'
                             rows='8'
-                            value={slug ? content : ''}
+                            value={content}
                             onChange={event => setContent(event.target.value)}
                             placeholder='Write your article (in markdown)'></textarea>
                         </fieldset>
@@ -67,7 +67,7 @@ const InternalNewPost = props => {
                           <input
                             type='text'
                             className='form-control'
-                            // value= {tags && tags.join('')}
+                            value= {tags}
                             onChange={event => setTags(event.target.value)}
                             placeholder='Enter tags'></input>
                           <div className='tag-list'></div>
@@ -77,8 +77,6 @@ const InternalNewPost = props => {
                           className='btn btn-lg pull-xs-right btn-primary'
                           type='button'
                           onClick={() => {
-                            console.log("点击");
-                            console.log(title, description, content, tags, props.currentSlug);
 
                             props.onPostArticleClicked(
                               title,
