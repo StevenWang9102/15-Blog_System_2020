@@ -5,7 +5,6 @@ import {
   ARTICLE_TITLE_CLICKED,
   FOLLOW_AUTHOR_LOADED,
   ARTICLE_COMMENTS_LOADED,
-  LOADED_USER_PROFILE,
   LOAD_INIT_ARTICLE_DETAIL,
   ARTICLE_CONTENT_LOADED,
   TAG_RELATED_ARTICLE_LOADED,
@@ -130,6 +129,7 @@ export const asyncReducer = (state = initialState, action) => {
     case FOLLOW_AUTHOR_LOADED:
       return { ...state, followAuthorStatus: action.data };
 
+      
     default:
       return state;
   }

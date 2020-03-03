@@ -27,6 +27,8 @@ export const POST_COMMENTS_CLICKED = Symbol("POST_COMMENTS_CLICKED");
 export const POST_ARTICLE_CLICKED = Symbol("POST_ARTICLE_CLICKED");
 export const POSTED_ARTICLE_RELOADED = Symbol("POSTED_ARTICLE_RELOADED");
 export const FOLLOW_AUTHOR_CLICKED = Symbol("FOLLOW_AUTHOR_CLICKED");
+// SET_LOADING_LOADED
+export const SET_LOADING_LOADED = Symbol("SET_LOADING_LOADED");
 
 export const EDIT_ARTICLE_BUTTON_CLICKED = Symbol(
   "EDIT_ARTICLE_BUTTON_CLICKED"
@@ -74,8 +76,8 @@ export const loadInitArticleDetail = slug => {
   return { type: LOAD_INIT_ARTICLE_DETAIL, slug };
 };
 
-export const articleDataLoaded = articleData => {
-  return { type: ARTICLE_DATA_LOADED, articleData };
+export const articleDataLoaded = (articleData, loading) => {
+  return { type: ARTICLE_DATA_LOADED, articleData, loading };
 };
 
 export const articleContentLoaded = initArticleData => {
@@ -270,4 +272,8 @@ export const onFollowAuthorClick = (author_name, method) => {
 // followAuthorLoaded
 export const followAuthorLoaded = data => {
   return { type: FOLLOW_AUTHOR_LOADED, data: data };
+};
+// setLouding
+export const setLouding = status => {
+  return { type: SET_LOADING_LOADED, status };
 };

@@ -1,12 +1,16 @@
 import React from "react";
-import {ArticlePreview} from "./ArticlePreview";
-import {PopularTages} from "./PopularTags";
-import {Banner} from "./Banner";
+import { ArticlePreview } from "./ArticlePreview";
+import { PopularTages } from "./PopularTags";
+import { Banner } from "./Banner";
+import { connect } from "react-redux";
 
-export const MainPage = props => {
+const InternalMainPage = props => {
 
-return (
+  return (
     <div className="home-page">
+      {props.loading === "LOADING" ? (<div className="loading_status">
+        Loading...
+      </div>) : null}
       <Banner />
       <div className="container page">
         <div className="row">
@@ -17,4 +21,25 @@ return (
     </div>
   );
 };
+
+const mapStateToProps = ({ syncReducer, asyncReducer }) => {
+  const {
+    loading
+  } = syncReducer;
+
+  // const {
+  // } = asyncReducer;
+
+  return {
+    loading
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+export const MainPage = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(InternalMainPage);
 

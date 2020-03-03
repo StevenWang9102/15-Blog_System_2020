@@ -2,7 +2,9 @@ import {
   LOAD_YOUR_FEED,
   LOAD_GLOBAL_FEEDS,
   SIGN_UP_USER_LOADED,
+  ARTICLE_DATA_LOADED,
   UPDATED_YOUR_SETTING,
+  SET_LOADING_LOADED,
   DELETE_YOUR_ARTICLE_DONE,
   POPULAR_TAG_CLICKED,
   SET_HOME_NAV_STATUS,
@@ -19,6 +21,7 @@ const initialState = {
   popularNav: "null",
   profileNavStatusLeft: "active",
   profileNavStatusRight: "null",
+  loading: "nothing"
 };
 
 export const syncReducer = (state = initialState, action) => {
@@ -64,6 +67,14 @@ export const syncReducer = (state = initialState, action) => {
       case POPULAR_TAG_CLICKED:
         return { ...state, currentTagName: action.tagName };
   
+        // SET_LOADING_LOADED
+        case SET_LOADING_LOADED:
+          return { ...state, loading: action.status };
+          
+    // ARTICLE_DATA_LOADED
+    case ARTICLE_DATA_LOADED:
+      return { ...state, loading: action.loading };
+
     default:
       return state;
   }

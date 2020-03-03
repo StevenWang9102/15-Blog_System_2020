@@ -12,6 +12,7 @@ import {
   favoritedButtonClicked,
   setHomeNavStatus,
   loadPopularTags,
+  setLouding,
   updateSettingStatus
 } from "../../ReduxStore/FeedDetails/feedActions";
 
@@ -39,6 +40,8 @@ const Page = ({ children }) => {
 const InternalArticlePreview = props => {
   
   const [httpMethod, setHttpMethod] = useState({});
+  // const [louding, setLouding] = useState("");
+
   const articleCountDisplay = 10
   const articleOffSet = 0
   const pageNumber = Math.round(props.articleCount / articleCountDisplay)
@@ -81,6 +84,7 @@ const InternalArticlePreview = props => {
             {props.userInformation && props.userInformation.token && (
               <Link
                 onClick={() => {
+                  // setLouding("LOADING")
                   props.loadYourFeedArticles(articleCountDisplay, articleOffSet)
                   props.setHomeNavStatus("active", "null", "null");
                 }}
@@ -93,6 +97,7 @@ const InternalArticlePreview = props => {
             {/* ------------------ Global Feed ------------------ */}
             <Link
               onClick={() => {
+                props.setLouding("LOADING")
                 props.loadGlobalFeeds(articleCountDisplay, articleOffSet);
                 props.setHomeNavStatus("null", "active", "null");
               }}
@@ -219,6 +224,8 @@ const mapStateToProps = ({ syncReducer, asyncReducer }) => {
     yourNav,
     favoriteNav,
     popularNav,
+    loading
+
   } = syncReducer;
 
   const {
@@ -226,7 +233,7 @@ const mapStateToProps = ({ syncReducer, asyncReducer }) => {
     globalArticles,
     onArticleClick,
     currentHomeDisplayArticle,
-    articleCount
+    articleCount,
   } = asyncReducer;
 
   return {
@@ -239,7 +246,8 @@ const mapStateToProps = ({ syncReducer, asyncReducer }) => {
     favoriteNav,
     popularNav,
     currentHomeDisplayArticle,
-    articleCount
+    articleCount,
+    loading
   };
 };
 
@@ -251,11 +259,13 @@ const mapDispatchToProps = dispatch => {
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
     onFavoritedButtonClicked: (token, slug, httpMethod) =>
       dispatch(favoritedButtonClicked(token, slug, httpMethod)),
+      // setLouding:
+      setLouding: (status) =>
+      dispatch(setLouding(status)),
     loadGlobalFeeds: (articleCountDisplay, articleOffSet) => {
       dispatch(loadGlobalFeeds(articleCountDisplay, articleOffSet));
     },
-    loadPopularTags: () => {
-      dispatch(loadPopularTags());
+    loadPopularTags: () => { dispatch(loadPopularTags());
     }
   };
 };

@@ -60,7 +60,7 @@ export const postSaga = function*(){
     );
     console.log(initArticData);
     
-    yield put(articleDataLoaded(initArticData));
+    yield put(articleDataLoaded(initArticData, "loaded"));
   });
 
   // LOAD_POPULAR_TAGS
