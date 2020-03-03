@@ -8,9 +8,6 @@ const InternalMainPage = props => {
 
   return (
     <div className="home-page">
-      {props.loading === "LOADING" ? (<div className="loading_status">
-        Loading...
-      </div>) : null}
       <Banner />
       <div className="container page">
         <div className="row">
@@ -26,10 +23,7 @@ const mapStateToProps = ({ syncReducer, asyncReducer }) => {
   const {
     loading
   } = syncReducer;
-
-  // const {
-  // } = asyncReducer;
-
+  
   return {
     loading
   };

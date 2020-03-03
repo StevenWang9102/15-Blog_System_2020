@@ -25,6 +25,7 @@ import {
   favoritedArticleLoaded,
   POST_COMMENTS_CLICKED,
   currentDisplayArticleLoaded,
+  setLouding,
   // ----------------- POST ------------------
   signUpUserLoaded,
   favoritedArticleNavClicked,
@@ -35,7 +36,6 @@ import {
   SIGN_IN_BUTTON_CLICKED,
   userInformationLoaded,
   LOAD_YOUR_FEED,
-  yourFeedsLoaded,
   FAVORITED_BUTTON_CLICKED,
   setHomeNavStatus,
   postedArticleReloaded,
@@ -60,7 +60,11 @@ export const postSaga = function*(){
     );
     console.log(initArticData);
     
+    // 
+    // 
     yield put(articleDataLoaded(initArticData, "loaded"));
+    yield put(setLouding("loaded"));
+
   });
 
   // LOAD_POPULAR_TAGS
@@ -74,6 +78,7 @@ export const postSaga = function*(){
     console.log(initTagData);
     
     yield put(tagsDataLoaded(initTagData["tags"]));
+    yield put(setLouding("loaded"));
   });
 
   // ARTICLE_DETAILS_LOADED
@@ -235,6 +240,7 @@ export const postSaga = function*(){
       "GET"
     );
     yield put(currentHomeDisplayArticleLoaded(yourArticleData));
+    yield put(setLouding("loaded"));
   });
 
   // POST_ARTICLE_CLICKED

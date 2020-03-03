@@ -127,10 +127,14 @@ p{
   width: 100%;
   height: 100%;
   left: 0;
-  padding: 300px;
+  top:0;
   background-color: rgba(128, 128, 128, 0.219);
-  align-content: center;
   font-size: 40px;
   opacity: 0.9;
   z-index: 100;
+}
+
+.loading_status span{
+  position: absolute;
+  top: 350px;
 }

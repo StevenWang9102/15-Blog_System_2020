@@ -84,7 +84,7 @@ const InternalArticlePreview = props => {
             {props.userInformation && props.userInformation.token && (
               <Link
                 onClick={() => {
-                  // setLouding("LOADING")
+                  props.setLouding("LOADING")
                   props.loadYourFeedArticles(articleCountDisplay, articleOffSet)
                   props.setHomeNavStatus("active", "null", "null");
                 }}
@@ -168,6 +168,7 @@ const InternalArticlePreview = props => {
               to={"/article-detail/" + article.slug}>
               <h1
                 onClick={() => {
+                  // props.setLouding("LOADING")
                   props.onArticleClick(article.title, article.slug);
                 }}>
                 {article.title}
@@ -193,6 +194,7 @@ const InternalArticlePreview = props => {
                 class="page-link" 
                 href={`#p${pageNumber}`}
                 onClick={()=>{
+                  props.setLouding("LOADING")
                   if(props.favoriteNav==="active")
                     props.loadGlobalFeeds(articleCountDisplay, articleOffSet)
                   else if(props.yourNav==="active")
