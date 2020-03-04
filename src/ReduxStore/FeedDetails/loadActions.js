@@ -57,7 +57,6 @@ export const LOAD_ARTICLE_SETTING_DETAIL = Symbol(
 export const ARTICLE_SETTING_DETAIL_LOADED = Symbol(
   "ARTICLE_SETTING_DETAIL_LOADED"
 );
-// FOLLOW_AUTHOR_LOADED
 export const FOLLOW_AUTHOR_LOADED = Symbol(
   "FOLLOW_AUTHOR_LOADED"
 );
@@ -244,21 +243,18 @@ export const articleSettingContentLoaded = data => {
   return { type: ARTICLE_SETTING_DETAIL_LOADED, data: data };
 };
 
-// onFollowAuthorClick
 export const onFollowAuthorClick = (author_name, method) => {
   return { type: FOLLOW_AUTHOR_CLICKED, author_name: author_name, method: method };
 };
 
-// followAuthorLoaded
 export const followAuthorLoaded = data => {
   return { type: FOLLOW_AUTHOR_LOADED, data: data };
 };
-// setLoading
+
 export const setLoading = status => {
   return { type: SET_LOADING_LOADED, status };
 };
 
-// emptyArticleCount
 export const emptyArticleCount = status => {
   return { type: EMPTY_ARTICLE_COUNT, status };
 };

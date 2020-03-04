@@ -2,7 +2,6 @@ import {
   ARTICLE_DATA_LOADED,
   TAGS_DATA_LOADED,
   LOG_OUT_BUTTON_CLICK,
-  ARTICLE_TITLE_CLICKED,
   FOLLOW_AUTHOR_LOADED,
   ARTICLE_COMMENTS_LOADED,
   LOAD_INIT_ARTICLE_DETAIL,
@@ -14,7 +13,6 @@ import {
   FAVERATED_ARITICLE_LOADED,
   USER_INFORMATION_LOADED,
   CURRENT_PROFILE_ARTICLE_LOADED,
-  YOUR_FEED_NAV_CLICKED,
   CURRENT_HOME_DISPLAY_ARTICLES_LOADED,
 } from "./loadActions";
 
@@ -63,9 +61,6 @@ export const asyncReducer = (state = initialState, action) => {
         currentHomeDisplayArticle: action.tagRelatedArticles
       };
 
-    // case UPDATED_YOUR_SETTING:
-    //   return { ...state, userInformation: action.info };
-
     case USERS_PROFILE_LOADED:
       return { ...state, currentProfileDetail: action.userProfileData };
 
@@ -92,12 +87,6 @@ export const asyncReducer = (state = initialState, action) => {
         userInformation:{}
       };
 
-    // case YOUR_FEED_NAV_CLICKED:
-    //   return {
-    //     ...state,
-    //     tagRelatedArticles: null
-    //   };
-
     case LOAD_INIT_ARTICLE_DETAIL:
       return { ...state, currentSlug: action.slug };
 
@@ -115,7 +104,6 @@ export const asyncReducer = (state = initialState, action) => {
     
     case FOLLOW_AUTHOR_LOADED:
       return { ...state, followAuthorStatus: action.data };
-
       
     default:
       return state;

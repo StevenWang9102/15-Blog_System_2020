@@ -65,13 +65,11 @@ export const postSaga = function*(){
 
   // LOAD_POPULAR_TAGS
   yield takeLatest(LOAD_POPULAR_TAGS, function*() {
-    // articleCountDisplay, articleOffSet
     const initTagData = yield call(
       fetchDataFromServer,
       "/tags",
       "Load Popular Tags"
     );
-    // console.log(initTagData);
     
     yield put(tagsDataLoaded(initTagData["tags"]));
     yield put(setLoading("LOADED"));
@@ -135,10 +133,7 @@ export const postSaga = function*(){
   });
 
   // LOADED_USER_PROFILE
-  yield takeLatest(LOADED_USER_PROFILE, function*(action) {
-    // const t = yield select(state => state.userInformation)
-    // console.log(t);
-    
+  yield takeLatest(LOADED_USER_PROFILE, function*(action) {    
     const token = getUserInfoSagaLocal().token;
     const userName = action.author_name;
     const [userProfileData, userRelatedArticles] = yield all([

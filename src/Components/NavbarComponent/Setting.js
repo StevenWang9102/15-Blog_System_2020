@@ -17,7 +17,7 @@ const InternalSetting = props => {
 
   return (
     <div>
-      {props.settingStatus === "updated" ? (
+      {props.settingStatus === "UPDATED" ? (
         <Redirect to='/home' />
       ) : (
         <div className='auth-page'>
