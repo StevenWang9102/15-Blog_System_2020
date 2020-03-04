@@ -83,6 +83,7 @@ export const postSaga = function*(){
       "Load Article"
     );
     yield put(articleContentLoaded(initArticleData.article));
+    yield put(setLoading("LOADED"));
   });
 
   // LOAD_ARTICLE_SETTING_DETAIL
@@ -130,6 +131,7 @@ export const postSaga = function*(){
       "Load Popular Tags"
     );
     yield put(tagRelatedArticleLoaded(tagRelatedData.articles));
+    yield put(setLoading("LOADED"));
   });
 
   // LOADED_USER_PROFILE

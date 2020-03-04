@@ -112,6 +112,7 @@ const InternalArticlePreview = props => {
         return (
           <div className='article-preview' key={index}>
             <div className='article-meta'>
+
               <Link to={"/user_profile/" + article.author.username}>
                 <img
                   className='author-image'
@@ -161,6 +162,7 @@ const InternalArticlePreview = props => {
 
             <Link
               className='nav-link preview-link article-detail'
+              onClick={()=> props.setLoading("LOADING")}
               to={"/article-detail/" + article.slug}>
               <h1>
                 {article.title}

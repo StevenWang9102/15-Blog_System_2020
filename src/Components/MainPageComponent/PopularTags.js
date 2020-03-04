@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { popularTagClicked,  setHomeNavStatus } from "../../ReduxStore/FeedDetails/loadActions";
+import { popularTagClicked,  setHomeNavStatus, setLoading } from "../../ReduxStore/FeedDetails/loadActions";
 import { NavLink } from "react-router-dom";
 
 
@@ -19,6 +19,7 @@ const InternalPopularTages = props => {
                 key={index}
                 value = {tagName}
                 onClick = {()=> {
+                  props.setLoading("LOADING")
                   props.onPopularTagClicked(tagName)
                   props.setHomeNavStatus('null', 'null', 'active')
                 }}
@@ -51,6 +52,7 @@ const mapStateToProps = ({asyncReducer}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setLoading: (status) => dispatch(setLoading(status)),
     onPopularTagClicked: (tagName) => dispatch(popularTagClicked(tagName)),
     setHomeNavStatus: (your, favorited, popular) => dispatch(setHomeNavStatus(your, favorited, popular)),
   };
