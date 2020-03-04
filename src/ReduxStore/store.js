@@ -1,6 +1,5 @@
 import { syncReducer } from "./FeedDetails/syncReducers";
 import { asyncReducer } from "./FeedDetails/asyncReducers";
-
 // import { getSaga } from "./FeedDetails/getSagas";
 import { postSaga } from "./FeedDetails/postSagas";
 

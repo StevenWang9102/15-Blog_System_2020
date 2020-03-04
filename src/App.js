@@ -6,18 +6,18 @@ import "./App.css";
 const InternalApp = props => {
   return (
     <div className='App'>
-    {props.loading === "LOADING" ? (<div className="loading_status">
-        <span>Loading...</span>
-      </div>) : null}
+      {props.loading === "LOADING" ? (
+        <div className='loading_status'>
+          <span>Loading...</span>
+        </div>
+      ) : null}
       <Navbar />
     </div>
   );
 };
 
 const mapStateToProps = ({ syncReducer, asyncReducer }) => {
-  const {
-    loading
-  } = syncReducer;
+  const { loading } = syncReducer;
 
   return {
     loading

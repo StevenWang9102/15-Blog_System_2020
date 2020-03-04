@@ -4,7 +4,7 @@ import { removeUserFromSession } from "../../Components/UserComponent/AuthToken"
 import {
   logOutButtonClicked,
   onUpdateSettingClicked
-} from "../../ReduxStore/FeedDetails/feedActions";
+} from "../../ReduxStore/FeedDetails/loadActions";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 
@@ -17,7 +17,7 @@ const InternalSetting = props => {
 
   return (
     <div>
-      {props.yourSettingStatus === "updated" ? (
+      {props.settingStatus === "updated" ? (
         <Redirect to='/home' />
       ) : (
         <div className='auth-page'>
@@ -78,7 +78,6 @@ const InternalSetting = props => {
                         className='btn btn-lg btn-primary pull-xs-right'
                         type='button'
                         onClick={() =>
-                          // 此处应该重新的清空userInformation
                           props.onUpdateSettingClicked({
                             image,
                             name,
@@ -118,10 +117,10 @@ const InternalSetting = props => {
 const mapStateToProps = ({syncReducer, asyncReducer }) => {
 
   const { userInformation } = asyncReducer;
-  const { yourSettingStatus } = syncReducer;
+  const { settingStatus } = syncReducer;
 
   return {
-    yourSettingStatus,
+    settingStatus,
     userInformation
   };
 };

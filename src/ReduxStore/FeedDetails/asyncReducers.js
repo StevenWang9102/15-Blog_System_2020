@@ -16,20 +16,18 @@ import {
   CURRENT_PROFILE_ARTICLE_LOADED,
   YOUR_FEED_NAV_CLICKED,
   CURRENT_HOME_DISPLAY_ARTICLES_LOADED,
-} from "./feedActions";
+} from "./loadActions";
 
 const initialState = {
   currentComments: {},
   currentArticleDetails: {},
   globalArticles: [],
   popularTags: [],
-  currentArticleTitle: "",
-  currentArticleSlug: "",
   currentProfileDetail: {},
   currentUsersArticles: [],
   favoritedArticles: null,
   tagRelatedArticles: null,
-  currentTagName: "",
+  currentTagName: " ",
   userInformation: {},
   currentProfileDisplayArticle: [],
   currentHomeDisplayArticle: [],
@@ -49,13 +47,6 @@ export const asyncReducer = (state = initialState, action) => {
     case TAGS_DATA_LOADED:
       return { ...state, popularTags: action.tagsData };
 
-    case ARTICLE_TITLE_CLICKED:
-      return {
-        ...state,
-        currentArticleTitle: action.title,
-        currentArticleSlug: action.slug
-      };
-
     case ARTICLE_CONTENT_LOADED:
       return {
         ...state,
@@ -69,7 +60,6 @@ export const asyncReducer = (state = initialState, action) => {
     case TAG_RELATED_ARTICLE_LOADED:
       return {
         ...state,
-        tagRelatedArticles: action.tagRelatedArticles,
         currentHomeDisplayArticle: action.tagRelatedArticles
       };
 
@@ -84,9 +74,6 @@ export const asyncReducer = (state = initialState, action) => {
         ...state,
         currentUsersArticles: action.userRelatedArticles.articles,
         currentProfileDisplayArticle: action.userRelatedArticles.articles,
-        // 
-        // 
-        // 
         articleCount: action.userRelatedArticles.articlesCount
       };
 
@@ -105,11 +92,11 @@ export const asyncReducer = (state = initialState, action) => {
         userInformation:{}
       };
 
-    case YOUR_FEED_NAV_CLICKED:
-      return {
-        ...state,
-        tagRelatedArticles: null
-      };
+    // case YOUR_FEED_NAV_CLICKED:
+    //   return {
+    //     ...state,
+    //     tagRelatedArticles: null
+    //   };
 
     case LOAD_INIT_ARTICLE_DETAIL:
       return { ...state, currentSlug: action.slug };

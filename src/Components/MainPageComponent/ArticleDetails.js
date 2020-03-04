@@ -8,7 +8,7 @@ import {
   onDeleteArticleClicked,
   onEditArticleClicked,
   saveUserInformationToStore
-} from "../../ReduxStore/FeedDetails/feedActions";
+} from "../../ReduxStore/FeedDetails/loadActions";
 import { useParams } from "react-router-dom";
 import { ArticleComments } from "./ArticleComments";
 import { Route, Redirect } from "react-router-dom";
@@ -34,12 +34,13 @@ const InternalArticleDetails = props => {
 
   return (
     <Route>
-      {props.deleteYourArticleStatus ? (
+      {props.deleteYourArticleStatus ? 
         <Redirect to='/home' />
-      ) : (
+       : 
         <div className='article-page'>
           <div className='banner'>
             <div className='container'>
+
               {/* ---------------- Article Title  ---------------- */}
               {props.currentArticleDetails.author && (
                 <div>
@@ -48,7 +49,7 @@ const InternalArticleDetails = props => {
                   <div className='article-meta article-source'>
                     <Link
                       to={
-                        "/user-profile/" +
+                        "/user_profile/" +
                         props.currentArticleDetails.author.username
                       }>
                       <img
@@ -129,7 +130,7 @@ const InternalArticleDetails = props => {
           {/* ---------------- Comments ----------------  */}
           {props.userInformation.token && <ArticleComments />}
         </div>
-      )}
+      }
     </Route>
   );
 };

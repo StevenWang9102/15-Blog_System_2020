@@ -130,11 +130,26 @@ p{
   top:0;
   background-color: rgba(128, 128, 128, 0.219);
   font-size: 40px;
-  opacity: 0.9;
+  opacity: 0.8;
   z-index: 100;
 }
 
 .loading_status span{
   position: absolute;
   top: 350px;
+}
+
+
+.btn-outline-primary:focus{
+  color: #5cb85c;
+  font-weight: 500;
+  text-align: center;
+  background-color: #5cb85c11;
+}
+
+.btn-outline-primary:hover{
+  color: #5cb85c;
+  font-weight: 500;
+  text-align: center;
+  background-color: #5cb85c94;
 }

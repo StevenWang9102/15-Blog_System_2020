@@ -9,7 +9,6 @@ export const POPULAR_TAG_CLICKED = Symbol("POPULAR_TAG_CLICKED");
 export const POPULAR_TAG_DISPLAYED = Symbol("POPULAR_TAG_DISPLAYED");
 export const TAG_RELATED_ARTICLE_LOADED = Symbol("TAG_RELATED_ARTICLE_LOADED");
 export const RELATED_TAG_LOADED = Symbol("RELATED_TAG_LOADED");
-export const GLOBLE_FEED_CLICKED = Symbol("GLOBLE_FEED_CLICKED");
 export const LOADED_USER_PROFILE = Symbol("LOADED_USER_PROFILE");
 export const USERS_PROFILE_LOADED = Symbol("USERS_PROFILE_LOADED");
 export const USERS_RELATED_ARTICLES_LOADED = Symbol("USERS_RELATED_ARTICLES_LOADED");
@@ -24,10 +23,8 @@ export const YOUR_FEED_NAV_CLICKED = Symbol("YOUR_FEED_NAV_CLICKED");
 export const SET_HOME_NAV_STATUS = Symbol("SET_HOME_NAV_STATUS");
 export const GLOBAL_FEED_DATA_LOADED = Symbol("GLOBAL_FEED_DATA_LOADED");
 export const POST_COMMENTS_CLICKED = Symbol("POST_COMMENTS_CLICKED");
-export const POST_ARTICLE_CLICKED = Symbol("POST_ARTICLE_CLICKED");
 export const POSTED_ARTICLE_RELOADED = Symbol("POSTED_ARTICLE_RELOADED");
 export const FOLLOW_AUTHOR_CLICKED = Symbol("FOLLOW_AUTHOR_CLICKED");
-// SET_LOADING_LOADED
 export const SET_LOADING_LOADED = Symbol("SET_LOADING_LOADED");
 
 export const EDIT_ARTICLE_BUTTON_CLICKED = Symbol(
@@ -44,6 +41,8 @@ export const LOAD_POPULAR_TAGS = Symbol("LOAD_POPULAR_TAGS");
 export const SAVE_USER_INFOR_TO_STORE = Symbol("SAVE_USER_INFOR_TO_STORE");
 export const SET_LOG_IN_STSTUS = Symbol("SET_LOG_IN_STSTUS");
 export const LOG_OUT_BUTTON_CLICK = Symbol("LOG_OUT_BUTTON_CLICK");
+export const EMPTY_ARTICLE_COUNT = Symbol("EMPTY_ARTICLE_COUNT");
+
 export const UPDATE_SETTING_BUTTON_CLICK = Symbol(
   "UPDATE_SETTING_BUTTON_CLICK"
 );
@@ -106,10 +105,6 @@ export const popularTagIsDiplayed = tagName => {
 
 export const tagRelatedArticleLoaded = tagRelatedArticles => {
   return { type: TAG_RELATED_ARTICLE_LOADED, tagRelatedArticles };
-};
-
-export const globeFeedClicked = () => {
-  return { type: GLOBLE_FEED_CLICKED };
 };
 
 export const loadUserProfileDetail = (author_name, articleCountDisplay, articleOffSet) => {
@@ -175,22 +170,7 @@ export const onPostCommentsClicked = (slug, myComment) => {
   return { type: POST_COMMENTS_CLICKED, slug, myComment };
 };
 
-export const onPostArticleClicked = (
-  title,
-  description,
-  content,
-  tags,
-  slug
-) => {
-  return {
-    type: POST_ARTICLE_CLICKED,
-    title: title,
-    description: description,
-    content: content,
-    tags: tags,
-    slug: slug
-  };
-};
+
 
 export const postedArticleReloaded = status => {
   return { type: POSTED_ARTICLE_RELOADED, status: status };
@@ -266,14 +246,19 @@ export const articleSettingContentLoaded = data => {
 
 // onFollowAuthorClick
 export const onFollowAuthorClick = (author_name, method) => {
-  return { type: FOLLOW_AUTHOR_CLICKED, author_name: author_name, method:method };
+  return { type: FOLLOW_AUTHOR_CLICKED, author_name: author_name, method: method };
 };
 
 // followAuthorLoaded
 export const followAuthorLoaded = data => {
   return { type: FOLLOW_AUTHOR_LOADED, data: data };
 };
-// setLouding
-export const setLouding = status => {
+// setLoading
+export const setLoading = status => {
   return { type: SET_LOADING_LOADED, status };
+};
+
+// emptyArticleCount
+export const emptyArticleCount = status => {
+  return { type: EMPTY_ARTICLE_COUNT, status };
 };

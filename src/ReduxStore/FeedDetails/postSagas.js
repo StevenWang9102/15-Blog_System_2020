@@ -4,7 +4,7 @@ import {
   setUserOnSession
 } from "../../Components/UserComponent/AuthToken";
 import { getUserInfoSagaLocal } from "../getUserInfo"
-import { fetchDataFromServer, postDataToServerAll} from "../httpMethods"
+import { fetchDataFromServer, postDataToServerAll, articleCountDisplay, articleOffSet} from "../httpMethods"
 
 import {
   // --------------- GET -------------------
@@ -25,14 +25,12 @@ import {
   favoritedArticleLoaded,
   POST_COMMENTS_CLICKED,
   currentDisplayArticleLoaded,
-  setLouding,
+  setLoading,
   // ----------------- POST ------------------
   signUpUserLoaded,
-  favoritedArticleNavClicked,
   SIGN_UP_BUTTON_CLICK,
   loadGlobalFeeds,
   articleContentLoaded,
-  POST_ARTICLE_CLICKED,
   SIGN_IN_BUTTON_CLICKED,
   userInformationLoaded,
   LOAD_YOUR_FEED,
@@ -45,11 +43,12 @@ import {
   updateSettingStatus,
   DELETE_ARTICLE_BUTTON,
   FOLLOW_AUTHOR_CLICKED,
-} from "./feedActions";
+} from "./loadActions";
+import {  POST_ARTICLE_CLICKED, } from "./displayActions"
 
 
 export const postSaga = function*(){
-
+  
   // ------------------------------ GET SAGA --------------------
   // GLOBAL_FEEDS_LOADED
   yield takeLatest(LOAD_GLOBAL_FEEDS, function*(action) {
@@ -58,12 +57,9 @@ export const postSaga = function*(){
       `/articles?limit=${action.articleCountDisplay}&offset=${action.articleOffSet}`,
       "Load Global Feeds"
     );
-    console.log(initArticData);
-    
-    // 
-    // 
+
     yield put(articleDataLoaded(initArticData, "loaded"));
-    yield put(setLouding("loaded"));
+    yield put(setLoading("LOADED"));
 
   });
 
@@ -73,12 +69,12 @@ export const postSaga = function*(){
     const initTagData = yield call(
       fetchDataFromServer,
       "/tags",
-      "Load Initial Popular Tags"
+      "Load Popular Tags"
     );
-    console.log(initTagData);
+    // console.log(initTagData);
     
     yield put(tagsDataLoaded(initTagData["tags"]));
-    yield put(setLouding("loaded"));
+    yield put(setLoading("LOADED"));
   });
 
   // ARTICLE_DETAILS_LOADED
@@ -140,29 +136,36 @@ export const postSaga = function*(){
 
   // LOADED_USER_PROFILE
   yield takeLatest(LOADED_USER_PROFILE, function*(action) {
+    // const t = yield select(state => state.userInformation)
+    // console.log(t);
     
+    const token = getUserInfoSagaLocal().token;
     const userName = action.author_name;
     const [userProfileData, userRelatedArticles] = yield all([
-      call(fetchDataFromServer, `/profiles/${userName}`, "Load User Profile"),
+
+      call(postDataToServerAll, 
+        token, 
+        `/profiles/${userName}`, "NothingToPost", 
+        "Load User Profile",
+        "GET"
+        ),
       call(
         fetchDataFromServer,
         `/articles?author=${userName}&limit=${action.articleCountDisplay}&offset=${action.articleOffSet}`,
         "Load User Articles"
       )
     ]);
-
-    console.log(userProfileData);
     
+    // need clean ...
     yield put(userProfileDataLoaded(userProfileData.profile));
     yield put(userRelatedArticlesLoaded(userRelatedArticles));
     yield put(currentDisplayArticleLoaded(userRelatedArticles.articles));
+    yield put(setLoading("LOADED"));
   });
 
   // FAVERATED_NAV_CLICKED
-  // author_name, articleCountDisplay, articleOffSet
   yield takeLatest(FAVERATED_NAV_CLICKED, function*(action) {
     const userName = action.author_name;
-
     const favoritedArticlesData = yield call(
       fetchDataFromServer,
       `/articles?favorited=${userName}&limit=${action.articleCountDisplay}&offset=${action.articleOffSet}`,
@@ -170,13 +173,9 @@ export const postSaga = function*(){
     );
 
     yield put(favoritedArticleLoaded(favoritedArticlesData));
-    // 重新渲染count
-    // 
-    // 
-    console.log(favoritedArticlesData);
-    
     yield put(currentDisplayArticleLoaded(favoritedArticlesData.articles));
   });
+
   // FAVORITED_BUTTON_CLICKED
   yield takeLatest(FAVORITED_BUTTON_CLICKED, function*(action) {
     const slug = action.slug;
@@ -192,18 +191,16 @@ export const postSaga = function*(){
       message,
       type
     );
-
-    yield put(loadGlobalFeeds());
-    yield put(favoritedArticleNavClicked(action.author_name));
+    yield put(loadGlobalFeeds(articleCountDisplay, articleOffSet));
   });
 
 // ------------------------------ POST SAGA --------------------
+
   // SIGN_IN_BUTTON_CLICKED
   yield takeLatest(SIGN_IN_BUTTON_CLICKED, function*(action) {
     const userData = {};
     const url = "/users/login";
     const message = "Sign in";
-    console.log(action);
     
     userData.email = action.email;
     userData.password = action.password;
@@ -223,11 +220,11 @@ export const postSaga = function*(){
 
     yield put(userInformationLoaded(userPostedData));
     yield put(setHomeNavStatus("active", "null", "null"));
+    yield put(setLoading("LOADED"));
   });
 
   // LOAD_YOUR_FEED
   yield takeLatest(LOAD_YOUR_FEED, function*(action) {
-    // articleCountDisplay, articleOffSet
     const token = getUserInfoSagaLocal().token;
     const url = `/articles/feed?limit=${action.articleCountDisplay}&offset=${action.articleOffSet}`;
     const message = "Load Your Feed";
@@ -240,13 +237,11 @@ export const postSaga = function*(){
       "GET"
     );
     yield put(currentHomeDisplayArticleLoaded(yourArticleData));
-    yield put(setLouding("loaded"));
+    yield put(setLoading("LOADED"));
   });
 
   // POST_ARTICLE_CLICKED
   yield takeLatest(POST_ARTICLE_CLICKED, function*(action) {
-    console.log(action);
-    
     const token = getUserInfoSagaLocal().token;
     let url,
       type = "";
@@ -277,9 +272,11 @@ export const postSaga = function*(){
       type
     );
 
+    // need clean?
     yield put(articleContentLoaded(yourArticle.article));
     yield put(articleCommentsLoaded(yourArticle));
     yield put(postedArticleReloaded(true));
+    yield put(setLoading("LOADED"));
   });
 
   // SIGN_UP_BUTTON_CLICK
@@ -319,9 +316,9 @@ export const postSaga = function*(){
       postData,
       message,
       "PUT"
-    );
+    );    
     setUserOnSession(userSetting.user);
-    yield put(updateSettingStatus("updated"));
+    yield put(updateSettingStatus("UPDATED"));
     yield put(userInformationLoaded(userSetting.user));
   });
 
@@ -345,12 +342,8 @@ export const postSaga = function*(){
   // FOLLOW_AUTHOR_CLICKED
   yield takeLatest(FOLLOW_AUTHOR_CLICKED, function*(action) {
     const token = getUserInfoSagaLocal().token;
-    console.log(token);
-    
-    // https://conduit.productionready.io/api/profiles/sid893/follow
-    // const url = `/articles/${action.slug}`;
     const url = `/profiles/${action.author_name}/follow`;
-    const message = 'Follow  SUCCESS';
+    const message = 'Follow  Author';
     const postData = "NothingToPost";
     const followAuthor = yield call(
       postDataToServerAll,
@@ -360,10 +353,8 @@ export const postSaga = function*(){
       message,
       action.method
     );
-    console.log(followAuthor);
-    
+
     yield put(userProfileDataLoaded(followAuthor.profile));
-    // 
   });
 };
 

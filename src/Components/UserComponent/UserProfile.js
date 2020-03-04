@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { Link, NavLink } from "react-router-dom";
 import dateFormat from "dateformat";
 import { createUseStyles } from "react-jss";
+import { articleCountDisplay, articleOffSet} from "../../ReduxStore/httpMethods"
 import {
   loadUserProfileDetail,
   favoritedArticleNavClicked,
@@ -12,13 +13,13 @@ import {
   updateSettingStatus,
   favoritedButtonClicked,
   onFollowAuthorClick
-} from "../../ReduxStore/FeedDetails/feedActions";
+} from "../../ReduxStore/FeedDetails/loadActions";
 
 // ------------------------- JSS -----------------------
 const useStyles = createUseStyles({
   myButton: {
     border: '0px',
-    padding: '0px',
+    padding: '1px 7px 1px 5px',
   },
   '& a': {
     height: '5px',
@@ -26,6 +27,8 @@ const useStyles = createUseStyles({
   }
 });
 
+
+// ------------------------- Component -----------------------
 const InternalUserProfile = props => {
   
   const Page = ({ children }) => {
@@ -39,7 +42,6 @@ const InternalUserProfile = props => {
   };
   
   const Button = ({ children }) => {
-    // Custumized Styles
     const classes = useStyles();
     return (
       <button
@@ -49,28 +51,20 @@ const InternalUserProfile = props => {
     );
   };
 
-  // ------------------------- Component -----------------------
+  // ------------------------- Content -----------------------
   const [httpMethod, setHttpMethod] = useState({});
   const { author_name } = useParams();
   const { article_type } = useParams();
   
-  console.log(author_name);
-
-  const articleCountDisplay = 5
-  const articleOffSet = 0
   const pageNumber = Math.round(props.articleCount / articleCountDisplay)
-
   const myPageNumArray = []
   for (let i = 1; i <= pageNumber; i++) {
     myPageNumArray.push(i)
   }
 
   useEffect(() => {
-    // 从别处转移过来的时候，用户名没有及时更新
-    // 好像只是页面跳转，但是没有发送请求？
     props.loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet);
-    props.updateSettingStatus("not updated");
-    // 更新是否改动setting的
+    props.updateSettingStatus("NOT UPDATED");
 
     if (article_type === "favorited_articles") {
       props.setProfileNavStatus("null", "active");
@@ -84,6 +78,7 @@ const InternalUserProfile = props => {
   return (
     <div>
       <div className='profile-page'>
+        
         {/* ---------------- User Information ---------------- */}
         <div className='user-info'>
           <div className='container'>
@@ -113,9 +108,7 @@ const InternalUserProfile = props => {
                         props.onFollowAuthorClick(author_name, "DELETE");
                     }}>
                     <img src='./icon/004-settings.png' alt='' />
-                    {/* {props.currentProfileDetail.following} */}
-                    {/* {props.currentProfileDetail.following} */}
-                    {props.currentProfileDetail.following ? `- Unfollow ${author_name}` : `+ Follow ${author_name} Now`}
+                    {props.currentProfileDetail.following ? `- Unfollow ${author_name}  ` : ` + Follow ${author_name} Now `}
                   </a>
                 </Button>
               </div>
@@ -165,15 +158,6 @@ const InternalUserProfile = props => {
                       </Link>
 
                       <div className='info'>
-                        {/* 
-                            // 目前只是链接过去了
-                            // 但是似乎没有重新请求吧
-                            // 似乎此时的作者名字不对
-                            // 应该请求并且渲染页面
-                            // 好像目前页面内容还是不对劲
-                            // 点击玩作者之后，在点击Nav为啥又不能找到我自己的内容了。。。
-
-                            */}
                         <Link
                           to={"/user_profile/" + article.author.username}
                           className='author'
@@ -196,7 +180,7 @@ const InternalUserProfile = props => {
                           }
                           const token = props.userInformation.token;
                           token &&
-                            props.onFavoritedButtonClicked(
+                            props.onFavoritedArticleClicked(
                               token,
                               article.slug,
                               tempMethod[article.slug],
@@ -224,7 +208,7 @@ const InternalUserProfile = props => {
                   No articles are here... yet.
                 </div>
               )}
-              {/* --------------------- Page Tunner --------------------- */}
+              {/* --------------------- Switch Page --------------------- */}
               <nav>
                 <ul class="pagination">
 
@@ -242,7 +226,6 @@ const InternalUserProfile = props => {
                       > {pageNumber} </a>
                     </Page>)
                   })}
-
                 </ul>
               </nav>
             </div>
@@ -299,9 +282,11 @@ const mapDispatchToProps = dispatch => {
         setProfileNavStatus(profileNavStatusLeft, profileNavStatusRight)
       ),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
-    onFavoritedButtonClicked: (token, slug, httpMethod, author_name) =>
+    onFavoritedArticleClicked: (token, slug, httpMethod, author_name) =>
       dispatch(favoritedButtonClicked(token, slug, httpMethod, author_name)),
     onFollowAuthorClick: (author_name, method) => dispatch(onFollowAuthorClick(author_name, method)),
+    // emptyArticleCount
+
   };
 };
 

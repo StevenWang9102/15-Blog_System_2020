@@ -5,16 +5,17 @@ import { createUseStyles } from "react-jss";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
 import { Link } from "react-router-dom";
+import { articleCountDisplay, articleOffSet} from "../../ReduxStore/httpMethods"
 import {
-  articleTitleClicked,
   loadGlobalFeeds,
   loadYourArticles,
   favoritedButtonClicked,
   setHomeNavStatus,
   loadPopularTags,
-  setLouding,
+  setLoading,
+  emptyArticleCount,
   updateSettingStatus
-} from "../../ReduxStore/FeedDetails/feedActions";
+} from "../../ReduxStore/FeedDetails/loadActions";
 
 const useStyles = createUseStyles({
   myButton: {
@@ -27,64 +28,52 @@ const useStyles = createUseStyles({
   }
 });
 
-const Page = ({ children }) => {
-  const classes = useStyles();
-  return (
-    <button
-      className={`page-item ${classes.myButton}`}>
-      {children}
-    </button>
-  );
-};
-
 const InternalArticlePreview = props => {
-  
-  const [httpMethod, setHttpMethod] = useState({});
-  // const [louding, setLouding] = useState("");
 
-  const articleCountDisplay = 10
-  const articleOffSet = 0
+  const Page = ({ children }) => {
+    const classes = useStyles();
+    return (
+      <button
+        className={`page-item ${classes.myButton}`}>
+        {children}
+      </button>
+    );
+  };
+
+  const [httpMethod, setHttpMethod] = useState({});
   const pageNumber = Math.round(props.articleCount / articleCountDisplay)
 
-  const myPageNumArray = []
+  const myPageNumArray = [];
   for (let i = 1; i <= pageNumber; i++) {
     myPageNumArray.push(i)
   }
-  console.log(myPageNumArray);
-
 
   useEffect(() => {
-    props.updateSettingStatus("not updated");
+    props.setLoading("LOADING")
+    props.updateSettingStatus("NOT UPDATED");
+    props.loadPopularTags();
+
     if (props.userInformation.username) {
       props.setHomeNavStatus("active", "null", "null");
-      props.loadPopularTags();
       props.loadYourFeedArticles(articleCountDisplay, articleOffSet);
     } else {
-      props.setHomeNavStatus("active", "active", "null");
-      props.loadPopularTags();
+      props.setHomeNavStatus("null", "active", "null");
       props.loadGlobalFeeds(articleCountDisplay, articleOffSet);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ------------------------ JSS -----------------------
-  
-  
- 
-
-
-  // ---------------------- Content -----------------------
   return (
     <div className='col-md-9 col-sm-12'>
       <div className='feed-toggle'>
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
 
-            {/* ------------------ Your Feed ----------------- */}
+            {/* -------- Your Feed ------- */}
             {props.userInformation && props.userInformation.token && (
               <Link
                 onClick={() => {
-                  props.setLouding("LOADING")
+                  props.setLoading("LOADING")
                   props.loadYourFeedArticles(articleCountDisplay, articleOffSet)
                   props.setHomeNavStatus("active", "null", "null");
                 }}
@@ -94,19 +83,19 @@ const InternalArticlePreview = props => {
               </Link>
             )}
 
-            {/* ------------------ Global Feed ------------------ */}
+            {/* -------- Global Feed ------- */}
             <Link
               onClick={() => {
-                props.setLouding("LOADING")
-                props.loadGlobalFeeds(articleCountDisplay, articleOffSet);
+                props.setLoading("LOADING")
                 props.setHomeNavStatus("null", "active", "null");
+                props.loadGlobalFeeds(articleCountDisplay, articleOffSet);
               }}
               className={`nav-link ${props.favoriteNav} display-inline`}
               to='/home/global_feed'>
               Global Feed
             </Link>
 
-            {/* ----------------- Popular Tags --------------- */}
+            {/* --------- Popular Tags -------*/}
             {props.currentTagName && (
               <Link
                 className={`nav-link ${props.popularNav} display-inline`}
@@ -118,7 +107,7 @@ const InternalArticlePreview = props => {
         </ul>
       </div>
 
-      {/* --------------------- Related Articles --------------------- */}
+      {/* ---------- Current Articles ---------- */}
       {props.currentHomeDisplayArticle.map((article, index) => {
         return (
           <div className='article-preview' key={index}>
@@ -130,7 +119,13 @@ const InternalArticlePreview = props => {
                   alt='au'
                 />
 
-                <div className='info author'>
+                <div 
+                  className='info author'
+                  onClick={()=> {
+                    props.setLoading("LOADING")
+                    props.emptyArticleCount()
+                  } }
+                  >
                   {article.author.username}
                   <span className='date'>
                     {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
@@ -140,25 +135,26 @@ const InternalArticlePreview = props => {
 
               <button
                 type='button'
-                className='btn btn-outline-primary btn-sm pull-xs-right'
+                className= "btn btn-outline-primary btn-sm pull-xs-right"
                 onClick={() => {
+                  props.setLoading("LOADING")
+                  // Switch method between "POST" and "DELETE"
                   const tempMethod = { ...httpMethod };
                   if (tempMethod[article.slug] === "POST") {
                     tempMethod[article.slug] = "DELETE";
                   } else {
                     tempMethod[article.slug] = "POST";
                   }
-                  const token =
-                    props.userInformation.token;
+                  const token = props.userInformation.token;
                   token &&
-                    props.onFavoritedButtonClicked(
+                    props.onFavoritedArticleClicked(
                       token,
                       article.slug,
                       tempMethod[article.slug]
                     );
                   setHttpMethod(tempMethod);
                 }}>
-                <img src='./icon/002-heart-2.png' alt='love' />
+                <img src='./icon/002-heart-2.png' alt='' />
                 {article.favoritesCount}
               </button>
             </div>
@@ -166,11 +162,7 @@ const InternalArticlePreview = props => {
             <Link
               className='nav-link preview-link article-detail'
               to={"/article-detail/" + article.slug}>
-              <h1
-                onClick={() => {
-                  // props.setLouding("LOADING")
-                  props.onArticleClick(article.title, article.slug);
-                }}>
+              <h1>
                 {article.title}
               </h1>
               <p>{article.description}</p>
@@ -183,10 +175,9 @@ const InternalArticlePreview = props => {
         <div className='article-preview'>No articles are here... yet.</div>
       )}
 
-      {/* --------------------- Page Tunner --------------------- */}
+      {/* --------- Page Tunner -------- */}
       <nav>
         <ul class="pagination">
-
           {myPageNumArray.map((pageNumber, index) => {
             const articleOffSet = index * articleCountDisplay
             return (<Page>
@@ -194,7 +185,7 @@ const InternalArticlePreview = props => {
                 class="page-link" 
                 href={`#p${pageNumber}`}
                 onClick={()=>{
-                  props.setLouding("LOADING")
+                  props.setLoading("LOADING")
                   if(props.favoriteNav==="active")
                     props.loadGlobalFeeds(articleCountDisplay, articleOffSet)
                   else if(props.yourNav==="active")
@@ -205,7 +196,6 @@ const InternalArticlePreview = props => {
                 > {pageNumber} </a>
             </Page>)
           })}
-
         </ul>
       </nav>
     </div>
@@ -214,34 +204,27 @@ const InternalArticlePreview = props => {
 
 InternalArticlePreview.propTypes = {
   currentTagName: PropTypes.string,
-  tagRelatedArticles: PropTypes.array,
   globalArticles: PropTypes.array.isRequired,
-  onArticleClick: PropTypes.func
 };
 
 const mapStateToProps = ({ syncReducer, asyncReducer }) => {
   const {
-    tagRelatedArticles,
     currentTagName,
     yourNav,
     favoriteNav,
     popularNav,
     loading
-
   } = syncReducer;
 
   const {
     userInformation,
     globalArticles,
-    onArticleClick,
     currentHomeDisplayArticle,
     articleCount,
   } = asyncReducer;
 
   return {
     globalArticles,
-    onArticleClick,
-    tagRelatedArticles,
     userInformation,
     currentTagName,
     yourNav,
@@ -255,18 +238,16 @@ const mapStateToProps = ({ syncReducer, asyncReducer }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onArticleClick: (title, slug) => dispatch(articleTitleClicked(title, slug)),
+    setLoading: (status) => dispatch(setLoading(status)),
     setHomeNavStatus: (your, favorite, popular) => dispatch(setHomeNavStatus(your, favorite, popular)),
     loadYourFeedArticles: (articleCountDisplay, articleOffSet) => dispatch(loadYourArticles(articleCountDisplay, articleOffSet)),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
-    onFavoritedButtonClicked: (token, slug, httpMethod) =>
+    onFavoritedArticleClicked: (token, slug, httpMethod) =>
       dispatch(favoritedButtonClicked(token, slug, httpMethod)),
-      // setLouding:
-      setLouding: (status) =>
-      dispatch(setLouding(status)),
     loadGlobalFeeds: (articleCountDisplay, articleOffSet) => {
       dispatch(loadGlobalFeeds(articleCountDisplay, articleOffSet));
     },
+    emptyArticleCount: () => dispatch(emptyArticleCount()),
     loadPopularTags: () => { dispatch(loadPopularTags());
     }
   };

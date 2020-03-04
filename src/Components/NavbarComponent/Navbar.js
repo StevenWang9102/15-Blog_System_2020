@@ -15,8 +15,9 @@ import {
   onSignUpButtonClicked,
   postedArticleReloaded,
   userInformationLoaded,
-  updateSettingStatus
-} from "../../ReduxStore/FeedDetails/feedActions";
+  updateSettingStatus,
+  setLoading
+} from "../../ReduxStore/FeedDetails/loadActions";
 
 import {
   BrowserRouter as Router,
@@ -34,7 +35,6 @@ const InternalNavbar = props => {
       !props.userInformation ||
       (props.userInformation && !props.userInformation.token)
     ) {
-      // 上面再细节研究一下，为什么？@@@@@@@@@
       const userInformationOnSession = getUserFromSession();
       if (userInformationOnSession) {
         props.userInformationLoaded({ user: userInformationOnSession });
@@ -44,7 +44,6 @@ const InternalNavbar = props => {
       return props.userInformation;
     }
   };
-
 
   useEffect(() => {
     getUserInformationLocal();
@@ -89,10 +88,7 @@ const InternalNavbar = props => {
 
                   <li className='nav-item'>
                     <Link className='nav-link' to='/setting'>
-                      <img src='./icon/004-settings.png' alt='' 
-                        // onClick={()=>{props.updateSettingStatus("no updated");
-                      // }}
-                      />
+                      <img src='./icon/004-settings.png' alt=''/>
                       Setting
                     </Link>
                   </li>
@@ -105,6 +101,7 @@ const InternalNavbar = props => {
                       onClick={() => {
                         props.loadUserProfileDetail(userInfoLocal.username, 5, 0);
                         props.setProfileNavStatus("active", "null");
+                        props.setLoading("LOADING")
                       }}
                       >
                       <img
@@ -206,7 +203,8 @@ const mapDispatchToProps = dispatch => {
     onSignUpButtonClicked: data => dispatch(onSignUpButtonClicked(data)),
     postedArticleReloaded: data => dispatch(postedArticleReloaded(data)),
     userInformationLoaded: user => dispatch(userInformationLoaded(user)),
-    
+    setLoading: (status) => dispatch(setLoading(status)),
+
   };
 };
 

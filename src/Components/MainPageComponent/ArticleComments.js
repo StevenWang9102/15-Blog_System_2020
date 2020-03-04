@@ -3,7 +3,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
-import { onPostCommentsClicked } from "../../ReduxStore/FeedDetails/feedActions";
+import { onPostCommentsClicked } from "../../ReduxStore/FeedDetails/loadActions";
 
 
 const InternalArticleComments = props => {
@@ -33,9 +33,7 @@ const InternalArticleComments = props => {
               <button
                 type="button"
                 className='btn btn-sm btn-primary'
-                onClick={()=>
-                    props.onPostCommentsClicked(props.currentSlug, myComment)
-                }
+                onClick={()=> props.onPostCommentsClicked(props.currentSlug, myComment)}
                 >Post Comment</button>
             </div>
           </form>

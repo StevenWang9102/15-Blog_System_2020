@@ -19,21 +19,11 @@ const InternalMainPage = props => {
   );
 };
 
-const mapStateToProps = ({ syncReducer, asyncReducer }) => {
-  const {
-    loading
-  } = syncReducer;
-  
-  return {
-    loading
-  };
-};
-
 const mapDispatchToProps = dispatch => {
   return {};
 };
 export const MainPage = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(InternalMainPage);
 
