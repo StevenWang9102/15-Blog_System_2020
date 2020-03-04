@@ -3,28 +3,37 @@ import {
   TAGS_DATA_LOADED,
   ARTICLE_TITLE_CLICKED,
   ARTICLE_COMMENTS_LOADED,
-  INIT_ARTICLE_DETAILS_GET,
+  LOAD_INIT_ARTICLE_DETAIL,
   ARTICLE_CONTENT_LOADED,
   TAG_RELATED_ARTICLE_LOADED,
+  ARTICLE_SETTING_DETAIL_LOADED,
   RELATED_TAG_LOADED,
+  SIGN_UP_USER_LOADED,
   USERS_PROFILE_LOADED,
-  INITIALDATA_LOADED,
+  FAVORITED_ARTICLES_LOADED,
+  LOG_OUT_BUTTON_CLICK,
+  LOAD_GLOBAL_FEEDS,
   USERS_RELATED_ARTICLES_LOADED,
   FAVERATED_ARITICLE_LOADED,
-  USER_TOKEN_LOADED,
+  UPDATED_YOUR_SETTING,
+  USER_INFORMATION_LOADED,
+  CURRENT_PROFILE_ARTICLE_LOADED,
   YOURE_FEED_LOADED,
-  GLOBAL_DATA_LOADED,
-  SMALL_NAV_CLICKED,
+  SET_LOG_IN_STSTUS,
   YOUR_FEED_NAV_CLICKED,
-  SMALL_NAV_SET_CLICKED,
-  YOURE_FEED_CLICKED
+  DELETE_YOUR_ARTICLE_DONE,
+  SET_HOME_NAV_STATUS,
+  YOURE_FEED_CLICKED,
+  CURRENT_HOME_DISPLAY_ARTICLES_LOADED,
+  POSTED_ARTICLE_RELOADED,
+  EDIT_ARTICLE_BUTTON_CLICKED,
+  SET_PROFILE_NAV
 } from "./feedActions";
 
 const initialState = {
   currentComments: {},
   currentArticleDetails: {},
-  articleLibrary: [],
-  globalFeeds: [],
+  globalArticles: [],
   popularTags: [],
   currentArticleTitle: "",
   currentArticleSlug: "",
@@ -33,19 +42,28 @@ const initialState = {
   favoritedArticles: null,
   tagRelatedArticles: null,
   currentTagName: "",
-  userInfo: {},
+  userInformation: {},
   yourArticles: null,
   smallNavStatus: "active",
   selfStatus: "null",
-  status1: "null",
-  status2: "active",
-  status3: "active"
+  article_reloaded: false,
+  myNav: "active",
+  favorited_Nav: "null",
+  currentDisplayArticle: [],
+  currentHomeDisplayArticle: [],
+  profileNavStatusLeft: "active",
+  profileNavStatusRight: "null",
+  favorited_article: {}
 };
 
 export const feedReducer = (state = initialState, action) => {
   switch (action.type) {
     case ARTICLE_DATA_LOADED:
-      return { ...state, articleLibrary: action.articleData };
+      return {
+        ...state,
+        globalArticles: action.articleData,
+        currentHomeDisplayArticle: action.articleData
+      };
 
     case TAGS_DATA_LOADED:
       return { ...state, popularTags: action.tagsData };
@@ -58,13 +76,21 @@ export const feedReducer = (state = initialState, action) => {
       };
 
     case ARTICLE_CONTENT_LOADED:
-      return { ...state, currentArticleDetails: action.initArticleData };
+      return {
+        ...state,
+        currentArticleDetails: action.initArticleData,
+        newPosedArticleSlug: action.initArticleData.slug
+      };
 
     case ARTICLE_COMMENTS_LOADED:
       return { ...state, currentComments: action.initCommentData };
 
     case TAG_RELATED_ARTICLE_LOADED:
-      return { ...state, tagRelatedArticles: action.tagRelatedArticles };
+      return {
+        ...state,
+        tagRelatedArticles: action.tagRelatedArticles,
+        currentHomeDisplayArticle: action.tagRelatedArticles
+      };
 
     case RELATED_TAG_LOADED:
       return { ...state, currentTagName: action.tagName };
@@ -72,29 +98,27 @@ export const feedReducer = (state = initialState, action) => {
     case YOURE_FEED_CLICKED:
       return { ...state, currentTagName: null, tagRelatedArticles: null };
 
-    case INITIALDATA_LOADED:
+    case LOAD_GLOBAL_FEEDS:
       return { ...state, currentTagName: "", tagRelatedArticles: null };
-
-    case GLOBAL_DATA_LOADED:
-      return { ...state, globalFeeds: action.payload };
 
     case USERS_PROFILE_LOADED:
       return { ...state, currentProfileData: action.userProfileData };
 
     case USERS_RELATED_ARTICLES_LOADED:
-      return { ...state, currentUsersArticles: action.userRelatedArticles };
+      return {
+        ...state,
+        currentUsersArticles: action.userRelatedArticles,
+        currentDisplayArticle: action.userRelatedArticles
+      };
 
     case FAVERATED_ARITICLE_LOADED:
       return { ...state, favoritedArticles: action.favoritedArticles };
 
-    case USER_TOKEN_LOADED:
-      return { ...state, userInfo: action.userInfo };
+    case USER_INFORMATION_LOADED:
+      return { ...state, userInformation: action.userInformation };
 
     case YOURE_FEED_LOADED:
       return { ...state, yourArticles: action.articles };
-
-    case SMALL_NAV_CLICKED:
-      return { ...state, smallNavStatus: action.status };
 
     case YOUR_FEED_NAV_CLICKED:
       return {
@@ -103,15 +127,53 @@ export const feedReducer = (state = initialState, action) => {
         tagRelatedArticles: null
       };
 
-    case SMALL_NAV_SET_CLICKED:
+    case SET_HOME_NAV_STATUS:
       return {
         ...state,
-        status1: action.status1,
-        status2: action.status2,
-        status3: action.status3
+        homeNavStatus: action.status
       };
-    case INIT_ARTICLE_DETAILS_GET:
+    case LOAD_INIT_ARTICLE_DETAIL:
       return { ...state, currentSlug: action.slug };
+
+    case POSTED_ARTICLE_RELOADED:
+      return { ...state, article_reloaded: action.status };
+
+    case EDIT_ARTICLE_BUTTON_CLICKED:
+      return { ...state, article_reloaded: action.status };
+
+    case SET_PROFILE_NAV:
+      return {
+        ...state,
+        profileNavStatusLeft: action.profileNavStatusLeft,
+        profileNavStatusRight: action.profileNavStatusRight
+      };
+
+    case CURRENT_PROFILE_ARTICLE_LOADED:
+      return { ...state, currentDisplayArticle: action.userProfileData };
+
+    case CURRENT_HOME_DISPLAY_ARTICLES_LOADED:
+      return { ...state, currentHomeDisplayArticle: action.payload };
+
+    case SET_LOG_IN_STSTUS:
+      return { ...state, loginStatus: action.loginStatus };
+
+    case LOG_OUT_BUTTON_CLICK:
+      return { ...state, loginStatus: action.loginStatus };
+
+    case UPDATED_YOUR_SETTING:
+      return { ...state, yourSettingStatus: action.status };
+
+    case DELETE_YOUR_ARTICLE_DONE:
+      return { ...state, deleteYourArticleStatus: action.status };
+
+    case SIGN_UP_USER_LOADED:
+      return { ...state, signUpStatus: action.data };
+
+    case FAVORITED_ARTICLES_LOADED:
+      return { ...state, favorited_article: action.data };
+
+    case ARTICLE_SETTING_DETAIL_LOADED:
+      return { ...state, articles_setting: action.data };
 
     default:
       return state;

@@ -3,18 +3,18 @@ import { connect } from "react-redux";
 import { signInClicked } from "../../ReduxStore/FeedDetails/feedActions";
 import {
   Route,
-  Link,
   Redirect,
 } from "react-router-dom";
 const InternalSignIn = props => {
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <Route>
-      {props.userInfo.token ? (
-        <Redirect to='/home' />
-      ) : (
+      {props.userInformation.token ? 
+        <Redirect to='/home'/>
+       : 
         <div className='auth-page'>
           <div className='container page'>
             <div className='row'>
@@ -43,22 +43,20 @@ const InternalSignIn = props => {
                       placeholder='Password'></input>
                   </fieldset>
                 
-                  <Link>
                     <button
+                      type="button"
                       className='btn btn-lg btn-primary pull-xs-right'
                       onClick={()=> {
                         props.onSignInClicked(email, password);
                       }}>
                       Sign in
                     </button>
-                  </Link>
-                  {/* @@@@ 不理解为什么可以重新跳转了。。。。。。。。 */}
                 </form>
               </div>
             </div>
           </div>
         </div>
-      )}
+      }
     </Route>
   );
 };

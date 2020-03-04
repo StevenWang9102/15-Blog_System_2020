@@ -101,7 +101,25 @@ p{
   margin-top: 20px;
 }
 
+.edit-button button{
+  margin-right: 5px;
+}
+
 .article-source
 {
   display: inline-block;
+}
+
+.feed-toggle .nav-link{
+  cursor: pointer !important;
+  text-align: center;
+  margin-right: 0;
+  width: 150px;
+  font-weight: 450;
+}
+
+.user-pic
+{
+  height: 26px !important;
+  width: 26px !important;
 }

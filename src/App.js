@@ -1,17 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Navbar } from "./Components/NavbarComponent/Navbar";
 import "./App.css";
-import { loadInitialData } from "./ReduxStore/FeedDetails/feedActions";
 
 const InternalApp = props => {
-  useEffect(() => {
-    props.loadInitialData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
-    <div className="App">
+    <div className='App'>
       <Navbar />
     </div>
   );
@@ -22,11 +16,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    loadInitialData: () => {
-      dispatch(loadInitialData());
-    }
-  };
+  return {};
 };
 
 export const App = connect(mapStateToProps, mapDispatchToProps)(InternalApp);

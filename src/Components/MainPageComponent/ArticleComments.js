@@ -7,6 +7,7 @@ import { onPostCommentsClicked } from "../../ReduxStore/FeedDetails/feedActions"
 
 
 const InternalArticleComments = props => {
+  
    const [myComment, setMyComment] = useState("");
   
   return (
@@ -29,12 +30,11 @@ const InternalArticleComments = props => {
                 className='comment-author-img'
                 alt='au'
               />
-              <button 
+              <button
+                type="button"
                 className='btn btn-sm btn-primary'
-                onClick={(event)=>
-                  {
+                onClick={()=>
                     props.onPostCommentsClicked(props.currentSlug, myComment)
-                  }
                 }
                 >Post Comment</button>
             </div>
@@ -45,7 +45,7 @@ const InternalArticleComments = props => {
       {/* ---------------- Public Comments ----------------  */}
       <div className='row'>
         <div className='col-xs-12 col-md-8 offset-md-2'>
-          {props.currentComments.comments &&
+          {props.currentComments && props.currentComments.comments &&
             props.currentComments.comments.map((comment, index) => {
               return (
                 <div key={index}>
@@ -58,7 +58,7 @@ const InternalArticleComments = props => {
                         <img
                           src={comment.author.image}
                           className='comment-author-img'
-                          alt='au'
+                          alt=''
                         />
                       </a>
                       &nbsp;
@@ -83,8 +83,8 @@ InternalArticleComments.propTypes = {
   currentComments: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ currentComments, currentArticleSlug, currentSlug }) => {
-  return { currentComments, currentArticleSlug, currentSlug };
+const mapStateToProps = ({ currentComments, currentSlug }) => {
+  return { currentComments,  currentSlug };
 };
 
 const mapDispatchToProps = dispatch => {

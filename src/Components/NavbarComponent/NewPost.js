@@ -1,98 +1,108 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import { onPostArticleClicked, loadInitArticleDetail } from "../../ReduxStore/FeedDetails/feedActions";
+import { useParams } from "react-router-dom";
+import { onPostArticleClicked, loadArticleSettingDetail, postedArticleReloaded } from "../../ReduxStore/FeedDetails/feedActions";
+import { Redirect } from "react-router-dom";
 
 const InternalNewPost = props => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [content, setContent] = useState("");
-  const [tags, setTags] = useState("");
 
-// 从哪里拿到这篇文章的slug， 应该是内存
-// 每次进入这个界面，都去看看这篇文章有没有值
-// 目前请求失败@@@@@@@
-
-useEffect(() => {
-  props.loadInitArticleDetail(props.currentSlug);
-  // 发送请求这篇文章的内容
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
+  const { slug } = useParams();  
+  const [title, setTitle] = useState((slug && props.currentArticleDetails.title) || "");
+  const [description, setDescription] = useState((slug && props.currentArticleDetails.description) || "" );
+  const [content, setContent] = useState((slug && props.currentArticleDetails.body)|| "");
+  const [tags, setTags] = useState((slug && props.currentArticleDetails.tagList) || []);
 
   return (
-    <div className='auth-page'>
-      <div class='editor-page'>
-        <div class='container page'>
-          <div class='row'>
-            <div class='col-md-10 offset-md-1 col-xs-12'>
-              <form>
-                <fieldset>
-                  
-                  {/* ---- Title ---- */}
-                  <fieldset class='form-group'>
-                    <input
-                      type='text'
-                      class='form-control form-control-lg'
-                      onChange={event => setTitle(event.target.value)}
-                      placeholder='Article Title'></input>
-                  </fieldset>
+    <div>
+      {props.article_reloaded ? 
+        <Redirect to={`/article-detail/${props.newPosedArticleSlug}`} /> 
+        : 
+        <div className='auth-page'>
+            <div className='editor-page'>
+              <div className='container page'>
+                <div className='row'>
+                  <div className='col-md-10 offset-md-1 col-xs-12'>
+                    <form>
+                      <fieldset>
+                        
+                        {/* ---- Title ---- */}
+                        <fieldset className='form-group'>
+                          <input
+                            type='text'
+                            className='form-control form-control-lg'
+                            onChange={event => setTitle(event.target.value)}
+                            value={title}
+                            placeholder='Article Title'></input>
+                        </fieldset>
 
-                  {/* ---- Description ---- */}
-                  <fieldset class='form-group'>
-                    <input
-                      type='text'
-                      class='form-control'
-                      onChange={event => setDescription(event.target.value)}
-                      placeholder="What's this article about?"></input>
-                  </fieldset>
+                        {/* ---- Description ---- */}
+                        <fieldset className='form-group'>
+                          <input
+                            type='text'
+                            className='form-control'
+                            value={description}
+                            onChange={event => setDescription(event.target.value)}
+                            placeholder="What's this article about?"></input>
+                        </fieldset>
 
-                  {/* ---- Content ---- */}
-                  <fieldset class='form-group'>
-                    <textarea
-                      class='form-control'
-                      rows='8'
-                      onChange={event => setContent(event.target.value)}
-                      placeholder='Write your article (in markdown)'></textarea>
-                  </fieldset>
+                        {/* ---- Content ---- */}
+                        <fieldset className='form-group'>
+                          <textarea
+                            className='form-control'
+                            rows='8'
+                            value={content}
+                            onChange={event => setContent(event.target.value)}
+                            placeholder='Write your article (in markdown)'></textarea>
+                        </fieldset>
 
-                  {/* ---- Tags ---- */}
-                  <fieldset class='form-group'>
-                    <input
-                      type='text'
-                      class='form-control'
-                      onChange={event => setTags(event.target.value)}
-                      placeholder='Enter tags'></input>
-                    <div class='tag-list'></div>
-                  </fieldset>
+                        {/* ---- Tags ---- */}
+                        <fieldset className='form-group'>
+                          <input
+                            type='text'
+                            className='form-control'
+                            // value= {tags && tags.join('')}
+                            onChange={event => setTags(event.target.value)}
+                            placeholder='Enter tags'></input>
+                          <div className='tag-list'></div>
+                        </fieldset>
 
-                  <button
-                    class='btn btn-lg pull-xs-right btn-primary'
-                    type='button'
-                    onClick={()=> {
-                      props.onPostArticleClicked(title, description, content, tags, props.currentSlug );
-                    }}>
-                    Publish Article
-                  </button>
-                
-                </fieldset>
-              </form>
+                        <button
+                          className='btn btn-lg pull-xs-right btn-primary'
+                          type='button'
+                          onClick={() => {
+                            props.onPostArticleClicked(
+                              title,
+                              description,
+                              content,
+                              tags,
+                              props.currentSlug,
+                            );
+                          }}>
+                          Publish Article
+                        </button>
+                      </fieldset>
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        }
     </div>
   );
 };
 
-
-const mapStateToProps = ({ currentSlug, currentArticleDetails }) => {
-  return { currentSlug, currentArticleDetails };
+const mapStateToProps = ({ currentSlug, currentArticleDetails, article_reloaded, newPosedArticleSlug }) => {
+  return { currentSlug, currentArticleDetails, article_reloaded, newPosedArticleSlug };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onPostArticleClicked: (title, description, content, tags, slug) =>
       dispatch(onPostArticleClicked(title, description, content, tags, slug)),
-    loadInitArticleDetail: (slug) => dispatch(loadInitArticleDetail(slug)),
+    // loadArticleSettingDetail: slug => dispatch(loadArticleSettingDetail(slug)),
+    // postedArticleReloaded: slug => dispatch(postedArticleReloaded(slug)),
+
   };
 };
 export const NewPost = connect(
