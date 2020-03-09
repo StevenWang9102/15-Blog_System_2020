@@ -9,13 +9,16 @@ import { articleCountDisplay, articleOffSet} from "../../ReduxStore/httpMethods"
 import {
   loadGlobalFeeds,
   loadYourArticles,
+  loadPopularTags,
+} from "../../ReduxStore/Actions/articleActions";
+
+import {
   favoritedButtonClicked,
   setHomeNavStatus,
-  loadPopularTags,
   setLoading,
   emptyArticleCount,
   updateSettingStatus
-} from "../../ReduxStore/FeedDetails/loadActions";
+} from "../../ReduxStore/Actions/eventActions";
 
 const useStyles = createUseStyles({
   myButton: {

@@ -11,13 +11,16 @@ import { ArticleDetails } from "../MainPageComponent/ArticleDetails";
 import PropTypes from "prop-types";
 import {
   loadUserProfileDetail,
-  setProfileNavStatus,
-  onSignUpButtonClicked,
-  postedArticleReloaded,
   userInformationLoaded,
-  updateSettingStatus,
-  setLoading
-} from "../../ReduxStore/FeedDetails/loadActions";
+  onSignUpButtonClicked,
+} from "../../ReduxStore/Actions/userActions";
+
+import {
+setProfileNavStatus,
+postedArticleReloaded,
+updateSettingStatus,
+setLoading
+} from "../../ReduxStore/Actions/eventActions";
 
 import {
   BrowserRouter as Router,
@@ -26,6 +29,7 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
+
 import { getUserFromSession } from "../UserComponent/AuthToken";
 
 const InternalNavbar = props => {

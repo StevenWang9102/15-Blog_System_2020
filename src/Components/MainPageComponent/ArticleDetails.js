@@ -3,16 +3,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import dateFormat from "dateformat";
-import {
-  loadInitArticleDetail,
-  onDeleteArticleClicked,
-  onEditArticleClicked,
-  saveUserInformationToStore
-} from "../../ReduxStore/FeedDetails/loadActions";
 import { useParams } from "react-router-dom";
 import { ArticleComments } from "./ArticleComments";
 import { Route, Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
+import {loadInitArticleDetail} from "../../ReduxStore/Actions/articleActions";
+import {onDeleteArticleClicked, onEditArticleClicked} from "../../ReduxStore/Actions/eventActions";
+import {saveUserInformationToStore} from "../../ReduxStore/Actions/userActions";
 
 const InternalArticleDetails = props => {
   const { article_slug } = useParams();

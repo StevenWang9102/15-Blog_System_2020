@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
-import { onSignUpButtonClicked } from "../../ReduxStore/FeedDetails/loadActions";
+import { onSignUpButtonClicked } from "../../ReduxStore/Actions/userActions";
 import { Redirect } from "react-router-dom";
 
 export const InternalSignUp = props => {

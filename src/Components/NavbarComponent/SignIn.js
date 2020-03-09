@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { signInClicked, setLoading } from "../../ReduxStore/FeedDetails/loadActions";
+import { setLoading } from "../../ReduxStore/Actions/eventActions";
+import { signInClicked } from "../../ReduxStore/Actions/userActions";
 import {
   Route,
   Redirect,

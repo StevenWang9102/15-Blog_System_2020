@@ -3,7 +3,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
-import { onPostCommentsClicked } from "../../ReduxStore/FeedDetails/loadActions";
+import { onPostCommentsClicked } from "../../ReduxStore/Actions/eventActions";
 
 
 const InternalArticleComments = props => {

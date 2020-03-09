@@ -7,14 +7,15 @@ import dateFormat from "dateformat";
 import { createUseStyles } from "react-jss";
 import { articleCountDisplay, articleOffSet} from "../../ReduxStore/httpMethods"
 import {
-  loadUserProfileDetail,
   favoritedArticleNavClicked,
   setProfileNavStatus,
   updateSettingStatus,
   favoritedButtonClicked,
   onFollowAuthorClick
-} from "../../ReduxStore/FeedDetails/loadActions";
-
+} from "../../ReduxStore/Actions/eventActions";
+import {
+  loadUserProfileDetail,
+} from "../../ReduxStore/Actions/userActions";
 // ------------------------- JSS -----------------------
 const useStyles = createUseStyles({
   myButton: {

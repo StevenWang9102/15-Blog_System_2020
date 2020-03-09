@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { setLoading } from "../../ReduxStore/FeedDetails/loadActions";
-import { onPostArticleClicked } from "../../ReduxStore/FeedDetails/displayActions";
+import { setLoading } from "../../ReduxStore/Actions/eventActions";
+import { onPostArticleClicked } from "../../ReduxStore/Actions/eventActions";
 
 import { Redirect } from "react-router-dom";
 

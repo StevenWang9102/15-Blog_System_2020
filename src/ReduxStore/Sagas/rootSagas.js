@@ -5,7 +5,5 @@ import {eventSaga} from './eventSagas'
 import {articleSaga} from './articleSagas'
 
 export const rootSaga = function*(){
-  yield all([  userSaga(), articleSaga(), eventSaga() ])
+  yield all([userSaga(), articleSaga(), eventSaga()])
 };
-
-

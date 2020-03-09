@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { popularTagClicked,  setHomeNavStatus, setLoading } from "../../ReduxStore/FeedDetails/loadActions";
 import { NavLink } from "react-router-dom";
+import { setHomeNavStatus, setLoading } from "../../ReduxStore/Actions/eventActions";
+import { popularTagClicked} from "../../ReduxStore/Actions/articleActions";
 
 
 const InternalPopularTages = props => {

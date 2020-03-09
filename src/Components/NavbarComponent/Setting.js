@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { removeUserFromSession } from "../../Components/UserComponent/AuthToken";
 import {
-  logOutButtonClicked,
   onUpdateSettingClicked,
   setLoading
-} from "../../ReduxStore/FeedDetails/loadActions";
+} from "../../ReduxStore/Actions/eventActions";
+import { logOutButtonClicked } from "../../ReduxStore/Actions/userActions";
+
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 
