@@ -191,6 +191,7 @@ const InternalUserProfile = props => {
                           setHttpMethod(tempMethod);
                         }}>
                         <i className='ion-heart'></i>
+                        <img src='../icon/002-heart-2.png' alt='' />
                         {article.favoritesCount}
                       </button>
                     </div>
@@ -290,8 +291,6 @@ const mapDispatchToProps = dispatch => {
     onFavoritedArticleClicked: (token, slug, httpMethod, author_name) =>
       dispatch(favoritedButtonClicked(token, slug, httpMethod, author_name)),
     onFollowAuthorClick: (author_name, method) => dispatch(onFollowAuthorClick(author_name, method)),
-    // emptyArticleCount
-
   };
 };
 

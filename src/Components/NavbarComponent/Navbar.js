@@ -85,14 +85,14 @@ const InternalNavbar = props => {
                       onClick={() => {
                         props.postedArticleReloaded(false);
                       }}>
-                      <img src='./icon/008-edit.png' alt='' />
+                      <img src='../icon/008-edit.png' alt='' />
                       New Post
                     </Link>
                   </li>
 
                   <li className='nav-item'>
                     <Link className='nav-link' to='/setting'>
-                      <img src='./icon/004-settings.png' alt=''/>
+                      <img src='../icon/004-settings.png' alt=''/>
                       Setting
                     </Link>
                   </li>

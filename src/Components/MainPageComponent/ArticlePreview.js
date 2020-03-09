@@ -158,7 +158,7 @@ const InternalArticlePreview = props => {
                     );
                   setHttpMethod(tempMethod);
                 }}>
-                <img src='./icon/002-heart-2.png' alt='' />
+                <img src='../icon/002-heart-2.png' alt='' />
                 {article.favoritesCount}
               </button>
             </div>
