@@ -186,10 +186,10 @@ InternalNavbar.propTypes = {
   loadUserProfileDetail: PropTypes.func
 };
 
-const mapStateToProps = ({asyncReducer}) => {
+const mapStateToProps = ({userReducer}) => {
   const {
     userInformation
-  } = asyncReducer
+  } = userReducer
 
   return {
     userInformation

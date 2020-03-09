@@ -81,10 +81,14 @@ InternalArticleComments.propTypes = {
   currentComments: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ asyncReducer}) => {
+const mapStateToProps = ({ articleReducer, userReducer}) => {
   const {
-    currentComments, currentSlug, userInformation
-  } = asyncReducer
+    currentComments, currentSlug
+  } = articleReducer
+
+  const {
+    userInformation
+  } = userReducer
   
   return {
     currentComments, currentSlug, userInformation

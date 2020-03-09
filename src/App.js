@@ -16,8 +16,8 @@ const InternalApp = props => {
   );
 };
 
-const mapStateToProps = ({ syncReducer, asyncReducer }) => {
-  const { loading } = syncReducer;
+const mapStateToProps = ({ eventReducer }) => {
+  const { loading } = eventReducer;
 
   return {
     loading

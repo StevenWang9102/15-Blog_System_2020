@@ -16,6 +16,7 @@ import {
 import {
   loadUserProfileDetail,
 } from "../../ReduxStore/Actions/userActions";
+
 // ------------------------- JSS -----------------------
 const useStyles = createUseStyles({
   myButton: {
@@ -241,29 +242,32 @@ InternalUserProfile.propTypes = {
   currentProfileDetail: PropTypes.object.isRequired,
   currentUsersArticles: PropTypes.array.isRequired,
   loadUserProfileDetail: PropTypes.func.isRequired,
-  favoritedArticles: PropTypes.array
 };
 
-const mapStateToProps = ({ syncReducer, asyncReducer }) => {
-  const { profileNavStatusLeft, profileNavStatusRight } = syncReducer;
+const mapStateToProps = ({ eventReducer, userReducer, articleReducer }) => {
+  const { 
+    profileNavStatusLeft, 
+    profileNavStatusRight,
+    onFavoritedArticleNavClicked,
+    articleCount
+  } = eventReducer;
 
   const {
     userInformation,
-    currentProfileDetail,
-    currentUsersArticles,
-    onFavoritedArticleNavClicked,
-    favoritedArticles,
-    currentProfileDisplayArticle,
     followAuthorStatus,
-    articleCount
-  } = asyncReducer;
+    currentProfileDetail,
+  } = userReducer;
+
+  const {
+    currentUsersArticles,
+    currentProfileDisplayArticle,
+  } = articleReducer;
 
   return {
     userInformation,
     currentProfileDetail,
     currentUsersArticles,
     onFavoritedArticleNavClicked,
-    favoritedArticles,
     profileNavStatusLeft,
     profileNavStatusRight,
     currentProfileDisplayArticle,

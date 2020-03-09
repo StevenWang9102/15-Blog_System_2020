@@ -37,8 +37,8 @@ export const loadGlobalFeeds = (articleCountDisplay, articleOffSet) => {
   return { type: LOAD_GLOBAL_FEEDS, articleCountDisplay, articleOffSet };
 };
 
-export const articleDataLoaded = (articleData, loading) => {
-  return { type: ARTICLE_DATA_LOADED, articleData, loading };
+export const articleDataLoaded = (articleData) => {
+  return { type: ARTICLE_DATA_LOADED, articleData };
 };
 
 export const loadInitArticleDetail = slug => {

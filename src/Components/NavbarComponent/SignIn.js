@@ -66,11 +66,11 @@ const InternalSignIn = props => {
 };
 
 
-const mapStateToProps = ({asyncReducer}) => {
+const mapStateToProps = ({userReducer}) => {
 
   const {
     userInformation  
-  } = asyncReducer
+  } = userReducer
 
   return {
     userInformation  

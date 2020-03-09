@@ -102,16 +102,16 @@ const InternalNewPost = props => {
   );
 };
 
-const mapStateToProps = ({ syncReducer, asyncReducer }) => {
+const mapStateToProps = ({ eventReducer, articleReducer }) => {
   const {
     article_loaded,
-  } = syncReducer;
+  } = eventReducer;
 
   const {
     currentSlug,
     currentArticleDetails,
     newPosedArticleSlug
-  } = asyncReducer;
+  } = articleReducer;
 
   return {
     currentSlug,

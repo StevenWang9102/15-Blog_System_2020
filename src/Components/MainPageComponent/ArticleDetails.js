@@ -137,15 +137,18 @@ InternalArticleDetails.propTypes = {
 };
 
 
-const mapStateToProps = ({syncReducer, asyncReducer}) => {
+const mapStateToProps = ({eventReducer, userReducer, articleReducer}) => {
   const {
     deleteYourArticleStatus,
-  } = syncReducer
+  } = eventReducer
 
   const {
     userInformation,
+  } = userReducer
+  
+  const {
     currentArticleDetails,
-  } = asyncReducer
+  } = articleReducer
   
   return {
     currentArticleDetails,

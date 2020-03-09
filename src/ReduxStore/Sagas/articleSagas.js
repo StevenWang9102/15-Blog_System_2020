@@ -29,7 +29,7 @@ yield takeLatest(LOAD_GLOBAL_FEEDS, function*(action) {
       `/articles?limit=${action.articleCountDisplay}&offset=${action.articleOffSet}`,
       "Load Global Feeds"
     );
-    yield put(articleDataLoaded(initArticData, "loaded"));
+    yield put(articleDataLoaded(initArticData));
     yield put(setLoading("LOADED"));
 
   });

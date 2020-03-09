@@ -66,8 +66,8 @@ export const InternalSignUp = props => {
   );
 };
 
-const mapStateToProps = ({ syncReducer }) => {
-  const { signUpStatus } = syncReducer;
+const mapStateToProps = ({ eventReducer }) => {
+  const { signUpStatus } = eventReducer;
 
   return {
     signUpStatus

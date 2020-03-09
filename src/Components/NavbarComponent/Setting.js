@@ -117,10 +117,10 @@ const InternalSetting = props => {
   );
 };
 
-const mapStateToProps = ({ syncReducer, asyncReducer }) => {
+const mapStateToProps = ({ eventReducer, userReducer }) => {
 
-  const { userInformation } = asyncReducer;
-  const { settingStatus } = syncReducer;
+  const { userInformation } = userReducer;
+  const { settingStatus } = eventReducer;
 
   return {
     settingStatus,

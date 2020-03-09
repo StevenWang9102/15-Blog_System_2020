@@ -33,7 +33,7 @@ export const articleReducer = (state = initialState, action) => {
         globalArticles: action.articleData["articles"],
         currentHomeDisplayArticle: action.articleData["articles"],
         articleCount: action.articleData["articlesCount"],
-        loading: action.loading
+        // loading: action.loading
       };
 
     case TAGS_DATA_LOADED:

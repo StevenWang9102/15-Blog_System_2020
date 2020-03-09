@@ -41,10 +41,10 @@ InternalPopularTages.propTypes = {
   onPopularTagClicked: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({asyncReducer}) => {
+const mapStateToProps = ({articleReducer}) => {
   const {
     popularTags
-  } = asyncReducer
+  } = articleReducer
 
   return {
     popularTags

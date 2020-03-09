@@ -212,21 +212,24 @@ InternalArticlePreview.propTypes = {
   globalArticles: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = ({ syncReducer, asyncReducer }) => {
+const mapStateToProps = ({ eventReducer, articleReducer, userReducer }) => {
   const {
-    currentTagName,
     yourNav,
     favoriteNav,
     popularNav,
-    loading
-  } = syncReducer;
+    loading,
+    articleCount,
+  } = eventReducer;
+
+  const {
+    currentTagName,
+    globalArticles,
+    currentHomeDisplayArticle,
+  } = articleReducer;
 
   const {
     userInformation,
-    globalArticles,
-    currentHomeDisplayArticle,
-    articleCount,
-  } = asyncReducer;
+  } = userReducer;
 
   return {
     globalArticles,
