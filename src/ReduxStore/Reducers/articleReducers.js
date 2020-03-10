@@ -59,7 +59,10 @@ export const articleReducer = (state = initialState, action) => {
       return { ...state, currentSlug: action.slug };
 
     case CURRENT_PROFILE_ARTICLE_LOADED:
-      return { ...state, currentProfileDisplayArticle: action.userProfileData };
+      return { ...state, 
+        currentProfileDisplayArticle: action.userProfileData.articles,
+        articlesAllCount: action.userProfileData.articlesCount
+      };
 
     case CURRENT_HOME_DISPLAY_ARTICLES_LOADED:
       return {

@@ -14,7 +14,6 @@ const useStyles = createUseStyles({
 });
 
 export const PageTunner = props => {
-
   const Page = ({ children }) => {
     const classes = useStyles();
     return (
@@ -29,6 +28,7 @@ export const PageTunner = props => {
     myPageNumArray.push(i);
   }
 
+  console.log(props.articlesAllCount);
   
   return (
     <nav>
@@ -36,26 +36,57 @@ export const PageTunner = props => {
         {myPageNumArray.map((pageNumber, index) => {
           const articleOffSet = index * articleCountDisplay;
 
-          return (
-            <Page>
-              <a
-                className='page-link'
-                href={`#p${pageNumber}`}
-                onClick={() => {
-                  props.setLoading("LOADING");
-                  if (props.favoriteNav === "active")
-                    props.loadGlobalFeeds(articleCountDisplay, articleOffSet);
-                  else if (props.yourNav === "active")
-                    props.loadYourFeedArticles(
-                      articleCountDisplay,
-                      articleOffSet
-                    );
-                  else props.loadPopularTags();
-                }}>
-                {pageNumber}
-              </a>
-            </Page>
-          );
+          if (props.fromPage === "ArticlePriview") {
+            return (
+              <Page>
+                <a
+                  className='page-link'
+                  href={`#p${pageNumber}`}
+                  onClick={() => {
+                    props.setLoading("LOADING");
+                    if (props.favoriteNav === "active")
+                      props.loadGlobalFeeds(articleCountDisplay, articleOffSet);
+                    else if (props.yourNav === "active")
+                      props.loadYourFeedArticles(
+                        articleCountDisplay,
+                        articleOffSet
+                      );
+                    else props.loadPopularTags();
+                  }}>
+                  {pageNumber}
+                </a>
+              </Page>
+            );
+          } else
+
+          // if(props.fromPage==="UserProfile") 
+          {
+            console.log("jinla");
+
+            return (              
+              <Page>
+                <a
+                  class='page-link'
+                  href={`#p${pageNumber}`}
+                  onClick={() => {
+                    if (props.profileNavStatusLeft === "active")
+                      props.loadUserProfileDetail(
+                        props.author_name,
+                        articleCountDisplay,
+                        articleOffSet
+                      );
+                    else
+                      props.onFavoritedArticleNavClicked(
+                        props.author_name,
+                        articleCountDisplay,
+                        articleOffSet
+                      );
+                  }}>
+                  {pageNumber}
+                </a>
+              </Page>
+            );
+          }
         })}
       </ul>
     </nav>

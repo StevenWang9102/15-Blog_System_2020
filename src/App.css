@@ -155,3 +155,7 @@ p{
   text-align: center;
   background-color: #5cb85c94;
 }
+
+.home-page .col-md-9{
+  width: 85%;
+}

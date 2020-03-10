@@ -100,7 +100,7 @@ export const eventSaga = function*() {
     );
 
     yield put(favoritedArticleLoaded(favoritedArticlesData));
-    yield put(currentDisplayArticleLoaded(favoritedArticlesData.articles));
+    yield put(currentDisplayArticleLoaded(favoritedArticlesData));
   });
 
   // FAVORITED_BUTTON_CLICKED

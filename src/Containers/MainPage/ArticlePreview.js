@@ -111,6 +111,7 @@ const InternalArticlePreview = props => {
 
       {/* ------------------- PAGE TUNNER -------------- */}
       <PageTunner
+        fromPage="ArticlePriview"
         articlesAllCount={props.articlesAllCount}
         setLoading={props.setLoading}
         favoriteNav={props.favoriteNav}

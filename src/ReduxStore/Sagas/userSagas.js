@@ -47,7 +47,8 @@ export const userSaga = function*() {
     // need clean ...
     yield put(userProfileDataLoaded(userProfileData.profile));
     yield put(userRelatedArticlesLoaded(userRelatedArticles));
-    yield put(currentDisplayArticleLoaded(userRelatedArticles.articles));
+    yield put(currentDisplayArticleLoaded(userRelatedArticles));
+    // .articles
     yield put(setLoading("LOADED"));
   });
 

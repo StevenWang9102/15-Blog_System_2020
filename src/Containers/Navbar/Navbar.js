@@ -52,7 +52,6 @@ const InternalNavbar = props => {
       <div>
         <nav className='navbar navbar-light'>
           <div className='container'>
-            {/* -------------------- LOGO ----------------- */}
             <Link className='navbar-brand' to='/home'>
               conduit
             </Link>

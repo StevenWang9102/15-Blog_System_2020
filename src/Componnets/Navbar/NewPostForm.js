@@ -20,7 +20,7 @@ export const NewPostForm = props => {
             type='text'
             className='form-control'
             value={props.description}
-            onChange={event => props.etDescription(event.target.value)}
+            onChange={event => props.setDescription(event.target.value)}
             placeholder="What's this article about?"></input>
         </fieldset>
 
