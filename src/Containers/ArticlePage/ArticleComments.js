@@ -3,8 +3,8 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { onPostCommentsClicked } from "../../ReduxStore/Actions/eventActions";
-import { YourComments } from "../../Componnets/ArticlePage/YourComments";
-import { PublicComments } from "../../Componnets/ArticlePage/PublicComments";
+import { YourComments } from "../../Components/ArticlePage/YourComments";
+import { PublicComments } from "../../Components/ArticlePage/PublicComments";
 
 const InternalArticleComments = props => {
   const [myComment, setMyComment] = useState("");

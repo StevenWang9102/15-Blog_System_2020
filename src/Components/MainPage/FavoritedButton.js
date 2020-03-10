@@ -1,9 +1,6 @@
 import React from "react";
-import { useState } from "react";
 
 export const FavoritedButton = props => {
-
-  const [httpMethod, setHttpMethod] = useState({});
 
   return (
     <button
@@ -13,7 +10,7 @@ export const FavoritedButton = props => {
         props.setLoading("LOADING");
 
         // Switch method between "POST" and "DELETE"
-        const tempMethod = { ...httpMethod };
+        const tempMethod = { ...props.httpMethod };
         if (tempMethod[props.article.slug] === "POST") {
           tempMethod[props.article.slug] = "DELETE";
         } else {
@@ -26,7 +23,7 @@ export const FavoritedButton = props => {
             props.article.slug,
             tempMethod[props.article.slug]
           );
-        setHttpMethod(tempMethod);
+          props.setHttpMethod(tempMethod);
       }}>
       <img src='../icon/002-heart-2.png' alt='' />
       {props.article.favoritesCount}

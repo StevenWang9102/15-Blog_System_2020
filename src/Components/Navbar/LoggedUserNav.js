@@ -1,25 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { getUserFromSession } from "../../Functions/AuthToken";
 
 export const LoggedUserNav = props => {
 
-  const getUserInformationLocal = () => {
-    if (
-      !props.userInformation ||
-      (props.userInformation && !props.userInformation.token)
-    ) {
-      const userInformationOnSession = getUserFromSession();
-      if (userInformationOnSession) {
-        props.userInformationLoaded({ user: userInformationOnSession });
-      }
-      return userInformationOnSession;
-    } else {
-      return props.userInformation;
-    }
-  };
 
-  const userInfoLocal = getUserInformationLocal();
+  const userInfoLocal = props.getUserInformationLocal();
 
   return (
     <div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -6,16 +7,13 @@ import {
   articleCountDisplay,
   articleOffSet
 } from "../../Functions/httpMethods";
-import { YourFeedsNav } from "../../Componnets/MainPage/YourFeedsNav";
-
-import { GlobalFeedsNav } from "../../Componnets/MainPage/GlobalFeedsNav";
-import { ArticleTitle } from "../../Componnets/ArticlePage/ArticleTitle";
-import { ArticleDesctiption } from "../../Componnets/MainPage/ArticleDesctiption";
-
-import { PageTunner } from "../../Componnets/MainPage/PageTunner";
-
-import { PopularTagsNav } from "../../Componnets/MainPage/PopularTagsNav";
-import { FavoritedButton } from "../../Componnets/MainPage/FavoritedButton";
+import { YourFeedsNav } from "../../Components/MainPage/YourFeedsNav";
+import { GlobalFeedsNav } from "../../Components/MainPage/GlobalFeedsNav";
+import { ArticleTitle } from "../../Components/ArticlePage/ArticleTitle";
+import { ArticleDesctiption } from "../../Components/MainPage/ArticleDesctiption";
+import { PageTunner } from "../../Components/MainPage/PageTunner";
+import { PopularTagsNav } from "../../Components/MainPage/PopularTagsNav";
+import { FavoritedButton } from "../../Components/MainPage/FavoritedButton";
 
 import {
   loadGlobalFeeds,
@@ -31,8 +29,8 @@ import {
   updateSettingStatus
 } from "../../ReduxStore/Actions/eventActions";
 
-
 const InternalArticlePreview = props => {
+  const [httpMethod, setHttpMethod] = useState({});
 
   useEffect(() => {
     props.setLoading("LOADING");
@@ -90,6 +88,8 @@ const InternalArticlePreview = props => {
               />
 
               <FavoritedButton
+                httpMethod={httpMethod}
+                setHttpMethod={setHttpMethod}
                 article={article}
                 userInformation={props.userInformation}
                 setLoading={props.setLoading}
@@ -111,14 +111,13 @@ const InternalArticlePreview = props => {
 
       {/* ------------------- PAGE TUNNER -------------- */}
       <PageTunner
-        fromPage="ArticlePriview"
+        fromPage='ArticlePriview'
         articlesAllCount={props.articlesAllCount}
         setLoading={props.setLoading}
         favoriteNav={props.favoriteNav}
         loadGlobalFeeds={props.loadGlobalFeeds}
         loadPopularTags={props.loadPopularTags}
       />
-
     </div>
   );
 };
@@ -129,12 +128,7 @@ InternalArticlePreview.propTypes = {
 };
 
 const mapStateToProps = ({ eventReducer, articleReducer, userReducer }) => {
-  const {
-    yourNav,
-    favoriteNav,
-    popularNav,
-    loading,
-  } = eventReducer;
+  const { yourNav, favoriteNav, popularNav, loading } = eventReducer;
 
   const {
     currentTagName,

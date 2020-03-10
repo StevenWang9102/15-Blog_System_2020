@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import dateFormat from "dateformat";
 
 import {
@@ -8,8 +8,6 @@ import {
 import { Link } from "react-router-dom";
 
 export const UserProfileDisplayArticles = props => {
-  const [httpMethod, setHttpMethod] = useState({});
-console.log(props.currentProfileDisplayArticle);
 
   return (
     <div>
@@ -39,10 +37,12 @@ console.log(props.currentProfileDisplayArticle);
                     {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
                   </span>
                 </div>
+
+                
                 <button
                   className='btn btn-outline-primary btn-sm pull-xs-right'
                   onClick={() => {
-                    const tempMethod = { ...httpMethod };
+                    const tempMethod = { ...props.httpMethod };
                     if (tempMethod[article.slug] === "DELETE") {
                       tempMethod[article.slug] = "POST";
                     } else {
@@ -56,7 +56,7 @@ console.log(props.currentProfileDisplayArticle);
                         tempMethod[article.slug],
                         props.author_name
                       );
-                    setHttpMethod(tempMethod);
+                      props.setHttpMethod(tempMethod);
                   }}>
                   <i className='ion-heart'></i>
                   <img src='../../icon/002-heart-2.png' alt='' />

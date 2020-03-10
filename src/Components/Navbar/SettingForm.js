@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { removeUserFromSession } from "../../Functions/AuthToken";
 
 export const SettingForm = ({
     image,
@@ -15,7 +14,8 @@ export const SettingForm = ({
     setPassWord,
     setLoading,
     onUpdateSettingClicked,
-    logOutButtonClicked
+    logOutButtonClicked,
+    removeUserFromSession
 }) => {
   return (
     <form>

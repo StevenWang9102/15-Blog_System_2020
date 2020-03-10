@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { removeUserFromSession } from "../../Functions/AuthToken";
 import {
   onUpdateSettingClicked,
   setLoading
 } from "../../ReduxStore/Actions/eventActions";
 import { logOutButtonClicked } from "../../ReduxStore/Actions/userActions";
-import { SettingForm } from "../../Componnets/Navbar/SettingForm"
+import { SettingForm } from "../../Components/Navbar/SettingForm"
 import { Redirect } from "react-router-dom";
 
 const InternalSetting = props => {
@@ -41,6 +42,7 @@ const InternalSetting = props => {
                       setLoading={props.setLoading}
                       onUpdateSettingClicked={props.onUpdateSettingClicked}
                       logOutButtonClicked={props.logOutButtonClicked}
+                      removeUserFromSession={removeUserFromSession}
                     />
                   </div>
                 </div>

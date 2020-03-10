@@ -6,11 +6,10 @@ import {
 } from "../../Functions/httpMethods";
 
 export const YourFeedsNav = props => {
-  const isDisplay = props.userInformation && props.userInformation.token;
   
   return (
     <span>
-      {isDisplay && (
+      {props.userInformation && props.userInformation.token && (
         <Link
           onClick={() => {
             props.setLoading("LOADING");

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { setLoading } from "../../ReduxStore/Actions/eventActions";
 import { onPostArticleClicked } from "../../ReduxStore/Actions/eventActions";
-import { NewPostForm } from "../../Componnets/Navbar/NewPostForm"
+import { NewPostForm } from "../../Components/Navbar/NewPostForm"
 import { Redirect } from "react-router-dom";
 
 const InternalNewPost = props => {

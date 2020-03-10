@@ -2,12 +2,9 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Link, NavLink } from "react-router-dom";
-import dateFormat from "dateformat";
-import { createUseStyles } from "react-jss";
-import { UserProfileTitle } from "../../Componnets/User/UserProfileTitle"
-import { UserProfileNav } from "../../Componnets/User/UserProfileNav"
-import { UserProfileDisplayArticles } from "../../Componnets/User/UserProfileDisplayArticles"
+import { UserProfileTitle } from "../../Components/User/UserProfileTitle"
+import { UserProfileNav } from "../../Components/User/UserProfileNav"
+import { UserProfileDisplayArticles } from "../../Components/User/UserProfileDisplayArticles"
 
 import { articleCountDisplay, articleOffSet} from "../../Functions/httpMethods"
 import {
@@ -20,12 +17,12 @@ import {
 import {
   loadUserProfileDetail,
 } from "../../ReduxStore/Actions/userActions";
-import { PageTunner } from "../../Componnets/MainPage/PageTunner";
+import { PageTunner } from "../../Components/MainPage/PageTunner";
 
 
 
 const InternalUserProfile = props => {
-  
+  const [httpMethod, setHttpMethod] = useState({});
   const { author_name } = useParams();
   const { article_type } = useParams();
   
@@ -69,6 +66,8 @@ const InternalUserProfile = props => {
 
               {/* ---------------- Related Article Area ----------------  */}
               <UserProfileDisplayArticles
+                httpMethod={httpMethod}
+                setHttpMethod={setHttpMethod}
                 userInformation={props.userInformation}
                 currentProfileDisplayArticle={props.currentProfileDisplayArticle}
                 loadUserProfileDetail={props.loadUserProfileDetail}

@@ -5,12 +5,11 @@ import { Banner } from "./Banner";
 import { connect } from "react-redux";
 
 const InternalMainPage = props => {
-
   return (
-    <div className="home-page">
+    <div className='home-page'>
       <Banner />
-      <div className="container page">
-        <div className="row">
+      <div className='container page'>
+        <div className='row'>
           <ArticlePreview />
           <PopularTages />
         </div>
@@ -19,8 +18,4 @@ const InternalMainPage = props => {
   );
 };
 
-export const MainPage = connect(
-  null,
-  null
-)(InternalMainPage);
-
+export const MainPage = connect(null, null)(InternalMainPage);

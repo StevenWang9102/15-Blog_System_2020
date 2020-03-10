@@ -10,21 +10,21 @@ import {
   onEditArticleClicked
 } from "../../ReduxStore/Actions/eventActions";
 import { saveUserInformationToStore } from "../../ReduxStore/Actions/userActions";
-import { EditButton } from "../../Componnets/ArticlePage/EditButton";
-import { SignInOptions } from "../../Componnets/ArticlePage/SignInOptions";
-import { ArticleTitle } from "../../Componnets/ArticlePage/ArticleTitle";
-import { ArticleContent } from "../../Componnets/ArticlePage/ArticleContent";
+import { EditButton } from "../../Components/ArticlePage/EditButton";
+import { SignInOptions } from "../../Components/ArticlePage/SignInOptions";
+import { ArticleTitle } from "../../Components/ArticlePage/ArticleTitle";
+import { ArticleContent } from "../../Components/ArticlePage/ArticleContent";
 
 const InternalArticleDetails = props => {
   const { article_slug } = useParams();
-
+  const isUserExist = props.userInformation.token;
+  
   const isAuthorized = () => {
-    if (props.userInformation) {
+    if (props.currentArticleDetails.author && props.userInformation)
       return (
         props.userInformation.username ===
         props.currentArticleDetails.author.username
       );
-    }
   };
 
   useEffect(() => {
@@ -41,18 +41,16 @@ const InternalArticleDetails = props => {
           <div className='banner'>
             <div className='container'>
               {/* ------------------ Article Title  ------------------ */}
-              {props.currentArticleDetails.author && (
-                <>
-                  <h1>{props.currentArticleDetails.title}</h1>
-                  <div className='article-meta article-source'>
+              <div>
+                <h1>{props.currentArticleDetails.title}</h1>
+                <div className='article-meta article-source'>
                   <ArticleTitle
                     currentArticleDetails={props.currentArticleDetails}
                   />
-                  </div>
-                </>
-              )}
+                </div>
+              </div>
 
-              {props.currentArticleDetails.author && isAuthorized() && (
+              {isAuthorized() && (
                 <EditButton
                   article_slug={article_slug}
                   onEditArticleClicked={props.onEditArticleClicked}
@@ -65,11 +63,9 @@ const InternalArticleDetails = props => {
           {/* -------- Article Details -------- */}
           <ArticleContent currentArticleDetails={props.currentArticleDetails} />
 
-          {/* -------- Sign In Options -------- */}
-          {!props.userInformation.token && <SignInOptions />}
-
-          {/* -------- Comments -------- */}
-          {props.userInformation.token && <ArticleComments />}
+          {/* -------- Sign In Options OR Comments -------- */}
+          {isUserExist ? 
+              <SignInOptions /> : <ArticleComments />}
         </div>
       )}
     </Route>

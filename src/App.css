@@ -35,10 +35,11 @@ body{
   width: 30px;
 }
 
-.article-detail
+.article-detail h1
 {
-  width: 100%;
+  width: 300px;
   text-align: left;
+  word-break: all;
 }
 
 .banner

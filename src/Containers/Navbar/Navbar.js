@@ -2,9 +2,9 @@ import React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { LoggedUserNav } from "../../Componnets/Navbar/LoggedUserNav";
-import { UnLoggedNav } from "../../Componnets/Navbar/UnLoggedNav";
-import { Switcher } from "../../Componnets/Navbar/Switcher";
+import { LoggedUserNav } from "../../Components/Navbar/LoggedUserNav";
+import { UnLoggedNav } from "../../Components/Navbar/UnLoggedNav";
+import { Switcher } from "../../Components/Navbar/Switcher";
 
 import {
   loadUserProfileDetail,
@@ -29,8 +29,7 @@ import { getUserFromSession } from "../../Functions/AuthToken";
 const InternalNavbar = props => {
   const getUserInformationLocal = () => {
     if (
-      !props.userInformation ||
-      (props.userInformation && !props.userInformation.token)
+      !props.userInformation || !props.userInformation.token
     ) {
       const userInformationOnSession = getUserFromSession();
       if (userInformationOnSession) {
@@ -60,6 +59,7 @@ const InternalNavbar = props => {
               {/* --------------- NAVIGATION --------------- */}
               {props.userInformation && props.userInformation.token ? (
                 <LoggedUserNav
+                  getUserInformationLocal={getUserInformationLocal}
                   userInformation={props.userInformation}
                   userInformationLoaded={props.userInformationLoaded}
                   postedArticleReloaded={props.postedArticleReloaded}
