@@ -58,7 +58,7 @@ const InternalUserProfile = props => {
   const { author_name } = useParams();
   const { article_type } = useParams();
   
-  const pageNumber = Math.round(props.articleCount / articleCountDisplay)
+  const pageNumber = Math.round(props.articlesAllCount / articleCountDisplay)
   const myPageNumArray = []
   for (let i = 1; i <= pageNumber; i++) {
     myPageNumArray.push(i)
@@ -250,7 +250,7 @@ const mapStateToProps = ({ eventReducer, userReducer, articleReducer }) => {
     profileNavStatusLeft, 
     profileNavStatusRight,
     onFavoritedArticleNavClicked,
-    articleCount
+    articlesAllCount
   } = eventReducer;
 
   const {
@@ -273,7 +273,7 @@ const mapStateToProps = ({ eventReducer, userReducer, articleReducer }) => {
     profileNavStatusRight,
     currentProfileDisplayArticle,
     followAuthorStatus,
-    articleCount
+    articlesAllCount
   };
 };
 

@@ -55,7 +55,7 @@ export const eventReducer = (state = initialState, action) => {
       return { ...state, loading: action.status };
 
     case EMPTY_ARTICLE_COUNT:
-      return { ...state, articleCount: 0 };
+      return { ...state, articlesAllCount: 0 };
 
     default:
       return state;

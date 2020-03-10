@@ -19,11 +19,8 @@ const InternalMainPage = props => {
   );
 };
 
-const mapDispatchToProps = dispatch => {
-  return {};
-};
 export const MainPage = connect(
   null,
-  mapDispatchToProps
+  null
 )(InternalMainPage);
 

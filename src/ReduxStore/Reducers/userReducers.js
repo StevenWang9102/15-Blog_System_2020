@@ -25,7 +25,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         currentUsersArticles: action.userRelatedArticles.articles,
         currentProfileDisplayArticle: action.userRelatedArticles.articles,
-        articleCount: action.userRelatedArticles.articlesCount
+        articlesAllCount: action.userRelatedArticles.articlesCount
       };
 
     case USER_INFORMATION_LOADED:

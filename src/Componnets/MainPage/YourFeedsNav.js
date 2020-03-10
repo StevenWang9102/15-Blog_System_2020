@@ -7,6 +7,7 @@ import {
 
 export const YourFeedsNav = props => {
   const isDisplay = props.userInformation && props.userInformation.token;
+  
   return (
     <span>
       {isDisplay && (

@@ -32,7 +32,7 @@ export const articleReducer = (state = initialState, action) => {
         ...state,
         globalArticles: action.articleData["articles"],
         currentHomeDisplayArticle: action.articleData["articles"],
-        articleCount: action.articleData["articlesCount"],
+        articlesAllCount: action.articleData["articlesCount"],
         // loading: action.loading
       };
 
@@ -65,7 +65,7 @@ export const articleReducer = (state = initialState, action) => {
       return {
         ...state,
         currentHomeDisplayArticle: action.payload.articles,
-        articleCount: action.payload.articlesCount
+        articlesAllCount: action.payload.articlesCount
       };
 
     case DELETE_YOUR_ARTICLE_DONE:

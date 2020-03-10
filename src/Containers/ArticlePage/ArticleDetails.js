@@ -42,9 +42,14 @@ const InternalArticleDetails = props => {
             <div className='container'>
               {/* ------------------ Article Title  ------------------ */}
               {props.currentArticleDetails.author && (
-                <ArticleTitle
-                  currentArticleDetails={props.currentArticleDetails}
-                />
+                <>
+                  <h1>{props.currentArticleDetails.title}</h1>
+                  <div className='article-meta article-source'>
+                  <ArticleTitle
+                    currentArticleDetails={props.currentArticleDetails}
+                  />
+                  </div>
+                </>
               )}
 
               {props.currentArticleDetails.author && isAuthorized() && (

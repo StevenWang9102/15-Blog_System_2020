@@ -4,10 +4,6 @@ import dateFormat from "dateformat";
 
 export const ArticleTitle = props => {
   return (
-    <div>
-      <h1>{props.currentArticleDetails.title}</h1>
-
-      <div className='article-meta article-source'>
         <Link
           to={"/user_profile/" + props.currentArticleDetails.author.username}>
           <img
@@ -15,7 +11,13 @@ export const ArticleTitle = props => {
             src={props.currentArticleDetails.author.image}
             alt='au'
           />
-          <div className='info author'>
+          <div 
+            className='info author'
+
+            onClick={()=> {
+              props.setLoading("LOADING")
+              props.emptyArticleCount()
+            }}>
             {props.currentArticleDetails &&
               props.currentArticleDetails.author &&
               props.currentArticleDetails.author.username}
@@ -29,7 +31,6 @@ export const ArticleTitle = props => {
             </span>
           </div>
         </Link>
-      </div>
-    </div>
+    // </div>
   );
 };
