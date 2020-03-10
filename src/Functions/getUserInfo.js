@@ -1,4 +1,4 @@
-import { getUserFromSession,} from "../Components/UserComponent/AuthToken";
+import { getUserFromSession,} from "./AuthToken";
 
 export const getUserInfoSagaLocal =()=>{
     return getUserFromSession();

@@ -2,12 +2,12 @@ import React from "react";
 import { useEffect } from "react";
 import { SignIn } from "./SignIn";
 import { SignUp } from "./SignUp";
-import { MainPage } from "../MainPageComponent/MainPage";
+import { MainPage } from "../MainPage/MainPage";
 import { NewPost } from "./NewPost";
 import { Setting } from "./Setting";
 import { connect } from "react-redux";
-import { UserProfile } from "../UserComponent/UserProfile";
-import { ArticleDetails } from "../MainPageComponent/ArticleDetails";
+import { UserProfile } from "../User/UserProfile";
+import { ArticleDetails } from "../ArticlePage/ArticleDetails";
 import PropTypes from "prop-types";
 import {
   loadUserProfileDetail,
@@ -30,7 +30,7 @@ import {
   Redirect
 } from "react-router-dom";
 
-import { getUserFromSession } from "../UserComponent/AuthToken";
+import { getUserFromSession } from "../../Functions/AuthToken";
 
 const InternalNavbar = props => {
   

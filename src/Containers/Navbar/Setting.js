@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { removeUserFromSession } from "../../Components/UserComponent/AuthToken";
+import { removeUserFromSession } from "../../Functions/AuthToken";
 import {
   onUpdateSettingClicked,
   setLoading

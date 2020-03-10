@@ -129,7 +129,8 @@ p{
   left: 0;
   top:0;
   background-color: rgba(128, 128, 128, 0.219);
-  font-family: 'Kaushan Script', cursive;
+  font-family: 'Kaushan Script', sans-serif;
+  ;
   font-size: 40px;
   opacity: 0.8;
   z-index: 100;

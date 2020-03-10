@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Navbar } from "./Components/NavbarComponent/Navbar";
+import { Navbar } from "./Containers/Navbar/Navbar";
 import "./App.css";
 
 const InternalApp = props => {

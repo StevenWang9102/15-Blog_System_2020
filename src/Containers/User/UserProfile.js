@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { Link, NavLink } from "react-router-dom";
 import dateFormat from "dateformat";
 import { createUseStyles } from "react-jss";
-import { articleCountDisplay, articleOffSet} from "../../ReduxStore/httpMethods"
+import { articleCountDisplay, articleOffSet} from "../../Functions/httpMethods"
 import {
   favoritedArticleNavClicked,
   setProfileNavStatus,

@@ -1,6 +1,6 @@
 import { takeLatest, put, call } from "redux-saga/effects";
-import { getUserInfoSagaLocal } from "../getUserInfo"
-import { fetchDataFromServer, postDataToServerAll } from "../httpMethods"
+import { getUserInfoSagaLocal } from "../../Functions/getUserInfo"
+import { fetchDataFromServer, postDataToServerAll } from "../../Functions/httpMethods"
 
 import {
   LOAD_GLOBAL_FEEDS,

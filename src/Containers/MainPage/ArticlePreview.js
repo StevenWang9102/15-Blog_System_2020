@@ -5,7 +5,13 @@ import { createUseStyles } from "react-jss";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
 import { Link } from "react-router-dom";
-import { articleCountDisplay, articleOffSet} from "../../ReduxStore/httpMethods"
+import { articleCountDisplay, articleOffSet } from "../../Functions/httpMethods"
+import { YourFeedsNav } from "../../Componnets/MainPage/YourFeedsNav"
+
+import { GlobalFeedsNav } from "../../Componnets/MainPage/GlobalFeedsNav"
+
+import { PopularTagsNav } from "../../Componnets/MainPage/PopularTagsNav"
+
 import {
   loadGlobalFeeds,
   loadYourArticles,
@@ -72,45 +78,31 @@ const InternalArticlePreview = props => {
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
 
-            {/* -------- Your Feed ------- */}
-            {props.userInformation && props.userInformation.token && (
-              <Link
-                onClick={() => {
-                  props.setLoading("LOADING")
-                  props.loadYourFeedArticles(articleCountDisplay, articleOffSet)
-                  props.setHomeNavStatus("active", "null", "null");
-                }}
-                className={`nav-link display-inline ${props.yourNav} `}
-                to='/home/your_feed'>
-                Your Feed
-              </Link>
-            )}
+            {/* ----------- NAVIGATION --------- */}
+            <YourFeedsNav
+              userInformation={props.userInformation}
+              setLoading={props.setLoading}
+              loadYourFeedArticles={props.loadYourFeedArticles}
+              setHomeNavStatus={props.setHomeNavStatus}
+              yourNav={props.yourNav}
+            />
 
-            {/* -------- Global Feed ------- */}
-            <Link
-              onClick={() => {
-                props.setLoading("LOADING")
-                props.setHomeNavStatus("null", "active", "null");
-                props.loadGlobalFeeds(articleCountDisplay, articleOffSet);
-              }}
-              className={`nav-link ${props.favoriteNav} display-inline`}
-              to='/home/global_feed'>
-              Global Feed
-            </Link>
+            <GlobalFeedsNav
+              setLoading={props.setLoading}
+              setHomeNavStatus={props.setHomeNavStatus}
+              loadGlobalFeeds={props.loadGlobalFeeds}
+              favoriteNav={props.favoriteNav}
+            />
 
-            {/* --------- Popular Tags -------*/}
-            {props.currentTagName && (
-              <Link
-                className={`nav-link ${props.popularNav} display-inline`}
-                to='/home/popular_tags'>
-                # {props.currentTagName}
-              </Link>
-            )}
+            <PopularTagsNav
+              popularNav={props.popularNav}
+              currentTagName={props.currentTagName}
+            />
           </li>
         </ul>
       </div>
 
-      {/* ---------- Current Articles ---------- */}
+      {/* ---------- CURRENT DISPLAY ARTICLES---------- */}
       {props.currentHomeDisplayArticle.map((article, index) => {
         return (
           <div className='article-preview' key={index}>

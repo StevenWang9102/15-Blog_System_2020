@@ -1,12 +1,12 @@
 import { takeLatest, put, call, all } from "redux-saga/effects";
 import {
   setUserOnSession
-} from "../../Components/UserComponent/AuthToken";
-import { getUserInfoSagaLocal } from "../getUserInfo";
+} from "../../Functions/AuthToken";
+import { getUserInfoSagaLocal } from "../../Functions/getUserInfo"
 import {
   fetchDataFromServer,
   postDataToServerAll,
-} from "../httpMethods";
+} from "../../Functions/httpMethods";
 
 import {
   LOADED_USER_PROFILE,
