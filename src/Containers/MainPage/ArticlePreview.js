@@ -31,6 +31,8 @@ import {
 
 const InternalArticlePreview = props => {
   const [httpMethod, setHttpMethod] = useState({});
+  const [currentPageOffSet, setCurrentPageOffSet] = useState(0);
+
 
   useEffect(() => {
     props.setLoading("LOADING");
@@ -93,6 +95,7 @@ const InternalArticlePreview = props => {
                 article={article}
                 userInformation={props.userInformation}
                 setLoading={props.setLoading}
+                currentPageOffSet={currentPageOffSet}
                 onFavoritedArticleClicked={props.onFavoritedArticleClicked}
               />
             </div>
@@ -117,6 +120,7 @@ const InternalArticlePreview = props => {
         favoriteNav={props.favoriteNav}
         loadGlobalFeeds={props.loadGlobalFeeds}
         loadPopularTags={props.loadPopularTags}
+        setCurrentPageOffSet={setCurrentPageOffSet}
       />
     </div>
   );

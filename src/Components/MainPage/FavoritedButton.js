@@ -21,9 +21,11 @@ export const FavoritedButton = props => {
           props.onFavoritedArticleClicked(
             props.userInformation.token,
             props.article.slug,
-            tempMethod[props.article.slug]
+            tempMethod[props.article.slug],
+            props.currentPageOffSet,
           );
-          props.setHttpMethod(tempMethod);
+          
+        props.setHttpMethod(tempMethod);
       }}>
       <img src='../icon/002-heart-2.png' alt='' />
       {props.article.favoritesCount}

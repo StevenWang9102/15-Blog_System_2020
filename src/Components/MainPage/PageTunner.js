@@ -45,6 +45,7 @@ export const PageTunner = props => {
                   href={`#p${pageNumber}`}
                   onClick={() => {
                     props.setLoading("LOADING");
+                    props.setCurrentPageOffSet(articleOffSet);
                     if (props.favoriteNav === "active")
                       props.loadGlobalFeeds(articleCountDisplay, articleOffSet);
                     else if (props.yourNav === "active")
@@ -59,12 +60,7 @@ export const PageTunner = props => {
               </Page>
             );
           } else
-
-          // if(props.fromPage==="UserProfile") 
-          {
-            console.log("jinla");
-
-            return (              
+          { return (              
               <Page>
                 <a
                   class='page-link'

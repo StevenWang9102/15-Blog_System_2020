@@ -42,14 +42,16 @@ export const favoritedButtonClicked = (
   token,
   slug,
   httpMethod,
-  author_name
+  author_name,
+  currentPageOffSet
 ) => {
   return {
     type: FAVORITED_BUTTON_CLICKED,
     token: token,
     slug: slug,
     httpMethod: httpMethod,
-    author_name
+    author_name,
+    currentPageOffSet
   };
 };
 
