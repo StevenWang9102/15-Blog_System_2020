@@ -2,7 +2,7 @@ import {
   FOLLOW_AUTHOR_LOADED,
   LOG_OUT_BUTTON_CLICK,
   USERS_PROFILE_LOADED,
-  USERS_RELATED_ARTICLES_LOADED,
+  // USERS_RELATED_ARTICLES_LOADED,
   USER_INFORMATION_LOADED
 } from "../Actions/userActions";
 
@@ -19,14 +19,6 @@ export const userReducer = (state = initialState, action) => {
 
     case USERS_PROFILE_LOADED:
       return { ...state, currentProfileDetail: action.userProfileData };
-
-    case USERS_RELATED_ARTICLES_LOADED:
-      return {
-        ...state,
-        currentUsersArticles: action.userRelatedArticles.articles,
-        currentProfileDisplayArticle: action.userRelatedArticles.articles,
-        articlesAllCount: action.userRelatedArticles.articlesCount
-      };
 
     case USER_INFORMATION_LOADED:
       return { ...state, userInformation: action.userInformation };

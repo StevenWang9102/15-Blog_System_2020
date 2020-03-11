@@ -1,4 +1,4 @@
-export const articleCountDisplay = 10
+export const articleCountDisplay = 15
 export const articleOffSet = 0
 
 export const postDataToServerAll = (token, url, postData, message, type) => {

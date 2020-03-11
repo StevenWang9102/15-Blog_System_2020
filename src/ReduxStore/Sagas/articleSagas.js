@@ -1,4 +1,4 @@
-import { takeLatest, put, call } from "redux-saga/effects";
+import { takeLatest, put, call, select } from "redux-saga/effects";
 import { getUserInfoSagaLocal } from "../../Functions/getUserInfo"
 import { fetchDataFromServer, postDataToServerAll } from "../../Functions/httpMethods"
 
@@ -31,8 +31,7 @@ yield takeLatest(LOAD_GLOBAL_FEEDS, function*(action) {
     );
     yield put(articleDataLoaded(initArticData));
     yield put(setLoading("LOADED"));
-
-  });
+});
 
   // LOAD_POPULAR_TAGS
   yield takeLatest(LOAD_POPULAR_TAGS, function*() {
@@ -48,7 +47,9 @@ yield takeLatest(LOAD_GLOBAL_FEEDS, function*(action) {
 
   // LOAD_YOUR_FEED
   yield takeLatest(LOAD_YOUR_FEED, function*(action) {
-    const token = getUserInfoSagaLocal().token;
+    const state = yield select();   
+    const token = getUserInfoSagaLocal(state).token; 
+
     const url = `/articles/feed?limit=${action.articleCountDisplay}&offset=${action.articleOffSet}`;
     const message = "Load Your Feed";
     const yourArticleData = yield call(
@@ -93,6 +94,8 @@ yield takeLatest(LOAD_GLOBAL_FEEDS, function*(action) {
       "Load Article Setting"
     );
     yield put(articleSettingContentLoaded(initArticleData.article));
+    yield put(setLoading("LOADED"));
+
   });
 
   // ARTICLE_COMMENT_LOADED
@@ -103,5 +106,6 @@ yield takeLatest(LOAD_GLOBAL_FEEDS, function*(action) {
       "Load Article Comments"
     );
     yield put(articleCommentsLoaded(initCommentData));
+    yield put(setLoading("LOADED"));
   });
 }

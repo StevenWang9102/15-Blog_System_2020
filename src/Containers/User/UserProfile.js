@@ -10,8 +10,9 @@ import {
   favoritedArticleNavClicked,
   setProfileNavStatus,
   updateSettingStatus,
-  favoritedButtonClicked,
-  onFollowAuthorClick
+  onFollowAuthorClick,
+  setLoading,
+  favoritedButtonClicked
 } from "../../ReduxStore/Actions/eventActions";
 import {
   loadUserProfileDetail,
@@ -24,7 +25,8 @@ const InternalUserProfile = props => {
   const [httpMethod, setHttpMethod] = useState({});
   const { author_name } = useParams();
   const { article_type } = useParams();
-  
+  const [currentPageOffSet, setCurrentPageOffSet] = useState(0);
+
 
   useEffect(() => {
     props.loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet);
@@ -65,8 +67,11 @@ const InternalUserProfile = props => {
 
               {/* ---------------- Related Article Area ----------------  */}
               <UserProfileDisplayArticles
+                author_name={author_name}
                 httpMethod={httpMethod}
                 setHttpMethod={setHttpMethod}
+                setLoading={props.setLoading}
+                currentPageOffSet={currentPageOffSet}
                 userInformation={props.userInformation}
                 currentProfileDisplayArticle={props.currentProfileDisplayArticle}
                 loadUserProfileDetail={props.loadUserProfileDetail}
@@ -77,6 +82,7 @@ const InternalUserProfile = props => {
               <PageTunner
                 fromPage="UserProfile"
                 author_name={author_name}
+                setCurrentPageOffSet={setCurrentPageOffSet}
                 profileNavStatusLeft={props.profileNavStatusLeft}
                 loadUserProfileDetail={props.loadUserProfileDetail}
                 articlesAllCount={props.articlesAllCount}
@@ -91,15 +97,15 @@ const InternalUserProfile = props => {
 };
 
 InternalUserProfile.propTypes = {
-  author_name: PropTypes.array.isRequired,
+  author_name: PropTypes.array,
   userInformation: PropTypes.object.isRequired,
   setProfileNavStatus: PropTypes.func.isRequired,
-  profileNavStatusLeft: PropTypes.array.isRequired,
-  profileNavStatusRight: PropTypes.array.isRequired,
-  articlesAllCount: PropTypes.number.isRequired,
+  profileNavStatusLeft: PropTypes.string.isRequired,
+  profileNavStatusRight: PropTypes.string.isRequired,
+  articlesAllCount: PropTypes.number,
   loadUserProfileDetail: PropTypes.func.isRequired,
   currentProfileDetail: PropTypes.object.isRequired,
-  currentUsersArticles: PropTypes.array.isRequired,
+  currentUsersArticles: PropTypes.array,
 };
 
 const mapStateToProps = ({ eventReducer, userReducer, articleReducer }) => {
@@ -145,10 +151,11 @@ const mapDispatchToProps = dispatch => {
       dispatch(
         setProfileNavStatus(profileNavStatusLeft, profileNavStatusRight)
       ),
+    setLoading: status => dispatch(setLoading(status)),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
-    onFavoritedArticleClicked: (token, slug, httpMethod, author_name) =>
-      dispatch(favoritedButtonClicked(token, slug, httpMethod, author_name)),
     onFollowAuthorClick: (author_name, method) => dispatch(onFollowAuthorClick(author_name, method)),
+    onFavoritedArticleClicked: (token, slug, httpMethod, currentPageOffSet, name) =>
+    dispatch(favoritedButtonClicked(token, slug, httpMethod, currentPageOffSet, name)),
   };
 };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { ArticlePreview } from "./ArticlePreview";
+import { ArticlePreview } from "../ArticlePage/ArticlePreview";
 import { PopularTages } from "./PopularTags";
 import { Banner } from "./Banner";
 import { connect } from "react-redux";

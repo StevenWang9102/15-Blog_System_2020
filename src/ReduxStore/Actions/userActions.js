@@ -47,9 +47,10 @@ export const saveUserInformationToStore = userInformation => {
     return { type: USERS_PROFILE_LOADED, userProfileData };
   };
   
-  export const userRelatedArticlesLoaded = userRelatedArticles => {
-    return { type: USERS_RELATED_ARTICLES_LOADED, userRelatedArticles };
-  };
+  // export const userRelatedArticlesLoaded = userRelatedArticles => {
+  //   return { type: USERS_RELATED_ARTICLES_LOADED, userRelatedArticles };
+  // };
+  
   export const signInClicked = (email, password) => {
     return { type: SIGN_IN_BUTTON_CLICKED, email: email, password: password };
   };

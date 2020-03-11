@@ -10,7 +10,7 @@ import {
 import { SIGN_UP_USER_LOADED } from "../Actions/userActions";
 
 const initialState = {
-  article_loaded: false,
+  postArticleLoaded: "NOT LOADED",
   yourNav: "active",
   favoriteNav: "null",
   settingStatus: "NOT UPDATED",
@@ -31,10 +31,10 @@ export const eventReducer = (state = initialState, action) => {
       };
 
     case POSTED_ARTICLE_RELOADED:
-      return { ...state, article_loaded: action.status };
+      return { ...state, postArticleLoaded: action.status };
 
     case EDIT_ARTICLE_BUTTON_CLICKED:
-      return { ...state, article_loaded: action.status };
+      return { ...state, postArticleLoaded: action.status };
 
     case SET_PROFILE_NAV:
       return {

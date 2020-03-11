@@ -1,4 +1,4 @@
-import { takeLatest, put, call, all } from "redux-saga/effects";
+import { takeLatest, put, call, all, select } from "redux-saga/effects";
 import {
   setUserOnSession
 } from "../../Functions/AuthToken";
@@ -7,11 +7,11 @@ import {
   fetchDataFromServer,
   postDataToServerAll,
 } from "../../Functions/httpMethods";
+// import { getUserFromSession,} from "../../Functions/AuthToken";
 
 import {
   LOADED_USER_PROFILE,
   userProfileDataLoaded,
-  userRelatedArticlesLoaded,
   SIGN_UP_BUTTON_CLICK,
   SIGN_IN_BUTTON_CLICKED,
   userInformationLoaded,
@@ -22,11 +22,12 @@ import { currentDisplayArticleLoaded } from "../Actions/articleActions";
 
 import { setLoading, setHomeNavStatus } from "../Actions/eventActions";
 
-export const userSaga = function*() {
-
+export const userSaga = function*() { 
   // LOADED_USER_PROFILE
   yield takeLatest(LOADED_USER_PROFILE, function*(action) {
-    const token = getUserInfoSagaLocal().token;
+    const state = yield select();   
+    const token = getUserInfoSagaLocal(state).token;    
+    
     const userName = action.author_name;
     const [userProfileData, userRelatedArticles] = yield all([
       call(
@@ -44,11 +45,8 @@ export const userSaga = function*() {
       )
     ]);
 
-    // need clean ...
     yield put(userProfileDataLoaded(userProfileData.profile));
-    yield put(userRelatedArticlesLoaded(userRelatedArticles));
     yield put(currentDisplayArticleLoaded(userRelatedArticles));
-    // .articles
     yield put(setLoading("LOADED"));
   });
 

@@ -1,5 +1,4 @@
 export const FAVERATED_NAV_CLICKED = Symbol("FAVERATED_NAV_CLICKED");
-export const FAVERATED_ARITICLE_LOADED = Symbol("FAVERATED_ARITICLE_LOADED");
 export const FAVORITED_BUTTON_CLICKED = Symbol("FAVORITED_BUTTON_CLICKED");
 export const YOUR_FEED_NAV_CLICKED = Symbol("YOUR_FEED_NAV_CLICKED");
 export const SET_HOME_NAV_STATUS = Symbol("SET_HOME_NAV_STATUS");
@@ -34,24 +33,21 @@ export const favoritedArticleNavClicked = (
   };
 };
 
-export const favoritedArticleLoaded = favoritedArticles => {
-  return { type: FAVERATED_ARITICLE_LOADED, favoritedArticles };
-};
 
 export const favoritedButtonClicked = (
   token,
   slug,
   httpMethod,
-  author_name,
-  currentPageOffSet
+  currentPageOffSet,
+  name
 ) => {
   return {
     type: FAVORITED_BUTTON_CLICKED,
     token: token,
     slug: slug,
     httpMethod: httpMethod,
-    author_name,
-    currentPageOffSet
+    currentPageOffSet:currentPageOffSet,
+    name
   };
 };
 

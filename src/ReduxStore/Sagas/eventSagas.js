@@ -1,24 +1,20 @@
-import { takeLatest, put, call } from "redux-saga/effects";
+import { takeLatest, put, call,select } from "redux-saga/effects";
 import { setUserOnSession } from "../../Functions/AuthToken";
 import { getUserInfoSagaLocal } from "../../Functions/getUserInfo"
 import {
   fetchDataFromServer,
   postDataToServerAll,
-  articleCountDisplay,
-  articleOffSet
 } from "../../Functions/httpMethods";
 
 import {
   articleCommentsLoaded,
   currentDisplayArticleLoaded,
-  loadGlobalFeeds,
   articleContentLoaded,
   deleteYourArticle
 } from "../Actions/articleActions";
 
 import {
   FAVERATED_NAV_CLICKED,
-  favoritedArticleLoaded,
   setLoading,
   FAVORITED_BUTTON_CLICKED,
   postedArticleReloaded,
@@ -27,7 +23,8 @@ import {
   FOLLOW_AUTHOR_CLICKED,
   POST_ARTICLE_CLICKED,
   DELETE_ARTICLE_BUTTON,
-  POST_COMMENTS_CLICKED
+  POST_COMMENTS_CLICKED,
+  setHomeNavStatus
 } from "../Actions/eventActions";
 
 import {
@@ -36,9 +33,12 @@ import {
 } from "../Actions/userActions";
 
 export const eventSaga = function*() {
+  
   // POST_ARTICLE_CLICKED
   yield takeLatest(POST_ARTICLE_CLICKED, function*(action) {
-    const token = getUserInfoSagaLocal().token;
+    const state = yield select();   
+    const token = getUserInfoSagaLocal(state).token;    
+
     let url,
       type = "";
     const postData = {};
@@ -67,16 +67,18 @@ export const eventSaga = function*() {
       message,
       type
     );
-    // need clean?
+
     yield put(articleContentLoaded(yourArticle.article));
     yield put(articleCommentsLoaded(yourArticle));
-    yield put(postedArticleReloaded(true));
+    yield put(postedArticleReloaded("LOADED"));
     yield put(setLoading("LOADED"));
   });
 
   // POST_COMMENTS_CLICKED
   yield takeLatest(POST_COMMENTS_CLICKED, function*(action) {
-    const token = getUserInfoSagaLocal().token;
+    const state = yield select();   
+    const token = getUserInfoSagaLocal(state).token;    
+    
     const url = `/articles/${action.slug}/comments`;
     const message = "Post My Comments";
     const postData = {};
@@ -88,6 +90,7 @@ export const eventSaga = function*() {
       `/articles/${action.slug}/comments`
     );
     yield put(articleCommentsLoaded(initCommentData));
+    yield put(setLoading("LOADED"));
   });
 
   // FAVERATED_NAV_CLICKED
@@ -99,13 +102,14 @@ export const eventSaga = function*() {
       "Load Your Favorited Articles"
     );
 
-    yield put(favoritedArticleLoaded(favoritedArticlesData));
     yield put(currentDisplayArticleLoaded(favoritedArticlesData));
+    yield put(setLoading("LOADED"));
+
   });
 
   // FAVORITED_BUTTON_CLICKED
   yield takeLatest(FAVORITED_BUTTON_CLICKED, function*(action) {
-    console.log('没进来？？？');
+    console.log(action);
     
     const slug = action.slug;
     const token = action.token;
@@ -113,12 +117,14 @@ export const eventSaga = function*() {
     const message = "Post Favoriated Articles";
     const type = action.httpMethod;
     yield call(postDataToServerAll, token, url, "NothingToPost", message, type);
-    yield put(loadGlobalFeeds(articleCountDisplay, articleOffSet));
+    yield put(setLoading("LOADED"));
   });
 
   // UPDATE_SETTING_BUTTON_CLICK
   yield takeLatest(UPDATE_SETTING_BUTTON_CLICK, function*(action) {
-    const token = getUserInfoSagaLocal().token;
+
+    const state = yield select();   
+    const token = getUserInfoSagaLocal(state).token;    
     const url = "/user";
     const message = "Update User Setting";
     const postData = action.request;
@@ -130,31 +136,37 @@ export const eventSaga = function*() {
       message,
       "PUT"
     );
+    console.log(userSetting.user);
+    
     setUserOnSession(userSetting.user);
-    yield put(updateSettingStatus("UPDATED"));
     yield put(userInformationLoaded(userSetting.user));
+    yield put(updateSettingStatus("UPDATED"));
   });
 
   // DELETE_ARTICLE_BUTTON
   yield takeLatest(DELETE_ARTICLE_BUTTON, function*(action) {
-    const token = getUserInfoSagaLocal().token;
+
+    const state = yield select();   
+    const token = getUserInfoSagaLocal(state).token;    
     const url = `/articles/${action.slug}`;
     const message = "Delete Article";
     const postData = "NothingToPost";
-    const deleteArticle = yield call(
+    yield call(
       postDataToServerAll,
       token,
       url,
       postData,
       message,
       "DELETE"
-    );
-    yield put(deleteYourArticle(deleteArticle));
+    );    
+    yield put(deleteYourArticle("DELETED"));
   });
 
   // FOLLOW_AUTHOR_CLICKED
   yield takeLatest(FOLLOW_AUTHOR_CLICKED, function*(action) {
-    const token = getUserInfoSagaLocal().token;
+    const state = yield select();   
+    const token = getUserInfoSagaLocal(state).token;    
+
     const url = `/profiles/${action.author_name}/follow`;
     const message = "Follow  Author";
     const postData = "NothingToPost";

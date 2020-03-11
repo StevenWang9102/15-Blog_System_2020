@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import {setDeleteArticleStatus} from "../../ReduxStore/Actions/articleActions"
 import { LoggedUserNav } from "../../Components/Navbar/LoggedUserNav";
 import { UnLoggedNav } from "../../Components/Navbar/UnLoggedNav";
 import { Switcher } from "../../Components/Navbar/Switcher";
@@ -27,7 +28,10 @@ import {
 import { getUserFromSession } from "../../Functions/AuthToken";
 
 const InternalNavbar = props => {
+  
   const getUserInformationLocal = () => {
+    console.log('函数');
+    
     if (
       !props.userInformation || !props.userInformation.token
     ) {
@@ -63,6 +67,7 @@ const InternalNavbar = props => {
                   userInformation={props.userInformation}
                   userInformationLoaded={props.userInformationLoaded}
                   postedArticleReloaded={props.postedArticleReloaded}
+                  setDeleteArticleStatus={props.setDeleteArticleStatus}
                   loadUserProfileDetail={props.loadUserProfileDetail}
                   setProfileNavStatus={props.setProfileNavStatus}
                   setLoading={props.setLoading}

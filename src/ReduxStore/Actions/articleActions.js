@@ -26,7 +26,8 @@ export const LOAD_POPULAR_TAGS = Symbol("LOAD_POPULAR_TAGS");
 export const CURRENT_PROFILE_ARTICLE_LOADED = Symbol(
   "CURRENT_PROFILE_ARTICLE_LOADED"
 );
-
+// SET_DELETE_ARTICLE
+export const SET_DELETE_ARTICLE = Symbol("SET_DELETE_ARTICLE");
 
 // --------------------------- Functions --------------------------------
 export const globalDataLoaded = payload => {
@@ -91,6 +92,11 @@ export const loadPopularTags = () => {
 
 export const deleteYourArticle = status => {
   return { type: DELETE_YOUR_ARTICLE_DONE, status: status };
+};
+
+// setDeleteArticleStatus
+export const setDeleteArticleStatus = status => {
+  return { type: SET_DELETE_ARTICLE, status: status };
 };
 
 export const loadArticleSettingDetail = slug => {

@@ -23,7 +23,7 @@ const InternalNewPost = props => {
 
   return (
     <div>
-      {props.article_loaded ?
+      {props.postArticleLoaded === "LOADED" ?
         <Redirect to={`/article-detail/${props.newPosedArticleSlug}`} />
         :
         <div className='auth-page'>
@@ -57,13 +57,13 @@ const InternalNewPost = props => {
 InternalNewPost.propTypes = {
   currentArticleDetails: PropTypes.object,
   newPosedArticleSlug: PropTypes.array,
-  article_loaded: PropTypes.array,
+  postArticleLoaded: PropTypes.array,
 };
 
 
 const mapStateToProps = ({ eventReducer, articleReducer }) => {
   const {
-    article_loaded,
+    postArticleLoaded,
   } = eventReducer;
 
   const {
@@ -75,7 +75,7 @@ const mapStateToProps = ({ eventReducer, articleReducer }) => {
   return {
     currentSlug,
     currentArticleDetails,
-    article_loaded,
+    postArticleLoaded,
     newPosedArticleSlug
   };
 };

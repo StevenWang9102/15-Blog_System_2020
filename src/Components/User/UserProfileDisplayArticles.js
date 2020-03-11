@@ -1,5 +1,6 @@
 import React from "react";
 import dateFormat from "dateformat";
+import { FavoritedButton } from "../MainPage/FavoritedButton"
 
 import {
   articleCountDisplay,
@@ -38,30 +39,16 @@ export const UserProfileDisplayArticles = props => {
                   </span>
                 </div>
 
-                
-                <button
-                  className='btn btn-outline-primary btn-sm pull-xs-right'
-                  onClick={() => {
-                    const tempMethod = { ...props.httpMethod };
-                    if (tempMethod[article.slug] === "DELETE") {
-                      tempMethod[article.slug] = "POST";
-                    } else {
-                      tempMethod[article.slug] = "DELETE";
-                    }
-                    const token = props.userInformation.token;
-                    token &&
-                      props.onFavoritedArticleClicked(
-                        token,
-                        article.slug,
-                        tempMethod[article.slug],
-                        props.author_name
-                      );
-                      props.setHttpMethod(tempMethod);
-                  }}>
-                  <i className='ion-heart'></i>
-                  <img src='../../icon/002-heart-2.png' alt='' />
-                  {article.favoritesCount}
-                </button>
+                <FavoritedButton
+                  author_name={props.author_name}
+                  httpMethod={props.httpMethod}
+                  setHttpMethod={props.setHttpMethod}
+                  article={article}
+                  userInformation={props.userInformation}
+                  setLoading={props.setLoading}
+                  currentPageOffSet={props.currentPageOffSet}
+                  onFavoritedArticleClicked={props.onFavoritedArticleClicked}
+              />
               </div>
 
               <Link

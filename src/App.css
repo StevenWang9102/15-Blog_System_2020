@@ -160,3 +160,8 @@ p{
 .home-page .col-md-9{
   width: 85%;
 }
+
+.article-content{
+  text-align: left;
+  margin-left: 10px;
+}

@@ -6,6 +6,7 @@ import {
   ARTICLE_CONTENT_LOADED,
   TAG_RELATED_ARTICLE_LOADED,
   ARTICLE_SETTING_DETAIL_LOADED,
+  SET_DELETE_ARTICLE,
   CURRENT_PROFILE_ARTICLE_LOADED,
   CURRENT_HOME_DISPLAY_ARTICLES_LOADED,
   LOAD_YOUR_FEED,
@@ -72,7 +73,10 @@ export const articleReducer = (state = initialState, action) => {
       };
 
     case DELETE_YOUR_ARTICLE_DONE:
-      return { ...state, deleteYourArticleStatus: action.status };
+      return { ...state, deleteArticleDone: action.status };
+// SET_DELETE_ARTICLE
+case SET_DELETE_ARTICLE:
+  return { ...state, deleteArticleDone: action.status };
 
     case ARTICLE_SETTING_DETAIL_LOADED:
       return { ...state, articles_setting: action.data };

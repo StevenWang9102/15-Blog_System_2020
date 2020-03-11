@@ -1,5 +1,9 @@
-import { getUserFromSession,} from "./AuthToken";
+import { getUserFromSession } from "./AuthToken";
 
-export const getUserInfoSagaLocal =()=>{
-    return getUserFromSession();
-}
+export const getUserInfoSagaLocal = (state) => {
+  const userInformationSaga = state.userReducer.userInformation;
+
+  if (userInformationSaga && userInformationSaga.token) 
+    return userInformationSaga;
+  else return getUserFromSession();
+};

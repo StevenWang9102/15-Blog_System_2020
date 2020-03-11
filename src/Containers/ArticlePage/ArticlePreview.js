@@ -18,7 +18,8 @@ import { FavoritedButton } from "../../Components/MainPage/FavoritedButton";
 import {
   loadGlobalFeeds,
   loadYourArticles,
-  loadPopularTags
+  loadPopularTags,
+  setDeleteArticleStatus
 } from "../../ReduxStore/Actions/articleActions";
 
 import {
@@ -26,7 +27,8 @@ import {
   setHomeNavStatus,
   setLoading,
   emptyArticleCount,
-  updateSettingStatus
+  updateSettingStatus,
+  favoritedArticleNavClicked
 } from "../../ReduxStore/Actions/eventActions";
 
 const InternalArticlePreview = props => {
@@ -37,9 +39,12 @@ const InternalArticlePreview = props => {
   useEffect(() => {
     props.setLoading("LOADING");
     props.updateSettingStatus("NOT UPDATED");
+    props.setDeleteArticleStatus("NOT DELETED");
     props.loadPopularTags();
 
-    if (props.userInformation.username) {
+    // 这地方要重新请求用户的信息
+
+    if (props.userInformation && props.userInformation.username) {
       props.setHomeNavStatus("active", "null", "null");
       props.loadYourFeedArticles(articleCountDisplay, articleOffSet);
     } else {
@@ -128,14 +133,14 @@ const InternalArticlePreview = props => {
 
 InternalArticlePreview.propTypes = {
   userInformation: PropTypes.object,
-  currentArticleDetails:PropTypes.object.isRequired,
-  currentHomeDisplayArticle:PropTypes.object.isRequired,
+  currentArticleDetails:PropTypes.object,
+  currentHomeDisplayArticle:PropTypes.array.isRequired,
   currentTagName: PropTypes.string,
-  popularNav: PropTypes.array.isRequired,
-  yourNav: PropTypes.array.isRequired,
-  favoriteNav: PropTypes.array.isRequired,
+  popularNav: PropTypes.string.isRequired,
+  yourNav: PropTypes.string.isRequired,
+  favoriteNav: PropTypes.string,
   setLoading: PropTypes.func.isRequired,
-  articlesAllCount:PropTypes.number.isRequired,
+  articlesAllCount:PropTypes.number,
 };
 
 const mapStateToProps = ({ eventReducer, articleReducer, userReducer }) => {
@@ -169,15 +174,16 @@ const mapDispatchToProps = dispatch => {
     loadYourFeedArticles: (articleCountDisplay, articleOffSet) =>
       dispatch(loadYourArticles(articleCountDisplay, articleOffSet)),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
-    onFavoritedArticleClicked: (token, slug, httpMethod) =>
-      dispatch(favoritedButtonClicked(token, slug, httpMethod)),
+    onFavoritedArticleClicked: (token, slug, httpMethod, currentPageOffSet, name) =>
+      dispatch(favoritedButtonClicked(token, slug, httpMethod, currentPageOffSet, name)),
     loadGlobalFeeds: (articleCountDisplay, articleOffSet) => {
       dispatch(loadGlobalFeeds(articleCountDisplay, articleOffSet));
     },
     emptyArticleCount: () => dispatch(emptyArticleCount()),
-    loadPopularTags: () => {
-      dispatch(loadPopularTags());
-    }
+    setDeleteArticleStatus: status =>dispatch(setDeleteArticleStatus(status)),
+    loadPopularTags: () => {dispatch(loadPopularTags())},
+    onFavoritedArticleNavClicked: (author_name, articleCountDisplay, articleOffSet) =>
+      dispatch(favoritedArticleNavClicked(author_name, articleCountDisplay, articleOffSet)),
   };
 };
 

@@ -7,7 +7,8 @@ import { Route, Redirect } from "react-router-dom";
 import { loadInitArticleDetail } from "../../ReduxStore/Actions/articleActions";
 import {
   onDeleteArticleClicked,
-  onEditArticleClicked
+  onEditArticleClicked,
+  setLoading
 } from "../../ReduxStore/Actions/eventActions";
 import { saveUserInformationToStore } from "../../ReduxStore/Actions/userActions";
 import { EditButton } from "../../Components/ArticlePage/EditButton";
@@ -34,7 +35,7 @@ const InternalArticleDetails = props => {
 
   return (
     <Route>
-      {props.deleteYourArticleStatus ? (
+      {props.deleteArticleDone === "DELETED" ? (
         <Redirect to='/home' />
       ) : (
         <div className='article-page'>
@@ -45,6 +46,7 @@ const InternalArticleDetails = props => {
                 <h1>{props.currentArticleDetails.title}</h1>
                 <div className='article-meta article-source'>
                   <ArticleTitle
+                    setLoading={props.setLoading}
                     currentArticleDetails={props.currentArticleDetails}
                   />
                 </div>
@@ -65,7 +67,7 @@ const InternalArticleDetails = props => {
 
           {/* -------- Sign In Options OR Comments -------- */}
           {isUserExist ? 
-              <SignInOptions /> : <ArticleComments />}
+              <ArticleComments />:<SignInOptions /> }
         </div>
       )}
     </Route>
@@ -80,17 +82,16 @@ InternalArticleDetails.propTypes = {
   onDeleteArticleClicked: PropTypes.func,
 };
 
-const mapStateToProps = ({ eventReducer, userReducer, articleReducer }) => {
-  const { deleteYourArticleStatus } = eventReducer;
+const mapStateToProps = ({ userReducer, articleReducer }) => {
 
   const { userInformation } = userReducer;
 
-  const { currentArticleDetails } = articleReducer;
+  const { currentArticleDetails, deleteArticleDone } = articleReducer;
 
   return {
     currentArticleDetails,
     userInformation,
-    deleteYourArticleStatus
+    deleteArticleDone
   };
 };
 
@@ -100,7 +101,9 @@ const mapDispatchToProps = dispatch => {
     onEditArticleClicked: flag => dispatch(onEditArticleClicked(flag)),
     onDeleteArticleClicked: slug => dispatch(onDeleteArticleClicked(slug)),
     saveUserInformationToStore: userInformation =>
-      dispatch(saveUserInformationToStore(userInformation))
+      dispatch(saveUserInformationToStore(userInformation)),
+      setLoading: status => dispatch(setLoading(status)),
+
   };
 };
 
