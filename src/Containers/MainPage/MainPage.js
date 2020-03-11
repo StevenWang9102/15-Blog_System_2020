@@ -7,11 +7,11 @@ import { connect } from "react-redux";
 const InternalMainPage = props => {
   return (
     <div className='home-page'>
-      <Banner />
+      <Banner/>
       <div className='container page'>
         <div className='row'>
-          <ArticlePreview />
-          <PopularTages />
+          <ArticlePreview/>
+          <PopularTages/>
         </div>
       </div>
     </div>

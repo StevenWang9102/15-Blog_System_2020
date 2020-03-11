@@ -123,8 +123,15 @@ const InternalArticlePreview = props => {
 };
 
 InternalArticlePreview.propTypes = {
+  userInformation: PropTypes.object,
+  currentArticleDetails:PropTypes.object.isRequired,
+  currentHomeDisplayArticle:PropTypes.object.isRequired,
   currentTagName: PropTypes.string,
-  globalArticles: PropTypes.array.isRequired
+  popularNav: PropTypes.array.isRequired,
+  yourNav: PropTypes.array.isRequired,
+  favoriteNav: PropTypes.array.isRequired,
+  setLoading: PropTypes.func.isRequired,
+  articlesAllCount:PropTypes.number.isRequired,
 };
 
 const mapStateToProps = ({ eventReducer, articleReducer, userReducer }) => {
@@ -132,7 +139,6 @@ const mapStateToProps = ({ eventReducer, articleReducer, userReducer }) => {
 
   const {
     currentTagName,
-    globalArticles,
     currentHomeDisplayArticle,
     articlesAllCount
   } = articleReducer;
@@ -140,7 +146,6 @@ const mapStateToProps = ({ eventReducer, articleReducer, userReducer }) => {
   const { userInformation } = userReducer;
 
   return {
-    globalArticles,
     userInformation,
     currentTagName,
     yourNav,

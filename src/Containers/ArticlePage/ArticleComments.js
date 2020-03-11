@@ -26,7 +26,12 @@ const InternalArticleComments = props => {
 };
 
 InternalArticleComments.propTypes = {
-  currentComments: PropTypes.object.isRequired
+  currentComments: PropTypes.object.isRequired,
+  userInformation: PropTypes.object.isRequired,
+  currentSlug: PropTypes.array,
+  myComment: PropTypes.array,
+  setMyComment: PropTypes.func,
+  onPostCommentsClicked: PropTypes.func,
 };
 
 const mapStateToProps = ({ articleReducer, userReducer }) => {
@@ -42,8 +47,7 @@ const mapStateToProps = ({ articleReducer, userReducer }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onPostCommentsClicked: (slug, myComment) =>
-      dispatch(onPostCommentsClicked(slug, myComment))
+    onPostCommentsClicked: (slug, myComment) => dispatch(onPostCommentsClicked(slug, myComment))
   };
 };
 

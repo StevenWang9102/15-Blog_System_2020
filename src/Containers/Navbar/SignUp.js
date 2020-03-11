@@ -3,6 +3,7 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { onSignUpButtonClicked } from "../../ReduxStore/Actions/userActions";
 import { Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
 
 export const InternalSignUp = props => {
   const [userName, setUserName] = useState(" ");
@@ -64,6 +65,12 @@ export const InternalSignUp = props => {
       )}
     </div>
   );
+};
+
+
+InternalSignUp.propTypes = {
+  signUpStatus: PropTypes.array,
+  onSignUpButtonClicked: PropTypes.func,
 };
 
 const mapStateToProps = ({ eventReducer }) => {

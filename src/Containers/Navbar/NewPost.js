@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
-import { setLoading } from "../../ReduxStore/Actions/eventActions";
-import { onPostArticleClicked } from "../../ReduxStore/Actions/eventActions";
+import { useParams, Redirect } from "react-router-dom";
+import { setLoading, onPostArticleClicked } from "../../ReduxStore/Actions/eventActions";
 import { NewPostForm } from "../../Components/Navbar/NewPostForm"
-import { Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const InternalNewPost = props => {
   const { slug } = useParams();
@@ -54,6 +53,13 @@ const InternalNewPost = props => {
     </div>
   );
 };
+
+InternalNewPost.propTypes = {
+  currentArticleDetails: PropTypes.object,
+  newPosedArticleSlug: PropTypes.array,
+  article_loaded: PropTypes.array,
+};
+
 
 const mapStateToProps = ({ eventReducer, articleReducer }) => {
   const {

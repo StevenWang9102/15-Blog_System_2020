@@ -77,13 +77,15 @@ const InternalNavbar = props => {
         </nav>
 
         {/* --------------- ROUTER SWITCH --------------- */}
-        <Switcher />
+        <Switcher/>
       </div>
     </Router>
   );
 };
 
 InternalNavbar.propTypes = {
+  userInformation: PropTypes.object,
+  userInformationLoaded: PropTypes.func,
   loadUserProfileDetail: PropTypes.func
 };
 

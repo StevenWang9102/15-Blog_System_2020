@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { UserProfileTitle } from "../../Components/User/UserProfileTitle"
 import { UserProfileNav } from "../../Components/User/UserProfileNav"
 import { UserProfileDisplayArticles } from "../../Components/User/UserProfileDisplayArticles"
-
 import { articleCountDisplay, articleOffSet} from "../../Functions/httpMethods"
 import {
   favoritedArticleNavClicked,
@@ -77,9 +76,9 @@ const InternalUserProfile = props => {
               {/* --------------------- Switch Page --------------------- */}
               <PageTunner
                 fromPage="UserProfile"
+                author_name={author_name}
                 profileNavStatusLeft={props.profileNavStatusLeft}
                 loadUserProfileDetail={props.loadUserProfileDetail}
-                author_name={author_name}
                 articlesAllCount={props.articlesAllCount}
                 onFavoritedArticleNavClicked={props.onFavoritedArticleNavClicked}
               />
@@ -92,9 +91,15 @@ const InternalUserProfile = props => {
 };
 
 InternalUserProfile.propTypes = {
+  author_name: PropTypes.array.isRequired,
+  userInformation: PropTypes.object.isRequired,
+  setProfileNavStatus: PropTypes.func.isRequired,
+  profileNavStatusLeft: PropTypes.array.isRequired,
+  profileNavStatusRight: PropTypes.array.isRequired,
+  articlesAllCount: PropTypes.number.isRequired,
+  loadUserProfileDetail: PropTypes.func.isRequired,
   currentProfileDetail: PropTypes.object.isRequired,
   currentUsersArticles: PropTypes.array.isRequired,
-  loadUserProfileDetail: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ eventReducer, userReducer, articleReducer }) => {

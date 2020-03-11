@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import { removeUserFromSession } from "../../Functions/AuthToken";
 import {
   onUpdateSettingClicked,
@@ -27,7 +28,6 @@ const InternalSetting = props => {
                 <div className='row'>
                   <div className='col-md-6 offset-md-3 col-xs-12'>
                     <h1 className='text-xs-center'>Your Settings</h1>
-
                     <SettingForm
                       image={image}
                       name={name}
@@ -52,6 +52,11 @@ const InternalSetting = props => {
         )}
     </div>
   );
+};
+
+InternalSetting.propTypes = {
+  settingStatus: PropTypes.array.isRequired,
+  userInformation: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = ({ eventReducer, userReducer }) => {

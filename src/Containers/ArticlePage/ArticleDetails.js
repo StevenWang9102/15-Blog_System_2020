@@ -73,7 +73,11 @@ const InternalArticleDetails = props => {
 };
 
 InternalArticleDetails.propTypes = {
-  currentArticleDetails: PropTypes.object.isRequired
+  userInformation: PropTypes.object,
+  currentArticleDetails: PropTypes.object.isRequired,
+  article_slug: PropTypes.array,
+  onEditArticleClicked: PropTypes.func,
+  onDeleteArticleClicked: PropTypes.func,
 };
 
 const mapStateToProps = ({ eventReducer, userReducer, articleReducer }) => {
