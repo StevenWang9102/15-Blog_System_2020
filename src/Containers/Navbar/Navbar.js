@@ -29,11 +29,26 @@ import { getUserFromSession } from "../../Functions/AuthToken";
 
 const InternalNavbar = props => {
   
-  const getUserInformationLocal = () => {
-    console.log('函数');
+  // const getUserInformationLocal = () => {
+  //   console.log('函数');
     
+  //   if (
+  //     !props.userInformation || !props.userInformation.token
+  //   ) {
+  //     const userInformationOnSession = getUserFromSession();
+  //     if (userInformationOnSession) {
+  //       props.userInformationLoaded({ user: userInformationOnSession });
+  //     }
+  //     return userInformationOnSession;
+  //   } else {
+  //     return props.userInformation;
+  //   }
+  // };
+
+  const getUserInformationLocal = () => {
     if (
-      !props.userInformation || !props.userInformation.token
+      !props.userInformation ||
+      (props.userInformation && !props.userInformation.token)
     ) {
       const userInformationOnSession = getUserFromSession();
       if (userInformationOnSession) {
@@ -45,11 +60,15 @@ const InternalNavbar = props => {
     }
   };
 
+  const userInformationLocal = getUserInformationLocal()
+
   useEffect(() => {
     getUserInformationLocal();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(props.userInformation);
+  
   return (
     <Router>
       <div>
