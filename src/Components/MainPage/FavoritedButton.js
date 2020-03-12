@@ -30,6 +30,7 @@ export const FavoritedButton = props => {
         type='button'
         className={`btn btn-outline-primary btn-sm pull-xs-right ${classes.myButton}`}
         onClick={() => {
+          
           if (props.userInformation.token) {
             props.setLoading("LOADING");
 
@@ -47,7 +48,6 @@ export const FavoritedButton = props => {
               props.article.slug,
               tempMethod[props.article.slug],
               props.currentPageOffSet,
-              props.author_name
             );
             props.setHttpMethod(tempMethod);
 

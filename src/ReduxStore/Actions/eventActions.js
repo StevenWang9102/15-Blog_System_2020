@@ -37,7 +37,6 @@ export const favoritedButtonClicked = (
   slug,
   httpMethod,
   currentPageOffSet,
-  name
 ) => {
   return {
     type: FAVORITED_BUTTON_CLICKED,
@@ -45,7 +44,6 @@ export const favoritedButtonClicked = (
     slug: slug,
     httpMethod: httpMethod,
     currentPageOffSet: currentPageOffSet,
-    name
   };
 };
 

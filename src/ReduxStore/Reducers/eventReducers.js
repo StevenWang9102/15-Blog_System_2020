@@ -12,7 +12,7 @@ import { SIGN_UP_USER_LOADED } from "../Actions/userActions";
 const initialState = {
   postArticleLoaded: "NOT LOADED",
   yourNav: "active",
-  favoriteNav: "null",
+  globalNav: "null",
   settingStatus: "NOT UPDATED",
   popularNav: "null",
   profileNavStatusLeft: "active",
@@ -26,7 +26,7 @@ export const eventReducer = (state = initialState, action) => {
       return {
         ...state,
         yourNav: action.your,
-        favoriteNav: action.favorite,
+        globalNav: action.favorite,
         popularNav: action.popular
       };
 

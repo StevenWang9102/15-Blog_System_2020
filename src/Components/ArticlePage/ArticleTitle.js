@@ -1,23 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import dateFormat from "dateformat";
+import { displayLimit, offset } from "../../Functions/HttpClient";
 
 export const ArticleTitle = props => {
-  const authorLocal = props.currentArticleDetails.author;
-  const username = authorLocal && authorLocal.username;
-  const image = authorLocal && authorLocal.image;
-  const updateAt = authorLocal && authorLocal.updatedAt;
+
+  const usernameLocal = props.article && props.article.author && props.article.author.username;
+  const imageLocal = props.article && props.article.author && props.article.author.image;
+  const updateAtLocal = props.article && props.article.author && props.article.author.updatedAt;
 
   return (
-    <Link to={"/user_profile/" + username}>
-      <img className='author-image' src={image} alt='au' />
+    <Link to={`/user_profile/${usernameLocal}`}>
+      <img className='author-image' src={imageLocal} alt='au' />
       <div
         className='info author'
         onClick={() => {
           props.setLoading("LOADING");
+
+          if (props.pageName === "User Profile") {
+            props.setProfileNavStatus("active", "null");
+            props.loadUserProfileDetail(
+              usernameLocal,
+              displayLimit,
+              offset
+            );
+          }
         }}>
-        {username}
-        <span className='date'>{dateFormat(updateAt, "ddd mmm dd yyyy")}</span>
+        {usernameLocal}
+        <span className='date'>{dateFormat(updateAtLocal, "ddd mmm dd yyyy")}</span>
       </div>
     </Link>
   );

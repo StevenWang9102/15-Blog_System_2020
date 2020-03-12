@@ -4,13 +4,9 @@ import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { displayLimit, offset } from "../../Functions/HttpClient";
-import { YourFeedsNav } from "../../Components/MainPage/YourFeedsNav";
-import { GlobalFeedsNav } from "../../Components/MainPage/GlobalFeedsNav";
-import { ArticleTitle } from "../../Components/ArticlePage/ArticleTitle";
-import { ArticleDesctiption } from "../../Components/MainPage/ArticleDesctiption";
+import { FeedsToggle } from "../../Components/MainPage/FeedsToggle";
+import { CurrentDisplayArticles } from "../../Components/ArticlePage/CurrentDisplayArticles";
 import { PageTunner } from "../../Components/MainPage/PageTunner";
-import { PopularTagsNav } from "../../Components/MainPage/PopularTagsNav";
-import { FavoritedButton } from "../../Components/MainPage/FavoritedButton";
 import {
   loadUserProfileDetail,
   setSignUpStatus
@@ -58,68 +54,33 @@ const InternalArticlePreview = props => {
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
             {/* ----------- NAVIGATION --------- */}
-            <YourFeedsNav
-              userInformation={props.userInformation}
-              setLoading={props.setLoading}
-              loadYourFeedArticles={props.loadYourFeedArticles}
-              setHomeNavStatus={props.setHomeNavStatus}
-              yourNav={props.yourNav}
-            />
+            
+            <FeedsToggle
+                onPage="Article Preview"
 
-            <GlobalFeedsNav
-              setLoading={props.setLoading}
-              setHomeNavStatus={props.setHomeNavStatus}
-              loadGlobalFeeds={props.loadGlobalFeeds}
-              favoriteNav={props.favoriteNav}
-            />
-
-            <PopularTagsNav
-              popularNav={props.popularNav}
-              currentTagName={props.currentTagName}
-            />
+              />
           </li>
         </ul>
       </div>
 
       {/* ---------- CURRENT DISPLAY ARTICLES---------- */}
-      {props.currentHomeDisplayArticle.map((article, index) => {
-        return (
-          <div className='article-preview' key={index}>
-            <div className='article-meta'>
-              <ArticleTitle
-                currentArticleDetails={article}
-                setLoading={props.setLoading}
-              />
-
-              <FavoritedButton
-                httpMethod={httpMethod}
-                setHttpMethod={setHttpMethod}
-                article={article}
-                userInformation={props.userInformation}
-                setLoading={props.setLoading}
-                currentPageOffSet={currentPageOffSet}
-                onFavoritedArticleClicked={props.onFavoritedArticleClicked}
-              />
-            </div>
-
-            <ArticleDesctiption
-              setLoading={props.setLoading}
-              article={article}
-            />
-          </div>
-        );
-      })}
-
-      {props.currentHomeDisplayArticle.length === 0 && (
-        <div className='article-preview'>No articles are here... yet.</div>
-      )}
+      <CurrentDisplayArticles
+        pageName="Article Preview"
+        userInformation={props.userInformation}
+        currentDisplayArticle={props.currentHomeDisplayArticle}
+        setLoading={props.setLoading}
+        httpMethod={httpMethod}
+        setHttpMethod={setHttpMethod}
+        currentPageOffSet={currentPageOffSet}
+        onFavoritedArticleClicked={props.onFavoritedArticleClicked}
+        />
 
       {/* ------------------- PAGE TUNNER -------------- */}
       <PageTunner
         fromPage='ArticlePriview'
         articlesAllCount={props.articlesAllCount}
         setLoading={props.setLoading}
-        favoriteNav={props.favoriteNav}
+        globalNav={props.globalNav}
         loadGlobalFeeds={props.loadGlobalFeeds}
         loadPopularTags={props.loadPopularTags}
         setCurrentPageOffSet={setCurrentPageOffSet}
@@ -135,13 +96,13 @@ InternalArticlePreview.propTypes = {
   currentTagName: PropTypes.string,
   popularNav: PropTypes.string.isRequired,
   yourNav: PropTypes.string.isRequired,
-  favoriteNav: PropTypes.string,
+  globalNav: PropTypes.string,
   setLoading: PropTypes.func.isRequired,
   articlesAllCount: PropTypes.number
 };
 
 const mapStateToProps = ({ eventReducer, articleReducer, userReducer }) => {
-  const { yourNav, favoriteNav, popularNav, loading } = eventReducer;
+  const { yourNav, globalNav, popularNav, loading } = eventReducer;
 
   const {
     currentTagName,
@@ -155,7 +116,7 @@ const mapStateToProps = ({ eventReducer, articleReducer, userReducer }) => {
     userInformation,
     currentTagName,
     yourNav,
-    favoriteNav,
+    globalNav,
     popularNav,
     currentHomeDisplayArticle,
     articlesAllCount,
@@ -171,15 +132,15 @@ const mapDispatchToProps = dispatch => {
     loadYourFeedArticles: (displayLimit, offset) =>
       dispatch(loadYourArticles(displayLimit, offset)),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
+    
     onFavoritedArticleClicked: (
       token,
       slug,
       httpMethod,
       currentPageOffSet,
-      name
     ) =>
       dispatch(
-        favoritedButtonClicked(token, slug, httpMethod, currentPageOffSet, name)
+        favoritedButtonClicked(token, slug, httpMethod, currentPageOffSet)
       ),
     loadGlobalFeeds: (displayLimit, offset) => {
       dispatch(loadGlobalFeeds(displayLimit, offset));

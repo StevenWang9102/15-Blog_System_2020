@@ -45,7 +45,7 @@ export const PageTunner = props => {
                     onClick={() => {
                       props.setLoading("LOADING");
                       props.setCurrentPageOffSet(offset);
-                      if (props.favoriteNav === "active")
+                      if (props.globalNav === "active")
                         props.loadGlobalFeeds(displayLimit, offset);
                       else if (props.yourNav === "active")
                         props.loadYourFeedArticles(displayLimit, offset);

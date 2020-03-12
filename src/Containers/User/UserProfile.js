@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { UserProfileTitle } from "../../Components/User/UserProfileTitle"
-import { UserProfileNav } from "../../Components/User/UserProfileNav"
-import { UserProfileDisplayArticles } from "../../Components/User/UserProfileDisplayArticles"
-import { displayLimit, offset} from "../../Functions/HttpClient"
+import { UserProfileTitle } from "../../Components/User/UserProfileTitle";
+import { FeedsToggle } from "../../Components/MainPage/FeedsToggle";
+import { CurrentDisplayArticles } from "../../Components/ArticlePage/CurrentDisplayArticles";
+import { displayLimit, offset } from "../../Functions/HttpClient";
 import {
   favoritedArticleNavClicked,
   setProfileNavStatus,
@@ -14,12 +14,8 @@ import {
   setLoading,
   favoritedButtonClicked
 } from "../../ReduxStore/Actions/eventActions";
-import {
-  loadUserProfileDetail,
-} from "../../ReduxStore/Actions/userActions";
+import { loadUserProfileDetail } from "../../ReduxStore/Actions/userActions";
 import { PageTunner } from "../../Components/MainPage/PageTunner";
-
-
 
 const InternalUserProfile = props => {
   const { author_name } = useParams();
@@ -27,7 +23,6 @@ const InternalUserProfile = props => {
   const [httpMethod, setHttpMethod] = useState({});
   const [currentPageOffSet, setCurrentPageOffSet] = useState(0);
 
-  
   useEffect(() => {
     props.loadUserProfileDetail(author_name, displayLimit, offset);
     props.updateSettingStatus("NOT UPDATED");
@@ -43,12 +38,11 @@ const InternalUserProfile = props => {
   return (
     <div>
       <div className='profile-page'>
-        
         {/* ---------------- User Information ---------------- */}
         <UserProfileTitle
           currentProfileDetail={props.currentProfileDetail}
-          userInformation= {props.userInformation}
-          author_name = {author_name}
+          userInformation={props.userInformation}
+          author_name={author_name}
           onFollowAuthorClick={props.onFollowAuthorClick}
         />
 
@@ -56,38 +50,43 @@ const InternalUserProfile = props => {
           <div className='row'>
             <div className='col-xs-12 col-md-10 offset-md-1'>
               {/* ---------------- Navigation ---------------- */}
-              <UserProfileNav
+
+              <FeedsToggle
+                onPage="User Profile"
                 author_name={author_name}
+                setLoading={props.setLoading}
+                setProfileNavStatus={props.setProfileNavStatus}
                 profileNavStatusLeft={props.profileNavStatusLeft}
                 profileNavStatusRight={props.profileNavStatusRight}
-                setProfileNavStatus={props.setProfileNavStatus}
                 loadUserProfileDetail={props.loadUserProfileDetail}
                 onFavoritedArticleNavClicked={props.onFavoritedArticleNavClicked}
               />
-
               {/* ---------------- Related Article Area ----------------  */}
-              <UserProfileDisplayArticles
+              <CurrentDisplayArticles
+                pageName="User Profile"
                 author_name={author_name}
+                currentDisplayArticle={props.currentProfileDisplayArticle}
                 httpMethod={httpMethod}
                 setHttpMethod={setHttpMethod}
                 setLoading={props.setLoading}
-                setProfileNavStatus = {props.setProfileNavStatus}
+                setProfileNavStatus={props.setProfileNavStatus}
                 currentPageOffSet={currentPageOffSet}
                 userInformation={props.userInformation}
-                currentProfileDisplayArticle={props.currentProfileDisplayArticle}
                 loadUserProfileDetail={props.loadUserProfileDetail}
                 onFavoritedArticleClicked={props.onFavoritedArticleClicked}
               />
 
               {/* --------------------- Switch Page --------------------- */}
               <PageTunner
-                fromPage="UserProfile"
+                fromPage='UserProfile'
                 author_name={author_name}
                 setCurrentPageOffSet={setCurrentPageOffSet}
                 profileNavStatusLeft={props.profileNavStatusLeft}
                 loadUserProfileDetail={props.loadUserProfileDetail}
                 articlesAllCount={props.articlesAllCount}
-                onFavoritedArticleNavClicked={props.onFavoritedArticleNavClicked}
+                onFavoritedArticleNavClicked={
+                  props.onFavoritedArticleNavClicked
+                }
               />
             </div>
           </div>
@@ -105,27 +104,23 @@ InternalUserProfile.propTypes = {
   profileNavStatusRight: PropTypes.string.isRequired,
   articlesAllCount: PropTypes.number,
   loadUserProfileDetail: PropTypes.func.isRequired,
-  currentProfileDetail: PropTypes.object.isRequired,
+  currentProfileDetail: PropTypes.object.isRequired
 };
 
 const mapStateToProps = ({ eventReducer, userReducer, articleReducer }) => {
-  const { 
-    profileNavStatusLeft, 
+  const {
+    profileNavStatusLeft,
     profileNavStatusRight,
-    onFavoritedArticleNavClicked,
+    onFavoritedArticleNavClicked
   } = eventReducer;
 
   const {
     userInformation,
     followAuthorStatus,
-    currentProfileDetail,
+    currentProfileDetail
   } = userReducer;
 
-  const {
-    currentProfileDisplayArticle,
-    articlesAllCount,
-
-  } = articleReducer;
+  const { currentProfileDisplayArticle, articlesAllCount } = articleReducer;
 
   return {
     userInformation,
@@ -151,9 +146,12 @@ const mapDispatchToProps = dispatch => {
       ),
     setLoading: status => dispatch(setLoading(status)),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
-    onFollowAuthorClick: (author_name, method) => dispatch(onFollowAuthorClick(author_name, method)),
-    onFavoritedArticleClicked: (token, slug, httpMethod, currentPageOffSet, name) =>
-    dispatch(favoritedButtonClicked(token, slug, httpMethod, currentPageOffSet, name)),
+    onFollowAuthorClick: (author_name, method) =>
+      dispatch(onFollowAuthorClick(author_name, method)),
+    onFavoritedArticleClicked: (token, slug, httpMethod, currentPageOffSet) =>
+      dispatch(
+        favoritedButtonClicked(token, slug, httpMethod, currentPageOffSet)
+      )
   };
 };
 
