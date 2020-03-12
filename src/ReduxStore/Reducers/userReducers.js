@@ -2,7 +2,6 @@ import {
   FOLLOW_AUTHOR_LOADED,
   LOG_OUT_BUTTON_CLICK,
   USERS_PROFILE_LOADED,
-  // USERS_RELATED_ARTICLES_LOADED,
   USER_INFORMATION_LOADED
 } from "../Actions/userActions";
 
@@ -15,7 +14,6 @@ const initialState = {
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
-
     case USERS_PROFILE_LOADED:
       return { ...state, currentProfileDetail: action.userProfileData };
 

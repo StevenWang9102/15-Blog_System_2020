@@ -2,11 +2,11 @@ import { takeLatest, put, call, all, select } from "redux-saga/effects";
 import {
   setUserOnSession
 } from "../../Functions/AuthToken";
-import { getUserInfoSagaLocal } from "../../Functions/getUserInfo"
+import { getUserInfoSagaLocal } from "../../Functions/getUserInfoSagaLocal"
 import {
   fetchDataFromServer,
   postDataToServerAll,
-} from "../../Functions/httpMethods";
+} from "../../Functions/HttpClient";
 // import { getUserFromSession,} from "../../Functions/AuthToken";
 
 import {
@@ -15,7 +15,7 @@ import {
   SIGN_UP_BUTTON_CLICK,
   SIGN_IN_BUTTON_CLICKED,
   userInformationLoaded,
-  signUpUserLoaded
+  setSignUpStatus
 } from "../Actions/userActions";
 
 import { currentDisplayArticleLoaded } from "../Actions/articleActions";
@@ -43,7 +43,7 @@ export const userSaga = function*() {
       ),
       call(
         fetchDataFromServer,
-        `/articles?author=${userName}&limit=${action.articleCountDisplay}&offset=${action.articleOffSet}`,
+        `/articles?author=${userName}&limit=${action.articleCountDisplay}&offset=${action.offset}`,
         "Load User Articles"
       )
     ]);
@@ -72,7 +72,7 @@ export const userSaga = function*() {
       "POST"
     );
 
-    if (!userPostedData) alert("Login fail！Check username and password");
+    if (!userPostedData) alert("Login fail. Check username and password");
     if (userPostedData) setUserOnSession(userPostedData.user);
 
     yield put(userInformationLoaded(userPostedData));
@@ -82,6 +82,8 @@ export const userSaga = function*() {
 
   // SIGN_UP_BUTTON_CLICK
   yield takeLatest(SIGN_UP_BUTTON_CLICK, function*(action) {
+    console.log(action);
+    
     const token = null;
     const url = "/users";
     const postData = {};
@@ -99,8 +101,10 @@ export const userSaga = function*() {
       message,
       "POST"
     );
-    setUserOnSession(signUpUser.user);
+    if (!signUpUser) alert("Sign Up fail. Change username, email and password");
+    if (signUpUser) setUserOnSession(signUpUser.user);
+
     yield put(userInformationLoaded(signUpUser));
-    yield put(signUpUserLoaded(signUpUser));
+    yield put(setSignUpStatus("LOADED"));
   });
 };

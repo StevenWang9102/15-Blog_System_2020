@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
   articleCountDisplay,
-  articleOffSet
-} from "../../Functions/httpMethods";
+  offset
+} from "../../Functions/HttpClient";
 import { YourFeedsNav } from "../../Components/MainPage/YourFeedsNav";
 import { GlobalFeedsNav } from "../../Components/MainPage/GlobalFeedsNav";
 import { ArticleTitle } from "../../Components/ArticlePage/ArticleTitle";
@@ -14,8 +14,7 @@ import { ArticleDesctiption } from "../../Components/MainPage/ArticleDesctiption
 import { PageTunner } from "../../Components/MainPage/PageTunner";
 import { PopularTagsNav } from "../../Components/MainPage/PopularTagsNav";
 import { FavoritedButton } from "../../Components/MainPage/FavoritedButton";
-// loadUserProfileDetail
-import {loadUserProfileDetail} from "../../ReduxStore/Actions/userActions";
+import {loadUserProfileDetail, setSignUpStatus} from "../../ReduxStore/Actions/userActions";
 
 import {
   loadGlobalFeeds,
@@ -28,7 +27,6 @@ import {
   favoritedButtonClicked,
   setHomeNavStatus,
   setLoading,
-  // emptyArticleAllCount,
   updateSettingStatus,
   favoritedArticleNavClicked
 } from "../../ReduxStore/Actions/eventActions";
@@ -43,14 +41,15 @@ const InternalArticlePreview = props => {
     props.setLoading("LOADING");
     props.updateSettingStatus("NOT UPDATED");
     props.setDeleteArticleStatus("NOT DELETED");
+    props.setSignUpStatus("NOT LOADED");
     props.loadPopularTags();
 
     if (props.userInformation && props.userInformation.username) {
       props.setHomeNavStatus("active", "null", "null");
-      props.loadYourFeedArticles(articleCountDisplay, articleOffSet);
+      props.loadYourFeedArticles(articleCountDisplay, offset);
     } else {
       props.setHomeNavStatus("null", "active", "null");
-      props.loadGlobalFeeds(articleCountDisplay, articleOffSet);
+      props.loadGlobalFeeds(articleCountDisplay, offset);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -91,10 +90,8 @@ const InternalArticlePreview = props => {
             <div className='article-meta'>
 
               <ArticleTitle
-                // loadUserProfileDetail={props.loadUserProfileDetail}
                 currentArticleDetails={article}
                 setLoading={props.setLoading}
-                // emptyArticleAllCount={props.emptyArticleAllCount}
               />
 
               <FavoritedButton
@@ -174,23 +171,23 @@ const mapDispatchToProps = dispatch => {
     setLoading: status => dispatch(setLoading(status)),
     setHomeNavStatus: (your, favorite, popular) =>
       dispatch(setHomeNavStatus(your, favorite, popular)),
-    loadYourFeedArticles: (articleCountDisplay, articleOffSet) =>
-      dispatch(loadYourArticles(articleCountDisplay, articleOffSet)),
+    loadYourFeedArticles: (articleCountDisplay, offset) =>
+      dispatch(loadYourArticles(articleCountDisplay, offset)),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
     onFavoritedArticleClicked: (token, slug, httpMethod, currentPageOffSet, name) =>
       dispatch(favoritedButtonClicked(token, slug, httpMethod, currentPageOffSet, name)),
-    loadGlobalFeeds: (articleCountDisplay, articleOffSet) => {
-      dispatch(loadGlobalFeeds(articleCountDisplay, articleOffSet));
+    loadGlobalFeeds: (articleCountDisplay, offset) => {
+      dispatch(loadGlobalFeeds(articleCountDisplay, offset));
     },
-    loadUserProfileDetail: (author_name, articleCountDisplay, articleOffSet) =>
+    loadUserProfileDetail: (author_name, articleCountDisplay, offset) =>
     dispatch(
-      loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet)
+      loadUserProfileDetail(author_name, articleCountDisplay, offset)
     ),
-    // emptyArticleAllCount: () => dispatch(emptyArticleAllCount()),
+    setSignUpStatus: () => dispatch(setSignUpStatus()),
     setDeleteArticleStatus: status =>dispatch(setDeleteArticleStatus(status)),
     loadPopularTags: () => {dispatch(loadPopularTags())},
-    onFavoritedArticleNavClicked: (author_name, articleCountDisplay, articleOffSet) =>
-      dispatch(favoritedArticleNavClicked(author_name, articleCountDisplay, articleOffSet)),
+    onFavoritedArticleNavClicked: (author_name, articleCountDisplay, offset) =>
+      dispatch(favoritedArticleNavClicked(author_name, articleCountDisplay, offset)),
   };
 };
 

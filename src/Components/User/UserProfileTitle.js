@@ -34,10 +34,7 @@ export const UserProfileTitle = props => {
               className='user-img'
               alt='au'
             />
-            <h4
-             >
-              {props.author_name}
-            </h4>
+            <h4>{props.author_name}</h4>
             <p>{profileDetails && profileDetails.bio}</p>
 
             <Button>

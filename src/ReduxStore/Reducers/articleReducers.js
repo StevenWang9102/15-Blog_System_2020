@@ -21,7 +21,7 @@ const initialState = {
   popularTags: [],
   currentTagName: " ",
   currentProfileDisplayArticle: [],
-  currentHomeDisplayArticle: [],
+  currentHomeDisplayArticle: []
 };
 
 export const articleReducer = (state = initialState, action) => {
@@ -30,15 +30,14 @@ export const articleReducer = (state = initialState, action) => {
       return {
         ...state,
         currentHomeDisplayArticle: action.articleData["articles"],
-        articlesAllCount: action.articleData["articlesCount"],
+        articlesAllCount: action.articleData["articlesCount"]
       };
 
     case TAGS_DATA_LOADED:
       return { ...state, popularTags: action.tagsData };
-    
+
     case TAG_RELATED_ARTICLE_LOADED:
       return { ...state, currentHomeDisplayArticle: action.data };
-
 
     case ARTICLE_CONTENT_LOADED:
       return {
@@ -54,7 +53,8 @@ export const articleReducer = (state = initialState, action) => {
       return { ...state, currentSlug: action.slug };
 
     case CURRENT_PROFILE_ARTICLE_LOADED:
-      return { ...state, 
+      return {
+        ...state,
         currentProfileDisplayArticle: action.userProfileData.articles,
         articlesAllCount: action.userProfileData.articlesCount
       };
@@ -68,9 +68,9 @@ export const articleReducer = (state = initialState, action) => {
 
     case DELETE_YOUR_ARTICLE_DONE:
       return { ...state, deleteArticleDone: action.status };
-// SET_DELETE_ARTICLE
-case SET_DELETE_ARTICLE:
-  return { ...state, deleteArticleDone: action.status };
+
+    case SET_DELETE_ARTICLE:
+      return { ...state, deleteArticleDone: action.status };
 
     case ARTICLE_SETTING_DETAIL_LOADED:
       return { ...state, articles_setting: action.data };

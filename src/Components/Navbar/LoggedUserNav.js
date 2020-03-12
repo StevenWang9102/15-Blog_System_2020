@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {articleCountDisplay, offset } from "../../Functions/HttpClient"
 
 export const LoggedUserNav = props => {
 
@@ -38,7 +39,7 @@ export const LoggedUserNav = props => {
           className='nav-link'
           to={`/user_profile/${userInfoLocal.username}`}
           onClick={() => {
-            props.loadUserProfileDetail(userInfoLocal.username, 5, 0);
+            props.loadUserProfileDetail(userInfoLocal.username, articleCountDisplay, offset);
             props.setProfileNavStatus("active", "null");
             props.setLoading("LOADING");
           }}>

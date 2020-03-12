@@ -1,5 +1,5 @@
 import React from "react";
-import { articleCountDisplay } from "../../Functions/httpMethods";
+import { articleCountDisplay } from "../../Functions/HttpClient";
 import { createUseStyles } from "react-jss";
 
 const useStyles = createUseStyles({
@@ -33,28 +33,22 @@ export const PageTunner = props => {
       <ul className='pagination'>
         {pageNumber !== 1 &&
           myPageNumArray.map((pageNumber, index) => {
-            const articleOffSet = index * articleCountDisplay;
+            const offset = index * articleCountDisplay;
 
             // From "ArticlePriview" Page
             if (props.fromPage === "ArticlePriview") {
               return (
-                <Page key={index} >
+                <Page key={index}>
                   <a
                     className='page-link'
                     href={`#p${pageNumber}`}
                     onClick={() => {
                       props.setLoading("LOADING");
-                      props.setCurrentPageOffSet(articleOffSet);
+                      props.setCurrentPageOffSet(offset);
                       if (props.favoriteNav === "active")
-                        props.loadGlobalFeeds(
-                          articleCountDisplay,
-                          articleOffSet
-                        );
+                        props.loadGlobalFeeds(articleCountDisplay, offset);
                       else if (props.yourNav === "active")
-                        props.loadYourFeedArticles(
-                          articleCountDisplay,
-                          articleOffSet
-                        );
+                        props.loadYourFeedArticles(articleCountDisplay, offset);
                       else props.loadPopularTags();
                     }}>
                     {pageNumber}
@@ -64,7 +58,7 @@ export const PageTunner = props => {
             } else {
               // From "User Profile" Page
               return (
-                <Page key={index} >
+                <Page key={index}>
                   <a
                     className='page-link'
                     href={`#p${pageNumber}`}
@@ -73,13 +67,13 @@ export const PageTunner = props => {
                         props.loadUserProfileDetail(
                           props.author_name,
                           articleCountDisplay,
-                          articleOffSet
+                          offset
                         );
                       else
                         props.onFavoritedArticleNavClicked(
                           props.author_name,
                           articleCountDisplay,
-                          articleOffSet
+                          offset
                         );
                     }}>
                     {pageNumber}

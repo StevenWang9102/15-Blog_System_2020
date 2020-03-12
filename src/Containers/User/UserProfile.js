@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { UserProfileTitle } from "../../Components/User/UserProfileTitle"
 import { UserProfileNav } from "../../Components/User/UserProfileNav"
 import { UserProfileDisplayArticles } from "../../Components/User/UserProfileDisplayArticles"
-import { articleCountDisplay, articleOffSet} from "../../Functions/httpMethods"
+import { articleCountDisplay, offset} from "../../Functions/HttpClient"
 import {
   favoritedArticleNavClicked,
   setProfileNavStatus,
@@ -22,16 +22,16 @@ import { PageTunner } from "../../Components/MainPage/PageTunner";
 
 
 const InternalUserProfile = props => {
-  const [httpMethod, setHttpMethod] = useState({});
   const { author_name } = useParams();
   const { article_type } = useParams();
+  const [httpMethod, setHttpMethod] = useState({});
   const [currentPageOffSet, setCurrentPageOffSet] = useState(0);
 
   console.log(props.userInformation.username);
   console.log(author_name);
   
   useEffect(() => {
-    props.loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet);
+    props.loadUserProfileDetail(author_name, articleCountDisplay, offset);
     props.updateSettingStatus("NOT UPDATED");
 
     if (article_type === "favorited_articles") {
@@ -143,10 +143,10 @@ const mapStateToProps = ({ eventReducer, userReducer, articleReducer }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadUserProfileDetail: (author_name, articleCountDisplay, articleOffSet) =>
-      dispatch(loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet)),
-    onFavoritedArticleNavClicked: (author_name, articleCountDisplay, articleOffSet) =>
-      dispatch(favoritedArticleNavClicked(author_name, articleCountDisplay, articleOffSet)),
+    loadUserProfileDetail: (author_name, articleCountDisplay, offset) =>
+      dispatch(loadUserProfileDetail(author_name, articleCountDisplay, offset)),
+    onFavoritedArticleNavClicked: (author_name, articleCountDisplay, offset) =>
+      dispatch(favoritedArticleNavClicked(author_name, articleCountDisplay, offset)),
     setProfileNavStatus: (profileNavStatusLeft, profileNavStatusRight) =>
       dispatch(
         setProfileNavStatus(profileNavStatusLeft, profileNavStatusRight)

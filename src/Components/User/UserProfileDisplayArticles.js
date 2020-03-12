@@ -4,8 +4,8 @@ import { FavoritedButton } from "../MainPage/FavoritedButton"
 
 import {
   articleCountDisplay,
-  articleOffSet
-} from "../../Functions/httpMethods";
+  offset
+} from "../../Functions/HttpClient";
 import { Link } from "react-router-dom";
 
 export const UserProfileDisplayArticles = props => {
@@ -30,10 +30,9 @@ export const UserProfileDisplayArticles = props => {
                       props.loadUserProfileDetail(
                         article.author.username,
                         articleCountDisplay,
-                        articleOffSet
+                        offset
                       )}
                     }>
-                      {/* setProfileNavStatus */}
                     {article.author.username }
                   </Link>
                   <span className='date'>

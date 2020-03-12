@@ -1,10 +1,10 @@
 import { takeLatest, put, call,select } from "redux-saga/effects";
 import { setUserOnSession } from "../../Functions/AuthToken";
-import { getUserInfoSagaLocal } from "../../Functions/getUserInfo"
+import { getUserInfoSagaLocal } from "../../Functions/getUserInfoSagaLocal"
 import {
   fetchDataFromServer,
   postDataToServerAll,
-} from "../../Functions/httpMethods";
+} from "../../Functions/HttpClient";
 
 import {
   articleCommentsLoaded,
@@ -24,7 +24,6 @@ import {
   POST_ARTICLE_CLICKED,
   DELETE_ARTICLE_BUTTON,
   POST_COMMENTS_CLICKED,
-  setHomeNavStatus
 } from "../Actions/eventActions";
 
 import {
@@ -89,6 +88,7 @@ export const eventSaga = function*() {
       fetchDataFromServer,
       `/articles/${action.slug}/comments`
     );
+
     yield put(articleCommentsLoaded(initCommentData));
     yield put(setLoading("LOADED"));
   });
@@ -98,13 +98,12 @@ export const eventSaga = function*() {
     const userName = action.author_name;
     const favoritedArticlesData = yield call(
       fetchDataFromServer,
-      `/articles?favorited=${userName}&limit=${action.articleCountDisplay}&offset=${action.articleOffSet}`,
+      `/articles?favorited=${userName}&limit=${action.articleCountDisplay}&offset=${action.offset}`,
       "Load Your Favorited Articles"
     );
 
     yield put(currentDisplayArticleLoaded(favoritedArticlesData));
     yield put(setLoading("LOADED"));
-
   });
 
   // FAVORITED_BUTTON_CLICKED
@@ -116,6 +115,7 @@ export const eventSaga = function*() {
     const url = `/articles/${slug}/favorite`;
     const message = "Post Favoriated Articles";
     const type = action.httpMethod;
+
     yield call(postDataToServerAll, token, url, "NothingToPost", message, type);
     yield put(setLoading("LOADED"));
   });
@@ -136,7 +136,6 @@ export const eventSaga = function*() {
       message,
       "PUT"
     );
-    console.log(userSetting.user);
     
     setUserOnSession(userSetting.user);
     yield put(userInformationLoaded(userSetting.user));
@@ -178,6 +177,7 @@ export const eventSaga = function*() {
       message,
       action.method
     );
+    
     yield put(userProfileDataLoaded(followAuthor.profile));
   });
 };

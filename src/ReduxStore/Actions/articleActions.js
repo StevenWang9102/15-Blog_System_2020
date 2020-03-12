@@ -25,21 +25,19 @@ export const LOAD_POPULAR_TAGS = Symbol("LOAD_POPULAR_TAGS");
 export const CURRENT_PROFILE_ARTICLE_LOADED = Symbol(
   "CURRENT_PROFILE_ARTICLE_LOADED"
 );
-// TAG_RELATED_ARTICLE_LOADED
 export const SET_DELETE_ARTICLE = Symbol("SET_DELETE_ARTICLE");
 export const TAG_RELATED_ARTICLE_LOADED = Symbol("TAG_RELATED_ARTICLE_LOADED");
 
-
 // --------------------------- Functions --------------------------------
-export const loadGlobalFeeds = (articleCountDisplay, articleOffSet) => {
-  return { type: LOAD_GLOBAL_FEEDS, articleCountDisplay, articleOffSet };
+export const loadGlobalFeeds = (articleCountDisplay, offset) => {
+  return { type: LOAD_GLOBAL_FEEDS, articleCountDisplay, offset };
 };
 
-export const tagRelatedArticleLoaded = (data) =>{
+export const tagRelatedArticleLoaded = data => {
   return { type: TAG_RELATED_ARTICLE_LOADED, data };
-}
+};
 
-export const articleDataLoaded = (articleData) => {
+export const articleDataLoaded = articleData => {
   return { type: ARTICLE_DATA_LOADED, articleData };
 };
 
@@ -71,13 +69,12 @@ export const popularTagIsDiplayed = tagName => {
   return { type: POPULAR_TAG_DISPLAYED, tagName };
 };
 
-
 export const currentDisplayArticleLoaded = userProfileData => {
   return { type: CURRENT_PROFILE_ARTICLE_LOADED, userProfileData };
 };
 
-export const loadYourArticles = (articleCountDisplay, articleOffSet) => {
-  return { type: LOAD_YOUR_FEED, articleCountDisplay, articleOffSet };
+export const loadYourArticles = (articleCountDisplay, offset) => {
+  return { type: LOAD_YOUR_FEED, articleCountDisplay, offset };
 };
 
 export const currentHomeDisplayArticleLoaded = payload => {
@@ -92,7 +89,6 @@ export const deleteYourArticle = status => {
   return { type: DELETE_YOUR_ARTICLE_DONE, status: status };
 };
 
-// setDeleteArticleStatus
 export const setDeleteArticleStatus = status => {
   return { type: SET_DELETE_ARTICLE, status: status };
 };
@@ -104,4 +100,3 @@ export const loadArticleSettingDetail = slug => {
 export const articleSettingContentLoaded = data => {
   return { type: ARTICLE_SETTING_DETAIL_LOADED, data: data };
 };
-

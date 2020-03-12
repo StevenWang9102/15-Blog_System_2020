@@ -11,8 +11,6 @@ export const InternalSignUp = props => {
   const [password, setPassword] = useState("");
 
   const [alertText, setAlertText] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [passWord, setPassWord] = useState("");
 
   function ValidateEmail(mail) {
     // eslint-disable-next-line no-useless-escape
@@ -21,7 +19,7 @@ export const InternalSignUp = props => {
 
   return (
     <div>
-      {props.signUpStatus ? (
+      {props.signUpStatus === "LOADED" ? (
         <Redirect to='/home' />
       ) : (
         <div className='auth-page'>
@@ -62,6 +60,10 @@ export const InternalSignUp = props => {
                     className='btn btn-lg btn-primary pull-xs-right'
                     type='button'
                     onClick={() => {
+                      if(userName.length===0 || password.length===0 || email.length===0 )
+                      setAlertText(
+                        "Username, Password, Email can not be blank"
+                      );
                       if (userName.length > 20 ) setAlertText(
                         "Username is too long (maximum is 20 characters)"
                       );
@@ -75,7 +77,7 @@ export const InternalSignUp = props => {
                     }}>
                     Sign up
                   </button>
-                  <div> {alertText} </div>
+                  <div className="sign_Alert"> {alertText} </div>
                 </form>
               </div>
             </div>

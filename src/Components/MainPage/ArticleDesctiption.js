@@ -8,7 +8,7 @@ export const ArticleDesctiption = props => {
       onClick={() => props.setLoading("LOADING")}
       to={"/article-detail/" + props.article.slug}>
       <h1>{props.article.title}</h1>
-      <p>{props.article.description}</p>
+        <p>{props.article.description}</p>
       <span>Read more...</span>
     </Link>
   );

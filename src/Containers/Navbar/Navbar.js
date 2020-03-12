@@ -45,8 +45,6 @@ const InternalNavbar = props => {
     }
   };
 
-  const userInformationLocal = getUserInformationLocal()
-
   useEffect(() => {
     getUserInformationLocal();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,9 +75,7 @@ const InternalNavbar = props => {
                   setLoading={props.setLoading}
                 />
               ) : (
-                <UnLoggedNav
-                  // onSignUpButtonClicked={props.onSignUpButtonClicked}
-                />
+                <UnLoggedNav/>
               )}
             </ul>
           </div>
@@ -108,9 +104,9 @@ const mapStateToProps = ({ userReducer }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadUserProfileDetail: (author_name, articleCountDisplay, articleOffSet) =>
+    loadUserProfileDetail: (author_name, articleCountDisplay, offset) =>
       dispatch(
-        loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet)
+        loadUserProfileDetail(author_name, articleCountDisplay, offset)
       ),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
     setProfileNavStatus: (profileNavStatusLeft, profileNavStatusRight) =>

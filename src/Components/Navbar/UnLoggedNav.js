@@ -1,4 +1,4 @@
-import React, { useState }  from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 export const UnLoggedNav = props => {
@@ -20,10 +20,7 @@ export const UnLoggedNav = props => {
       <li className='nav-item'>
         <Link
           className='nav-link'
-          to='/sign_up'
-          onClick={() => {
-            // props.onSignUpButtonClicked(null);
-          }}>
+          to='/sign_up'>
           Sign up
         </Link>
       </li>

@@ -23,13 +23,13 @@ export const POST_ARTICLE_CLICKED = Symbol("POST_ARTICLE_CLICKED");
 export const favoritedArticleNavClicked = (
   author_name,
   articleCountDisplay,
-  articleOffSet
+  offset
 ) => {
   return {
     type: FAVERATED_NAV_CLICKED,
     author_name,
     articleCountDisplay,
-    articleOffSet
+    offset
   };
 };
 

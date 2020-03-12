@@ -61,7 +61,6 @@ export const FavoritedButton = props => {
     );
   };
 
-
   return (
     <Button>
       <img src='../icon/002-heart-2.png' alt='' />

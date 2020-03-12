@@ -1,10 +1,8 @@
 import React from "react";
-import { articleCountDisplay, articleOffSet } from "../../Functions/httpMethods";
+import { articleCountDisplay, offset } from "../../Functions/HttpClient";
 import { NavLink } from "react-router-dom";
 
-
 export const UserProfileNav = props => {
-
   return (
     <div className='articles-toggle'>
       <ul className='nav nav-pills outline-active'>
@@ -17,7 +15,7 @@ export const UserProfileNav = props => {
               props.loadUserProfileDetail(
                 props.author_name,
                 articleCountDisplay,
-                articleOffSet
+                offset
               );
             }}>
             My Articles
@@ -33,7 +31,7 @@ export const UserProfileNav = props => {
               props.onFavoritedArticleNavClicked(
                 props.author_name,
                 articleCountDisplay,
-                articleOffSet
+                offset
               );
             }}>
             Favorited Articles
