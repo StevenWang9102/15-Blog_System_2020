@@ -43,7 +43,7 @@ const InternalNavbar = props => {
   useEffect(() => {
     getUserInformationLocal();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [props.userInformation ]);
 
   return (
     <Router>

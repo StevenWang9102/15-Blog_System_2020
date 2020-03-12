@@ -57,8 +57,7 @@ const InternalNewPost = props => {
 
 InternalNewPost.propTypes = {
   currentArticleDetails: PropTypes.object,
-  newPosedArticleSlug: PropTypes.array,
-  postArticleLoaded: PropTypes.array,
+  newPosedArticleSlug: PropTypes.string,
 };
 
 

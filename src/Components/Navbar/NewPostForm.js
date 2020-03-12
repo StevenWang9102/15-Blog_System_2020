@@ -1,6 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 
 export const NewPostForm = props => {
+  const [alertText, setAlertText] = useState("");
+
   return (
     <form>
       <fieldset>
@@ -49,17 +51,21 @@ export const NewPostForm = props => {
           className='btn btn-lg pull-xs-right btn-primary'
           type='button'
           onClick={() => {
-            props.setLoading("LOADING");
-            props.onPostArticleClicked(
+            if(props.title.length===0||props.description.length===0||props.content.length===0||props.tags.length===0){
+              setAlertText("* every input can not be blank")
+            }else{
+              props.setLoading("LOADING");
+              props.onPostArticleClicked(
               props.title,
               props.description,
               props.content,
               props.tags,
               props.currentSlug
-            );
+            );}
           }}>
           Publish Article
         </button>
+        <div className='sign_Alert'> {alertText} </div>
       </fieldset>
     </form>
   );

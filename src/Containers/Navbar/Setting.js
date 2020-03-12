@@ -55,7 +55,7 @@ const InternalSetting = props => {
 
 InternalSetting.propTypes = {
   settingStatus: PropTypes.string.isRequired,
-  userInformation: PropTypes.object.isRequired,
+  userInformation: PropTypes.object,
 };
 
 const mapStateToProps = ({ eventReducer, userReducer }) => {
