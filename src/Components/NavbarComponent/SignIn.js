@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { signInClicked } from "../../ReduxStore/FeedDetails/feedActions";
+import { signInClicked, setLoading } from "../../ReduxStore/FeedDetails/loadActions";
 import {
   Route,
   Redirect,
 } from "react-router-dom";
+
+
 const InternalSignIn = props => {
   
   const [email, setEmail] = useState("");
@@ -12,7 +14,7 @@ const InternalSignIn = props => {
 
   return (
     <Route>
-      {props.userInformation.token ? 
+      {props.userInformation && props.userInformation.token ? 
         <Redirect to='/home'/>
        : 
         <div className='auth-page'>
@@ -48,6 +50,7 @@ const InternalSignIn = props => {
                       className='btn btn-lg btn-primary pull-xs-right'
                       onClick={()=> {
                         props.onSignInClicked(email, password);
+                        props.setLoading("LOADING")
                       }}>
                       Sign in
                     </button>
@@ -61,14 +64,25 @@ const InternalSignIn = props => {
   );
 };
 
-const mapStateToProps = state => {
-  return { ...state };
+
+const mapStateToProps = ({asyncReducer}) => {
+
+  const {
+    userInformation  
+  } = asyncReducer
+
+  return {
+    userInformation  
+  };
 };
+
 
 const mapDispatchToProps = dispatch => {
   return {
     onSignInClicked: (email, password) =>
-      dispatch(signInClicked(email, password))
+      dispatch(signInClicked(email, password)),
+      setLoading: (status) => dispatch(setLoading(status)),
+
   };
 };
 

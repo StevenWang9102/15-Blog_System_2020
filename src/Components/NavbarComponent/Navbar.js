@@ -1,21 +1,23 @@
 import React from "react";
+import { useEffect } from "react";
 import { SignIn } from "./SignIn";
 import { SignUp } from "./SignUp";
 import { MainPage } from "../MainPageComponent/MainPage";
 import { NewPost } from "./NewPost";
 import { Setting } from "./Setting";
 import { connect } from "react-redux";
-import { createUseStyles } from "react-jss";
 import { UserProfile } from "../UserComponent/UserProfile";
 import { ArticleDetails } from "../MainPageComponent/ArticleDetails";
 import PropTypes from "prop-types";
-import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
 import {
   loadUserProfileDetail,
   setProfileNavStatus,
   onSignUpButtonClicked,
-  postedArticleReloaded
-} from "../../ReduxStore/FeedDetails/feedActions";
+  postedArticleReloaded,
+  userInformationLoaded,
+  updateSettingStatus,
+  setLoading
+} from "../../ReduxStore/FeedDetails/loadActions";
 
 import {
   BrowserRouter as Router,
@@ -24,31 +26,32 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
+import { getUserFromSession } from "../UserComponent/AuthToken";
 
-// ---------------- React-JSS-Configuration -------------------- //
-// const useStyles = createUseStyles({
-//   // 这个是公用的定义
-//   myImage: {
-//       height: 26 !important,
-//       width: 26,
-//       objectFit: 'cover',
-//       marginRight: 3
-//   }
-// });
-
-// // 这个是制定的定义
-// const Img = ({ children }) => {
-//   const classes = useStyles(); // 调取公用的定义
-//   return (
-//     <div className= {`${classes.myImage} user-pic`}>
-//       <img src={getUserInformation() && getUserInformation().image}  alt="user"/>
-//       {children}
-//     </div>
-//   );
-// };
-
-// ---------------- React-Component -------------------- //
 const InternalNavbar = props => {
+  
+  const getUserInformationLocal = () => {
+    if (
+      !props.userInformation ||
+      (props.userInformation && !props.userInformation.token)
+    ) {
+      const userInformationOnSession = getUserFromSession();
+      if (userInformationOnSession) {
+        props.userInformationLoaded({ user: userInformationOnSession });
+      }
+      return userInformationOnSession;
+    } else {
+      return props.userInformation;
+    }
+  };
+
+  useEffect(() => {
+    getUserInformationLocal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const userInfoLocal = getUserInformationLocal();
+
 
   return (
     <Router>
@@ -62,7 +65,8 @@ const InternalNavbar = props => {
             </Link>
 
             <ul className='nav navbar-nav pull-xs-right'>
-              {getUserInformation() ? (
+
+              {props.userInformation && props.userInformation.token ? (  
                 <div>
                   <li className='nav-item'>
                     <Link className='nav-link active' to='/home'>
@@ -71,11 +75,12 @@ const InternalNavbar = props => {
                   </li>
 
                   <li className='nav-item'>
-                    <Link 
-                      className='nav-link' 
+                    <Link
+                      className='nav-link'
                       to='/new_post'
-                      onClick={()=>{props.postedArticleReloaded(false)}}  
-                    >
+                      onClick={() => {
+                        props.postedArticleReloaded(false);
+                      }}>
                       <img src='./icon/008-edit.png' alt='' />
                       New Post
                     </Link>
@@ -83,7 +88,7 @@ const InternalNavbar = props => {
 
                   <li className='nav-item'>
                     <Link className='nav-link' to='/setting'>
-                      <img src='./icon/004-settings.png' alt='' />
+                      <img src='./icon/004-settings.png' alt=''/>
                       Setting
                     </Link>
                   </li>
@@ -92,18 +97,19 @@ const InternalNavbar = props => {
                   <li className='nav-item'>
                     <Link
                       className='nav-link'
-                      to = {`/user_profile/${getUserInformation().username}`}
+                      to={`/user_profile/${userInfoLocal.username}`}
                       onClick={() => {
-                        props.loadUserProfileDetail();
+                        props.loadUserProfileDetail(userInfoLocal.username, 5, 0);
                         props.setProfileNavStatus("active", "null");
-                      }}>
+                        props.setLoading("LOADING")
+                      }}
+                      >
                       <img
                         className='user-pic'
-                        src={getUserInformation().image}
+                        src={userInfoLocal.image}
                         alt=''
                       />
-                      {/* <Img/> */}
-                      {getUserInformation().username}
+                      {userInfoLocal.username}
                     </Link>
                   </li>
                 </div>
@@ -140,7 +146,7 @@ const InternalNavbar = props => {
           <Route exact path='/'>
             <Redirect to='/home' />
           </Route>
-          <Route exact path='/home' component={MainPage} />
+          <Route path='/home' component={MainPage} />
 
           <Route exact path='/article-detail/sign_in'>
             <Redirect to='/sign_in' />
@@ -152,6 +158,10 @@ const InternalNavbar = props => {
           </Route>
           <Route exact path='/sign_up' component={SignUp} />
 
+          <Route
+            path='/user_profile/:author_name/:article_type'
+            component={UserProfile}
+          />
           <Route path='/user_profile/:author_name' component={UserProfile} />
 
           <Route
@@ -168,23 +178,32 @@ const InternalNavbar = props => {
   );
 };
 
-
 InternalNavbar.propTypes = {
-  loadUserProfileDetail: PropTypes.func,
+  loadUserProfileDetail: PropTypes.func
 };
 
-const mapStateToProps = ({ loadUserProfileDetail }) => {
-  return { loadUserProfileDetail };
+const mapStateToProps = ({asyncReducer}) => {
+  const {
+    userInformation
+  } = asyncReducer
+
+  return {
+    userInformation
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadUserProfileDetail: () => dispatch(loadUserProfileDetail()),
-    setProfileNavStatus: (myNav, favorited_Nav) =>
-      dispatch(setProfileNavStatus(myNav, favorited_Nav)),
+    loadUserProfileDetail: (author_name, articleCountDisplay, articleOffSet) => dispatch(loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet)),
+    updateSettingStatus: status => dispatch(updateSettingStatus(status)),
+    setProfileNavStatus: (profileNavStatusLeft, profileNavStatusRight) =>
+      dispatch(
+        setProfileNavStatus(profileNavStatusLeft, profileNavStatusRight)
+      ),
     onSignUpButtonClicked: data => dispatch(onSignUpButtonClicked(data)),
-    // postedArticleReloaded
     postedArticleReloaded: data => dispatch(postedArticleReloaded(data)),
+    userInformationLoaded: user => dispatch(userInformationLoaded(user)),
+    setLoading: (status) => dispatch(setLoading(status)),
 
   };
 };

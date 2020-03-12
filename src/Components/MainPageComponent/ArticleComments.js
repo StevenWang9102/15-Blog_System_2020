@@ -3,7 +3,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import dateFormat from "dateformat";
-import { onPostCommentsClicked } from "../../ReduxStore/FeedDetails/feedActions";
+import { onPostCommentsClicked } from "../../ReduxStore/FeedDetails/loadActions";
 
 
 const InternalArticleComments = props => {
@@ -26,16 +26,14 @@ const InternalArticleComments = props => {
             </div>
             <div className='card-footer'>
               <img
-                src='http://i.imgur.com/Qr71crq.jpg'
+                src={props.userInformation.image}
                 className='comment-author-img'
                 alt='au'
               />
               <button
                 type="button"
                 className='btn btn-sm btn-primary'
-                onClick={()=>
-                    props.onPostCommentsClicked(props.currentSlug, myComment)
-                }
+                onClick={()=> props.onPostCommentsClicked(props.currentSlug, myComment)}
                 >Post Comment</button>
             </div>
           </form>
@@ -83,8 +81,14 @@ InternalArticleComments.propTypes = {
   currentComments: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ currentComments, currentSlug }) => {
-  return { currentComments,  currentSlug };
+const mapStateToProps = ({ asyncReducer}) => {
+  const {
+    currentComments, currentSlug, userInformation
+  } = asyncReducer
+  
+  return {
+    currentComments, currentSlug, userInformation
+  };
 };
 
 const mapDispatchToProps = dispatch => {

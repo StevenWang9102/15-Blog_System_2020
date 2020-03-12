@@ -56,9 +56,9 @@ p{
   text-align: left;
 }
 
-.display-inline
+.nav-item .display-inline
 {
-  display: inline-block !important;
+  display: inline-block;
   margin-right: 15px;
 }
 
@@ -81,15 +81,13 @@ p{
 }
 
 .commonts-container{
-
-  width: 70% !important;
-  text-align:left !important;
-  margin-left: 10% !important;
+  width: 70%;
+  text-align:left;
+  margin-left: 10%;
 }
 
-.hr-setting{
-
-  margin-top: 80px !important;
+.settings-page .hr-setting{
+  margin-top: 80px;
 }
 
 .logout-button{
@@ -111,15 +109,47 @@ p{
 }
 
 .feed-toggle .nav-link{
-  cursor: pointer !important;
+  cursor: pointer;
   text-align: center;
   margin-right: 0;
-  width: 150px;
+  width: 130px;
   font-weight: 450;
 }
 
-.user-pic
+.navbar-nav .nav-item .user-pic
 {
-  height: 26px !important;
-  width: 26px !important;
+  height: 26px;
+  width: 26px;
+}
+
+.loading_status{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top:0;
+  background-color: rgba(128, 128, 128, 0.219);
+  font-size: 40px;
+  opacity: 0.8;
+  z-index: 100;
+}
+
+.loading_status span{
+  position: absolute;
+  top: 350px;
+}
+
+
+.btn-outline-primary:focus{
+  color: #5cb85c;
+  font-weight: 500;
+  text-align: center;
+  background-color: #5cb85c11;
+}
+
+.btn-outline-primary:hover{
+  color: #5cb85c;
+  font-weight: 500;
+  text-align: center;
+  background-color: #5cb85c94;
 }

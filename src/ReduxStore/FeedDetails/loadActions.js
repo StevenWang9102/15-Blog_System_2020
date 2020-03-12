@@ -9,23 +9,24 @@ export const POPULAR_TAG_CLICKED = Symbol("POPULAR_TAG_CLICKED");
 export const POPULAR_TAG_DISPLAYED = Symbol("POPULAR_TAG_DISPLAYED");
 export const TAG_RELATED_ARTICLE_LOADED = Symbol("TAG_RELATED_ARTICLE_LOADED");
 export const RELATED_TAG_LOADED = Symbol("RELATED_TAG_LOADED");
-export const GLOBLE_FEED_CLICKED = Symbol("GLOBLE_FEED_CLICKED");
 export const LOADED_USER_PROFILE = Symbol("LOADED_USER_PROFILE");
 export const USERS_PROFILE_LOADED = Symbol("USERS_PROFILE_LOADED");
-export const USERS_RELATED_ARTICLES_LOADED = Symbol(  "USERS_RELATED_ARTICLES_LOADED" );
+export const USERS_RELATED_ARTICLES_LOADED = Symbol("USERS_RELATED_ARTICLES_LOADED");
 export const FAVERATED_NAV_CLICKED = Symbol("FAVERATED_NAV_CLICKED");
 export const FAVERATED_ARITICLE_LOADED = Symbol("FAVERATED_ARITICLE_LOADED");
 export const SIGN_IN_BUTTON_CLICKED = Symbol("SIGN_IN_BUTTON_CLICKED");
 export const USER_INFORMATION_LOADED = Symbol("USER_INFORMATION_LOADED");
-export const YOURE_FEED_CLICKED = Symbol("YOURE_FEED_CLICKED");
-export const YOURE_FEED_LOADED = Symbol("YOURE_FEED_LOADED");
+export const LOAD_YOUR_FEED = Symbol("LOAD_YOUR_FEED");
+export const YOUR_FEED_LOADED = Symbol("YOUR_FEED_LOADED");
 export const FAVORITED_BUTTON_CLICKED = Symbol("FAVORITED_BUTTON_CLICKED");
 export const YOUR_FEED_NAV_CLICKED = Symbol("YOUR_FEED_NAV_CLICKED");
 export const SET_HOME_NAV_STATUS = Symbol("SET_HOME_NAV_STATUS");
 export const GLOBAL_FEED_DATA_LOADED = Symbol("GLOBAL_FEED_DATA_LOADED");
 export const POST_COMMENTS_CLICKED = Symbol("POST_COMMENTS_CLICKED");
-export const POST_ARTICLE_CLICKED = Symbol("POST_ARTICLE_CLICKED");
 export const POSTED_ARTICLE_RELOADED = Symbol("POSTED_ARTICLE_RELOADED");
+export const FOLLOW_AUTHOR_CLICKED = Symbol("FOLLOW_AUTHOR_CLICKED");
+export const SET_LOADING_LOADED = Symbol("SET_LOADING_LOADED");
+
 export const EDIT_ARTICLE_BUTTON_CLICKED = Symbol(
   "EDIT_ARTICLE_BUTTON_CLICKED"
 );
@@ -40,6 +41,8 @@ export const LOAD_POPULAR_TAGS = Symbol("LOAD_POPULAR_TAGS");
 export const SAVE_USER_INFOR_TO_STORE = Symbol("SAVE_USER_INFOR_TO_STORE");
 export const SET_LOG_IN_STSTUS = Symbol("SET_LOG_IN_STSTUS");
 export const LOG_OUT_BUTTON_CLICK = Symbol("LOG_OUT_BUTTON_CLICK");
+export const EMPTY_ARTICLE_COUNT = Symbol("EMPTY_ARTICLE_COUNT");
+
 export const UPDATE_SETTING_BUTTON_CLICK = Symbol(
   "UPDATE_SETTING_BUTTON_CLICK"
 );
@@ -48,17 +51,19 @@ export const DELETE_ARTICLE_BUTTON = Symbol("DELETE_ARTICLE_BUTTON");
 export const DELETE_YOUR_ARTICLE_DONE = Symbol("DELETE_YOUR_ARTICLE_DONE");
 export const SIGN_UP_BUTTON_CLICK = Symbol("SIGN_UP_BUTTON_CLICK");
 export const SIGN_UP_USER_LOADED = Symbol("SIGN_UP_USER_LOADED");
-export const FAVORITED_ARTICLES_LOADED = Symbol("FAVORITED_ARTICLES_LOADED");
 export const LOAD_ARTICLE_SETTING_DETAIL = Symbol(
   "LOAD_ARTICLE_SETTING_DETAIL"
 );
 export const ARTICLE_SETTING_DETAIL_LOADED = Symbol(
   "ARTICLE_SETTING_DETAIL_LOADED"
 );
+export const FOLLOW_AUTHOR_LOADED = Symbol(
+  "FOLLOW_AUTHOR_LOADED"
+);
 
 // ---------------------------     Functions     --------------------------------
-export const loadGlobalFeeds = () => {
-  return { type: LOAD_GLOBAL_FEEDS };
+export const loadGlobalFeeds = (articleCountDisplay, articleOffSet) => {
+  return { type: LOAD_GLOBAL_FEEDS, articleCountDisplay, articleOffSet };
 };
 
 export const globalDataLoaded = payload => {
@@ -69,8 +74,8 @@ export const loadInitArticleDetail = slug => {
   return { type: LOAD_INIT_ARTICLE_DETAIL, slug };
 };
 
-export const articleDataLoaded = articleData => {
-  return { type: ARTICLE_DATA_LOADED, articleData };
+export const articleDataLoaded = (articleData, loading) => {
+  return { type: ARTICLE_DATA_LOADED, articleData, loading };
 };
 
 export const articleContentLoaded = initArticleData => {
@@ -101,16 +106,8 @@ export const tagRelatedArticleLoaded = tagRelatedArticles => {
   return { type: TAG_RELATED_ARTICLE_LOADED, tagRelatedArticles };
 };
 
-export const globeFeedClicked = () => {
-  return { type: GLOBLE_FEED_CLICKED };
-};
-
-export const relatedTagLoaded = tagName => {
-  return { type: RELATED_TAG_LOADED, tagName };
-};
-
-export const loadUserProfileDetail = author_name => {
-  return { type: LOADED_USER_PROFILE, author_name: author_name };
+export const loadUserProfileDetail = (author_name, articleCountDisplay, articleOffSet) => {
+  return { type: LOADED_USER_PROFILE, author_name, articleCountDisplay, articleOffSet };
 };
 
 export const userProfileDataLoaded = userProfileData => {
@@ -125,8 +122,8 @@ export const userRelatedArticlesLoaded = userRelatedArticles => {
   return { type: USERS_RELATED_ARTICLES_LOADED, userRelatedArticles };
 };
 
-export const favoritedArticleNavClicked = author_name => {
-  return { type: FAVERATED_NAV_CLICKED, author_name: author_name };
+export const favoritedArticleNavClicked = (author_name, articleCountDisplay, articleOffSet) => {
+  return { type: FAVERATED_NAV_CLICKED, author_name, articleCountDisplay, articleOffSet };
 };
 
 export const favoritedArticleLoaded = favoritedArticles => {
@@ -141,12 +138,8 @@ export const userInformationLoaded = payload => {
   return { type: USER_INFORMATION_LOADED, userInformation: payload.user };
 };
 
-export const loadYourArticles = () => {
-  return { type: YOURE_FEED_CLICKED };
-};
-
-export const yourFeedsLoaded = articles => {
-  return { type: YOURE_FEED_LOADED, articles: articles };
+export const loadYourArticles = (articleCountDisplay, articleOffSet) => {
+  return { type: LOAD_YOUR_FEED, articleCountDisplay, articleOffSet };
 };
 
 export const favoritedButtonClicked = (
@@ -168,30 +161,15 @@ export const yourFeedNavClicked = self => {
   return { type: YOUR_FEED_NAV_CLICKED, selfStatus: self };
 };
 
-export const setHomeNavStatus = status => {
-  return { type: SET_HOME_NAV_STATUS, status: status };
+export const setHomeNavStatus = (your, favorite, popular) => {
+  return { type: SET_HOME_NAV_STATUS, your: your, favorite: favorite, popular: popular };
 };
 
 export const onPostCommentsClicked = (slug, myComment) => {
-  return { type: POST_COMMENTS_CLICKED, slug: slug, myComment: myComment };
+  return { type: POST_COMMENTS_CLICKED, slug, myComment };
 };
 
-export const onPostArticleClicked = (
-  title,
-  description,
-  content,
-  tags,
-  slug
-) => {
-  return {
-    type: POST_ARTICLE_CLICKED,
-    title: title,
-    description: description,
-    content: content,
-    tags: tags,
-    slug: slug
-  };
-};
+
 
 export const postedArticleReloaded = status => {
   return { type: POSTED_ARTICLE_RELOADED, status: status };
@@ -216,8 +194,8 @@ export const currentHomeDisplayArticleLoaded = payload => {
   return { type: CURRENT_HOME_DISPLAY_ARTICLES_LOADED, payload: payload };
 };
 
-export const loadPopularTags = payload => {
-  return { type: LOAD_POPULAR_TAGS, payload: payload };
+export const loadPopularTags = () => {
+  return { type: LOAD_POPULAR_TAGS };
 };
 
 export const saveUserInformationToStore = userInformation => {
@@ -232,7 +210,7 @@ export const onUpdateSettingClicked = request => {
   return { type: UPDATE_SETTING_BUTTON_CLICK, request: request };
 };
 
-export const updatedYourSetting = status => {
+export const updateSettingStatus = (status) => {
   return { type: UPDATED_YOUR_SETTING, status: status };
 };
 
@@ -257,14 +235,26 @@ export const signUpUserLoaded = data => {
   return { type: SIGN_UP_USER_LOADED, data: data };
 };
 
-export const favoritedArticlesLoaded = data => {
-  return { type: FAVORITED_ARTICLES_LOADED, data: data };
-};
-
 export const loadArticleSettingDetail = slug => {
   return { type: LOAD_ARTICLE_SETTING_DETAIL, slug: slug };
 };
 
 export const articleSettingContentLoaded = data => {
   return { type: ARTICLE_SETTING_DETAIL_LOADED, data: data };
+};
+
+export const onFollowAuthorClick = (author_name, method) => {
+  return { type: FOLLOW_AUTHOR_CLICKED, author_name: author_name, method: method };
+};
+
+export const followAuthorLoaded = data => {
+  return { type: FOLLOW_AUTHOR_LOADED, data: data };
+};
+
+export const setLoading = status => {
+  return { type: SET_LOADING_LOADED, status };
+};
+
+export const emptyArticleCount = status => {
+  return { type: EMPTY_ARTICLE_COUNT, status };
 };

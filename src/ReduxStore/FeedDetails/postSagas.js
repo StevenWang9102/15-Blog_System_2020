@@ -1,78 +1,66 @@
 import { takeLatest, put, call, all, select } from "redux-saga/effects";
 import {
-  getUserFromSession,
+  // getUserFromSession,
   setUserOnSession
 } from "../../Components/UserComponent/AuthToken";
+import { getUserInfoSagaLocal } from "../getUserInfo"
+import { fetchDataFromServer, postDataToServerAll, articleCountDisplay, articleOffSet} from "../httpMethods"
+
 import {
+  // --------------- GET -------------------
   LOAD_GLOBAL_FEEDS,
   LOAD_INIT_ARTICLE_DETAIL,
-  signUpUserLoaded,
   POPULAR_TAG_CLICKED,
   LOAD_ARTICLE_SETTING_DETAIL,
   articleDataLoaded,
-  favoritedArticleNavClicked,
-  deleteYourArticle,
-  SIGN_UP_BUTTON_CLICK,
-  loadGlobalFeeds,
-  articleContentLoaded,
   articleCommentsLoaded,
   tagRelatedArticleLoaded,
-  relatedTagLoaded,
-  UPDATE_SETTING_BUTTON_CLICK,
   LOADED_USER_PROFILE,
   userProfileDataLoaded,
   tagsDataLoaded,
   userRelatedArticlesLoaded,
-  updatedYourSetting,
-  POST_ARTICLE_CLICKED,
   FAVERATED_NAV_CLICKED,
   LOAD_POPULAR_TAGS,
   articleSettingContentLoaded,
   favoritedArticleLoaded,
-  DELETE_ARTICLE_BUTTON,
+  POST_COMMENTS_CLICKED,
+  currentDisplayArticleLoaded,
+  setLoading,
+  // ----------------- POST ------------------
+  signUpUserLoaded,
+  SIGN_UP_BUTTON_CLICK,
+  loadGlobalFeeds,
+  articleContentLoaded,
   SIGN_IN_BUTTON_CLICKED,
   userInformationLoaded,
-  YOURE_FEED_CLICKED,
-  yourFeedsLoaded,
+  LOAD_YOUR_FEED,
   FAVORITED_BUTTON_CLICKED,
   setHomeNavStatus,
-  POST_COMMENTS_CLICKED,
   postedArticleReloaded,
-  currentDisplayArticleLoaded,
   currentHomeDisplayArticleLoaded,
-  SAVE_USER_INFOR_TO_STORE
-} from "./feedActions";
+  deleteYourArticle,
+  UPDATE_SETTING_BUTTON_CLICK,
+  updateSettingStatus,
+  DELETE_ARTICLE_BUTTON,
+  FOLLOW_AUTHOR_CLICKED,
+} from "./loadActions";
+import {  POST_ARTICLE_CLICKED, } from "./displayActions"
 
-export const getUserInformation = function() {
-  return getUserFromSession();
-};
 
-export const getUserInformation2 = function*() {
-  const reduxStoredUserInfo = yield select(state => state.userInformation);
-
-  if (reduxStoredUserInfo) {
-    return reduxStoredUserInfo;
-  } else {
-    const sessionStoredUserInfo = getUserFromSession();
-    if (sessionStoredUserInfo)
-      yield put(userInformationLoaded(sessionStoredUserInfo));
-    return getUserFromSession();
-  }
-};
-
-export const feedSaga = function*() {
-  yield takeLatest(SAVE_USER_INFOR_TO_STORE, function*(action) {
-    yield getUserInformation2(action.userInformation);
-  });
-
+export const postSaga = function*(){
+  
+  // ------------------------------ GET SAGA --------------------
   // GLOBAL_FEEDS_LOADED
-  yield takeLatest(LOAD_GLOBAL_FEEDS, function*() {
+  yield takeLatest(LOAD_GLOBAL_FEEDS, function*(action) {
     const initArticData = yield call(
       fetchDataFromServer,
-      "/articles?limit=50&offset=10",
+      `/articles?limit=${action.articleCountDisplay}&offset=${action.articleOffSet}`,
       "Load Global Feeds"
     );
-    yield put(articleDataLoaded(initArticData["articles"]));
+
+    yield put(articleDataLoaded(initArticData, "loaded"));
+    yield put(setLoading("LOADED"));
+
   });
 
   // LOAD_POPULAR_TAGS
@@ -80,9 +68,11 @@ export const feedSaga = function*() {
     const initTagData = yield call(
       fetchDataFromServer,
       "/tags",
-      "Load Initial Popular Tags"
+      "Load Popular Tags"
     );
+    
     yield put(tagsDataLoaded(initTagData["tags"]));
+    yield put(setLoading("LOADED"));
   });
 
   // ARTICLE_DETAILS_LOADED
@@ -93,6 +83,7 @@ export const feedSaga = function*() {
       "Load Article"
     );
     yield put(articleContentLoaded(initArticleData.article));
+    yield put(setLoading("LOADED"));
   });
 
   // LOAD_ARTICLE_SETTING_DETAIL
@@ -118,7 +109,7 @@ export const feedSaga = function*() {
 
   // POST_COMMENTS_CLICKED
   yield takeLatest(POST_COMMENTS_CLICKED, function*(action) {
-    const token = getUserInformation().token;
+    const token = getUserInfoSagaLocal().token;
     const url = `/articles/${action.slug}/comments`;
     const message = "Post My Comments";
     const postData = {};
@@ -140,40 +131,45 @@ export const feedSaga = function*() {
       "Load Popular Tags"
     );
     yield put(tagRelatedArticleLoaded(tagRelatedData.articles));
-    yield put(relatedTagLoaded(action.tagName));
+    yield put(setLoading("LOADED"));
   });
 
   // LOADED_USER_PROFILE
-  yield takeLatest(LOADED_USER_PROFILE, function*(action) {
-    // yield getUserInformation2();
+  yield takeLatest(LOADED_USER_PROFILE, function*(action) {    
+    const token = getUserInfoSagaLocal().token;
     const userName = action.author_name;
-
     const [userProfileData, userRelatedArticles] = yield all([
-      call(fetchDataFromServer, `/profiles/${userName}`, "Load User Profile"),
+
+      call(postDataToServerAll, 
+        token, 
+        `/profiles/${userName}`, "NothingToPost", 
+        "Load User Profile",
+        "GET"
+        ),
       call(
         fetchDataFromServer,
-        `/articles?author=${userName}&limit=5&offset=0`,
+        `/articles?author=${userName}&limit=${action.articleCountDisplay}&offset=${action.articleOffSet}`,
         "Load User Articles"
       )
     ]);
-
-    yield put(userProfileDataLoaded(userProfileData));
-    yield put(userRelatedArticlesLoaded(userRelatedArticles.articles));
+    
+    // need clean ...
+    yield put(userProfileDataLoaded(userProfileData.profile));
+    yield put(userRelatedArticlesLoaded(userRelatedArticles));
     yield put(currentDisplayArticleLoaded(userRelatedArticles.articles));
+    yield put(setLoading("LOADED"));
   });
 
   // FAVERATED_NAV_CLICKED
   yield takeLatest(FAVERATED_NAV_CLICKED, function*(action) {
-    yield getUserInformation2();
     const userName = action.author_name;
-
     const favoritedArticlesData = yield call(
       fetchDataFromServer,
-      `/articles?favorited=${userName}&limit=30&offset=0`,
+      `/articles?favorited=${userName}&limit=${action.articleCountDisplay}&offset=${action.articleOffSet}`,
       "Load Your Favorited Articles"
     );
 
-    yield put(favoritedArticleLoaded(favoritedArticlesData.articles));
+    yield put(favoritedArticleLoaded(favoritedArticlesData));
     yield put(currentDisplayArticleLoaded(favoritedArticlesData.articles));
   });
 
@@ -184,7 +180,7 @@ export const feedSaga = function*() {
     const url = `/articles/${slug}/favorite`;
     const message = "Post Favoriated Articles";
     const type = action.httpMethod;
-    const favoriedArticles = yield call(
+    yield call(
       postDataToServerAll,
       token,
       url,
@@ -192,17 +188,17 @@ export const feedSaga = function*() {
       message,
       type
     );
-
-    yield put(loadGlobalFeeds());
-    yield put(favoritedArticleNavClicked(action.author_name));
+    yield put(loadGlobalFeeds(articleCountDisplay, articleOffSet));
   });
+
+// ------------------------------ POST SAGA --------------------
 
   // SIGN_IN_BUTTON_CLICKED
   yield takeLatest(SIGN_IN_BUTTON_CLICKED, function*(action) {
     const userData = {};
     const url = "/users/login";
     const message = "Sign in";
-
+    
     userData.email = action.email;
     userData.password = action.password;
 
@@ -216,15 +212,18 @@ export const feedSaga = function*() {
       "POST"
     );
 
-    setUserOnSession(userPostedData.user);
+    if(!userPostedData) alert("Login fail！Check username and password");
+    if(userPostedData) setUserOnSession(userPostedData.user);
+
     yield put(userInformationLoaded(userPostedData));
-    yield put(setHomeNavStatus(["active", "null", "null"]));
+    yield put(setHomeNavStatus("active", "null", "null"));
+    yield put(setLoading("LOADED"));
   });
 
-  // YOURE_FEED_CLICKED
-  yield takeLatest(YOURE_FEED_CLICKED, function*() {
-    const token = getUserInformation().token;
-    const url = "/articles/feed?limit=10&offset=0";
+  // LOAD_YOUR_FEED
+  yield takeLatest(LOAD_YOUR_FEED, function*(action) {
+    const token = getUserInfoSagaLocal().token;
+    const url = `/articles/feed?limit=${action.articleCountDisplay}&offset=${action.articleOffSet}`;
     const message = "Load Your Feed";
     const yourArticleData = yield call(
       postDataToServerAll,
@@ -234,13 +233,13 @@ export const feedSaga = function*() {
       message,
       "GET"
     );
-    yield put(yourFeedsLoaded(yourArticleData.articles));
-    yield put(currentHomeDisplayArticleLoaded(yourArticleData.articles));
+    yield put(currentHomeDisplayArticleLoaded(yourArticleData));
+    yield put(setLoading("LOADED"));
   });
 
   // POST_ARTICLE_CLICKED
   yield takeLatest(POST_ARTICLE_CLICKED, function*(action) {
-    const token = getUserInformation().token;
+    const token = getUserInfoSagaLocal().token;
     let url,
       type = "";
     const postData = {};
@@ -270,44 +269,11 @@ export const feedSaga = function*() {
       type
     );
 
+    // need clean?
     yield put(articleContentLoaded(yourArticle.article));
     yield put(articleCommentsLoaded(yourArticle));
     yield put(postedArticleReloaded(true));
-  });
-
-  // UPDATE_SETTING_BUTTON_CLICK
-  yield takeLatest(UPDATE_SETTING_BUTTON_CLICK, function*(action) {
-    const token = getUserInformation().token;
-    const url = "/user";
-    const message = "Update User Setting";
-    const postData = action.request;
-    const userSetting = yield call(
-      postDataToServerAll,
-      token,
-      url,
-      postData,
-      message,
-      "PUT"
-    );
-    setUserOnSession(userSetting.user);
-    yield put(updatedYourSetting("updated"));
-  });
-
-  // DELETE_ARTICLE_BUTTON
-  yield takeLatest(DELETE_ARTICLE_BUTTON, function*(action) {
-    const token = getUserInformation().token;
-    const url = `/articles/${action.slug}`;
-    const message = "Delete Article";
-    const postData = "NothingToPost";
-    const deleteArticle = yield call(
-      postDataToServerAll,
-      token,
-      url,
-      postData,
-      message,
-      "DELETE"
-    );
-    yield put(deleteYourArticle(deleteArticle));
+    yield put(setLoading("LOADED"));
   });
 
   // SIGN_UP_BUTTON_CLICK
@@ -333,37 +299,60 @@ export const feedSaga = function*() {
     yield put(userInformationLoaded(signUpUser));
     yield put(signUpUserLoaded(signUpUser));
   });
+
+  // UPDATE_SETTING_BUTTON_CLICK
+  yield takeLatest(UPDATE_SETTING_BUTTON_CLICK, function*(action) {
+    const token = getUserInfoSagaLocal().token;
+    const url = "/user";
+    const message = "Update User Setting";
+    const postData = action.request;
+    const userSetting = yield call(
+      postDataToServerAll,
+      token,
+      url,
+      postData,
+      message,
+      "PUT"
+    );    
+    setUserOnSession(userSetting.user);
+    yield put(updateSettingStatus("UPDATED"));
+    yield put(userInformationLoaded(userSetting.user));
+  });
+
+  // DELETE_ARTICLE_BUTTON
+  yield takeLatest(DELETE_ARTICLE_BUTTON, function*(action) {
+    const token = getUserInfoSagaLocal().token;
+    const url = `/articles/${action.slug}`;
+    const message = "Delete Article";
+    const postData = "NothingToPost";
+    const deleteArticle = yield call(
+      postDataToServerAll,
+      token,
+      url,
+      postData,
+      message,
+      "DELETE"
+    );
+    yield put(deleteYourArticle(deleteArticle));
+  });
+
+  // FOLLOW_AUTHOR_CLICKED
+  yield takeLatest(FOLLOW_AUTHOR_CLICKED, function*(action) {
+    const token = getUserInfoSagaLocal().token;
+    const url = `/profiles/${action.author_name}/follow`;
+    const message = 'Follow  Author';
+    const postData = "NothingToPost";
+    const followAuthor = yield call(
+      postDataToServerAll,
+      token,
+      url,
+      postData,
+      message,
+      action.method
+    );
+
+    yield put(userProfileDataLoaded(followAuthor.profile));
+  });
 };
 
-const postDataToServerAll = (token, url, postData, message, type) => {
-  let headers = { "Content-Type": "application/json" };
-  let request = {
-    method: `${type}`,
-    headers
-  };
 
-  if (postData !== "NothingToPost") request["body"] = JSON.stringify(postData);
-  if (token !== null) headers["Authorization"] = `Token ${token}`;
-
-  return fetch(`https://conduit.productionready.io/api${url}`, request).then(
-    response => {
-      if (response.ok) {
-        return response.json().then(response => {
-          console.log(` -- ${message} Success —- `);
-          return response;
-        });
-      } else console.error(` -- Error: ${message} failed -- `);
-    }
-  );
-};
-
-const fetchDataFromServer = (url, message) => {
-  return fetch("https://conduit.productionready.io/api" + url).then(
-    response => {
-      if (response.ok) {
-        console.log(` -- ${message} Success -- `);
-        return response.json();
-      } else console.error(" -- Error: get data failed -- ");
-    }
-  );
-};

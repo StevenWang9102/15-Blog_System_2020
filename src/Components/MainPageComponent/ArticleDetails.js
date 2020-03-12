@@ -8,10 +8,9 @@ import {
   onDeleteArticleClicked,
   onEditArticleClicked,
   saveUserInformationToStore
-} from "../../ReduxStore/FeedDetails/feedActions";
+} from "../../ReduxStore/FeedDetails/loadActions";
 import { useParams } from "react-router-dom";
 import { ArticleComments } from "./ArticleComments";
-import { getUserInformation } from "../../ReduxStore/FeedDetails/feedSagas";
 import { Route, Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -19,9 +18,9 @@ const InternalArticleDetails = props => {
   const { article_slug } = useParams();
 
   const isAuthorized = () => {
-    if (getUserInformation()) {
+    if (props.userInformation) {
       return (
-        getUserInformation().username ===
+        props.userInformation.username ===
         props.currentArticleDetails.author.username
       );
     }
@@ -35,12 +34,13 @@ const InternalArticleDetails = props => {
 
   return (
     <Route>
-      {props.deleteYourArticleStatus ? (
+      {props.deleteYourArticleStatus ? 
         <Redirect to='/home' />
-      ) : (
+       : 
         <div className='article-page'>
           <div className='banner'>
             <div className='container'>
+
               {/* ---------------- Article Title  ---------------- */}
               {props.currentArticleDetails.author && (
                 <div>
@@ -49,7 +49,7 @@ const InternalArticleDetails = props => {
                   <div className='article-meta article-source'>
                     <Link
                       to={
-                        "/user-profile/" +
+                        "/user_profile/" +
                         props.currentArticleDetails.author.username
                       }>
                       <img
@@ -112,7 +112,7 @@ const InternalArticleDetails = props => {
           </div>
 
           {/* ---------------- Sign in options  ----------------  */}
-          {!getUserInformation() && (
+          {!props.userInformation.token && (
             <div className='container page'>
               <div className='row'>
                 <div className='col-md-12'>
@@ -120,7 +120,7 @@ const InternalArticleDetails = props => {
                     Sign in
                   </Link>
                   or
-                  <Link to='sign_up'> sign up </Link>
+                  <Link to='sign_up'> Sign up </Link>
                   to add comments on this article.
                 </div>
               </div>
@@ -128,9 +128,9 @@ const InternalArticleDetails = props => {
           )}
 
           {/* ---------------- Comments ----------------  */}
-          {getUserInformation() && <ArticleComments />}
+          {props.userInformation.token && <ArticleComments />}
         </div>
-      )}
+      }
     </Route>
   );
 };
@@ -139,17 +139,21 @@ InternalArticleDetails.propTypes = {
   currentArticleDetails: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({
-  currentArticleDetails,
-  currentProfileData,
-  userInformation,
-  deleteYourArticleStatus
-}) => {
+
+const mapStateToProps = ({syncReducer, asyncReducer}) => {
+  const {
+    deleteYourArticleStatus,
+  } = syncReducer
+
+  const {
+    userInformation,
+    currentArticleDetails,
+  } = asyncReducer
+  
   return {
     currentArticleDetails,
-    currentProfileData,
     userInformation,
-    deleteYourArticleStatus
+    deleteYourArticleStatus,
   };
 };
 

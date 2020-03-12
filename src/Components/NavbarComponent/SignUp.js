@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
-import { onSignUpButtonClicked } from "../../ReduxStore/FeedDetails/feedActions";
+import { onSignUpButtonClicked } from "../../ReduxStore/FeedDetails/loadActions";
 import { Redirect } from "react-router-dom";
 
 export const InternalSignUp = props => {
@@ -66,8 +66,12 @@ export const InternalSignUp = props => {
   );
 };
 
-const mapStateToProps = state => {
-  return { ...state };
+const mapStateToProps = ({ syncReducer }) => {
+  const { signUpStatus } = syncReducer;
+
+  return {
+    signUpStatus
+  };
 };
 
 const mapDispatchToProps = dispatch => {
