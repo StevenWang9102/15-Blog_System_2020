@@ -6,9 +6,18 @@ import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 
 export const InternalSignUp = props => {
-  const [userName, setUserName] = useState(" ");
-  const [email, setEmail] = useState(" ");
-  const [password, setPassword] = useState(" ");
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [alertText, setAlertText] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [passWord, setPassWord] = useState("");
+
+  function ValidateEmail(mail) {
+    // eslint-disable-next-line no-useless-escape
+    return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))? false : true
+  }
 
   return (
     <div>
@@ -53,10 +62,20 @@ export const InternalSignUp = props => {
                     className='btn btn-lg btn-primary pull-xs-right'
                     type='button'
                     onClick={() => {
+                      if (userName.length > 20 ) setAlertText(
+                        "Username is too long (maximum is 20 characters)"
+                      );
+                      if (password.length < 8)
+                        setAlertText(
+                          "Password is too short (minimum is 8 characters)"
+                        );
+                      if (ValidateEmail(email))
+                        setAlertText("Email is invalid");
                       props.onSignUpButtonClicked(userName, email, password);
                     }}>
                     Sign up
                   </button>
+                  <div> {alertText} </div>
                 </form>
               </div>
             </div>
@@ -67,10 +86,9 @@ export const InternalSignUp = props => {
   );
 };
 
-
 InternalSignUp.propTypes = {
   signUpStatus: PropTypes.array,
-  onSignUpButtonClicked: PropTypes.func,
+  onSignUpButtonClicked: PropTypes.func
 };
 
 const mapStateToProps = ({ eventReducer }) => {

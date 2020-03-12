@@ -35,6 +35,7 @@ export const PageTunner = props => {
           myPageNumArray.map((pageNumber, index) => {
             const articleOffSet = index * articleCountDisplay;
 
+            // From "ArticlePriview" Page
             if (props.fromPage === "ArticlePriview") {
               return (
                 <Page key={index} >
@@ -61,6 +62,7 @@ export const PageTunner = props => {
                 </Page>
               );
             } else {
+              // From "User Profile" Page
               return (
                 <Page>
                   <a

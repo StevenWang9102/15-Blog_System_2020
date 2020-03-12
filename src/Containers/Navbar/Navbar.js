@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import {setDeleteArticleStatus} from "../../ReduxStore/Actions/articleActions"
+// import {setDeleteArticleStatus} from "../../ReduxStore/Actions/articleActions"
 import { LoggedUserNav } from "../../Components/Navbar/LoggedUserNav";
 import { UnLoggedNav } from "../../Components/Navbar/UnLoggedNav";
 import { Switcher } from "../../Components/Navbar/Switcher";
@@ -28,22 +28,7 @@ import {
 import { getUserFromSession } from "../../Functions/AuthToken";
 
 const InternalNavbar = props => {
-  
-  // const getUserInformationLocal = () => {
-  //   console.log('函数');
-    
-  //   if (
-  //     !props.userInformation || !props.userInformation.token
-  //   ) {
-  //     const userInformationOnSession = getUserFromSession();
-  //     if (userInformationOnSession) {
-  //       props.userInformationLoaded({ user: userInformationOnSession });
-  //     }
-  //     return userInformationOnSession;
-  //   } else {
-  //     return props.userInformation;
-  //   }
-  // };
+
 
   const getUserInformationLocal = () => {
     if (
@@ -93,7 +78,7 @@ const InternalNavbar = props => {
                 />
               ) : (
                 <UnLoggedNav
-                  onSignUpButtonClicked={props.onSignUpButtonClicked}
+                  // onSignUpButtonClicked={props.onSignUpButtonClicked}
                 />
               )}
             </ul>

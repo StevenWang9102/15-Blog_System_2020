@@ -103,7 +103,7 @@ export const setLoading = status => {
   return { type: SET_LOADING_LOADED, status };
 };
 
-export const emptyArticleCount = status => {
+export const emptyArticleAllCount = status => {
   return { type: EMPTY_ARTICLE_COUNT, status };
 };
 

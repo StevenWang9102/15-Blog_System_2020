@@ -14,6 +14,8 @@ import { ArticleDesctiption } from "../../Components/MainPage/ArticleDesctiption
 import { PageTunner } from "../../Components/MainPage/PageTunner";
 import { PopularTagsNav } from "../../Components/MainPage/PopularTagsNav";
 import { FavoritedButton } from "../../Components/MainPage/FavoritedButton";
+// loadUserProfileDetail
+import {loadUserProfileDetail} from "../../ReduxStore/Actions/userActions";
 
 import {
   loadGlobalFeeds,
@@ -26,10 +28,11 @@ import {
   favoritedButtonClicked,
   setHomeNavStatus,
   setLoading,
-  emptyArticleCount,
+  emptyArticleAllCount,
   updateSettingStatus,
   favoritedArticleNavClicked
 } from "../../ReduxStore/Actions/eventActions";
+
 
 const InternalArticlePreview = props => {
   const [httpMethod, setHttpMethod] = useState({});
@@ -41,8 +44,6 @@ const InternalArticlePreview = props => {
     props.updateSettingStatus("NOT UPDATED");
     props.setDeleteArticleStatus("NOT DELETED");
     props.loadPopularTags();
-
-    // 这地方要重新请求用户的信息
 
     if (props.userInformation && props.userInformation.username) {
       props.setHomeNavStatus("active", "null", "null");
@@ -88,10 +89,12 @@ const InternalArticlePreview = props => {
         return (
           <div className='article-preview' key={index}>
             <div className='article-meta'>
+
               <ArticleTitle
+                loadUserProfileDetail={props.loadUserProfileDetail}
                 currentArticleDetails={article}
                 setLoading={props.setLoading}
-                emptyArticleCount={props.emptyArticleCount}
+                emptyArticleAllCount={props.emptyArticleAllCount}
               />
 
               <FavoritedButton
@@ -179,7 +182,11 @@ const mapDispatchToProps = dispatch => {
     loadGlobalFeeds: (articleCountDisplay, articleOffSet) => {
       dispatch(loadGlobalFeeds(articleCountDisplay, articleOffSet));
     },
-    emptyArticleCount: () => dispatch(emptyArticleCount()),
+    loadUserProfileDetail: (author_name, articleCountDisplay, articleOffSet) =>
+    dispatch(
+      loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet)
+    ),
+    emptyArticleAllCount: () => dispatch(emptyArticleAllCount()),
     setDeleteArticleStatus: status =>dispatch(setDeleteArticleStatus(status)),
     loadPopularTags: () => {dispatch(loadPopularTags())},
     onFavoritedArticleNavClicked: (author_name, articleCountDisplay, articleOffSet) =>

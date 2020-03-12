@@ -21,147 +21,91 @@
   color: #09d3ac;
 }
 
-body{
+body {
   font-family: source sans pro, sans-serif;
 }
 
-.home-page .container{
+.home-page .container {
   text-align: left;
 }
 
-.article-meta .author-image
-{
+.article-meta .author-image {
   height: 30px;
   width: 30px;
 }
 
-.article-detail h1
-{
+.article-detail h1 {
   width: 300px;
   text-align: left;
   word-break: all;
 }
 
-.banner
-{
+.banner {
   text-align: left;
 }
 
-.article-meta .author-image
-{
+.article-meta .author-image {
   height: 30px;
   width: 30px;
 }
 
-p{
+p {
   text-align: left;
 }
 
-.nav-item .display-inline
-{
+.nav-item .display-inline {
   display: inline-block;
   margin-right: 15px;
 }
 
-.article-preview
-{
+.article-preview {
   text-align: left;
 }
 
-.article-meta button img{
+.article-meta button img {
   width: 13px;
   height: 13px;
   margin-right: 5px;
 }
 
-.nav-item .nav-link img
-{
+.nav-item .nav-link img {
   width: 13px;
   height: 13px;
   margin-right: 5px;
 }
 
-.commonts-container{
+.commonts-container {
   width: 70%;
-  text-align:left;
+  text-align: left;
   margin-left: 10%;
 }
 
-.settings-page .hr-setting{
+.settings-page .hr-setting {
   margin-top: 80px;
 }
 
-.logout-button{
+.logout-button {
   float: left;
 }
 
-.edit-button{
+.edit-button {
   display: inline-block;
   margin-top: 20px;
 }
 
-.edit-button button{
+.edit-button button {
   margin-right: 5px;
 }
 
-.article-source
-{
+.article-source {
   display: inline-block;
 }
 
-.feed-toggle .nav-link{
-  cursor: pointer;
-  text-align: center;
-  margin-right: 0;
-  width: 130px;
-  font-weight: 450;
-}
-
-.navbar-nav .nav-item .user-pic
-{
+.navbar-nav .nav-item .user-pic {
   height: 26px;
   width: 26px;
 }
 
-.loading_status{
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top:0;
-  background-color: rgba(128, 128, 128, 0.219);
-  font-family: 'Kaushan Script', sans-serif;
-  ;
-  font-size: 40px;
-  opacity: 0.8;
-  z-index: 100;
-}
-
-.loading_status span{
-  position: absolute;
-  top: 350px;
-}
-
-
-.btn-outline-primary:focus{
-  color: #5cb85c;
-  font-weight: 500;
-  text-align: center;
-  background-color: #5cb85c11;
-}
-
-.btn-outline-primary:hover{
-  color: #5cb85c;
-  font-weight: 500;
-  text-align: center;
-  background-color: #5cb85c94;
-}
-
-.home-page .col-md-9{
+.home-page .col-md-9 {
   width: 85%;
-}
-
-.article-content{
-  text-align: left;
-  margin-left: 10px;
 }

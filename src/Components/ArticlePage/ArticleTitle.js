@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import dateFormat from "dateformat";
+import { articleCountDisplay, articleOffSet} from "../../Functions/httpMethods"
 
 export const ArticleTitle = props => {
   const username =
@@ -20,7 +21,8 @@ export const ArticleTitle = props => {
         className='info author'
         onClick={() => {
           props.setLoading("LOADING");
-          props.emptyArticleCount();
+          props.loadUserProfileDetail(username, articleCountDisplay, articleOffSet);
+          props.emptyArticleAllCount();
         }}>
         {username}
 

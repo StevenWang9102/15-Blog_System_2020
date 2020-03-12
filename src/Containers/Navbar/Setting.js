@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { removeUserFromSession } from "../../Functions/AuthToken";
 import {
   onUpdateSettingClicked,
   setLoading
@@ -42,7 +41,6 @@ const InternalSetting = props => {
                       setLoading={props.setLoading}
                       onUpdateSettingClicked={props.onUpdateSettingClicked}
                       logOutButtonClicked={props.logOutButtonClicked}
-                      // removeUserFromSession={removeUserFromSession}
                     />
                   </div>
                 </div>
@@ -55,7 +53,7 @@ const InternalSetting = props => {
 };
 
 InternalSetting.propTypes = {
-  settingStatus: PropTypes.array.isRequired,
+  settingStatus: PropTypes.string.isRequired,
   userInformation: PropTypes.object.isRequired,
 };
 
