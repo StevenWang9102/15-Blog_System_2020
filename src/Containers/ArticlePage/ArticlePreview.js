@@ -28,7 +28,7 @@ import {
   favoritedButtonClicked,
   setHomeNavStatus,
   setLoading,
-  emptyArticleAllCount,
+  // emptyArticleAllCount,
   updateSettingStatus,
   favoritedArticleNavClicked
 } from "../../ReduxStore/Actions/eventActions";
@@ -91,10 +91,10 @@ const InternalArticlePreview = props => {
             <div className='article-meta'>
 
               <ArticleTitle
-                loadUserProfileDetail={props.loadUserProfileDetail}
+                // loadUserProfileDetail={props.loadUserProfileDetail}
                 currentArticleDetails={article}
                 setLoading={props.setLoading}
-                emptyArticleAllCount={props.emptyArticleAllCount}
+                // emptyArticleAllCount={props.emptyArticleAllCount}
               />
 
               <FavoritedButton
@@ -186,7 +186,7 @@ const mapDispatchToProps = dispatch => {
     dispatch(
       loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet)
     ),
-    emptyArticleAllCount: () => dispatch(emptyArticleAllCount()),
+    // emptyArticleAllCount: () => dispatch(emptyArticleAllCount()),
     setDeleteArticleStatus: status =>dispatch(setDeleteArticleStatus(status)),
     loadPopularTags: () => {dispatch(loadPopularTags())},
     onFavoritedArticleNavClicked: (author_name, articleCountDisplay, articleOffSet) =>

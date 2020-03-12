@@ -1,6 +1,6 @@
 import React from "react";
 import { createUseStyles } from "react-jss";
-
+import { Link } from "react-router-dom";
 const useStyles = createUseStyles({
   myButton: {
     border: "0px",
@@ -23,36 +23,45 @@ export const UserProfileTitle = props => {
     );
   };
 
+  const profileDetails = props.currentProfileDetail;
   return (
     <div className='user-info'>
       <div className='container'>
         <div className='row'>
           <div className='col-xs-12 col-md-10 offset-md-1'>
             <img
-              src={
-                props.currentProfileDetail && props.currentProfileDetail.image
-              }
+              src={profileDetails && profileDetails.image}
               className='user-img'
               alt='au'
             />
-            <h4>{props.author_name}</h4>
-            <p>
-              {props.currentProfileDetail && props.currentProfileDetail.bio}
-            </p>
+            <h4
+             >
+              {props.author_name}
+            </h4>
+            <p>{profileDetails && profileDetails.bio}</p>
 
             <Button>
               <i className='ion-plus-round'></i>
               <a
                 className='nav-link'
                 onClick={() => {
-                  if (props.currentProfileDetail.following === false)
-                    props.onFollowAuthorClick(props.author_name, "POST");
-                  else props.onFollowAuthorClick(props.author_name, "DELETE");
+                  if (props.userInformation.username) {
+                    if (profileDetails.following === false)
+                      props.onFollowAuthorClick(props.author_name, "POST");
+                    else props.onFollowAuthorClick(props.author_name, "DELETE");
+                  }
                 }}>
-                <img src='./icon/004-settings.png' alt='' />
-                {props.currentProfileDetail.following
-                  ? `- Unfollow ${props.author_name}  `
-                  : ` + Follow ${props.author_name} Now `}
+                {props.userInformation.username === props.author_name ? (
+                  <span>
+                    <Link to='/setting'>Edit Profile Setting</Link>
+                  </span>
+                ) : (
+                  <span>
+                    {profileDetails.following
+                      ? `- Unfollow ${props.author_name}  `
+                      : ` + Follow ${props.author_name} Now `}
+                  </span>
+                )}
               </a>
             </Button>
           </div>

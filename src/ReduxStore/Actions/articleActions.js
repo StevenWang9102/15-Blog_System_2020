@@ -17,7 +17,6 @@ export const ARTICLE_SETTING_DETAIL_LOADED = Symbol(
 );
 export const POPULAR_TAG_CLICKED = Symbol("POPULAR_TAG_CLICKED");
 export const POPULAR_TAG_DISPLAYED = Symbol("POPULAR_TAG_DISPLAYED");
-export const TAG_RELATED_ARTICLE_LOADED = Symbol("TAG_RELATED_ARTICLE_LOADED");
 export const RELATED_TAG_LOADED = Symbol("RELATED_TAG_LOADED");
 export const CURRENT_HOME_DISPLAY_ARTICLES_LOADED = Symbol(
   "CURRENT_HOME_DISPLAY_ARTICLES_LOADED"
@@ -26,17 +25,19 @@ export const LOAD_POPULAR_TAGS = Symbol("LOAD_POPULAR_TAGS");
 export const CURRENT_PROFILE_ARTICLE_LOADED = Symbol(
   "CURRENT_PROFILE_ARTICLE_LOADED"
 );
-// SET_DELETE_ARTICLE
+// TAG_RELATED_ARTICLE_LOADED
 export const SET_DELETE_ARTICLE = Symbol("SET_DELETE_ARTICLE");
+export const TAG_RELATED_ARTICLE_LOADED = Symbol("TAG_RELATED_ARTICLE_LOADED");
+
 
 // --------------------------- Functions --------------------------------
-export const globalDataLoaded = payload => {
-  return { type: GLOBAL_FEED_DATA_LOADED, payload };
-};
-
 export const loadGlobalFeeds = (articleCountDisplay, articleOffSet) => {
   return { type: LOAD_GLOBAL_FEEDS, articleCountDisplay, articleOffSet };
 };
+
+export const tagRelatedArticleLoaded = (data) =>{
+  return { type: TAG_RELATED_ARTICLE_LOADED, data };
+}
 
 export const articleDataLoaded = (articleData) => {
   return { type: ARTICLE_DATA_LOADED, articleData };
@@ -70,9 +71,6 @@ export const popularTagIsDiplayed = tagName => {
   return { type: POPULAR_TAG_DISPLAYED, tagName };
 };
 
-export const tagRelatedArticleLoaded = tagRelatedArticles => {
-  return { type: TAG_RELATED_ARTICLE_LOADED, tagRelatedArticles };
-};
 
 export const currentDisplayArticleLoaded = userProfileData => {
   return { type: CURRENT_PROFILE_ARTICLE_LOADED, userProfileData };

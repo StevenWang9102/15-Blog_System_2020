@@ -27,7 +27,9 @@ const InternalUserProfile = props => {
   const { article_type } = useParams();
   const [currentPageOffSet, setCurrentPageOffSet] = useState(0);
 
-
+  console.log(props.userInformation.username);
+  console.log(author_name);
+  
   useEffect(() => {
     props.loadUserProfileDetail(author_name, articleCountDisplay, articleOffSet);
     props.updateSettingStatus("NOT UPDATED");
@@ -40,7 +42,6 @@ const InternalUserProfile = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   return (
     <div>
       <div className='profile-page'>
@@ -48,6 +49,7 @@ const InternalUserProfile = props => {
         {/* ---------------- User Information ---------------- */}
         <UserProfileTitle
           currentProfileDetail={props.currentProfileDetail}
+          userInformation= {props.userInformation}
           author_name = {author_name}
           onFollowAuthorClick={props.onFollowAuthorClick}
         />
@@ -71,6 +73,7 @@ const InternalUserProfile = props => {
                 httpMethod={httpMethod}
                 setHttpMethod={setHttpMethod}
                 setLoading={props.setLoading}
+                setProfileNavStatus = {props.setProfileNavStatus}
                 currentPageOffSet={currentPageOffSet}
                 userInformation={props.userInformation}
                 currentProfileDisplayArticle={props.currentProfileDisplayArticle}
@@ -105,7 +108,6 @@ InternalUserProfile.propTypes = {
   articlesAllCount: PropTypes.number,
   loadUserProfileDetail: PropTypes.func.isRequired,
   currentProfileDetail: PropTypes.object.isRequired,
-  currentUsersArticles: PropTypes.array,
 };
 
 const mapStateToProps = ({ eventReducer, userReducer, articleReducer }) => {
@@ -122,7 +124,6 @@ const mapStateToProps = ({ eventReducer, userReducer, articleReducer }) => {
   } = userReducer;
 
   const {
-    currentUsersArticles,
     currentProfileDisplayArticle,
     articlesAllCount,
 
@@ -131,7 +132,6 @@ const mapStateToProps = ({ eventReducer, userReducer, articleReducer }) => {
   return {
     userInformation,
     currentProfileDetail,
-    currentUsersArticles,
     onFavoritedArticleNavClicked,
     profileNavStatusLeft,
     profileNavStatusRight,

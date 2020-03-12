@@ -8,7 +8,6 @@ import {
 
 const initialState = {
   currentProfileDetail: {},
-  currentUsersArticles: [],
   userInformation: {},
   currentProfileDisplayArticle: [],
   followAuthorStatus: false

@@ -4,7 +4,6 @@ import {
   ARTICLE_COMMENTS_LOADED,
   LOAD_INIT_ARTICLE_DETAIL,
   ARTICLE_CONTENT_LOADED,
-  TAG_RELATED_ARTICLE_LOADED,
   ARTICLE_SETTING_DETAIL_LOADED,
   SET_DELETE_ARTICLE,
   CURRENT_PROFILE_ARTICLE_LOADED,
@@ -12,15 +11,14 @@ import {
   LOAD_YOUR_FEED,
   LOAD_GLOBAL_FEEDS,
   POPULAR_TAG_CLICKED,
-  DELETE_YOUR_ARTICLE_DONE
+  DELETE_YOUR_ARTICLE_DONE,
+  TAG_RELATED_ARTICLE_LOADED
 } from "../Actions/articleActions";
 
 const initialState = {
   currentComments: {},
   currentArticleDetails: {},
-  globalArticles: [],
   popularTags: [],
-  tagRelatedArticles: null,
   currentTagName: " ",
   currentProfileDisplayArticle: [],
   currentHomeDisplayArticle: [],
@@ -31,14 +29,16 @@ export const articleReducer = (state = initialState, action) => {
     case ARTICLE_DATA_LOADED:
       return {
         ...state,
-        globalArticles: action.articleData["articles"],
         currentHomeDisplayArticle: action.articleData["articles"],
         articlesAllCount: action.articleData["articlesCount"],
-        // loading: action.loading
       };
 
     case TAGS_DATA_LOADED:
       return { ...state, popularTags: action.tagsData };
+    
+    case TAG_RELATED_ARTICLE_LOADED:
+      return { ...state, currentHomeDisplayArticle: action.data };
+
 
     case ARTICLE_CONTENT_LOADED:
       return {
@@ -49,12 +49,6 @@ export const articleReducer = (state = initialState, action) => {
 
     case ARTICLE_COMMENTS_LOADED:
       return { ...state, currentComments: action.initCommentData };
-
-    case TAG_RELATED_ARTICLE_LOADED:
-      return {
-        ...state,
-        currentHomeDisplayArticle: action.tagRelatedArticles
-      };
 
     case LOAD_INIT_ARTICLE_DETAIL:
       return { ...state, currentSlug: action.slug };

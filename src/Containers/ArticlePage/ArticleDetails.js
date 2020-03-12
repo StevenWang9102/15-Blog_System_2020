@@ -16,12 +16,10 @@ import { SignInOptions } from "../../Components/ArticlePage/SignInOptions";
 import { ArticleTitle } from "../../Components/ArticlePage/ArticleTitle";
 import { ArticleContent } from "../../Components/ArticlePage/ArticleContent";
 
-
 const InternalArticleDetails = props => {
-
   const { article_slug } = useParams();
   const isUserExist = props.userInformation.token;
-  
+
   const isAuthorized = () => {
     if (props.currentArticleDetails.author && props.userInformation)
       return (
@@ -44,16 +42,13 @@ const InternalArticleDetails = props => {
           <div className='banner'>
             <div className='container'>
               {/* ------------------ Article Title  ------------------ */}
-              <div>
-                <h1>{props.currentArticleDetails.title}</h1>
-                <div className='article-meta article-source'>
-                  <ArticleTitle
-                    setLoading={props.setLoading}
-                    currentArticleDetails={props.currentArticleDetails}
-                  />
-                </div>
+              <h1>{props.currentArticleDetails.title}</h1>
+              <div className='article-meta article-source'>
+                <ArticleTitle
+                  setLoading={props.setLoading}
+                  currentArticleDetails={props.currentArticleDetails}
+                />
               </div>
-
               {isAuthorized() && (
                 <EditButton
                   article_slug={article_slug}
@@ -68,8 +63,7 @@ const InternalArticleDetails = props => {
           <ArticleContent currentArticleDetails={props.currentArticleDetails} />
 
           {/* -------- Sign In Options OR Comments -------- */}
-          {isUserExist ? 
-              <ArticleComments />:<SignInOptions /> }
+          {isUserExist ? <ArticleComments /> : <SignInOptions />}
         </div>
       )}
     </Route>
@@ -81,11 +75,10 @@ InternalArticleDetails.propTypes = {
   currentArticleDetails: PropTypes.object.isRequired,
   article_slug: PropTypes.array,
   onEditArticleClicked: PropTypes.func,
-  onDeleteArticleClicked: PropTypes.func,
+  onDeleteArticleClicked: PropTypes.func
 };
 
 const mapStateToProps = ({ userReducer, articleReducer }) => {
-
   const { userInformation } = userReducer;
 
   const { currentArticleDetails, deleteArticleDone } = articleReducer;
@@ -104,8 +97,7 @@ const mapDispatchToProps = dispatch => {
     onDeleteArticleClicked: slug => dispatch(onDeleteArticleClicked(slug)),
     saveUserInformationToStore: userInformation =>
       dispatch(saveUserInformationToStore(userInformation)),
-      setLoading: status => dispatch(setLoading(status)),
-
+    setLoading: status => dispatch(setLoading(status))
   };
 };
 

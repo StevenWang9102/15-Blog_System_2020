@@ -70,7 +70,7 @@ const mapStateToProps = ({ eventReducer, userReducer }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    logOutButtonClicked: log => dispatch(logOutButtonClicked(log)),
+    logOutButtonClicked: ()=> dispatch(logOutButtonClicked()),
     setLoading: (status) => dispatch(setLoading(status)),
     onUpdateSettingClicked: request => dispatch(onUpdateSettingClicked(request))
   };

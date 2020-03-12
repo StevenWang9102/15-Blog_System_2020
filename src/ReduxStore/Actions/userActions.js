@@ -18,8 +18,8 @@ export const saveUserInformationToStore = userInformation => {
     return { type: SAVE_USER_INFOR_TO_STORE, userInformation: userInformation };
   };
   
-  export const logOutButtonClicked = status => {
-    return { type: LOG_OUT_BUTTON_CLICK, loginStatus: status };
+  export const logOutButtonClicked = () => {
+    return { type: LOG_OUT_BUTTON_CLICK };
   };
   
   export const onSignUpButtonClicked = (userName, email, password) => {

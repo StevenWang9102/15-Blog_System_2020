@@ -64,9 +64,9 @@ export const PageTunner = props => {
             } else {
               // From "User Profile" Page
               return (
-                <Page>
+                <Page key={index} >
                   <a
-                    class='page-link'
+                    className='page-link'
                     href={`#p${pageNumber}`}
                     onClick={() => {
                       if (props.profileNavStatusLeft === "active")

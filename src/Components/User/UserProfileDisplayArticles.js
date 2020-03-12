@@ -25,14 +25,16 @@ export const UserProfileDisplayArticles = props => {
                   <Link
                     to={"/user_profile/" + article.author.username}
                     className='author'
-                    onClick={() =>
+                    onClick={() =>{
+                      props.setProfileNavStatus("active", "null");
                       props.loadUserProfileDetail(
                         article.author.username,
                         articleCountDisplay,
                         articleOffSet
-                      )
+                      )}
                     }>
-                    {article.author.username}
+                      {/* setProfileNavStatus */}
+                    {article.author.username }
                   </Link>
                   <span className='date'>
                     {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}

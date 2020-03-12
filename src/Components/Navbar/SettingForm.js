@@ -90,7 +90,7 @@ export const SettingForm = ({
           className='btn btn-lg btn-danger'
           onClick={() => {
             removeUserFromSession();
-            logOutButtonClicked("log_out");
+            logOutButtonClicked();
           }}>
           click here to logout
         </button>

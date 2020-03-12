@@ -28,7 +28,7 @@ const InternalArticleComments = props => {
 InternalArticleComments.propTypes = {
   currentComments: PropTypes.object.isRequired,
   userInformation: PropTypes.object.isRequired,
-  currentSlug: PropTypes.array,
+  currentSlug: PropTypes.string,
   myComment: PropTypes.array,
   setMyComment: PropTypes.func,
   onPostCommentsClicked: PropTypes.func,

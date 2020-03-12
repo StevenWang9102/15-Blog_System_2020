@@ -24,9 +24,12 @@ import { setLoading, setHomeNavStatus } from "../Actions/eventActions";
 
 export const userSaga = function*() { 
   // LOADED_USER_PROFILE
-  yield takeLatest(LOADED_USER_PROFILE, function*(action) {
-    const state = yield select();   
-    const token = getUserInfoSagaLocal(state).token;    
+  yield takeLatest(LOADED_USER_PROFILE, function*(action) {    
+    const state = yield select();
+    let token = null
+    if(getUserInfoSagaLocal(state)){
+      token = getUserInfoSagaLocal(state).token
+    }
     
     const userName = action.author_name;
     const [userProfileData, userRelatedArticles] = yield all([
