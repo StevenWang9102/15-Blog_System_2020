@@ -18,21 +18,19 @@ export const EMPTY_ARTICLE_COUNT = Symbol("EMPTY_ARTICLE_COUNT");
 export const DELETE_ARTICLE_BUTTON = Symbol("DELETE_ARTICLE_BUTTON");
 export const POST_ARTICLE_CLICKED = Symbol("POST_ARTICLE_CLICKED");
 
-
 // --------------------------- Functions --------------------------------
 export const favoritedArticleNavClicked = (
   author_name,
-  articleCountDisplay,
+  displayLimit,
   offset
 ) => {
   return {
     type: FAVERATED_NAV_CLICKED,
     author_name,
-    articleCountDisplay,
+    displayLimit,
     offset
   };
 };
-
 
 export const favoritedButtonClicked = (
   token,
@@ -46,7 +44,7 @@ export const favoritedButtonClicked = (
     token: token,
     slug: slug,
     httpMethod: httpMethod,
-    currentPageOffSet:currentPageOffSet,
+    currentPageOffSet: currentPageOffSet,
     name
   };
 };

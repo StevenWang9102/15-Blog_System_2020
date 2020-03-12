@@ -1,5 +1,5 @@
 import React from "react";
-import { articleCountDisplay } from "../../Functions/HttpClient";
+import { displayLimit } from "../../Functions/HttpClient";
 import { createUseStyles } from "react-jss";
 
 const useStyles = createUseStyles({
@@ -21,7 +21,7 @@ export const PageTunner = props => {
     );
   };
 
-  const pageNumber = Math.round(props.articlesAllCount / articleCountDisplay);
+  const pageNumber = Math.round(props.articlesAllCount / displayLimit);
 
   const myPageNumArray = [];
   for (let i = 1; i <= pageNumber; i++) {
@@ -33,7 +33,7 @@ export const PageTunner = props => {
       <ul className='pagination'>
         {pageNumber !== 1 &&
           myPageNumArray.map((pageNumber, index) => {
-            const offset = index * articleCountDisplay;
+            const offset = index * displayLimit;
 
             // From "ArticlePriview" Page
             if (props.fromPage === "ArticlePriview") {
@@ -46,9 +46,9 @@ export const PageTunner = props => {
                       props.setLoading("LOADING");
                       props.setCurrentPageOffSet(offset);
                       if (props.favoriteNav === "active")
-                        props.loadGlobalFeeds(articleCountDisplay, offset);
+                        props.loadGlobalFeeds(displayLimit, offset);
                       else if (props.yourNav === "active")
-                        props.loadYourFeedArticles(articleCountDisplay, offset);
+                        props.loadYourFeedArticles(displayLimit, offset);
                       else props.loadPopularTags();
                     }}>
                     {pageNumber}
@@ -66,13 +66,13 @@ export const PageTunner = props => {
                       if (props.profileNavStatusLeft === "active")
                         props.loadUserProfileDetail(
                           props.author_name,
-                          articleCountDisplay,
+                          displayLimit,
                           offset
                         );
                       else
                         props.onFavoritedArticleNavClicked(
                           props.author_name,
-                          articleCountDisplay,
+                          displayLimit,
                           offset
                         );
                     }}>

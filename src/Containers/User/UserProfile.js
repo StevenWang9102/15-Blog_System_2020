@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { UserProfileTitle } from "../../Components/User/UserProfileTitle"
 import { UserProfileNav } from "../../Components/User/UserProfileNav"
 import { UserProfileDisplayArticles } from "../../Components/User/UserProfileDisplayArticles"
-import { articleCountDisplay, offset} from "../../Functions/HttpClient"
+import { displayLimit, offset} from "../../Functions/HttpClient"
 import {
   favoritedArticleNavClicked,
   setProfileNavStatus,
@@ -27,11 +27,9 @@ const InternalUserProfile = props => {
   const [httpMethod, setHttpMethod] = useState({});
   const [currentPageOffSet, setCurrentPageOffSet] = useState(0);
 
-  console.log(props.userInformation.username);
-  console.log(author_name);
   
   useEffect(() => {
-    props.loadUserProfileDetail(author_name, articleCountDisplay, offset);
+    props.loadUserProfileDetail(author_name, displayLimit, offset);
     props.updateSettingStatus("NOT UPDATED");
 
     if (article_type === "favorited_articles") {
@@ -143,10 +141,10 @@ const mapStateToProps = ({ eventReducer, userReducer, articleReducer }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadUserProfileDetail: (author_name, articleCountDisplay, offset) =>
-      dispatch(loadUserProfileDetail(author_name, articleCountDisplay, offset)),
-    onFavoritedArticleNavClicked: (author_name, articleCountDisplay, offset) =>
-      dispatch(favoritedArticleNavClicked(author_name, articleCountDisplay, offset)),
+    loadUserProfileDetail: (author_name, displayLimit, offset) =>
+      dispatch(loadUserProfileDetail(author_name, displayLimit, offset)),
+    onFavoritedArticleNavClicked: (author_name, displayLimit, offset) =>
+      dispatch(favoritedArticleNavClicked(author_name, displayLimit, offset)),
     setProfileNavStatus: (profileNavStatusLeft, profileNavStatusRight) =>
       dispatch(
         setProfileNavStatus(profileNavStatusLeft, profileNavStatusRight)

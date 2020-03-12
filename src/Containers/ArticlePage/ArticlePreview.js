@@ -3,10 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {
-  articleCountDisplay,
-  offset
-} from "../../Functions/HttpClient";
+import { displayLimit, offset } from "../../Functions/HttpClient";
 import { YourFeedsNav } from "../../Components/MainPage/YourFeedsNav";
 import { GlobalFeedsNav } from "../../Components/MainPage/GlobalFeedsNav";
 import { ArticleTitle } from "../../Components/ArticlePage/ArticleTitle";
@@ -14,7 +11,10 @@ import { ArticleDesctiption } from "../../Components/MainPage/ArticleDesctiption
 import { PageTunner } from "../../Components/MainPage/PageTunner";
 import { PopularTagsNav } from "../../Components/MainPage/PopularTagsNav";
 import { FavoritedButton } from "../../Components/MainPage/FavoritedButton";
-import {loadUserProfileDetail, setSignUpStatus} from "../../ReduxStore/Actions/userActions";
+import {
+  loadUserProfileDetail,
+  setSignUpStatus
+} from "../../ReduxStore/Actions/userActions";
 
 import {
   loadGlobalFeeds,
@@ -31,11 +31,9 @@ import {
   favoritedArticleNavClicked
 } from "../../ReduxStore/Actions/eventActions";
 
-
 const InternalArticlePreview = props => {
   const [httpMethod, setHttpMethod] = useState({});
   const [currentPageOffSet, setCurrentPageOffSet] = useState(0);
-
 
   useEffect(() => {
     props.setLoading("LOADING");
@@ -46,10 +44,10 @@ const InternalArticlePreview = props => {
 
     if (props.userInformation && props.userInformation.username) {
       props.setHomeNavStatus("active", "null", "null");
-      props.loadYourFeedArticles(articleCountDisplay, offset);
+      props.loadYourFeedArticles(displayLimit, offset);
     } else {
       props.setHomeNavStatus("null", "active", "null");
-      props.loadGlobalFeeds(articleCountDisplay, offset);
+      props.loadGlobalFeeds(displayLimit, offset);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -88,7 +86,6 @@ const InternalArticlePreview = props => {
         return (
           <div className='article-preview' key={index}>
             <div className='article-meta'>
-
               <ArticleTitle
                 currentArticleDetails={article}
                 setLoading={props.setLoading}
@@ -133,14 +130,14 @@ const InternalArticlePreview = props => {
 
 InternalArticlePreview.propTypes = {
   userInformation: PropTypes.object,
-  currentArticleDetails:PropTypes.object,
-  currentHomeDisplayArticle:PropTypes.array.isRequired,
+  currentArticleDetails: PropTypes.object,
+  currentHomeDisplayArticle: PropTypes.array.isRequired,
   currentTagName: PropTypes.string,
   popularNav: PropTypes.string.isRequired,
   yourNav: PropTypes.string.isRequired,
   favoriteNav: PropTypes.string,
   setLoading: PropTypes.func.isRequired,
-  articlesAllCount:PropTypes.number,
+  articlesAllCount: PropTypes.number
 };
 
 const mapStateToProps = ({ eventReducer, articleReducer, userReducer }) => {
@@ -171,23 +168,31 @@ const mapDispatchToProps = dispatch => {
     setLoading: status => dispatch(setLoading(status)),
     setHomeNavStatus: (your, favorite, popular) =>
       dispatch(setHomeNavStatus(your, favorite, popular)),
-    loadYourFeedArticles: (articleCountDisplay, offset) =>
-      dispatch(loadYourArticles(articleCountDisplay, offset)),
+    loadYourFeedArticles: (displayLimit, offset) =>
+      dispatch(loadYourArticles(displayLimit, offset)),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
-    onFavoritedArticleClicked: (token, slug, httpMethod, currentPageOffSet, name) =>
-      dispatch(favoritedButtonClicked(token, slug, httpMethod, currentPageOffSet, name)),
-    loadGlobalFeeds: (articleCountDisplay, offset) => {
-      dispatch(loadGlobalFeeds(articleCountDisplay, offset));
+    onFavoritedArticleClicked: (
+      token,
+      slug,
+      httpMethod,
+      currentPageOffSet,
+      name
+    ) =>
+      dispatch(
+        favoritedButtonClicked(token, slug, httpMethod, currentPageOffSet, name)
+      ),
+    loadGlobalFeeds: (displayLimit, offset) => {
+      dispatch(loadGlobalFeeds(displayLimit, offset));
     },
-    loadUserProfileDetail: (author_name, articleCountDisplay, offset) =>
-    dispatch(
-      loadUserProfileDetail(author_name, articleCountDisplay, offset)
-    ),
+    loadUserProfileDetail: (author_name, displayLimit, offset) =>
+      dispatch(loadUserProfileDetail(author_name, displayLimit, offset)),
     setSignUpStatus: () => dispatch(setSignUpStatus()),
-    setDeleteArticleStatus: status =>dispatch(setDeleteArticleStatus(status)),
-    loadPopularTags: () => {dispatch(loadPopularTags())},
-    onFavoritedArticleNavClicked: (author_name, articleCountDisplay, offset) =>
-      dispatch(favoritedArticleNavClicked(author_name, articleCountDisplay, offset)),
+    setDeleteArticleStatus: status => dispatch(setDeleteArticleStatus(status)),
+    loadPopularTags: () => {
+      dispatch(loadPopularTags());
+    },
+    onFavoritedArticleNavClicked: (author_name, displayLimit, offset) =>
+      dispatch(favoritedArticleNavClicked(author_name, displayLimit, offset))
   };
 };
 

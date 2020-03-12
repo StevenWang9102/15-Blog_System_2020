@@ -28,10 +28,10 @@ export const articleSaga = function*() {
   yield takeLatest(LOAD_GLOBAL_FEEDS, function*(action) {
     const initArticData = yield call(
       fetchDataFromServer,
-      `/articles?limit=${action.articleCountDisplay}&offset=${action.offset}`,
+      `/articles?limit=${action.displayLimit}&offset=${action.offset}`,
       "Load Global Feeds"
     );
-    
+
     yield put(articleDataLoaded(initArticData));
     yield put(setLoading("LOADED"));
   });
@@ -53,7 +53,7 @@ export const articleSaga = function*() {
     const state = yield select();
     const token = getUserInfoSagaLocal(state).token;
 
-    const url = `/articles/feed?limit=${action.articleCountDisplay}&offset=${action.offset}`;
+    const url = `/articles/feed?limit=${action.displayLimit}&offset=${action.offset}`;
     const message = "Load Your Feed";
     const yourArticleData = yield call(
       postDataToServerAll,
@@ -92,7 +92,7 @@ export const articleSaga = function*() {
     yield put(setLoading("LOADED"));
   });
 
-  // ----------- LOAD_ARTICLE_SETTING_DETAIL ----------- 
+  // ----------- LOAD_ARTICLE_SETTING_DETAIL -----------
   yield takeLatest(LOAD_ARTICLE_SETTING_DETAIL, function*(action) {
     const initArticleData = yield call(
       fetchDataFromServer,

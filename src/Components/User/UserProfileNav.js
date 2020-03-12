@@ -1,5 +1,5 @@
 import React from "react";
-import { articleCountDisplay, offset } from "../../Functions/HttpClient";
+import { displayLimit, offset } from "../../Functions/HttpClient";
 import { NavLink } from "react-router-dom";
 
 export const UserProfileNav = props => {
@@ -14,7 +14,7 @@ export const UserProfileNav = props => {
               props.setProfileNavStatus("active", "null");
               props.loadUserProfileDetail(
                 props.author_name,
-                articleCountDisplay,
+                displayLimit,
                 offset
               );
             }}>
@@ -30,7 +30,7 @@ export const UserProfileNav = props => {
               props.setProfileNavStatus("null", "active");
               props.onFavoritedArticleNavClicked(
                 props.author_name,
-                articleCountDisplay,
+                displayLimit,
                 offset
               );
             }}>

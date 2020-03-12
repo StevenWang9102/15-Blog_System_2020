@@ -7,7 +7,6 @@ import {
   fetchDataFromServer,
   postDataToServerAll,
 } from "../../Functions/HttpClient";
-// import { getUserFromSession,} from "../../Functions/AuthToken";
 
 import {
   LOADED_USER_PROFILE,
@@ -43,7 +42,7 @@ export const userSaga = function*() {
       ),
       call(
         fetchDataFromServer,
-        `/articles?author=${userName}&limit=${action.articleCountDisplay}&offset=${action.offset}`,
+        `/articles?author=${userName}&limit=${action.displayLimit}&offset=${action.offset}`,
         "Load User Articles"
       )
     ]);
@@ -82,7 +81,6 @@ export const userSaga = function*() {
 
   // SIGN_UP_BUTTON_CLICK
   yield takeLatest(SIGN_UP_BUTTON_CLICK, function*(action) {
-    console.log(action);
     
     const token = null;
     const url = "/users";

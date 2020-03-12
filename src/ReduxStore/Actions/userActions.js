@@ -40,13 +40,13 @@ export const followAuthorLoaded = data => {
 
 export const loadUserProfileDetail = (
   author_name,
-  articleCountDisplay,
+  displayLimit,
   offset
 ) => {
   return {
     type: LOADED_USER_PROFILE,
     author_name,
-    articleCountDisplay,
+    displayLimit,
     offset
   };
 };

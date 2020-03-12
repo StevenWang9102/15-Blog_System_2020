@@ -29,8 +29,8 @@ export const SET_DELETE_ARTICLE = Symbol("SET_DELETE_ARTICLE");
 export const TAG_RELATED_ARTICLE_LOADED = Symbol("TAG_RELATED_ARTICLE_LOADED");
 
 // --------------------------- Functions --------------------------------
-export const loadGlobalFeeds = (articleCountDisplay, offset) => {
-  return { type: LOAD_GLOBAL_FEEDS, articleCountDisplay, offset };
+export const loadGlobalFeeds = (displayLimit, offset) => {
+  return { type: LOAD_GLOBAL_FEEDS, displayLimit, offset };
 };
 
 export const tagRelatedArticleLoaded = data => {
@@ -73,8 +73,8 @@ export const currentDisplayArticleLoaded = userProfileData => {
   return { type: CURRENT_PROFILE_ARTICLE_LOADED, userProfileData };
 };
 
-export const loadYourArticles = (articleCountDisplay, offset) => {
-  return { type: LOAD_YOUR_FEED, articleCountDisplay, offset };
+export const loadYourArticles = (displayLimit, offset) => {
+  return { type: LOAD_YOUR_FEED, displayLimit, offset };
 };
 
 export const currentHomeDisplayArticleLoaded = payload => {

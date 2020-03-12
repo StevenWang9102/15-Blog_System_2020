@@ -98,7 +98,7 @@ export const eventSaga = function*() {
     const userName = action.author_name;
     const favoritedArticlesData = yield call(
       fetchDataFromServer,
-      `/articles?favorited=${userName}&limit=${action.articleCountDisplay}&offset=${action.offset}`,
+      `/articles?favorited=${userName}&limit=${action.displayLimit}&offset=${action.offset}`,
       "Load Your Favorited Articles"
     );
 
@@ -108,8 +108,7 @@ export const eventSaga = function*() {
 
   // FAVORITED_BUTTON_CLICKED
   yield takeLatest(FAVORITED_BUTTON_CLICKED, function*(action) {
-    console.log(action);
-    
+  
     const slug = action.slug;
     const token = action.token;
     const url = `/articles/${slug}/favorite`;

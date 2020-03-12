@@ -2,7 +2,6 @@ import React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-// import {setDeleteArticleStatus} from "../../ReduxStore/Actions/articleActions"
 import { LoggedUserNav } from "../../Components/Navbar/LoggedUserNav";
 import { UnLoggedNav } from "../../Components/Navbar/UnLoggedNav";
 import { Switcher } from "../../Components/Navbar/Switcher";
@@ -49,8 +48,6 @@ const InternalNavbar = props => {
     getUserInformationLocal();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(props.userInformation);
   
   return (
     <Router>
@@ -104,9 +101,9 @@ const mapStateToProps = ({ userReducer }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadUserProfileDetail: (author_name, articleCountDisplay, offset) =>
+    loadUserProfileDetail: (author_name, displayLimit, offset) =>
       dispatch(
-        loadUserProfileDetail(author_name, articleCountDisplay, offset)
+        loadUserProfileDetail(author_name, displayLimit, offset)
       ),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
     setProfileNavStatus: (profileNavStatusLeft, profileNavStatusRight) =>

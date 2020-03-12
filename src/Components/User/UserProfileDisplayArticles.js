@@ -1,15 +1,10 @@
 import React from "react";
 import dateFormat from "dateformat";
-import { FavoritedButton } from "../MainPage/FavoritedButton"
-
-import {
-  articleCountDisplay,
-  offset
-} from "../../Functions/HttpClient";
+import { FavoritedButton } from "../MainPage/FavoritedButton";
+import { displayLimit, offset } from "../../Functions/HttpClient";
 import { Link } from "react-router-dom";
 
 export const UserProfileDisplayArticles = props => {
-
   return (
     <div>
       {props.currentProfileDisplayArticle &&
@@ -25,15 +20,15 @@ export const UserProfileDisplayArticles = props => {
                   <Link
                     to={"/user_profile/" + article.author.username}
                     className='author'
-                    onClick={() =>{
+                    onClick={() => {
                       props.setProfileNavStatus("active", "null");
                       props.loadUserProfileDetail(
                         article.author.username,
-                        articleCountDisplay,
+                        displayLimit,
                         offset
-                      )}
-                    }>
-                    {article.author.username }
+                      );
+                    }}>
+                    {article.author.username}
                   </Link>
                   <span className='date'>
                     {dateFormat(article.updatedAt, "ddd mmm dd yyyy")}
@@ -49,7 +44,7 @@ export const UserProfileDisplayArticles = props => {
                   setLoading={props.setLoading}
                   currentPageOffSet={props.currentPageOffSet}
                   onFavoritedArticleClicked={props.onFavoritedArticleClicked}
-              />
+                />
               </div>
 
               <Link
