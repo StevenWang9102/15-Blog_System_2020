@@ -59,6 +59,7 @@ const InternalArticlePreview = props => {
           <li className='nav-item'>
             {/* ----------- NAVIGATION --------- */}
             <YourFeedsNav
+              navName="Your Feed"
               userInformation={props.userInformation}
               setLoading={props.setLoading}
               loadYourFeedArticles={props.loadYourFeedArticles}
@@ -66,7 +67,8 @@ const InternalArticlePreview = props => {
               yourNav={props.yourNav}
             />
 
-            <GlobalFeedsNav
+            <YourFeedsNav
+              navName="Global Feed"
               setLoading={props.setLoading}
               setHomeNavStatus={props.setHomeNavStatus}
               loadGlobalFeeds={props.loadGlobalFeeds}
