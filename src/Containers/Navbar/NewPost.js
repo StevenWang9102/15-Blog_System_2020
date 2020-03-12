@@ -55,6 +55,7 @@ const InternalNewPost = props => {
   );
 };
 
+
 InternalNewPost.propTypes = {
   currentArticleDetails: PropTypes.object,
   newPosedArticleSlug: PropTypes.string,
