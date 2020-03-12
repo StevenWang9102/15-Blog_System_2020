@@ -1,19 +1,20 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logOutButtonClicked } from "../../ReduxStore/Actions/userActions";
+import { SettingForm } from "../../Components/Navbar/SettingForm"
 import {
   onUpdateSettingClicked,
   setLoading
 } from "../../ReduxStore/Actions/eventActions";
-import { logOutButtonClicked } from "../../ReduxStore/Actions/userActions";
-import { SettingForm } from "../../Components/Navbar/SettingForm"
-import { Redirect } from "react-router-dom";
 
 const InternalSetting = props => {
-  const [image, setImage] = useState(props.userInformation && props.userInformation.image);
+  // Reading data from userInformation on redux store.
+  const [image, setImage] = useState((props.userInformation && props.userInformation.image) || "");
   const [name, setName] = useState(props.userInformation && props.userInformation.username);
-  const [bio, setBio] = useState(props.userInformation && props.userInformation.bio);
-  const [email, setEmail] = useState(props.userInformation && props.userInformation.email);
+  const [bio, setBio] = useState((props.userInformation && props.userInformation.bio) || "");
+  const [email, setEmail] = useState((props.userInformation && props.userInformation.email) || "");
   const [passWord, setPassWord] = useState("");
 
   return (

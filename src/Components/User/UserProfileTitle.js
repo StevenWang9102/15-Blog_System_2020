@@ -39,7 +39,7 @@ export const UserProfileTitle = props => {
 
             <Button>
               <i className='ion-plus-round'></i>
-              <a
+              <span
                 className='nav-link'
                 onClick={() => {
                   if (props.userInformation.username) {
@@ -48,7 +48,9 @@ export const UserProfileTitle = props => {
                     else props.onFollowAuthorClick(props.author_name, "DELETE");
                   }
                 }}>
+
                 {props.userInformation.username === props.author_name ? (
+                // Logged or not display differently
                   <span>
                     <Link to='/setting'>Edit Profile Setting</Link>
                   </span>
@@ -59,7 +61,7 @@ export const UserProfileTitle = props => {
                       : ` + Follow ${props.author_name} Now `}
                   </span>
                 )}
-              </a>
+              </span>
             </Button>
           </div>
         </div>

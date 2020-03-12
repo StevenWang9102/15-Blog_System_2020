@@ -9,12 +9,13 @@ export const InternalSignUp = props => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [alertText, setAlertText] = useState("");
 
   function ValidateEmail(mail) {
     // eslint-disable-next-line no-useless-escape
-    return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))? false : true
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)
+      ? false
+      : true;
   }
 
   return (
@@ -60,24 +61,33 @@ export const InternalSignUp = props => {
                     className='btn btn-lg btn-primary pull-xs-right'
                     type='button'
                     onClick={() => {
-                      if(userName.length===0 || password.length===0 || email.length===0 )
-                      setAlertText(
-                        "Username, Password, Email can not be blank"
-                      );
-                      if (userName.length > 20 ) setAlertText(
-                        "Username is too long (maximum is 20 characters)"
-                      );
-                      if (password.length < 8)
+                      // Input validation
+                      if (
+                        userName.length === 0 ||
+                        password.length === 0 ||
+                        email.length === 0
+                      )
+                        setAlertText(
+                          "Username, Password, Email can not be blank"
+                        );
+                      else if (userName.length > 20)
+                        setAlertText(
+                          "Username is too long (maximum is 20 characters)"
+                        );
+                      else if (password.length < 8)
                         setAlertText(
                           "Password is too short (minimum is 8 characters)"
                         );
-                      if (ValidateEmail(email))
+                      else if (ValidateEmail(email))
                         setAlertText("Email is invalid");
-                      props.onSignUpButtonClicked(userName, email, password);
+                      else {
+                        props.onSignUpButtonClicked(userName, email, password);
+                        setAlertText("");
+                      }
                     }}>
                     Sign up
                   </button>
-                  <div className="sign_Alert"> {alertText} </div>
+                  <div className='sign_Alert'> {alertText} </div>
                 </form>
               </div>
             </div>
@@ -89,7 +99,7 @@ export const InternalSignUp = props => {
 };
 
 InternalSignUp.propTypes = {
-  signUpStatus: PropTypes.array,
+  signUpStatus: PropTypes.string,
   onSignUpButtonClicked: PropTypes.func
 };
 

@@ -21,8 +21,8 @@ export const PageTunner = props => {
     );
   };
 
+  // Make an Page Number List
   const pageNumber = Math.round(props.articlesAllCount / displayLimit);
-
   const myPageNumArray = [];
   for (let i = 1; i <= pageNumber; i++) {
     myPageNumArray.push(i);
@@ -35,7 +35,7 @@ export const PageTunner = props => {
           myPageNumArray.map((pageNumber, index) => {
             const offset = index * displayLimit;
 
-            // From "ArticlePriview" Page
+            // Pages on "ArticlePriview" Page
             if (props.fromPage === "ArticlePriview") {
               return (
                 <Page key={index}>
@@ -56,7 +56,7 @@ export const PageTunner = props => {
                 </Page>
               );
             } else {
-              // From "User Profile" Page
+              // Pages on "User Profile" Page
               return (
                 <Page key={index}>
                   <a

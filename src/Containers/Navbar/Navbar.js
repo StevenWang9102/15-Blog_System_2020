@@ -19,17 +19,13 @@ import {
   setLoading
 } from "../../ReduxStore/Actions/eventActions";
 
-import {
-  BrowserRouter as Router,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 import { getUserFromSession } from "../../Functions/AuthToken";
 
 const InternalNavbar = props => {
-
-
   const getUserInformationLocal = () => {
+    // if we have userInformation on redux store, then get it from there first
     if (
       !props.userInformation ||
       (props.userInformation && !props.userInformation.token)
@@ -48,7 +44,7 @@ const InternalNavbar = props => {
     getUserInformationLocal();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   return (
     <Router>
       <div>
@@ -79,7 +75,7 @@ const InternalNavbar = props => {
         </nav>
 
         {/* --------------- ROUTER SWITCH --------------- */}
-        <Switcher/>
+        <Switcher />
       </div>
     </Router>
   );
@@ -102,9 +98,7 @@ const mapStateToProps = ({ userReducer }) => {
 const mapDispatchToProps = dispatch => {
   return {
     loadUserProfileDetail: (author_name, displayLimit, offset) =>
-      dispatch(
-        loadUserProfileDetail(author_name, displayLimit, offset)
-      ),
+      dispatch(loadUserProfileDetail(author_name, displayLimit, offset)),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
     setProfileNavStatus: (profileNavStatusLeft, profileNavStatusRight) =>
       dispatch(

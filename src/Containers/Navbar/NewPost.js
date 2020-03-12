@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 const InternalNewPost = props => {
   const { slug } = useParams();
 
+  // Using slug, we can know this component is "New Post" or "Editting Post"
   const [title, setTitle] = useState(
     slug ? props.currentArticleDetails.title : ""
   );

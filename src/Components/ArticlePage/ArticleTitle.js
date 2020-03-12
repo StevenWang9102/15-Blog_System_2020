@@ -4,7 +4,6 @@ import dateFormat from "dateformat";
 
 export const ArticleTitle = props => {
   const authorLocal = props.currentArticleDetails.author;
-
   const username = authorLocal && authorLocal.username;
   const image = authorLocal && authorLocal.image;
   const updateAt = authorLocal && authorLocal.updatedAt;

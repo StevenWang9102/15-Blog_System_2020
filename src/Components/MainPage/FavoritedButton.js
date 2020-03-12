@@ -49,11 +49,12 @@ export const FavoritedButton = props => {
               props.currentPageOffSet,
               props.author_name
             );
+            props.setHttpMethod(tempMethod);
 
+            // Display add 1 or not
             setFavoritesCountPlus(
               tempMethod[props.article.slug] === "POST" ? 1 : 0
             );
-            props.setHttpMethod(tempMethod);
           }
         }}>
         {children}
