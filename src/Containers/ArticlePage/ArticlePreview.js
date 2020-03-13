@@ -54,18 +54,26 @@ const InternalArticlePreview = props => {
         <ul className='nav nav-pills outline-active '>
           <li className='nav-item'>
             {/* ----------- NAVIGATION --------- */}
-            
             <FeedsToggle
-                onPage="Article Preview"
-
-              />
+              onPage='Article Preview'
+              userInformation={props.userInformation}
+              setLoading={props.setLoading}
+              loadYourFeedArticles={props.loadYourFeedArticles}
+              setHomeNavStatus={props.setHomeNavStatus}
+              yourNav={props.yourNav}
+              globalNav={props.globalNav}
+              popularNav={props.popularNav}
+              currentTagName={props.currentTagName}
+              loadGlobalFeeds={props.loadGlobalFeeds}
+              onFavoritedArticleClicked={props.onFavoritedArticleClicked}
+            />
           </li>
         </ul>
       </div>
 
       {/* ---------- CURRENT DISPLAY ARTICLES---------- */}
       <CurrentDisplayArticles
-        pageName="Article Preview"
+        pageName='Article Preview'
         userInformation={props.userInformation}
         currentDisplayArticle={props.currentHomeDisplayArticle}
         setLoading={props.setLoading}
@@ -73,7 +81,7 @@ const InternalArticlePreview = props => {
         setHttpMethod={setHttpMethod}
         currentPageOffSet={currentPageOffSet}
         onFavoritedArticleClicked={props.onFavoritedArticleClicked}
-        />
+      />
 
       {/* ------------------- PAGE TUNNER -------------- */}
       <PageTunner
@@ -132,13 +140,8 @@ const mapDispatchToProps = dispatch => {
     loadYourFeedArticles: (displayLimit, offset) =>
       dispatch(loadYourArticles(displayLimit, offset)),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
-    
-    onFavoritedArticleClicked: (
-      token,
-      slug,
-      httpMethod,
-      currentPageOffSet,
-    ) =>
+
+    onFavoritedArticleClicked: (token, slug, httpMethod, currentPageOffSet) =>
       dispatch(
         favoritedButtonClicked(token, slug, httpMethod, currentPageOffSet)
       ),

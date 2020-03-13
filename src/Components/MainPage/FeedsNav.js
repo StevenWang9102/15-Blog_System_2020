@@ -27,6 +27,8 @@ export const FeedsNav = props => {
     url = "/home/popular_tags";
   }
   // navName='My Articles'
+  // renderArray = ["My Articles", "Favorited Articles"];
+
   if (props.navName === "My Articles") {
     navName = "My Articles";
     isExist = true;
@@ -57,6 +59,8 @@ export const FeedsNav = props => {
             }
             //
             if (navName === "My Articles") {
+              console.log("进来了");
+              
               props.setProfileNavStatus("active", "null");
               props.loadUserProfileDetail(
                 props.author_name,

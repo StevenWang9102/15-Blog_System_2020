@@ -26,6 +26,7 @@ const InternalUserProfile = props => {
   useEffect(() => {
     props.loadUserProfileDetail(author_name, displayLimit, offset);
     props.updateSettingStatus("NOT UPDATED");
+    props.setProfileNavStatus("active", "null");
 
     if (article_type === "favorited_articles") {
       props.setProfileNavStatus("null", "active");
