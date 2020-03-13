@@ -11,7 +11,8 @@ export const YourComments = props => {
                 onChange={event => props.setMyComment(event.target.value)}
                 className='form-control'
                 placeholder='Write a comment...'
-                rows='3'></textarea>
+                rows='3'>
+              </textarea>
             </div>
             <div className='card-footer'>
               <img

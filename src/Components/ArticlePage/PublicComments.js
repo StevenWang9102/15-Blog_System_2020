@@ -14,6 +14,7 @@ export const PublicComments = props => {
                   <div className='card-block'>
                     <p className='card-text'>{comment.body}</p>
                   </div>
+
                   <div className='card-footer'>
                     <a href='#top' className='comment-author'>
                       <img
@@ -21,14 +22,16 @@ export const PublicComments = props => {
                         className='comment-author-img'
                         alt=''
                       />
-                    </a>
-                    &nbsp;
+                    </a> &nbsp;
+
                     <a href='#top' className='comment-author'>
                       {comment.author.username}
                     </a>
+
                     <span className='date-posted'>
                       {dateFormat(comment.updatedAt, "ddd mmm dd yyyy")}
                     </span>
+
                   </div>
                 </div>
               </div>

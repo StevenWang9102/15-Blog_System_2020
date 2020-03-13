@@ -16,7 +16,8 @@ import {
   loadGlobalFeeds,
   loadYourArticles,
   loadPopularTags,
-  setDeleteArticleStatus
+  setDeleteArticleStatus,
+  popularNavClean
 } from "../../ReduxStore/Actions/articleActions";
 
 import {
@@ -24,7 +25,7 @@ import {
   setHomeNavStatus,
   setLoading,
   updateSettingStatus,
-  favoritedArticleNavClicked
+  favoritedArticleNavClicked,
 } from "../../ReduxStore/Actions/eventActions";
 
 const InternalArticlePreview = props => {
@@ -58,6 +59,7 @@ const InternalArticlePreview = props => {
               onPage='Article Preview'
               userInformation={props.userInformation}
               setLoading={props.setLoading}
+              popularNavClean={props.popularNavClean}
               loadYourFeedArticles={props.loadYourFeedArticles}
               setHomeNavStatus={props.setHomeNavStatus}
               yourNav={props.yourNav}
@@ -140,6 +142,8 @@ const mapDispatchToProps = dispatch => {
     loadYourFeedArticles: (displayLimit, offset) =>
       dispatch(loadYourArticles(displayLimit, offset)),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
+// popularNavClean
+popularNavClean: () => dispatch(popularNavClean()),
 
     onFavoritedArticleClicked: (token, slug, httpMethod, currentPageOffSet) =>
       dispatch(

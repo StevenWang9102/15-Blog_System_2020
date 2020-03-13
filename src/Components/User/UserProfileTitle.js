@@ -38,7 +38,6 @@ export const UserProfileTitle = props => {
             <p>{profileDetails && profileDetails.bio}</p>
 
             <Button>
-              <i className='ion-plus-round'></i>
               <span
                 className='nav-link'
                 onClick={() => {
@@ -52,7 +51,7 @@ export const UserProfileTitle = props => {
                 {props.userInformation.username === props.author_name ? (
                 // Logged or not display differently
                   <span>
-                    <Link to='/setting'>Edit Profile Setting</Link>
+                    <Link to='/setting' className='nav-link'>Edit Profile Setting</Link>
                   </span>
                 ) : (
                   <span>

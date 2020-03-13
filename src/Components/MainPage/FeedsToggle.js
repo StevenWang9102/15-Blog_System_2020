@@ -2,17 +2,15 @@ import React from "react";
 import { FeedsNav } from "../../Components/MainPage/FeedsNav";
 
 export const FeedsToggle = props => {
-  let renderArray = [];
+  let myRender = [];
 
-  if (props.onPage === "User Profile")
-    renderArray = ["My Articles", "Favorited Articles"];
-  if (props.onPage === "Article Preview")
-    renderArray = ["Your Feed", "Global Feed", "Popular Feed"];
+  if (props.fromPage === "User Profile") myRender = ["My Articles", "Favorited Articles"];
+  if (props.fromPage === "Article Preview") myRender = ["Your Feed", "Global Feed", "Popular Feed"];
 
   return (
     <div className='articles-toggle'>
       <ul className='nav nav-pills outline-active'>
-        {renderArray.map((feed, index) => {
+        {myRender.map((feed, index) => {
             
           // User Profile Toggle
           if (props.fromPage === "User Profile") {
@@ -40,6 +38,7 @@ export const FeedsToggle = props => {
                   navName={feed}
                   userInformation={props.userInformation}
                   setLoading={props.setLoading}
+                  popularNavClean={props.popularNavClean}
                   loadYourFeedArticles={props.loadYourFeedArticles}
                   setHomeNavStatus={props.setHomeNavStatus}
                   yourNav={props.yourNav}

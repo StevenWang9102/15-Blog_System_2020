@@ -5,9 +5,12 @@ import { displayLimit, offset } from "../../Functions/HttpClient";
 
 export const ArticleTitle = props => {
 
-  const usernameLocal = props.article && props.article.author && props.article.author.username;
-  const imageLocal = props.article && props.article.author && props.article.author.image;
-  const updateAtLocal = props.article && props.article.author && props.article.author.updatedAt;
+  const usernameLocal =
+    props.article && props.article.author && props.article.author.username;
+  const imageLocal =
+    props.article && props.article.author && props.article.author.image;
+  const updateAtLocal =
+    props.article && props.article.author && props.article.author.updatedAt;
 
   return (
     <Link to={`/user_profile/${usernameLocal}`}>
@@ -19,15 +22,13 @@ export const ArticleTitle = props => {
 
           if (props.pageName === "User Profile") {
             props.setProfileNavStatus("active", "null");
-            props.loadUserProfileDetail(
-              usernameLocal,
-              displayLimit,
-              offset
-            );
+            props.loadUserProfileDetail(usernameLocal, displayLimit, offset);
           }
         }}>
         {usernameLocal}
-        <span className='date'>{dateFormat(updateAtLocal, "ddd mmm dd yyyy")}</span>
+        <span className='date'>
+          {dateFormat(updateAtLocal, "ddd mmm dd yyyy")}
+        </span>
       </div>
     </Link>
   );

@@ -50,10 +50,10 @@ const InternalUserProfile = props => {
         <div className='container'>
           <div className='row'>
             <div className='col-xs-12 col-md-10 offset-md-1'>
-              {/* ---------------- Navigation ---------------- */}
 
+              {/* ---------------- Navigation ---------------- */}
               <FeedsToggle
-                onPage="User Profile"
+                fromPage="User Profile"
                 author_name={author_name}
                 setLoading={props.setLoading}
                 setProfileNavStatus={props.setProfileNavStatus}
@@ -62,6 +62,7 @@ const InternalUserProfile = props => {
                 loadUserProfileDetail={props.loadUserProfileDetail}
                 onFavoritedArticleNavClicked={props.onFavoritedArticleNavClicked}
               />
+
               {/* ---------------- Related Article Area ----------------  */}
               <CurrentDisplayArticles
                 pageName="User Profile"

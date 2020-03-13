@@ -55,7 +55,7 @@ export const eventReducer = (state = initialState, action) => {
 
     case EMPTY_ARTICLE_COUNT:
       return { ...state, articlesAllCount: 0 };
-        
+  
     default:
       return state;
   }

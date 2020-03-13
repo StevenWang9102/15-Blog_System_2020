@@ -7,6 +7,7 @@ export const ARTICLE_COMMENTS_LOADED = Symbol("ARTICLE_COMMENTS_LOADED");
 export const ARTICLE_CONTENT_LOADED = Symbol("ARTICLE_CONTENT_LOADED");
 export const GLOBAL_FEED_DATA_LOADED = Symbol("GLOBAL_FEED_DATA_LOADED");
 export const LOAD_YOUR_FEED = Symbol("LOAD_YOUR_FEED");
+export const POPULAR_TAG_CLEAN = Symbol("POPULAR_TAG_CLEAN");
 export const YOUR_FEED_LOADED = Symbol("YOUR_FEED_LOADED");
 export const DELETE_YOUR_ARTICLE_DONE = Symbol("DELETE_YOUR_ARTICLE_DONE");
 export const LOAD_ARTICLE_SETTING_DETAIL = Symbol(
@@ -99,4 +100,9 @@ export const loadArticleSettingDetail = slug => {
 
 export const articleSettingContentLoaded = data => {
   return { type: ARTICLE_SETTING_DETAIL_LOADED, data: data };
+};
+
+// POPULAR_TAG_CLEAN
+export const popularNavClean = () => {
+  return { type: POPULAR_TAG_CLEAN };
 };

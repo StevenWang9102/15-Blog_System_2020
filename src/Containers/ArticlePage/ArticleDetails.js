@@ -45,8 +45,9 @@ const InternalArticleDetails = props => {
               <h1>{props.currentArticleDetails.title}</h1>
               <div className='article-meta article-source'>
                 <ArticleTitle
+                  onPage="Article Details"
                   setLoading={props.setLoading}
-                  currentArticleDetails={props.currentArticleDetails}
+                  article={props.currentArticleDetails}
                 />
               </div>
               {isAuthorized() && (

@@ -6,39 +6,43 @@ export const FeedsNav = props => {
   let isExist;
   let myStyle,
     url,
-    navName = "";
+    navDisplayName = "";
 
+  // Global Feed Nav Config
   if (props.navName === "Global Feed") {
-    navName = "Global Feed";
+    navDisplayName = "Global Feed";
     isExist = true;
     myStyle = props.globalNav;
     url = "/home/global_feed";
   }
+
+  // Your Feed Nav Config
   if (props.navName === "Your Feed") {
-    navName = "Your Feed";
+    navDisplayName = "Your Feed";
     isExist = props.userInformation && props.userInformation.token;
     myStyle = props.yourNav;
     url = "/home/your_feed";
   }
+
+  // Popular Feed Nav Config
   if (props.navName === "Popular Feed") {
-    navName = `# ${props.currentTagName}`;
+    navDisplayName = `# ${props.currentTagName}`;
     isExist = props.currentTagName;
     myStyle = props.popularNav;
     url = "/home/popular_tags";
   }
-  // navName='My Articles'
-  // renderArray = ["My Articles", "Favorited Articles"];
 
+  // My Articles Nav Config
   if (props.navName === "My Articles") {
-    navName = "My Articles";
+    navDisplayName = "My Articles";
     isExist = true;
     myStyle = props.profileNavStatusLeft;
     url = `/user_profile/${props.author_name}/my_articles`;
   }
 
-   // navName='Favorited Articles'
-   if (props.navName === "Favorited Articles") {
-    navName = "Favorited Articles";
+  // Favorited Articles Nav Config
+  if (props.navName === "Favorited Articles") {
+    navDisplayName = "Favorited Articles";
     isExist = true;
     myStyle = props.profileNavStatusRight;
     url = `/user_profile/${props.author_name}/favorited_articles`;
@@ -48,19 +52,29 @@ export const FeedsNav = props => {
       {isExist && (
         <Link
           onClick={() => {
-            props.setLoading("LOADING");
-            if (navName === "Your Feed") {
+            // Your Feed Click
+            if (props.navName === "Your Feed") {
+              props.setLoading("LOADING");
               props.setHomeNavStatus("active", "null", "null");
               props.loadYourFeedArticles(displayLimit, offset);
             }
-            if (navName === "Global Feed") {
+
+            // Global Feed Click
+            if (props.navName === "Global Feed") {
+              props.setLoading("LOADING");
               props.setHomeNavStatus("null", "active", "null");
               props.loadGlobalFeeds(displayLimit, offset);
             }
-            //
-            if (navName === "My Articles") {
-              console.log("进来了");
-              
+
+            // Popular Tag Click
+            if (props.navName === "Popular Feed") {
+              props.setHomeNavStatus("null", "active", "null");
+              props.popularNavClean();
+            }
+
+            // My Article Click
+            if (props.navName === "My Articles") {
+              props.setLoading("LOADING");
               props.setProfileNavStatus("active", "null");
               props.loadUserProfileDetail(
                 props.author_name,
@@ -68,8 +82,10 @@ export const FeedsNav = props => {
                 offset
               );
             }
-            // 
-            if (navName === "Favorited Articles") {
+
+            // Favorited Articles Click
+            if (props.navName === "Favorited Articles") {
+              props.setLoading("LOADING");
               props.setProfileNavStatus("null", "active");
               props.onFavoritedArticleNavClicked(
                 props.author_name,
@@ -80,7 +96,7 @@ export const FeedsNav = props => {
           }}
           className={`nav-link display-inline ${myStyle} `}
           to={url}>
-          {navName}
+          {navDisplayName}
         </Link>
       )}
     </span>
