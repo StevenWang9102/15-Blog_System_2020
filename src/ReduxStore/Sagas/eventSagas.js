@@ -108,7 +108,6 @@ export const eventSaga = function*() {
 
   // FAVORITED_BUTTON_CLICKED
   yield takeLatest(FAVORITED_BUTTON_CLICKED, function*(action) {
-    console.log();
     
     const slug = action.slug;
     const token = action.token;

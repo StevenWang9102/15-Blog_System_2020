@@ -56,7 +56,7 @@ const InternalArticlePreview = props => {
           <li className='nav-item'>
             {/* ----------- NAVIGATION --------- */}
             <FeedsToggle
-              onPage='Article Preview'
+              fromPage='Article Preview'
               userInformation={props.userInformation}
               setLoading={props.setLoading}
               popularNavClean={props.popularNavClean}

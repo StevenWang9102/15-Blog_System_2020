@@ -3,7 +3,7 @@ import { ArticlePreview } from "../ArticlePage/ArticlePreview";
 import { PopularTages } from "./PopularTags";
 import { Banner } from "./Banner";
 import { connect } from "react-redux";
-
+import { emptyArticleAllCount } from "../../ReduxStore/Actions/eventActions"
 const InternalMainPage = props => {
   return (
     <div className='home-page'>
@@ -11,11 +11,19 @@ const InternalMainPage = props => {
       <div className='container page'>
         <div className='row'>
           <ArticlePreview/>
-          <PopularTages/>
+          <PopularTages
+            emptyArticleAllCount={props.emptyArticleAllCount}
+          />
         </div>
       </div>
     </div>
   );
 };
 
-export const MainPage = connect(null, null)(InternalMainPage);
+const mapDispatchToProps = dispatch => {
+  return {
+    emptyArticleAllCount: () => dispatch(emptyArticleAllCount()),
+  };
+};
+
+export const MainPage = connect(null, mapDispatchToProps)(InternalMainPage);
