@@ -3,6 +3,8 @@
 
     This website is developed by me and guided by Frank
 
+<!-- How to work? -->
+    run "npm start" in VS code terminal
 
 <!-- Functions -->
 - you can sign in and sign up users
@@ -13,7 +15,7 @@
 
 <!-- Source Code -->
 
-You can see more details when you run my code. My Source code is on my Github - https://github.com/StevenWang9102, simply run "npm start" in your VS code terminal.
+You can see more details when you run my code. My Source code is on my Github - https://github.com/StevenWang9102.
 
 ----------------------------------------------------------------------------
 Created with "create react app"
