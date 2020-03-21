@@ -19,7 +19,7 @@ const useStyles = createUseStyles({
 
     '& span': {
       position: "absolute",
-      top: "420"
+      top: "420px"
     }
   },
 
