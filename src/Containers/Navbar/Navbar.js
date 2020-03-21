@@ -19,7 +19,7 @@ import {
   setLoading
 } from "../../ReduxStore/Actions/eventActions";
 
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { HashRouter as Router, Link } from "react-router-dom";
 
 import { getUserFromSession } from "../../Functions/AuthToken";
 
