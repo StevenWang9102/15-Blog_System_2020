@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { displayLimit, offset } from "../../Functions/HttpClient";
+import { displayLimit, offset } from "../../ReduxStore/HttpClient";
 
 export const FeedsNav = props => {
   let isExist;

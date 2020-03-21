@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { UserProfileTitle } from "../../Components/User/UserProfileTitle";
 import { FeedsToggle } from "../../Components/MainPage/FeedsToggle";
 import { CurrentDisplayArticles } from "../../Components/ArticlePage/CurrentDisplayArticles";
-import { displayLimit, offset } from "../../Functions/HttpClient";
+import { displayLimit, offset } from "../../ReduxStore/HttpClient";
 import {
   favoritedArticleNavClicked,
   setProfileNavStatus,

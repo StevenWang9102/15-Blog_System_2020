@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import dateFormat from "dateformat";
-import { displayLimit, offset } from "../../Functions/HttpClient";
+import { displayLimit, offset } from "../../ReduxStore/HttpClient";
 
 export const ArticleTitle = props => {
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { removeUserFromSession } from "../../Functions/AuthToken"
+import { removeUserFromSession } from "../../ReduxStore/AuthToken"
 
 export const SettingForm = ({
     image,

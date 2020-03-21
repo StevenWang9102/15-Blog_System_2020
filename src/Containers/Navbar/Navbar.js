@@ -21,7 +21,7 @@ import {
 
 import { HashRouter as Router, Link } from "react-router-dom";
 
-import { getUserFromSession } from "../../Functions/AuthToken";
+import { getUserFromSession } from "../../ReduxStore/AuthToken";
 
 const InternalNavbar = props => {
   const getUserInformationLocal = () => {

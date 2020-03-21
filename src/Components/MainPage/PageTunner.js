@@ -1,5 +1,5 @@
 import React from "react";
-import { displayLimit } from "../../Functions/HttpClient";
+import { displayLimit } from "../../ReduxStore/HttpClient";
 import { createUseStyles } from "react-jss";
 
 const useStyles = createUseStyles({

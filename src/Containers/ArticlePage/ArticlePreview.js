@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { displayLimit, offset } from "../../Functions/HttpClient";
+import { displayLimit, offset } from "../../ReduxStore/HttpClient";
 import { FeedsToggle } from "../../Components/MainPage/FeedsToggle";
 import { CurrentDisplayArticles } from "../../Components/ArticlePage/CurrentDisplayArticles";
 import { PageTunner } from "../../Components/MainPage/PageTunner";
