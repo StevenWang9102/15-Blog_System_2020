@@ -13,6 +13,7 @@ import {
 import { userInformationLoaded } from "../../ReduxStore/Actions/userActions";
 
 const InternalSetting = props => {
+
   const getUserInformationLocal = () => {
     // if we have userInformation on redux store, then get it from there first
     if (
@@ -29,26 +30,13 @@ const InternalSetting = props => {
     }
   };
 
-  getUserInformationLocal();
+  const localUser = getUserInformationLocal();
 
-
-  const [image, setImage] = useState(props.userInformation && props.userInformation.image);
-  const [name, setName] = useState("");
-  const [bio, setBio] = useState("");
-  const [email, setEmail] = useState("");
-  const [passWord, setPassWord] = useState("");
-
-  useEffect(() => {
-    // Reading data from userInformation on redux store.
-    getUserInformationLocal();
-    // setImage(props.userInformation && props.userInformation.image);
-    // setName(props.userInformation && props.userInformation.username);
-    // setBio(props.userInformation && props.userInformation.bio);
-    // setEmail(props.userInformation && props.userInformation.email);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.userInformation]);
-
-
+  const [image, setImage] = useState(localUser.image);
+  const [name, setName] = useState(localUser.username);
+  const [bio, setBio] = useState(localUser.bio);
+  const [email, setEmail] = useState(localUser.email);
+  const [passWord, setPassWord] = useState("");  
 
   return (
     <div>
@@ -111,7 +99,7 @@ const InternalSetting = props => {
                       className='btn btn-lg btn-primary pull-xs-right'
                       type='button'
                       onClick={() => {
-                        onUpdateSettingClicked({
+                        props.onUpdateSettingClicked({
                           image,
                           name,
                           bio,

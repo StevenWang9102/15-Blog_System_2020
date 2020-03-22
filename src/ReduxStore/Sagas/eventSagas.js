@@ -139,7 +139,7 @@ export const eventSaga = function*() {
   });
 
   // UPDATE_SETTING_BUTTON_CLICK
-  yield takeLatest(UPDATE_SETTING_BUTTON_CLICK, function*(action) {
+  yield takeLatest(UPDATE_SETTING_BUTTON_CLICK, function*(action) {    
     try {
       yield put(setLoading("LOADING"));
       const state = yield select();
