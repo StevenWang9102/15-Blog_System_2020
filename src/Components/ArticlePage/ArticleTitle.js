@@ -18,8 +18,6 @@ export const ArticleTitle = props => {
       <div
         className='info author'
         onClick={() => {
-          props.setLoading("LOADING");
-
           if (props.pageName === "User Profile") {
             props.setProfileNavStatus("active", "null");
             props.loadUserProfileDetail(usernameLocal, displayLimit, offset);

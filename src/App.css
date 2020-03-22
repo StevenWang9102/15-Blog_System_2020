@@ -113,3 +113,12 @@ p {
 .sign_Alert{
   color: rgb(233, 131, 35);
 }
+
+.pagination{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pagination a{
+  text-decoration: none;
+}

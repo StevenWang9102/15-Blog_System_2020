@@ -7,10 +7,7 @@ import { displayLimit, offset } from "../../ReduxStore/HttpClient";
 import { FeedsToggle } from "../../Components/MainPage/FeedsToggle";
 import { CurrentDisplayArticles } from "../../Components/ArticlePage/CurrentDisplayArticles";
 import { PageTunner } from "../../Components/MainPage/PageTunner";
-import {
-  loadUserProfileDetail,
-  setSignUpStatus
-} from "../../ReduxStore/Actions/userActions";
+import { loadUserProfileDetail, setSignUpStatus} from "../../ReduxStore/Actions/userActions";
 
 import {
   loadGlobalFeeds,
@@ -33,7 +30,6 @@ const InternalArticlePreview = props => {
   const [currentPageOffSet, setCurrentPageOffSet] = useState(0);
 
   useEffect(() => {
-    props.setLoading("LOADING");
     props.updateSettingStatus("NOT UPDATED");
     props.setDeleteArticleStatus("NOT DELETED");
     props.setSignUpStatus("NOT LOADED");

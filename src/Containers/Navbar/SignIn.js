@@ -52,7 +52,6 @@ const InternalSignIn = props => {
                       className='btn btn-lg btn-primary pull-xs-right'
                       onClick={()=> {
                         props.onSignInClicked(email, password);
-                        props.setLoading("LOADING")
                       }}>
                       Sign in
                     </button>

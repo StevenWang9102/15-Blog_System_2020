@@ -21,7 +21,6 @@ const InternalPopularTages = props => {
                 key={index}
                 value={tagName}
                 onClick={() => {
-                  props.setLoading("LOADING");
                   props.emptyArticleAllCount();
                   props.onPopularTagClicked(tagName);
                   props.setHomeNavStatus("null", "null", "active");

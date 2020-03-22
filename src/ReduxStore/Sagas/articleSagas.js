@@ -96,6 +96,7 @@ export const articleSaga = function*() {
   // ----------- ARTICLE_DETAILS_LOADED -----------
   yield takeLatest(LOAD_INIT_ARTICLE_DETAIL, function*(action) {
     try {
+      yield put(setLoading("LOADING"));
       const initArticleData = yield call(
         fetchDataFromServer,
         `/articles/${action.slug}`,
@@ -112,6 +113,7 @@ export const articleSaga = function*() {
   // ----------- LOAD_ARTICLE_SETTING_DETAIL -----------
   yield takeLatest(LOAD_ARTICLE_SETTING_DETAIL, function*(action) {
     try {
+      yield put(setLoading("LOADING"));
       const initArticleData = yield call(
         fetchDataFromServer,
         `/articles/${action.slug}`,
@@ -127,6 +129,7 @@ export const articleSaga = function*() {
   // ----------- ARTICLE_COMMENT_LOADED -----------
   yield takeLatest(LOAD_INIT_ARTICLE_DETAIL, function*(action) {
     try {
+      yield put(setLoading("LOADING"));
       const initCommentData = yield call(
         fetchDataFromServer,
         `/articles/${action.slug}/comments`,

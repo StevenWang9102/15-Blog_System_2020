@@ -41,7 +41,6 @@ export const LoggedUserNav = props => {
           onClick={() => {
             props.loadUserProfileDetail(userInfoLocal.username, displayLimit, offset);
             props.setProfileNavStatus("active", "null");
-            props.setLoading("LOADING");
           }}>
           <img className='user-pic' src={userInfoLocal.image} alt='' />
           {userInfoLocal.username}

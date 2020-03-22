@@ -33,7 +33,6 @@ export const CurrentDisplayArticles = props => {
 
             <Link
               className='nav-link preview-link article-detail'
-              onClick={() => props.setLoading("LOADING")}
               to={"/article-detail/" + article.slug}>
               <h1>{article.title}</h1>
               <p>{article.description}</p>

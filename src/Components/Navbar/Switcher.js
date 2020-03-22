@@ -28,8 +28,7 @@ export const Switcher = props => {
       <Route exact path='/sign_up' component={SignUp} />
 
       <Route
-        path='/user_profile/:author_name/:article_type'
-        component={UserProfile}
+        path='/user_profile/:author_name/:article_type' component={UserProfile}
       />
       <Route path='/user_profile/:author_name' component={UserProfile} />
 

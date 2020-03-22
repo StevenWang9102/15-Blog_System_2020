@@ -84,6 +84,7 @@ const InternalUserProfile = props => {
                 author_name={author_name}
                 setCurrentPageOffSet={setCurrentPageOffSet}
                 profileNavStatusLeft={props.profileNavStatusLeft}
+                profileNavStatusRight={props.profileNavStatusRight}
                 loadUserProfileDetail={props.loadUserProfileDetail}
                 articlesAllCount={props.articlesAllCount}
                 onFavoritedArticleNavClicked={

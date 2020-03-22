@@ -31,10 +31,8 @@ export const FavoritedButton = props => {
         className={`btn btn-outline-primary btn-sm pull-xs-right ${classes.myButton}`}
         onClick={() => {
           
+          // Switch method between "POST" and "DELETE"
           if (props.userInformation.token) {
-            props.setLoading("LOADING");
-
-            // Switch method between "POST" and "DELETE"
             const tempMethod = { ...props.httpMethod };
 
             if (tempMethod[props.article.slug] === "POST") {

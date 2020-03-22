@@ -54,14 +54,12 @@ export const FeedsNav = props => {
           onClick={() => {
             // Your Feed Click
             if (props.navName === "Your Feed") {
-              props.setLoading("LOADING");
               props.setHomeNavStatus("active", "null", "null");
               props.loadYourFeedArticles(displayLimit, offset);
             }
 
             // Global Feed Click
             if (props.navName === "Global Feed") {
-              props.setLoading("LOADING");
               props.setHomeNavStatus("null", "active", "null");
               props.loadGlobalFeeds(displayLimit, offset);
             }
@@ -74,7 +72,6 @@ export const FeedsNav = props => {
 
             // My Article Click
             if (props.navName === "My Articles") {
-              props.setLoading("LOADING");
               props.setProfileNavStatus("active", "null");
               props.loadUserProfileDetail(
                 props.author_name,
@@ -85,7 +82,6 @@ export const FeedsNav = props => {
 
             // Favorited Articles Click
             if (props.navName === "Favorited Articles") {
-              props.setLoading("LOADING");
               props.setProfileNavStatus("null", "active");
               props.onFavoritedArticleNavClicked(
                 props.author_name,
