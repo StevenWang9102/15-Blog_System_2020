@@ -50,7 +50,7 @@ export const CurrentDisplayArticles = props => {
 };
 
 CurrentDisplayArticles.propTypes = {
-  currentDisplayArticle: PropTypes.object,
+  currentDisplayArticle: PropTypes.array,
   pageName: PropTypes.string,
   userInformation: PropTypes.object,
   setProfileNavStatus: PropTypes.func,

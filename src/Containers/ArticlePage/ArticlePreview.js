@@ -48,8 +48,6 @@ const InternalArticlePreview = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(props.articlesAllCount);
-
   return (
     <div className='col-md-9 col-sm-12'>
       <div className='feed-toggle'>

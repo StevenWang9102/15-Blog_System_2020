@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import PropTypes from "prop-types";
 
 export const NewPostForm = props => {
   const [alertText, setAlertText] = useState("");
@@ -68,4 +69,12 @@ export const NewPostForm = props => {
       </fieldset>
     </form>
   );
+};
+
+NewPostForm.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  content: PropTypes.string,
+  tags: PropTypes.string,
+  currentSlug: PropTypes.string,
 };

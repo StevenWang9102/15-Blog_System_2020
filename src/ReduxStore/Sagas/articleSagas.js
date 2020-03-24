@@ -38,9 +38,7 @@ export const articleSaga = function*() {
   });
 
   // ----------- LOAD_POPULAR_TAGS -----------
-  yield takeLatest(LOAD_POPULAR_TAGS, function*(action) {    
-    console.log(action);
-    
+  yield takeLatest(LOAD_POPULAR_TAGS, function*(action) {        
     try {
       yield put(setLoading("LOADING"));
       const initTagData = yield call(
@@ -81,7 +79,6 @@ export const articleSaga = function*() {
 
   // ----------- POPULAR_TAG_CLICKED -----------
   yield takeLatest(POPULAR_TAG_CLICKED, function*(action) {
-    console.log(action);
     try {
       yield put(setLoading("LOADING"));
       const tagRelatedData = yield call(

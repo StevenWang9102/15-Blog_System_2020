@@ -51,6 +51,8 @@ export const PageTunner = props => {
             if (props.globalNav === "active") currentTag = "global_feed";
             if (props.yourNav === "active") currentTag = "your_feed";
             if (props.popularNav === "active") currentTag = "popular_feed";
+            if (props.profileNavStatusLeft === "active") currentTag = "my_ariticles";
+            if (props.profileNavStatusRight === "active") currentTag = "favorited_articles";
 
             // Deal with page padding
             let padding = "";
@@ -96,6 +98,7 @@ export const PageTunner = props => {
               return (
                 <Page padding={padding} key={index} clickedPage={clickedPage}>
                   <Link
+                    to={`/user_profile/${props.author_name}/${currentTag}/p${pageNumber}`}
                     onClick={() => {
                       if (props.profileNavStatusLeft === "active")
                         props.loadUserProfileDetail(

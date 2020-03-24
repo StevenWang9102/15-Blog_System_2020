@@ -1,6 +1,9 @@
 import React from "react";
 import { createUseStyles } from "react-jss";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+
+
 const useStyles = createUseStyles({
   myButton: {
     border: "0px",
@@ -67,4 +70,11 @@ export const UserProfileTitle = props => {
       </div>
     </div>
   );
+};
+
+
+UserProfileTitle.propTypes = {
+  userInformation: PropTypes.object,
+  author_name: PropTypes.string,
+  currentProfileDetail: PropTypes.object,
 };

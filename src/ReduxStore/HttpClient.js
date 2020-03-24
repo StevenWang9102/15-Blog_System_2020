@@ -15,10 +15,10 @@ export const postDataToServerAll = (token, url, postData, message, type) => {
       response => {
         if (response.ok) {
           return response.json().then(response => {
-            console.log(` -- ${message} Success —-`, response);
+            console.log(` ==${message} Success==`, response);
             return response;
           });
-        } else console.error(` -- Error: ${message} failed -- `);
+        } else console.error(` ==Error: ${message} failed== `);
       }
     );
   };
@@ -28,10 +28,10 @@ export const fetchDataFromServer = (url, message) => {
       response => {
         if (response.ok) {
           return response.json().then(response => {
-            console.log(` -- ${message} Success —-`, response);
+            console.log(` ==${message} Success==`, response);
             return response;
           });
-        } else console.error(" -- Error: get data failed -- ");
+        } else console.error(" ==Error: get data failed== ");
       }
     );
   };
