@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { setLoading } from "../../ReduxStore/Actions/eventActions";
 import { signInClicked } from "../../ReduxStore/Actions/userActions";
 import {
   Route,
@@ -68,7 +67,6 @@ const InternalSignIn = props => {
 InternalSignIn.propTypes = {
   userInformation: PropTypes.object,
   onSignInClicked: PropTypes.func,
-  setLoading: PropTypes.func,
 };
 
 const mapStateToProps = ({userReducer}) => {
@@ -87,8 +85,6 @@ const mapDispatchToProps = dispatch => {
   return {
     onSignInClicked: (email, password) =>
       dispatch(signInClicked(email, password)),
-      setLoading: (status) => dispatch(setLoading(status)),
-
   };
 };
 

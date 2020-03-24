@@ -15,7 +15,6 @@ export const CurrentDisplayArticles = props => {
               <ArticleTitle
                 pageName={props.pageName}
                 article={article}
-                setLoading={props.setLoading}
                 setProfileNavStatus={props.setProfileNavStatus}
                 loadUserProfileDetail={props.loadUserProfileDetail}
               />
@@ -25,7 +24,6 @@ export const CurrentDisplayArticles = props => {
                 setHttpMethod={props.setHttpMethod}
                 article={article}
                 userInformation={props.userInformation}
-                setLoading={props.setLoading}
                 currentPageOffSet={props.currentPageOffSet}
                 onFavoritedArticleClicked={props.onFavoritedArticleClicked}
               />

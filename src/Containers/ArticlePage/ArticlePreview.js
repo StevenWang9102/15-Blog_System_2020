@@ -24,7 +24,6 @@ import {
 import {
   favoritedButtonClicked,
   setHomeNavStatus,
-  setLoading,
   updateSettingStatus,
   favoritedArticleNavClicked
 } from "../../ReduxStore/Actions/eventActions";
@@ -60,7 +59,6 @@ const InternalArticlePreview = props => {
             <FeedsToggle
               fromPage='Article Preview'
               userInformation={props.userInformation}
-              setLoading={props.setLoading}
               popularNavClean={props.popularNavClean}
               loadYourFeedArticles={props.loadYourFeedArticles}
               setHomeNavStatus={props.setHomeNavStatus}
@@ -80,7 +78,6 @@ const InternalArticlePreview = props => {
         pageName='Article Preview'
         userInformation={props.userInformation}
         currentDisplayArticle={props.currentHomeDisplayArticle}
-        setLoading={props.setLoading}
         httpMethod={httpMethod}
         setHttpMethod={setHttpMethod}
         currentPageOffSet={currentPageOffSet}
@@ -91,7 +88,6 @@ const InternalArticlePreview = props => {
       <PageTunner
         fromPage='ArticlePriview'
         articlesAllCount={props.articlesAllCount}
-        setLoading={props.setLoading}
         globalNav={props.globalNav}
         popularNav={props.popularNav}
         onPopularTagClicked={props.onPopularTagClicked}
@@ -111,7 +107,6 @@ InternalArticlePreview.propTypes = {
   popularNav: PropTypes.string.isRequired,
   yourNav: PropTypes.string.isRequired,
   globalNav: PropTypes.string,
-  setLoading: PropTypes.func.isRequired,
   articlesAllCount: PropTypes.number
 };
 
@@ -140,7 +135,6 @@ const mapStateToProps = ({ eventReducer, articleReducer, userReducer }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setLoading: status => dispatch(setLoading(status)),
     setHomeNavStatus: (your, favorite, popular) =>
       dispatch(setHomeNavStatus(your, favorite, popular)),
     loadYourFeedArticles: (displayLimit, offset) =>

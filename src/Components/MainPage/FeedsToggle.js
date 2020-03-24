@@ -19,7 +19,6 @@ export const FeedsToggle = props => {
                 <FeedsNav
                   navName={feed}
                   author_name={props.author_name}
-                  setLoading={props.setLoading}
                   setProfileNavStatus={props.setProfileNavStatus}
                   profileNavStatusLeft={props.profileNavStatusLeft}
                   profileNavStatusRight={props.profileNavStatusRight}
@@ -37,7 +36,6 @@ export const FeedsToggle = props => {
                 <FeedsNav
                   navName={feed}
                   userInformation={props.userInformation}
-                  setLoading={props.setLoading}
                   popularNavClean={props.popularNavClean}
                   loadYourFeedArticles={props.loadYourFeedArticles}
                   setHomeNavStatus={props.setHomeNavStatus}

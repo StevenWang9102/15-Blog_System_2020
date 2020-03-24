@@ -8,7 +8,6 @@ import { loadInitArticleDetail } from "../../ReduxStore/Actions/articleActions";
 import {
   onDeleteArticleClicked,
   onEditArticleClicked,
-  setLoading
 } from "../../ReduxStore/Actions/eventActions";
 import { saveUserInformationToStore } from "../../ReduxStore/Actions/userActions";
 import { EditButton } from "../../Components/ArticlePage/EditButton";
@@ -46,7 +45,6 @@ const InternalArticleDetails = props => {
               <div className='article-meta article-source'>
                 <ArticleTitle
                   onPage="Article Details"
-                  setLoading={props.setLoading}
                   article={props.currentArticleDetails}
                 />
               </div>
@@ -98,7 +96,6 @@ const mapDispatchToProps = dispatch => {
     onDeleteArticleClicked: slug => dispatch(onDeleteArticleClicked(slug)),
     saveUserInformationToStore: userInformation =>
       dispatch(saveUserInformationToStore(userInformation)),
-    setLoading: status => dispatch(setLoading(status))
   };
 };
 

@@ -11,7 +11,6 @@ import {
   setProfileNavStatus,
   updateSettingStatus,
   onFollowAuthorClick,
-  setLoading,
   favoritedButtonClicked
 } from "../../ReduxStore/Actions/eventActions";
 import { loadUserProfileDetail } from "../../ReduxStore/Actions/userActions";
@@ -56,7 +55,6 @@ const InternalUserProfile = props => {
               <FeedsToggle
                 fromPage="User Profile"
                 author_name={author_name}
-                setLoading={props.setLoading}
                 setProfileNavStatus={props.setProfileNavStatus}
                 profileNavStatusLeft={props.profileNavStatusLeft}
                 profileNavStatusRight={props.profileNavStatusRight}
@@ -71,7 +69,6 @@ const InternalUserProfile = props => {
                 currentDisplayArticle={props.currentProfileDisplayArticle}
                 httpMethod={httpMethod}
                 setHttpMethod={setHttpMethod}
-                setLoading={props.setLoading}
                 setProfileNavStatus={props.setProfileNavStatus}
                 currentPageOffSet={currentPageOffSet}
                 userInformation={props.userInformation}
@@ -148,7 +145,6 @@ const mapDispatchToProps = dispatch => {
       dispatch(
         setProfileNavStatus(profileNavStatusLeft, profileNavStatusRight)
       ),
-    setLoading: status => dispatch(setLoading(status)),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
     onFollowAuthorClick: (author_name, method) =>
       dispatch(onFollowAuthorClick(author_name, method)),
