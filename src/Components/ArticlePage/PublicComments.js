@@ -1,5 +1,6 @@
 import React from "react";
 import dateFormat from "dateformat";
+import PropTypes from "prop-types";
 
 export const PublicComments = props => {
   return (
@@ -40,4 +41,8 @@ export const PublicComments = props => {
       </div>
     </div>
   );
+};
+
+PublicComments.propTypes = {
+  currentComments: PropTypes.object,
 };

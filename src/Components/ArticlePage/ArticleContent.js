@@ -1,5 +1,6 @@
 import React from "react";
 import { createUseStyles } from "react-jss";
+import PropTypes from "prop-types";
 
 const useStyles = createUseStyles({
   content: {
@@ -27,4 +28,8 @@ export const ArticleContent = props => {
       <hr />
     </div>
   );
+};
+
+ArticleContent.propTypes = {
+  currentArticleDetails: PropTypes.object.isRequired,
 };

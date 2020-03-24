@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { displayLimit } from "../../ReduxStore/HttpClient";
 import { createUseStyles } from "react-jss";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const useStyles = createUseStyles({
   myButton: {
@@ -71,15 +72,19 @@ export const PageTunner = props => {
                 <Page padding={padding} key={index} clickedPage={clickedPage}>
                   <Link
                     to={`/home/${currentTag}/p${pageNumber}`}
-                    onClick={() => {                      
+                    onClick={() => {
                       setClickedIndex(index);
                       props.setCurrentPageOffSet(offset);
                       if (currentTag === "global_feed")
                         props.loadGlobalFeeds(displayLimit, offset);
                       else if (currentTag === "your_feed")
                         props.loadYourFeedArticles(displayLimit, offset);
-                      else if (currentTag === "popular_feed"){
-                        props.onPopularTagClicked(props.currentTagName, displayLimit, offset);
+                      else if (currentTag === "popular_feed") {
+                        props.onPopularTagClicked(
+                          props.currentTagName,
+                          displayLimit,
+                          offset
+                        );
                       }
                     }}>
                     {pageNumber}
@@ -114,4 +119,12 @@ export const PageTunner = props => {
       </ul>
     </nav>
   );
+};
+
+PageTunner.propTypes = {
+  articlesAllCount: PropTypes.number,
+  fromPage: PropTypes.string,
+  loadUserProfileDetail: PropTypes.func,
+  loadGlobalFeeds: PropTypes.func,
+  onFavoritedArticleNavClicked: PropTypes.func,
 };

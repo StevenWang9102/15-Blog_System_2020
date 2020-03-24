@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import { FavoritedButton } from "../../Components/MainPage/FavoritedButton";
 import { ArticleTitle } from "../../Components/ArticlePage/ArticleTitle";
 
@@ -46,4 +47,12 @@ export const CurrentDisplayArticles = props => {
         )}
     </div>
   );
+};
+
+CurrentDisplayArticles.propTypes = {
+  currentDisplayArticle: PropTypes.object,
+  pageName: PropTypes.string,
+  userInformation: PropTypes.object,
+  setProfileNavStatus: PropTypes.func,
+  loadUserProfileDetail: PropTypes.func,
 };

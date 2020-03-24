@@ -16,7 +16,6 @@ import {
   setProfileNavStatus,
   postedArticleReloaded,
   updateSettingStatus,
-  setLoading
 } from "../../ReduxStore/Actions/eventActions";
 
 import { HashRouter as Router, Link } from "react-router-dom";
@@ -65,7 +64,6 @@ const InternalNavbar = props => {
                   setDeleteArticleStatus={props.setDeleteArticleStatus}
                   loadUserProfileDetail={props.loadUserProfileDetail}
                   setProfileNavStatus={props.setProfileNavStatus}
-                  setLoading={props.setLoading}
                 />
               ) : (
                 <UnLoggedNav/>
@@ -107,7 +105,6 @@ const mapDispatchToProps = dispatch => {
     onSignUpButtonClicked: data => dispatch(onSignUpButtonClicked(data)),
     postedArticleReloaded: data => dispatch(postedArticleReloaded(data)),
     userInformationLoaded: user => dispatch(userInformationLoaded(user)),
-    setLoading: status => dispatch(setLoading(status))
   };
 };
 

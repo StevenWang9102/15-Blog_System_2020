@@ -8,7 +8,6 @@ import { logOutButtonClicked } from "../../ReduxStore/Actions/userActions";
 import { getUserFromSession } from "../../ReduxStore/AuthToken";
 import {
   onUpdateSettingClicked,
-  setLoading
 } from "../../ReduxStore/Actions/eventActions";
 import { userInformationLoaded } from "../../ReduxStore/Actions/userActions";
 
@@ -152,7 +151,6 @@ const mapStateToProps = ({ eventReducer, userReducer }) => {
 const mapDispatchToProps = dispatch => {
   return {
     logOutButtonClicked: () => dispatch(logOutButtonClicked()),
-    setLoading: status => dispatch(setLoading(status)),
     userInformationLoaded: user => dispatch(userInformationLoaded(user)),
     onUpdateSettingClicked: request => dispatch(onUpdateSettingClicked(request))
   };

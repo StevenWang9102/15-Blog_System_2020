@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {displayLimit, offset } from "../../ReduxStore/HttpClient"
+import PropTypes from "prop-types";
 
 export const LoggedUserNav = props => {
 
@@ -48,4 +49,11 @@ export const LoggedUserNav = props => {
       </li>
     </div>
   );
+};
+
+LoggedUserNav.propTypes = {
+  getUserInformationLocal: PropTypes.func,
+  postedArticleReloaded: PropTypes.func,
+  loadUserProfileDetail: PropTypes.func,
+  setProfileNavStatus: PropTypes.func,
 };

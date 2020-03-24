@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import dateFormat from "dateformat";
 import { displayLimit, offset } from "../../ReduxStore/HttpClient";
+import PropTypes from "prop-types";
 
 export const ArticleTitle = props => {
 
@@ -30,4 +31,12 @@ export const ArticleTitle = props => {
       </div>
     </Link>
   );
+};
+
+
+ArticleTitle.propTypes = {
+  article: PropTypes.object,
+  pageName: PropTypes.string,
+  setProfileNavStatus: PropTypes.func,
+  loadUserProfileDetail: PropTypes.func,
 };

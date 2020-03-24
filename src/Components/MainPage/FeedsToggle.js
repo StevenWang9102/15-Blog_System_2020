@@ -1,5 +1,6 @@
 import React from "react";
 import { FeedsNav } from "../../Components/MainPage/FeedsNav";
+import PropTypes from "prop-types";
 
 export const FeedsToggle = props => {
   let myRender = [];
@@ -53,4 +54,12 @@ export const FeedsToggle = props => {
       </ul>
     </div>
   );
+};
+
+FeedsToggle.propTypes = {
+  fromPage: PropTypes.string,
+  profileNavStatusLeft: PropTypes.string,
+  profileNavStatusRight: PropTypes.string,
+  loadYourFeedArticles: PropTypes.func,
+  setProfileNavStatus: PropTypes.func,
 };

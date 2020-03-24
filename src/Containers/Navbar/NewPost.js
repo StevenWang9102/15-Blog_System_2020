@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useParams, Redirect } from "react-router-dom";
-import { setLoading, onPostArticleClicked } from "../../ReduxStore/Actions/eventActions";
+import { onPostArticleClicked } from "../../ReduxStore/Actions/eventActions";
 import { NewPostForm } from "../../Components/Navbar/NewPostForm"
 import PropTypes from "prop-types";
 
@@ -42,7 +42,6 @@ const InternalNewPost = props => {
                     setContent={setContent}
                     setTags={setTags}
                     currentSlug={props.currentSlug}
-                    setLoading={props.setLoading}
                     onPostArticleClicked={props.onPostArticleClicked}
                   />
                 </div>
@@ -82,7 +81,6 @@ const mapStateToProps = ({ eventReducer, articleReducer }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setLoading: (status) => dispatch(setLoading(status)),
     onPostArticleClicked: (title, description, content, tags, slug) =>
       dispatch(onPostArticleClicked(title, description, content, tags, slug))
   };

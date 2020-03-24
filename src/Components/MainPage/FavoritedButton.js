@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { createUseStyles } from "react-jss";
+import PropTypes from "prop-types";
 
 const useStyles = createUseStyles({
   myButton: {
@@ -66,4 +67,12 @@ export const FavoritedButton = props => {
       {props.article.favoritesCount + favoritesCountPlus}
     </Button>
   );
+};
+
+
+FavoritedButton.propTypes = {
+  userInformation: PropTypes.object,
+  article: PropTypes.object,
+  onFavoritedArticleClicked: PropTypes.func,
+  setHttpMethod: PropTypes.func,
 };

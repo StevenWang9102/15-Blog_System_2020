@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 
 export const YourComments = props => {
   return (
@@ -32,3 +32,8 @@ export const YourComments = props => {
   );
 };
 
+
+YourComments.propTypes = {
+  userInformation: PropTypes.object,
+  currentSlug: PropTypes.string,
+};

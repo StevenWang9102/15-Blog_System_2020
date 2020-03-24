@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { displayLimit, offset } from "../../ReduxStore/HttpClient";
+import PropTypes from "prop-types";
 
 export const FeedsNav = props => {
   let isExist;
@@ -97,4 +98,11 @@ export const FeedsNav = props => {
       )}
     </span>
   );
+};
+
+FeedsNav.propTypes = {
+  navName: PropTypes.string,
+  userInformation: PropTypes.object,
+  author_name: PropTypes.string,
+  setHomeNavStatus: PropTypes.func,
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 export const EditButton = props => {
   return (
@@ -20,4 +21,10 @@ export const EditButton = props => {
       </button>
     </div>
   );
+};
+
+EditButton.propTypes = {
+  article_slug: PropTypes.string,
+  onEditArticleClicked: PropTypes.func,
+  onDeleteArticleClicked: PropTypes.func,
 };
