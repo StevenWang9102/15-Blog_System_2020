@@ -48,6 +48,7 @@ const InternalSetting = props => {
               <div className='row'>
                 <div className='col-md-6 offset-md-3 col-xs-12'>
                   <h1 className='text-xs-center'>Your Settings</h1>
+                  
                   <form>
                     <fieldset className='form-group'>
                       <input
