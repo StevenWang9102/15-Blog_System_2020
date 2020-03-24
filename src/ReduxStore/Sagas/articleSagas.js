@@ -38,7 +38,9 @@ export const articleSaga = function*() {
   });
 
   // ----------- LOAD_POPULAR_TAGS -----------
-  yield takeLatest(LOAD_POPULAR_TAGS, function*() {
+  yield takeLatest(LOAD_POPULAR_TAGS, function*(action) {    
+    console.log(action);
+    
     try {
       yield put(setLoading("LOADING"));
       const initTagData = yield call(
@@ -79,14 +81,15 @@ export const articleSaga = function*() {
 
   // ----------- POPULAR_TAG_CLICKED -----------
   yield takeLatest(POPULAR_TAG_CLICKED, function*(action) {
+    console.log(action);
     try {
       yield put(setLoading("LOADING"));
       const tagRelatedData = yield call(
         fetchDataFromServer,
-        `/articles?tag=${action.tagName}&limit=10&offset=0`,
+        `/articles?tag=${action.tagName}&limit=${action.displayLimit}&offset=${action.offset}`,
         "Load Popular Tags"
       );
-      yield put(tagRelatedArticleLoaded(tagRelatedData.articles));
+      yield put(tagRelatedArticleLoaded(tagRelatedData));
       yield put(setLoading("LOADED"));
     } catch {
       yield put(setLoading("LOADED"));

@@ -49,6 +49,7 @@ export const PageTunner = props => {
             let currentTag = "";
             if (props.globalNav === "active") currentTag = "global_feed";
             if (props.yourNav === "active") currentTag = "your_feed";
+            if (props.popularNav === "active") currentTag = "popular_feed";
 
             // Deal with page padding
             let padding = "";
@@ -70,14 +71,16 @@ export const PageTunner = props => {
                 <Page padding={padding} key={index} clickedPage={clickedPage}>
                   <Link
                     to={`/home/${currentTag}/p${pageNumber}`}
-                    onClick={() => {
+                    onClick={() => {                      
                       setClickedIndex(index);
                       props.setCurrentPageOffSet(offset);
                       if (currentTag === "global_feed")
                         props.loadGlobalFeeds(displayLimit, offset);
                       else if (currentTag === "your_feed")
                         props.loadYourFeedArticles(displayLimit, offset);
-                      else props.loadPopularTags();
+                      else if (currentTag === "popular_feed"){
+                        props.onPopularTagClicked(props.currentTagName, displayLimit, offset);
+                      }
                     }}>
                     {pageNumber}
                   </Link>

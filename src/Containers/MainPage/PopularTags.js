@@ -22,7 +22,7 @@ const InternalPopularTages = props => {
                 value={tagName}
                 onClick={() => {
                   props.emptyArticleAllCount();
-                  props.onPopularTagClicked(tagName);
+                  props.onPopularTagClicked(tagName, 10, 0);
                   props.setHomeNavStatus("null", "null", "active");
                 }}
                 to={`/home/popular_tags#${tagName}`}>
@@ -52,7 +52,7 @@ const mapStateToProps = ({ articleReducer }) => {
 const mapDispatchToProps = dispatch => {
   return {
     setLoading: status => dispatch(setLoading(status)),
-    onPopularTagClicked: tagName => dispatch(popularTagClicked(tagName)),
+    onPopularTagClicked: (tagName, limit, offset) => dispatch(popularTagClicked(tagName, limit, offset)),
     setHomeNavStatus: (your, favorited, popular) =>
       dispatch(setHomeNavStatus(your, favorited, popular))
   };

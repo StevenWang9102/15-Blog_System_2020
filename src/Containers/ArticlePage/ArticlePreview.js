@@ -7,14 +7,18 @@ import { displayLimit, offset } from "../../ReduxStore/HttpClient";
 import { FeedsToggle } from "../../Components/MainPage/FeedsToggle";
 import { CurrentDisplayArticles } from "../../Components/ArticlePage/CurrentDisplayArticles";
 import { PageTunner } from "../../Components/MainPage/PageTunner";
-import { loadUserProfileDetail, setSignUpStatus} from "../../ReduxStore/Actions/userActions";
+import {
+  loadUserProfileDetail,
+  setSignUpStatus
+} from "../../ReduxStore/Actions/userActions";
 
 import {
   loadGlobalFeeds,
   loadYourArticles,
   loadPopularTags,
   setDeleteArticleStatus,
-  popularNavClean
+  popularNavClean,
+  popularTagClicked
 } from "../../ReduxStore/Actions/articleActions";
 
 import {
@@ -22,7 +26,7 @@ import {
   setHomeNavStatus,
   setLoading,
   updateSettingStatus,
-  favoritedArticleNavClicked,
+  favoritedArticleNavClicked
 } from "../../ReduxStore/Actions/eventActions";
 
 const InternalArticlePreview = props => {
@@ -44,6 +48,8 @@ const InternalArticlePreview = props => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log(props.articlesAllCount);
 
   return (
     <div className='col-md-9 col-sm-12'>
@@ -87,8 +93,10 @@ const InternalArticlePreview = props => {
         articlesAllCount={props.articlesAllCount}
         setLoading={props.setLoading}
         globalNav={props.globalNav}
+        popularNav={props.popularNav}
+        onPopularTagClicked={props.onPopularTagClicked}
         loadGlobalFeeds={props.loadGlobalFeeds}
-        loadPopularTags={props.loadPopularTags}
+        currentTagName={props.currentTagName}
         setCurrentPageOffSet={setCurrentPageOffSet}
       />
     </div>
@@ -138,13 +146,13 @@ const mapDispatchToProps = dispatch => {
     loadYourFeedArticles: (displayLimit, offset) =>
       dispatch(loadYourArticles(displayLimit, offset)),
     updateSettingStatus: status => dispatch(updateSettingStatus(status)),
-// popularNavClean
-popularNavClean: () => dispatch(popularNavClean()),
+    popularNavClean: () => dispatch(popularNavClean()),
 
     onFavoritedArticleClicked: (token, slug, httpMethod, currentPageOffSet) =>
       dispatch(
         favoritedButtonClicked(token, slug, httpMethod, currentPageOffSet)
       ),
+    onPopularTagClicked: (currentTagName, displayLimit, offset) => dispatch(popularTagClicked(currentTagName, displayLimit, offset)),
     loadGlobalFeeds: (displayLimit, offset) => {
       dispatch(loadGlobalFeeds(displayLimit, offset));
     },

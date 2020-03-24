@@ -39,7 +39,10 @@ export const articleReducer = (state = initialState, action) => {
       return { ...state, popularTags: action.tagsData };
 
     case TAG_RELATED_ARTICLE_LOADED:
-      return { ...state, currentHomeDisplayArticle: action.data };
+      return { ...state, 
+        currentHomeDisplayArticle: action.data.articles,
+        articlesAllCount: action.data.articlesCount,
+      };
 
     case ARTICLE_CONTENT_LOADED:
       return {

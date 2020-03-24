@@ -62,8 +62,8 @@ export const articleTitleClicked = (title, slug) => {
   return { type: ARTICLE_TITLE_CLICKED, title, slug };
 };
 
-export const popularTagClicked = tagName => {
-  return { type: POPULAR_TAG_CLICKED, tagName };
+export const popularTagClicked = (tagName, displayLimit, offset) => {
+  return { type: POPULAR_TAG_CLICKED, tagName, displayLimit, offset };
 };
 
 export const popularTagIsDiplayed = tagName => {

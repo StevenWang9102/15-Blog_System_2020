@@ -24,13 +24,14 @@ const InternalUserProfile = props => {
   const [currentPageOffSet, setCurrentPageOffSet] = useState(0);
 
   useEffect(() => {
-    props.loadUserProfileDetail(author_name, displayLimit, offset);
     props.updateSettingStatus("NOT UPDATED");
     props.setProfileNavStatus("active", "null");
 
     if (article_type === "favorited_articles") {
+      props.onFavoritedArticleNavClicked(author_name, displayLimit, offset)
       props.setProfileNavStatus("null", "active");
     } else {
+      props.loadUserProfileDetail(author_name, displayLimit, offset);
       props.setProfileNavStatus("active", "null");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
