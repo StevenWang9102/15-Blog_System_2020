@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<a
+  href="#/user_profile/undefined"
+  onClick={[Function]}
+>
+  <img
+    alt="au"
+    className="author-image"
+  />
+  <div
+    className="info author"
+    onClick={[Function]}
+  >
+    <span
+      className="date"
+    >
+      Wed Mar 25 2020
+    </span>
+  </div>
+</a>
+`;

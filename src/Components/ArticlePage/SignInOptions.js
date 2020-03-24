@@ -1,8 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { HashRouter as Router, Link } from "react-router-dom";
 
 export const SignInOptions = props => {
   return (
+    <Router>
     <div className='container page'>
       <div className='row'>
         <div className='col-md-12'>
@@ -15,5 +16,6 @@ export const SignInOptions = props => {
         </div>
       </div>
     </div>
+    </Router>
   );
 };

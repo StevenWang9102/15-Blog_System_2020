@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div>
+  <li
+    className="nav-item"
+  >
+    <a
+      className="nav-link active"
+      href="#/home"
+      onClick={[Function]}
+    >
+      Home
+    </a>
+  </li>
+  <li
+    className="nav-item"
+  >
+    <a
+      className="nav-link"
+      href="#/new_post"
+      onClick={[Function]}
+    >
+      <img
+        alt=""
+        src="../../icon/008-edit.png"
+      />
+      New Post
+    </a>
+  </li>
+  <li
+    className="nav-item"
+  >
+    <a
+      className="nav-link"
+      href="#/setting"
+      onClick={[Function]}
+    >
+      <img
+        alt=""
+        src="../../icon/004-settings.png"
+      />
+      Setting
+    </a>
+  </li>
+  <li
+    className="nav-item"
+  >
+    <a
+      className="nav-link"
+      href="#/user_profile/undefined"
+      onClick={[Function]}
+    >
+      <img
+        alt=""
+        className="user-pic"
+      />
+    </a>
+  </li>
+</div>
+`;

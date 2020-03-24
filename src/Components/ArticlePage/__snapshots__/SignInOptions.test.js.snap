@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="container page"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-md-12"
+    >
+      <a
+        href="#/sign_in"
+        onClick={[Function]}
+      >
+        <span>
+           Sign in 
+        </span>
+      </a>
+      or
+      <a
+        href="#/sign_up"
+        onClick={[Function]}
+      >
+         Sign up 
+      </a>
+      to add comments on this article.
+    </div>
+  </div>
+</div>
+`;

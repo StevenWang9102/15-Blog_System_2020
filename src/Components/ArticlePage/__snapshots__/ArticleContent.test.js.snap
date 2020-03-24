@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="container page"
+>
+  <div
+    className="row article-content content-0-2-1"
+  >
+    <div
+      className="col-md-12 article-detail"
+    />
+  </div>
+  <hr />
+</div>
+`;

@@ -4,6 +4,6 @@ import renderer from 'react-test-renderer';
 
 it('renders correctly', () => {
   const tree = renderer
-    .create(<ArticleContent currentArticleDetails="test"/>).toJSON();
+    .create(<ArticleContent currentArticleDetails={{}}/>).toJSON();
   expect(tree).toMatchSnapshot();
 });

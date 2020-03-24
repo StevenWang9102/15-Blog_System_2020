@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="edit-button"
+>
+  <a
+    href="#/new_post/test"
+    onClick={[Function]}
+  >
+    <button
+      className="btn btn-sm btn-outline-secondary"
+      onClick={[Function]}
+      type="button"
+    >
+      Edit Article
+    </button>
+  </a>
+  <button
+    className="btn btn-sm btn-outline-danger"
+    onClick={[Function]}
+  >
+    Delete Article
+  </button>
+</div>
+`;

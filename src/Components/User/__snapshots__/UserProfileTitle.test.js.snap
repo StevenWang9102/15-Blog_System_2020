@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="user-info"
+>
+  <div
+    className="container"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-xs-12 col-md-10 offset-md-1"
+      >
+        <img
+          alt="au"
+          className="user-img"
+        />
+        <h4>
+          test
+        </h4>
+        <p />
+        <button
+          className="btn btn-sm btn-outline-secondary action-btn myButton-0-2-1"
+        >
+          <span
+            className="nav-link"
+            onClick={[Function]}
+          >
+            <span>
+               + Follow test Now 
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

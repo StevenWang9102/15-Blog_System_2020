@@ -1,9 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { HashRouter as Router, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 export const EditButton = props => {
+
   return (
+    <Router>
     <div className='edit-button'>
       <Link to={`/new_post/${props.article_slug}`}>
         <button
@@ -20,6 +22,7 @@ export const EditButton = props => {
         Delete Article
       </button>
     </div>
+    </Router>
   );
 };
 
