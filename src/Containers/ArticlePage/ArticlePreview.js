@@ -87,8 +87,10 @@ const InternalArticlePreview = props => {
         fromPage='ArticlePriview'
         articlesAllCount={props.articlesAllCount}
         globalNav={props.globalNav}
+        yourNav={props.yourNav}
         popularNav={props.popularNav}
         onPopularTagClicked={props.onPopularTagClicked}
+        loadYourFeedArticles={props.loadYourFeedArticles}
         loadGlobalFeeds={props.loadGlobalFeeds}
         currentTagName={props.currentTagName}
         setCurrentPageOffSet={setCurrentPageOffSet}

@@ -75,6 +75,9 @@ export const PageTunner = props => {
                   <Link
                     to={`/home/${currentTag}/p${pageNumber}`}
                     onClick={() => {
+                      console.log(props.yourNav);
+                      console.log(currentTag);
+                      
                       setClickedIndex(index);
                       props.setCurrentPageOffSet(offset);
                       if (currentTag === "global_feed")

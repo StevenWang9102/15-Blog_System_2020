@@ -99,13 +99,13 @@ const InternalSetting = props => {
                       className='btn btn-lg btn-primary pull-xs-right'
                       type='button'
                       onClick={() => {
-                        props.onUpdateSettingClicked({
-                          image,
-                          name,
-                          bio,
-                          email,
-                          passWord
-                        });
+                        props.onUpdateSettingClicked({user:{
+                          "image": image,
+                          "username": name,
+                          "bio": bio,
+                          "email": email,
+                          "passWord": passWord,
+                        }});
                       }}>
                       Update Settings
                     </button>
@@ -118,7 +118,7 @@ const InternalSetting = props => {
                         className='btn btn-lg btn-danger'
                         onClick={() => {
                           removeUserFromSession();
-                          logOutButtonClicked();
+                          props.logOutButtonClicked();
                         }}>
                         click here to logout
                       </button>
