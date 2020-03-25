@@ -48,7 +48,8 @@ const mapStateToProps = ({ articleReducer }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onPopularTagClicked: (tagName, limit, offset) => dispatch(popularTagClicked(tagName, limit, offset)),
+    onPopularTagClicked: (tagName, limit, offset) =>
+      dispatch(popularTagClicked(tagName, limit, offset)),
     setHomeNavStatus: (your, favorited, popular) =>
       dispatch(setHomeNavStatus(your, favorited, popular))
   };

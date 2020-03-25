@@ -104,5 +104,5 @@ FeedsNav.propTypes = {
   navName: PropTypes.string,
   userInformation: PropTypes.object,
   author_name: PropTypes.string,
-  setHomeNavStatus: PropTypes.func,
+  setHomeNavStatus: PropTypes.func
 };

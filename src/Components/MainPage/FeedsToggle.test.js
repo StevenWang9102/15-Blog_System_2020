@@ -12,7 +12,6 @@ it("renders correctly", () => {
         loadYourFeedArticles={() => {}}
         setProfileNavStatus={() => {}}
       />
-    )
-    .toJSON();
+    ).toJSON();
   expect(tree).toMatchSnapshot();
 });

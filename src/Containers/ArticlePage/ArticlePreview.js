@@ -146,7 +146,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(
         favoritedButtonClicked(token, slug, httpMethod, currentPageOffSet)
       ),
-    onPopularTagClicked: (currentTagName, displayLimit, offset) => dispatch(popularTagClicked(currentTagName, displayLimit, offset)),
+    onPopularTagClicked: (currentTagName, displayLimit, offset) =>
+      dispatch(popularTagClicked(currentTagName, displayLimit, offset)),
     loadGlobalFeeds: (displayLimit, offset) => {
       dispatch(loadGlobalFeeds(displayLimit, offset));
     },

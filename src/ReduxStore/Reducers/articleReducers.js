@@ -89,8 +89,6 @@ export const articleReducer = (state = initialState, action) => {
     case LOAD_GLOBAL_FEEDS:
       return { ...state, currentTagName: "" };
 
-    // POPULAR_TAG_CLEAN
-    // 好像和上面动作一样
     case POPULAR_TAG_CLEAN:
        return { ...state, currentTagName: null };     
 

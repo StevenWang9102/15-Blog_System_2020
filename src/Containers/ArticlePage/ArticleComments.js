@@ -11,16 +11,15 @@ const InternalArticleComments = props => {
 
   return (
     <div className='commonts-container'>
-
-      <YourComments 
+      <YourComments
         userInformation={props.userInformation}
         currentSlug={props.currentSlug}
         myComment={myComment}
         setMyComment={setMyComment}
-        onPostCommentsClicked={props.onPostCommentsClicked}/>
+        onPostCommentsClicked={props.onPostCommentsClicked}
+      />
 
-      <PublicComments
-        currentComments={props.currentComments} />
+      <PublicComments currentComments={props.currentComments} />
     </div>
   );
 };
@@ -31,13 +30,13 @@ InternalArticleComments.propTypes = {
   currentSlug: PropTypes.string,
   myComment: PropTypes.array,
   setMyComment: PropTypes.func,
-  onPostCommentsClicked: PropTypes.func,
+  onPostCommentsClicked: PropTypes.func
 };
 
 const mapStateToProps = ({ articleReducer, userReducer }) => {
   const { currentComments, currentSlug } = articleReducer;
   const { userInformation } = userReducer;
-  
+
   return {
     currentComments,
     currentSlug,
@@ -47,7 +46,8 @@ const mapStateToProps = ({ articleReducer, userReducer }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onPostCommentsClicked: (slug, myComment) => dispatch(onPostCommentsClicked(slug, myComment))
+    onPostCommentsClicked: (slug, myComment) =>
+      dispatch(onPostCommentsClicked(slug, myComment))
   };
 };
 

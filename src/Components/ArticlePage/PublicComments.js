@@ -23,16 +23,14 @@ export const PublicComments = props => {
                         className='comment-author-img'
                         alt=''
                       />
-                    </a> &nbsp;
-
+                    </a>
+                    &nbsp;
                     <a href='#top' className='comment-author'>
                       {comment.author.username}
                     </a>
-
                     <span className='date-posted'>
                       {dateFormat(comment.updatedAt, "ddd mmm dd yyyy")}
                     </span>
-
                   </div>
                 </div>
               </div>
@@ -44,5 +42,5 @@ export const PublicComments = props => {
 };
 
 PublicComments.propTypes = {
-  currentComments: PropTypes.object,
+  currentComments: PropTypes.object
 };

@@ -15,7 +15,7 @@ import {
 import {
   setProfileNavStatus,
   postedArticleReloaded,
-  updateSettingStatus,
+  updateSettingStatus
 } from "../../ReduxStore/Actions/eventActions";
 
 import { HashRouter as Router, Link } from "react-router-dom";
@@ -42,7 +42,7 @@ const InternalNavbar = props => {
   useEffect(() => {
     getUserInformationLocal();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.userInformation ]);
+  }, [props.userInformation]);
 
   return (
     <Router>
@@ -66,7 +66,7 @@ const InternalNavbar = props => {
                   setProfileNavStatus={props.setProfileNavStatus}
                 />
               ) : (
-                <UnLoggedNav/>
+                <UnLoggedNav />
               )}
             </ul>
           </div>
@@ -104,7 +104,7 @@ const mapDispatchToProps = dispatch => {
       ),
     onSignUpButtonClicked: data => dispatch(onSignUpButtonClicked(data)),
     postedArticleReloaded: data => dispatch(postedArticleReloaded(data)),
-    userInformationLoaded: user => dispatch(userInformationLoaded(user)),
+    userInformationLoaded: user => dispatch(userInformationLoaded(user))
   };
 };
 
