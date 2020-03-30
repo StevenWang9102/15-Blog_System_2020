@@ -10,8 +10,10 @@ export const postDataToServerAll = (token, url, postData, message, type) => {
   
     if (postData !== "NothingToPost") request["body"] = JSON.stringify(postData);
     if (token !== null) headers["Authorization"] = `Token ${token}`;
+
+    const baseUrl = process.env.REACT_APP_API_BASE_URL;
   
-    return fetch(`https://conduit.productionready.io/api${url}`, request).then(
+    return fetch(`${baseUrl}${url}`, request).then(
       response => {
         if (response.ok) {
           return response.json().then(response => {
@@ -24,7 +26,8 @@ export const postDataToServerAll = (token, url, postData, message, type) => {
   };
   
 export const fetchDataFromServer = (url, message) => {
-    return fetch("https://conduit.productionready.io/api" + url).then(
+  const baseUrl = process.env.REACT_APP_API_BASE_URL;
+    return fetch(baseUrl + url).then(
       response => {
         if (response.ok) {
           return response.json().then(response => {
