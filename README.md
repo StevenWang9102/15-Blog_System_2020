@@ -4,7 +4,8 @@
     This website is developed by me and guided by Frank
 
 <!-- How to work? -->
-    run "npm start" in VS code terminal
+    run "npm start" in VS code terminal.
+    You can also watch project videos on my personal website.(https://stevenwangakl.wixsite.com/myprojects)
 
 <!-- Functions -->
 - you can sign in and sign up users
