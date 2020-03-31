@@ -1,4 +1,4 @@
-export const displayLimit = 10;
+export const displayLimit = 3;
 export const offset = 0;
 
 export const postDataToServerAll = (token, url, postData, message, type) => {
@@ -24,6 +24,7 @@ export const postDataToServerAll = (token, url, postData, message, type) => {
 };
 
 export const fetchDataFromServer = (url, message) => {
+  
   const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
   return fetch(baseUrl + url).then(response => {

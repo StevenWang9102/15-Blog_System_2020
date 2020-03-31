@@ -1,0 +1,125 @@
+{
+  "articles": {
+    "articles": [
+      {
+        "id": 1,
+        "title": "Title Test1",
+        "slug": "title-test-imbf2yb",
+        "body": "## Markdown\n* first\n* second",
+        "createdAt": "2020-03-31T03:17:30.719Z",
+        "updatedAt": "2020-03-31T03:17:30.719Z",
+        "tagList": [],
+        "description": "about Test",
+        "author": {
+          "username": "vvtesttest",
+          "bio": null,
+          "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+          "following": false
+        },
+        "favorited": false,
+        "favoritesCount": 0
+      },
+      {
+        "id": 2,
+        "title": "Title Test2",
+        "slug": "title-test-imbf2yb",
+        "body": "## Markdown\n* first\n* second",
+        "createdAt": "2020-03-31T03:17:30.719Z",
+        "updatedAt": "2020-03-31T03:17:30.719Z",
+        "tagList": [],
+        "description": "about Test",
+        "author": {
+          "username": "vvtesttest",
+          "bio": null,
+          "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+          "following": false
+        },
+        "favorited": false,
+        "favoritesCount": 0
+      },
+      {
+        "id": 3,
+        "title": "Title Test3",
+        "slug": "title-test-imbf2yb",
+        "body": "## Markdown\n* first\n* second",
+        "createdAt": "2020-03-31T03:17:30.719Z",
+        "updatedAt": "2020-03-31T03:17:30.719Z",
+        "tagList": [],
+        "description": "about Test",
+        "author": {
+          "username": "vvtesttest",
+          "bio": null,
+          "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+          "following": false
+        },
+        "favorited": false,
+        "favoritesCount": 0
+      },
+      {
+        "id": 4,
+        "title": "Title Test4",
+        "slug": "title-test-imbf2yb",
+        "body": "## Markdown\n* first\n* second",
+        "createdAt": "2020-03-31T03:17:30.719Z",
+        "updatedAt": "2020-03-31T03:17:30.719Z",
+        "tagList": [],
+        "description": "about Test",
+        "author": {
+          "username": "vvtesttest",
+          "bio": null,
+          "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+          "following": false
+        },
+        "favorited": false,
+        "favoritesCount": 0
+      },
+      {
+        "id": 5,
+        "title": "Title Test5",
+        "slug": "title-test-imbf2yb",
+        "body": "## Markdown\n* first\n* second",
+        "createdAt": "2020-03-31T03:17:30.719Z",
+        "updatedAt": "2020-03-31T03:17:30.719Z",
+        "tagList": [],
+        "description": "about Test",
+        "author": {
+          "username": "vvtesttest",
+          "bio": null,
+          "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+          "following": false
+        },
+        "favorited": false,
+        "favoritesCount": 0
+      },
+      {
+        "id": 6,
+        "title": "Title Test6",
+        "slug": "title-test-imbf2yb",
+        "body": "## Markdown\n* first\n* second",
+        "createdAt": "2020-03-31T03:17:30.719Z",
+        "updatedAt": "2020-03-31T03:17:30.719Z",
+        "tagList": [],
+        "description": "about Test",
+        "author": {
+          "username": "vvtesttest",
+          "bio": null,
+          "image": "https://static.productionready.io/images/smiley-cyrus.jpg",
+          "following": false
+        },
+        "favorited": false,
+        "favoritesCount": 0
+      }
+    ],
+    
+    "articlesCount": "12"
+  },
+  "tags": {
+    "tags": [
+      "butt",
+      "dragons",
+      "training",
+      "happiness",
+      "flowers"
+    ]
+  }
+}

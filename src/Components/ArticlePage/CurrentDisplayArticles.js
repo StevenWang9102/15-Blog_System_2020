@@ -8,7 +8,7 @@ export const CurrentDisplayArticles = props => {
 
   return (
     <div>
-      {props.currentDisplayArticle.map((article, index) => {
+      {props.currentDisplayArticle && props.currentDisplayArticle.map((article, index) => {
     
         return (
           <div className='article-preview' key={index}>

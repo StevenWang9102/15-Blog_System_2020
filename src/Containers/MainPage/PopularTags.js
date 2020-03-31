@@ -11,7 +11,7 @@ const InternalPopularTages = props => {
       <div className='sidebar'>
         <p>Popular Tags</p>
         <div className='tag-list'>
-          {props.popularTags.map((tagName, index) => {
+          {props.popularTags && props.popularTags.map((tagName, index) => {
             return (
               <NavLink
                 className='tag-pill tag-default'

@@ -20,7 +20,8 @@
     "typescript": "3.7.4"
   },
   "scripts": {
-    "start": "concurrently \"json-server --watch .\\mock\\db.json\" \"react-scripts start\"",
+    "start": "concurrently \"json-server --watch db.json\" \"react-scripts start\"",
+    "start-json": "json-server --watch db.json",
     "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject"
