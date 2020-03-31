@@ -21,7 +21,6 @@
   },
   "scripts": {
     "start": "concurrently \"json-server --watch db.json\" \"react-scripts start\"",
-    "start-json": "json-server --watch db.json",
     "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject"

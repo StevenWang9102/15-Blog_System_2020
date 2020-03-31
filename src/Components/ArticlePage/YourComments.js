@@ -1,17 +1,20 @@
 import React from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 
 export const YourComments = props => {
+  const [myComment, setMyComment] = useState("");
+
   return (
     <div className='row'>
       <div className='col-xs-12 col-md-8 offset-md-2'>
         <form className='card comment-form'>
           <div className='card-block'>
             <textarea
-              onChange={event => props.setMyComment(event.target.value)}
+              onChange={event => setMyComment(event.target.value)}
               className='form-control'
               placeholder='Write a comment...'
-              rows='3'></textarea>
+              rows='3'>{myComment}</textarea>
           </div>
           <div className='card-footer'>
             <img
@@ -22,8 +25,10 @@ export const YourComments = props => {
             <button
               type='button'
               className='btn btn-sm btn-primary'
-              onClick={() =>
-                props.onPostCommentsClicked(props.currentSlug, props.myComment)
+              onClick={() =>{
+                props.onPostCommentsClicked(props.currentSlug, myComment);
+                setMyComment();
+                }
               }>
               Post Comment
             </button>
@@ -36,5 +41,5 @@ export const YourComments = props => {
 
 YourComments.propTypes = {
   userInformation: PropTypes.object,
-  currentSlug: PropTypes.string
+  currentSlug: PropTypes.string,
 };
