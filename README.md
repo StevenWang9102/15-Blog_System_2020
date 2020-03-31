@@ -1,14 +1,16 @@
 ## Introduction
-    this is a website mainly post and substribe feed you prefer. You can create an account and substribe some authors. At the home page, you can find the author's article there. Also, you can post your own articles and write some comments to any article.
 
-    This website is developed by me and guided by Frank
+this is a website mainly post and substribe feed you prefer. You can create an account and substribe some authors. At the home page, you can find the author's article there. Also, you can post your own articles and write some comments to any article.
+
+This website is developed by me and guided by Frank
 
 ## How to work?
-    run "npm start" in VS code terminal.
 
-    You can also watch project videos on my personal website.(https://stevenwangakl.wixsite.com/myprojects)
+run "npm start" in VS code terminal.
 
-    You can play with it on my hosted website online (http://react-blog-system.s3-website-ap-southeast-2.amazonaws.com/).
+You can also watch project videos on my personal website.(https://stevenwangakl.wixsite.com/myprojects)
+
+You can play with it on my hosted website online (http://react-blog-system.s3-website-ap-southeast-2.amazonaws.com/).
 
 ## Functions
 - you can sign in and sign up users
