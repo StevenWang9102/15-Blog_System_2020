@@ -22,7 +22,13 @@ export const LoggedUserNav = props => {
             onClick={() => {
               props.postedArticleReloaded(false);
             }}>
-            <img src='../../icon/008-edit.png' alt='' />
+            <img
+              onClick={() => {
+                props.newPostNavClicked();
+              }}
+              src='../../icon/008-edit.png'
+              alt=''
+            />
             New Post
           </Link>
         </li>

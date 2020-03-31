@@ -41,6 +41,8 @@ export const eventSaga = function*() {
       const postData = {};
       const message = "Post an Article";
 
+      console.log(action.slug);
+      
       if (action.slug) {
         type = "PUT";
         url = `/articles/${action.slug}`;

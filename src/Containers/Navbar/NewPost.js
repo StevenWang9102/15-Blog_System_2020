@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useParams, Redirect } from "react-router-dom";
-import { onPostArticleClicked } from "../../ReduxStore/Actions/eventActions";
+import { onPostArticleClicked, newPostNavClicked } from "../../ReduxStore/Actions/eventActions";
 import { NewPostForm } from "../../Components/Navbar/NewPostForm"
 import PropTypes from "prop-types";
 
@@ -37,11 +37,12 @@ const InternalNewPost = props => {
                     description={description}
                     content={content}
                     tags={tags}
+                    newPostNavClicked={props.newPostNavClicked()}
                     setTitle={setTitle}
                     setDescription={setDescription}
                     setContent={setContent}
                     setTags={setTags}
-                    currentSlug={props.currentSlug}
+                    slug={slug}
                     onPostArticleClicked={props.onPostArticleClicked}
                   />
                 </div>
@@ -81,6 +82,8 @@ const mapStateToProps = ({ eventReducer, articleReducer }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    newPostNavClicked: () =>
+      dispatch(newPostNavClicked()),
     onPostArticleClicked: (title, description, content, tags, slug) =>
       dispatch(onPostArticleClicked(title, description, content, tags, slug))
   };

@@ -16,6 +16,10 @@ import {
   TAG_RELATED_ARTICLE_LOADED
 } from "../Actions/articleActions";
 
+import {
+  NEW_POST_NAV_CLICKED,
+} from "../Actions/eventActions";
+
 
 const initialState = {
   currentComments: {},
@@ -56,6 +60,9 @@ export const articleReducer = (state = initialState, action) => {
 
     case LOAD_INIT_ARTICLE_DETAIL:
       return { ...state, currentSlug: action.slug };
+
+    case NEW_POST_NAV_CLICKED:
+      return { ...state, currentSlug: null };
 
     case CURRENT_PROFILE_ARTICLE_LOADED:
       return {

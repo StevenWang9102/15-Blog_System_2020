@@ -60,7 +60,7 @@ export const NewPostForm = props => {
               props.description,
               props.content,
               props.tags,
-              props.currentSlug
+              props.slug
             );}
           }}>
           Publish Article
@@ -76,5 +76,4 @@ NewPostForm.propTypes = {
   description: PropTypes.string,
   content: PropTypes.string,
   tags: PropTypes.string,
-  currentSlug: PropTypes.string,
 };

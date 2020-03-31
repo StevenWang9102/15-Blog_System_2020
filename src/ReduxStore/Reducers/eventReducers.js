@@ -7,6 +7,7 @@ import {
   SET_PROFILE_NAV,
   EMPTY_ARTICLE_COUNT,
 } from "../Actions/eventActions";
+
 import { SIGN_UP_USER_LOADED } from "../Actions/userActions";
 
 const initialState = {
@@ -55,7 +56,7 @@ export const eventReducer = (state = initialState, action) => {
 
     case EMPTY_ARTICLE_COUNT:
       return { ...state, articlesAllCount: 0 };
-  
+
     default:
       return state;
   }

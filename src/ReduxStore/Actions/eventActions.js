@@ -17,6 +17,7 @@ export const UPDATE_SETTING_BUTTON_CLICK = Symbol(
 export const EMPTY_ARTICLE_COUNT = Symbol("EMPTY_ARTICLE_COUNT");
 export const DELETE_ARTICLE_BUTTON = Symbol("DELETE_ARTICLE_BUTTON");
 export const POST_ARTICLE_CLICKED = Symbol("POST_ARTICLE_CLICKED");
+export const NEW_POST_NAV_CLICKED = Symbol("NEW_POST_NAV_CLICKED");
 
 // --------------------------- Functions --------------------------------
 export const favoritedArticleNavClicked = (
@@ -109,6 +110,10 @@ export const onDeleteArticleClicked = slug => {
 
 export const updateSettingStatus = status => {
   return { type: UPDATED_YOUR_SETTING, status: status };
+};
+
+export const newPostNavClicked = () => {
+  return { type: NEW_POST_NAV_CLICKED };
 };
 
 export const onPostArticleClicked = (
