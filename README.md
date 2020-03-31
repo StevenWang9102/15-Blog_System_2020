@@ -5,7 +5,10 @@
 
 <!-- How to work? -->
     run "npm start" in VS code terminal.
+
     You can also watch project videos on my personal website.(https://stevenwangakl.wixsite.com/myprojects)
+
+    You can play with it on my hosted website online (http://react-blog-system.s3-website-ap-southeast-2.amazonaws.com/).
 
 <!-- Functions -->
 - you can sign in and sign up users
