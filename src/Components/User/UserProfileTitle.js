@@ -27,6 +27,7 @@ export const UserProfileTitle = props => {
   };
 
   const profileDetails = props.currentProfileDetail;
+  
   return (
     <div className='user-info'>
       <div className='container'>
