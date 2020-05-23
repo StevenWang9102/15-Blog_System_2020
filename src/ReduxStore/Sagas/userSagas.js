@@ -55,6 +55,7 @@ export const userSaga = function*() {
   // SIGN_IN_BUTTON_CLICKED
   yield takeLatest(SIGN_IN_BUTTON_CLICKED, function*(action) {
     try {
+      
       yield put(setLoading("LOADING"));
       const userData = {};
       const url = "/users/login";
