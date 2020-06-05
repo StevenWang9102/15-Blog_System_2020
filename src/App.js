@@ -22,8 +22,6 @@ const useStyles = createUseStyles({
       top: "420px"
     }
   },
-
-  
 });
 
 const InternalApp = props => {

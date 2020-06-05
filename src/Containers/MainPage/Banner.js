@@ -5,7 +5,7 @@ export const Banner = props => {
     <div className='home-page'>
       <div className='banner'>
         <div className='container'>
-          <h1 className='logo-font'>conduit - {process.env.REACT_APP_TITLE}</h1>
+          <h1 className='logo-font'>Conduit <span>{process.env.REACT_APP_TITLE}</span></h1>
           <p>A place to share your knowledge.</p>
         </div>
       </div>

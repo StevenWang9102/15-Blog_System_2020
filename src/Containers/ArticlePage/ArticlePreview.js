@@ -9,7 +9,8 @@ import { CurrentDisplayArticles } from "../../Components/ArticlePage/CurrentDisp
 import { PageTunner } from "../../Components/MainPage/PageTunner";
 import {
   loadUserProfileDetail,
-  setSignUpStatus
+  setSignUpStatus,
+  signInClicked
 } from "../../ReduxStore/Actions/userActions";
 
 import {
@@ -18,7 +19,7 @@ import {
   loadPopularTags,
   setDeleteArticleStatus,
   popularNavClean,
-  popularTagClicked
+  popularTagClicked,
 } from "../../ReduxStore/Actions/articleActions";
 
 import {
@@ -37,6 +38,8 @@ const InternalArticlePreview = props => {
     props.setDeleteArticleStatus("NOT DELETED");
     props.setSignUpStatus("NOT LOADED");
     props.loadPopularTags();
+    props.onSignInClicked();
+
 
     if (props.userInformation && props.userInformation.username) {
       props.setHomeNavStatus("active", "null", "null");
@@ -155,9 +158,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(loadUserProfileDetail(author_name, displayLimit, offset)),
     setSignUpStatus: () => dispatch(setSignUpStatus()),
     setDeleteArticleStatus: status => dispatch(setDeleteArticleStatus(status)),
-    loadPopularTags: () => {
-      dispatch(loadPopularTags());
+    loadPopularTags: () => { dispatch(loadPopularTags());
     },
+    onSignInClicked: (email, password) => { dispatch(signInClicked(email, password));},
     onFavoritedArticleNavClicked: (author_name, displayLimit, offset) =>
       dispatch(favoritedArticleNavClicked(author_name, displayLimit, offset))
   };

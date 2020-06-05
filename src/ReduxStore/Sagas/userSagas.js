@@ -61,8 +61,11 @@ export const userSaga = function*() {
       const url = "/users/login";
       const message = "Sign in";
 
-      userData.email = action.email;
-      userData.password = action.password;
+      // userData.email = action.email;
+      // userData.password = action.password;
+
+      userData.email = "steven.wang.akl@gmail.com";
+      userData.password = "co7218891";
 
       const postData = { user: userData };
       const userPostedData = yield call(
